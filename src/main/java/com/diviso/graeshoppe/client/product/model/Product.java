@@ -29,6 +29,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
+@Document(indexName="product")
 public class Product   {
   @JsonProperty("barcode")
   private Barcode barcode = null;
