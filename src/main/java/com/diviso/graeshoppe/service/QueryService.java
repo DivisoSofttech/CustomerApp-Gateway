@@ -18,7 +18,7 @@ import com.diviso.graeshoppe.client.store.domain.UserRating;
 
 public interface QueryService {
 public Page<Category> findAllCategories(Pageable pageable);
-public Page<Product> findProductByCategoryId(Long categoryId,Pageable pageable);
+public Page<Product> findProductByCategoryId(Long categoryId,String userId,Pageable pageable);
 public Page<Customer> findAllCustomers(String searchTerm, Pageable pageable);
 public List<String> findAllUom(Pageable pageable);
 public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable);

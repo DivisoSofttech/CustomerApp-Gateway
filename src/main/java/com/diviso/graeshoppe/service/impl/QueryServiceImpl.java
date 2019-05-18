@@ -8,6 +8,7 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
@@ -74,8 +75,11 @@ public class QueryServiceImpl implements QueryService {
 	}
 	
 	@Override
-	public Page<Product> findProductByCategoryId(Long categoryId, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("categories.id", categoryId))
+	public Page<Product> findProductByCategoryId(Long categoryId,String userId, Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("categories.id", categoryId))
+						.must(QueryBuilders.matchQuery("userId", userId)))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 	}

@@ -79,9 +79,9 @@ public class QueryResource {
 	private StockDiaryResourceApi stockDiaryResourceApi;
 	
 	
-	@GetMapping("/findProductByCategoryId/{categoryId}")
-	public Page<Product> findProductByCategoryId(@PathVariable Long categoryId,Pageable pageable) {
-		return queryService.findProductByCategoryId(categoryId,pageable);
+	@GetMapping("/findProductByCategoryId/{categoryId}/{userId}")
+	public Page<Product> findProductByCategoryId(@PathVariable Long categoryId,@PathVariable String userId,Pageable pageable) {
+		return queryService.findProductByCategoryId(categoryId,userId,pageable);
 	}
 	
 	@GetMapping("/findStockCurrentByProductId/{productId}")	
