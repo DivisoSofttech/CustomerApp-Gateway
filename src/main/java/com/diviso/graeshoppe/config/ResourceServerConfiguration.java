@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bytatech.ayoos.config;
+package com.diviso.graeshoppe.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -24,7 +24,7 @@ import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.security.web.util.matcher.RequestHeaderRequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
-import com.bytatech.ayoos.security.AuthoritiesConstants;
+import com.diviso.graeshoppe.security.AuthoritiesConstants;
 
 @Configuration
 @EnableResourceServer

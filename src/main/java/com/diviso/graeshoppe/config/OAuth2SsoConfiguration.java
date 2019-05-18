@@ -1,4 +1,4 @@
-package com.bytatech.ayoos.config;
+package com.diviso.graeshoppe.config;
 
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -17,7 +17,7 @@ import org.springframework.security.web.util.matcher.NegatedRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.filter.CorsFilter;
 
-import com.bytatech.ayoos.security.AuthoritiesConstants;
+import com.diviso.graeshoppe.security.AuthoritiesConstants;
 
 import io.github.jhipster.security.AjaxLogoutSuccessHandler;
 
