@@ -1,33 +1,27 @@
 package com.diviso.graeshoppe.client.product.model;
 
-import java.util.Objects;
-import com.diviso.graeshoppe.client.product.model.Barcode;
-import com.diviso.graeshoppe.client.product.model.Category;
-import com.diviso.graeshoppe.client.product.model.Label;
-import com.diviso.graeshoppe.client.product.model.Note;
-import com.diviso.graeshoppe.client.product.model.Status;
-import com.diviso.graeshoppe.client.product.model.StockDiary;
-import com.diviso.graeshoppe.client.product.model.StockLine;
-import com.diviso.graeshoppe.client.product.model.TaxCategory;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import org.springframework.validation.annotation.Validated;
+import java.util.Objects;
+
 import javax.validation.Valid;
-import javax.validation.constraints.*;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * Product
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@Document(indexName = "product")
 public class Product   {
   @JsonProperty("barcode")
   private Barcode barcode = null;
