@@ -80,8 +80,8 @@ public class QueryResource {
 	private StockDiaryResourceApi stockDiaryResourceApi;
 	
 	
-	@GetMapping("/findProductByCategoryId/{categoryId}/{userId}")
-	public Page<Product> findProductByCategoryId(@PathVariable Long categoryId,@PathVariable String userId,Pageable pageable) {
+	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
+	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId,@PathVariable String userId,Pageable pageable) {
 		return queryService.findProductByCategoryId(categoryId,userId,pageable);
 	}
 	
