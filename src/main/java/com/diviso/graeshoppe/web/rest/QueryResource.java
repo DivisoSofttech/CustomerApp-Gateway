@@ -251,7 +251,7 @@ public class QueryResource {
 	public void  findAllCategoriesBStoreId(@PathVariable Long storeId){
 		queryService.findAllCategoriesByStoreId(storeId);
 	}*/
-	@GetMapping("/products/{storeId}")
+	@GetMapping("/findproducts/{storeId}")
 	public ResponseEntity<List<Product>> findAllProductByStoreId(@PathVariable String storeId){
 		return ResponseEntity.ok().body(queryService.findAllProductsByStoreId(storeId).getContent());
 	}
