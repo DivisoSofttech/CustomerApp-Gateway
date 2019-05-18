@@ -30,6 +30,7 @@ import com.diviso.graeshoppe.client.product.model.Uom;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.Review;
+import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
@@ -221,6 +222,36 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllStores(org.springframework.data.domain.Pageable)
+	 */
+	@Override
+	public Page<Store> findAllStores(Pageable pageable) {
+		
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductsByStoreId(java.lang.String)
+	 */
+	@Override
+	public Page<Product> findAllProductsByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userId", storeId))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllCategoriesByStoreId(java.lang.Long)
+	 */
+	/*@Override
+	public Page<Category> findAllCategoriesByStoreId(Long storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("sale.id", storeId))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, TicketLine.class).getContent();
+	}*/
 	
 
 	

@@ -40,6 +40,7 @@ import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.domain.Review;
+import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.service.QueryService;
 
@@ -241,5 +242,17 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllUserRatings(pageable).getContent());
 	}
 	
+	@GetMapping("/sores")
+	public ResponseEntity<List<Store>> findAllStores(Pageable pageable){
+		return ResponseEntity.ok().body(queryService.findAllStores(pageable).getContent());
+	}
 	
+	/*@GetMapping("/findallcategories")
+	public void  findAllCategoriesBStoreId(@PathVariable Long storeId){
+		queryService.findAllCategoriesByStoreId(storeId);
+	}*/
+	@GetMapping("/products/{storeId}")
+	public ResponseEntity<List<Product>> findAllProductByStoreId(@PathVariable String storeId){
+		return ResponseEntity.ok().body(queryService.findAllProductsByStoreId(storeId).getContent());
+	}
 }

@@ -14,6 +14,7 @@ import com.diviso.graeshoppe.client.product.model.StockLine;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.Review;
+import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 
 public interface QueryService {
@@ -42,5 +43,17 @@ public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pa
 public Page<Product> findAllProducts(Pageable pageable);
 public Page<Review> findAllReviews(Pageable pageable);
 public Page<UserRating> findAllUserRatings(Pageable pageable);
+/**
+ * @param pageable
+ */
+public Page<Store> findAllStores(Pageable pageable);
+/**
+ * @param storeId
+ */
+//public Page<Category> findAllCategoriesByStoreId(Long storeId);
+/**
+ * @param storeId
+ */
+public Page<Product> findAllProductsByStoreId(String storeId);
 
 }
