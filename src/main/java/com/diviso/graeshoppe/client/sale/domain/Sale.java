@@ -23,6 +23,8 @@ import java.util.Set;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 
 
 /**
@@ -45,7 +47,16 @@ public class Sale implements Serializable {
     
     private Instant date ;
 
-   
+ 
+    public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	private String userId ;
     private Set<TicketLine> ticketLines = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -128,14 +139,13 @@ public class Sale implements Serializable {
         return Objects.hashCode(getId());
     }
 
-    @Override
-    public String toString() {
-        return "Sale{" +
-            "id=" + getId() +
-            ", customerId=" + getCustomerId() +
-            ", grandTotal=" + getGrandTotal() +
-            "}";
-    }
+   
+
+	@Override
+	public String toString() {
+		return "Sale [id=" + id + ", customerId=" + customerId + ", grandTotal=" + grandTotal + ", date=" + date
+				+ ", userId=" + userId + ", ticketLines=" + ticketLines + "]";
+	}
 
 	public Instant getDate() {
 		return date;

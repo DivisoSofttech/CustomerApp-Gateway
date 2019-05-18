@@ -8,6 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.validation.annotation.Validated;
 
+import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import io.swagger.annotations.ApiModelProperty;
@@ -31,6 +32,9 @@ public class SaleDTO   {
   @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("userId")
+  private String userId = null;
+  
   public SaleDTO customerId(Long customerId) {
     this.customerId = customerId;
     return this;
@@ -110,6 +114,24 @@ public class SaleDTO   {
 
   public void setId(Long id) {
     this.id = id;
+  }
+  public SaleDTO userId(String userId) {
+	    this.userId = userId;
+	    return this;
+	  }
+  /**
+   * Get userId
+   * @return userId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getUserId() {
+    return userId;
+  }
+
+  public void setUserId(String userId) {
+    this.userId = userId;
   }
 
 
