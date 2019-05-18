@@ -242,7 +242,7 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllUserRatings(pageable).getContent());
 	}
 	
-	@GetMapping("/sores")
+	@GetMapping("/stores")
 	public ResponseEntity<List<Store>> findAllStores(Pageable pageable){
 		return ResponseEntity.ok().body(queryService.findAllStores(pageable).getContent());
 	}
