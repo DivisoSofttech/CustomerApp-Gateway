@@ -278,6 +278,16 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userName", userName))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByStoreId(java.lang.String)
+	 */
+	@Override
+	public Page<StockCurrent> findStockCurrentByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.userName", storeId))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}	
 
 }

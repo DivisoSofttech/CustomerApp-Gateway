@@ -289,12 +289,12 @@ public class CommandResource {
 	}
 	
 	@PostMapping("/reviews")
-	public ResponseEntity<ReviewDTO> createUserRating(@RequestBody ReviewDTO reviewDTO) {
+	public ResponseEntity<ReviewDTO> createUserReview(@RequestBody ReviewDTO reviewDTO) {
 		return this.reviewResourceApi.createReviewUsingPOST(reviewDTO);
 	}
 	
 	@PutMapping("/reviews")
-	public ResponseEntity<ReviewDTO> updateUserRating(@RequestBody ReviewDTO reviewDTO){
+	public ResponseEntity<ReviewDTO> updateReview(@RequestBody ReviewDTO reviewDTO){
 		return this.reviewResourceApi.updateReviewUsingPUT(reviewDTO);
 	}
 	
@@ -302,5 +302,8 @@ public class CommandResource {
 	public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
 		return this.reviewResourceApi.deleteReviewUsingDELETE(id);
 	}
+	
+	
+		
 	
 }

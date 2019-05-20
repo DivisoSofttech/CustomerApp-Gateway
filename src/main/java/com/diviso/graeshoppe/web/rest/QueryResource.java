@@ -265,4 +265,10 @@ public class QueryResource {
 	public ResponseEntity<List<Review>> findReviewsByStoreId(@PathVariable String userName){
 		return ResponseEntity.ok().body(queryService.findReviewByStoreId(userName).getContent());
 	}
+	
+	@GetMapping("/stock-current/{storeId}")
+	public ResponseEntity<List<StockCurrent>> findStockCurrentByStoreId(@PathVariable String storeId){
+		
+	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
+	}
 }
