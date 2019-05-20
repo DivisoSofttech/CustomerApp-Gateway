@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.client.store.model;
+package com.diviso.graeshoppe.client.store.domain;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -12,12 +12,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * TypeDTO
+ * Type
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-20T12:06:06.200+05:30[Asia/Calcutta]")
 @Document(indexName = "type")
-public class TypeDTO   {
+public class Type  {
   @JsonProperty("deliveryInfoId")
   private Long deliveryInfoId = null;
 
@@ -27,7 +27,7 @@ public class TypeDTO   {
   @JsonProperty("name")
   private String name = null;
 
-  public TypeDTO deliveryInfoId(Long deliveryInfoId) {
+  public Type deliveryInfoId(Long deliveryInfoId) {
     this.deliveryInfoId = deliveryInfoId;
     return this;
   }
@@ -47,7 +47,7 @@ public class TypeDTO   {
     this.deliveryInfoId = deliveryInfoId;
   }
 
-  public TypeDTO id(Long id) {
+  public Type id(Long id) {
     this.id = id;
     return this;
   }
@@ -67,7 +67,7 @@ public class TypeDTO   {
     this.id = id;
   }
 
-  public TypeDTO name(String name) {
+  public Type name(String name) {
     this.name = name;
     return this;
   }
@@ -96,10 +96,10 @@ public class TypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TypeDTO typeDTO = (TypeDTO) o;
-    return Objects.equals(this.deliveryInfoId, typeDTO.deliveryInfoId) &&
-        Objects.equals(this.id, typeDTO.id) &&
-        Objects.equals(this.name, typeDTO.name);
+    Type type = (Type) o;
+    return Objects.equals(this.deliveryInfoId, type.deliveryInfoId) &&
+        Objects.equals(this.id, type.id) &&
+        Objects.equals(this.name, type.name);
   }
 
   @Override

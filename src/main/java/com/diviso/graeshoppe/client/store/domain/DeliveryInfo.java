@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.client.store.model;
+package com.diviso.graeshoppe.client.store.domain;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -6,48 +6,28 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
+import java.time.Instant;
+import java.time.OffsetDateTime;
+
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * TypeDTO
+ * DeliveryInfo
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-20T12:06:06.200+05:30[Asia/Calcutta]")
-@Document(indexName = "type")
-public class TypeDTO   {
-  @JsonProperty("deliveryInfoId")
-  private Long deliveryInfoId = null;
-
+@Document(indexName = "deliveryinfo")
+public class DeliveryInfo  {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("name")
-  private String name = null;
+  @JsonProperty("startingTime")
+  private Instant startingTime = null;
 
-  public TypeDTO deliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
-    return this;
-  }
-
-  /**
-   * Get deliveryInfoId
-   * @return deliveryInfoId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getDeliveryInfoId() {
-    return deliveryInfoId;
-  }
-
-  public void setDeliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
-  }
-
-  public TypeDTO id(Long id) {
+  public DeliveryInfo id(Long id) {
     this.id = id;
     return this;
   }
@@ -67,24 +47,25 @@ public class TypeDTO   {
     this.id = id;
   }
 
-  public TypeDTO name(String name) {
-    this.name = name;
+  public DeliveryInfo startingTime(Instant startingTime) {
+    this.startingTime = startingTime;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get startingTime
+   * @return startingTime
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getName() {
-    return name;
+  public Instant getStartingTime() {
+    return startingTime;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setStartingTime(Instant startingTime) {
+    this.startingTime = startingTime;
   }
 
 
@@ -96,25 +77,23 @@ public class TypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TypeDTO typeDTO = (TypeDTO) o;
-    return Objects.equals(this.deliveryInfoId, typeDTO.deliveryInfoId) &&
-        Objects.equals(this.id, typeDTO.id) &&
-        Objects.equals(this.name, typeDTO.name);
+    DeliveryInfo deliveryInfo = (DeliveryInfo) o;
+    return Objects.equals(this.id, deliveryInfo.id) &&
+        Objects.equals(this.startingTime, deliveryInfo.startingTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deliveryInfoId, id, name);
+    return Objects.hash(id, startingTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TypeDTO {\n");
+    sb.append("class DeliveryInfoDTO {\n");
     
-    sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");
     sb.append("}");
     return sb.toString();
   }
