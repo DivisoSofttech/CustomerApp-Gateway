@@ -5,24 +5,25 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * PropreitorDTO
+ * DeliveryInfoDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-20T12:06:06.200+05:30[Asia/Calcutta]")
 
-public class PropreitorDTO   {
+public class DeliveryInfoDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("name")
-  private String name = null;
+  @JsonProperty("startingTime")
+  private OffsetDateTime startingTime = null;
 
-  public PropreitorDTO id(Long id) {
+  public DeliveryInfoDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -42,24 +43,25 @@ public class PropreitorDTO   {
     this.id = id;
   }
 
-  public PropreitorDTO name(String name) {
-    this.name = name;
+  public DeliveryInfoDTO startingTime(OffsetDateTime startingTime) {
+    this.startingTime = startingTime;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get startingTime
+   * @return startingTime
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getName() {
-    return name;
+  public OffsetDateTime getStartingTime() {
+    return startingTime;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setStartingTime(OffsetDateTime startingTime) {
+    this.startingTime = startingTime;
   }
 
 
@@ -71,23 +73,23 @@ public class PropreitorDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PropreitorDTO propreitorDTO = (PropreitorDTO) o;
-    return Objects.equals(this.id, propreitorDTO.id) &&
-        Objects.equals(this.name, propreitorDTO.name);
+    DeliveryInfoDTO deliveryInfoDTO = (DeliveryInfoDTO) o;
+    return Objects.equals(this.id, deliveryInfoDTO.id) &&
+        Objects.equals(this.startingTime, deliveryInfoDTO.startingTime);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id, startingTime);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PropreitorDTO {\n");
+    sb.append("class DeliveryInfoDTO {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");
     sb.append("}");
     return sb.toString();
   }

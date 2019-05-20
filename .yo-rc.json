@@ -1,34 +1,41 @@
 {
-  "generator-jhipster": {
-    "promptValues": {
-      "packageName": "com.diviso.graeshoppe"
+    "generator-jhipster": {
+        "promptValues": {
+            "packageName": "com.diviso.graeshoppe"
+        },
+        "jhipsterVersion": "5.8.2",
+        "applicationType": "gateway",
+        "baseName": "customergateway",
+        "packageName": "com.diviso.graeshoppe",
+        "packageFolder": "com/diviso/graeshoppe",
+        "serverPort": "8070",
+        "authenticationType": "oauth2",
+        "cacheProvider": "hazelcast",
+        "enableHibernateCache": true,
+        "websocket": false,
+        "databaseType": "sql",
+        "devDatabaseType": "mysql",
+        "prodDatabaseType": "mysql",
+        "searchEngine": "elasticsearch",
+        "messageBroker": false,
+        "serviceDiscoveryType": "eureka",
+        "buildTool": "maven",
+        "enableSwaggerCodegen": false,
+        "clientFramework": "angularX",
+        "useSass": true,
+        "clientPackageManager": "npm",
+        "testFrameworks": [],
+        "jhiPrefix": "jhi",
+        "entitySuffix": "",
+        "dtoSuffix": "DTO",
+        "otherModules": [],
+        "enableTranslation": false
     },
-    "jhipsterVersion": "5.8.2",
-    "applicationType": "gateway",
-    "baseName": "customergateway",
-    "packageName": "com.diviso.graeshoppe",
-    "packageFolder": "com/diviso/graeshoppe",
-    "serverPort": "8070",
-    "authenticationType": "oauth2",
-    "cacheProvider": "hazelcast",
-    "enableHibernateCache": true,
-    "websocket": false,
-    "databaseType": "sql",
-    "devDatabaseType": "mysql",
-    "prodDatabaseType": "mysql",
-    "searchEngine": "elasticsearch",
-    "messageBroker": false,
-    "serviceDiscoveryType": "eureka",
-    "buildTool": "maven",
-    "enableSwaggerCodegen": false,
-    "clientFramework": "angularX",
-    "useSass": true,
-    "clientPackageManager": "npm",
-    "testFrameworks": [],
-    "jhiPrefix": "jhi",
-    "entitySuffix": "",
-    "dtoSuffix": "DTO",
-    "otherModules": [],
-    "enableTranslation": false
-  }
+    "generator-jhipster-swagger-cli": {
+        "apis": {
+            "store": {
+                "spec": " http://34.73.191.107:8071/v2/api-docs"
+            }
+        }
+    }
 }
