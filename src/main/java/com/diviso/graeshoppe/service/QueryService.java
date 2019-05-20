@@ -64,6 +64,6 @@ public Store findStoreByRegNo(String regNo);
 /**
  * @param storeId
  */
-public Page<Review> findReviewByStoreId(String storeId);
+public Page<Review> findReviewByStoreId(String userName);
 
 }

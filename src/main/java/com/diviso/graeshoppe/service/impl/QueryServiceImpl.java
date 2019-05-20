@@ -274,8 +274,8 @@ public class QueryServiceImpl implements QueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findReviewByStoreId(java.lang.String)
 	 */
 	@Override
-	public Page<Review> findReviewByStoreId(String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("storeId", storeId))
+	public Page<Review> findReviewByStoreId(String userName) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userName", userName))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
 	}	
