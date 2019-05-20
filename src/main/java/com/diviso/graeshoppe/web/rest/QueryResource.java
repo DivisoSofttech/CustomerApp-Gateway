@@ -260,4 +260,9 @@ public class QueryResource {
 	public ResponseEntity<Store> findStoreByRegisterNumber(@PathVariable String regNo){
 		return ResponseEntity.ok().body(queryService.findStoreByRegNo(regNo));
 	}
+	
+	@GetMapping("/review/{storeId}")
+	public ResponseEntity<List<Review>> findReviewsByStoreId(@PathVariable String storeId){
+		return ResponseEntity.ok().body(queryService.findReviewByStoreId(storeId).getContent());
+	}
 }

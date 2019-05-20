@@ -61,5 +61,9 @@ public Page<Product> findAllProductsByStoreId(String storeId);
  * @return
  */
 public Store findStoreByRegNo(String regNo);
+/**
+ * @param storeId
+ */
+public Page<Review> findReviewByStoreId(String storeId);
 
 }
