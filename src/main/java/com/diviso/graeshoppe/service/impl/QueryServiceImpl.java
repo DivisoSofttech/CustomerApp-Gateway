@@ -18,7 +18,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.elasticsearch.core.query.StringQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.product.model.Category;
@@ -244,6 +247,13 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRegNo(java.lang.String)
+	 */
+	@Override
+	public Store findStoreByRegNo(String regNo) {
+		StringQuery stringQuery = new StringQuery(termQuery("regNo", regNo).toString());
+		return elasticsearchOperations.queryForObject(stringQuery, Store.class);
+	/* (non-Javadoc)
 	 * @see com.diviso.graeshoppe.service.QueryService#findAllCategoriesByStoreId(java.lang.Long)
 	 */
 	/*@Override
@@ -258,6 +268,6 @@ public class QueryServiceImpl implements QueryService {
 	
 	
 	
-	
+	}	
 
 }

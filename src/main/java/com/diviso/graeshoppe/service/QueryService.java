@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.product.model.Category;
@@ -55,5 +56,10 @@ public Page<Store> findAllStores(Pageable pageable);
  * @param storeId
  */
 public Page<Product> findAllProductsByStoreId(String storeId);
+/**
+ * @param regNo
+ * @return
+ */
+public Store findStoreByRegNo(String regNo);
 
 }
