@@ -266,7 +266,7 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findReviewByStoreId(userName).getContent());
 	}
 	
-	@GetMapping("/stock-current/{storeId}")
+	@GetMapping("/stockcurrent/{storeId}")
 	public ResponseEntity<List<StockCurrent>> findStockCurrentByStoreId(@PathVariable String storeId){
 		
 	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
