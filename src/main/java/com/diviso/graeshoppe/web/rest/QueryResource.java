@@ -242,6 +242,10 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllUserRatings(pageable).getContent());
 	}
 	
+	@GetMapping("/user-rating/{regNo}")
+	public ResponseEntity<List<UserRating>> findUserRatingByRegNo(@PathVariable String regNo){
+		return ResponseEntity.ok().body(queryService.findUserRatingByRegNo(regNo).getContent());
+	}
 	@GetMapping("/stores")
 	public ResponseEntity<List<Store>> findAllStores(Pageable pageable){
 		return ResponseEntity.ok().body(queryService.findAllStores(pageable).getContent());
@@ -271,4 +275,5 @@ public class QueryResource {
 		
 	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
 	}
+	
 }

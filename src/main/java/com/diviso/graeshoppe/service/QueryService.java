@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
@@ -69,5 +70,10 @@ public Page<Review> findReviewByStoreId(String userName);
  * @param storeId
  */
 public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
+/**
+ * @param regNo
+ * @return
+ */
+public Page<UserRating> findUserRatingByRegNo(String regNo);
 
 }
