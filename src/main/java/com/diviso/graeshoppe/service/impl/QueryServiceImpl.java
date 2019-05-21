@@ -285,7 +285,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<StockCurrent> findStockCurrentByStoreId(String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.userName", storeId))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.userId", storeId))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}	
