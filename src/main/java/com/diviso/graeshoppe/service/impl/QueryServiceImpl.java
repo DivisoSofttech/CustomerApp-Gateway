@@ -302,21 +302,22 @@ public class QueryServiceImpl implements QueryService {
 	}	
 
 	@Override
-	public List<Product> findCategoryAndCount(Pageable pageable) {
+	public List<Entry> findCategoryAndCount(Pageable pageable) {
 System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				 // .withQuery(matchAllQuery())
-				 // .withSearchType(QUERY_THEN_FETCH)
-				.withQuery(termQuery("categories.name.keyword","Starters"))
+				 .withQuery(matchAllQuery())
+				  .withSearchType(QUERY_THEN_FETCH)
+				//.withQuery(termQuery("categories.name.keyword","Starters"))
 				  .withIndices("product").withTypes("product")
-				  //.addAggregation(AggregationBuilders.terms("totalcategories").field("categories.name.keyword"))
+				  .addAggregation(AggregationBuilders.terms("totalcategories").field("categories.name.keyword"))
 				  .build();
 		
 	
-		//AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
-		//TermsAggregation categoryAggregation = result.getAggregation("totalcategories", TermsAggregation.class);
-		//return categoryAggregation.getBuckets();
-	return	elasticsearchTemplate.queryForList(searchQuery, Product.class);
+		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
+		TermsAggregation categoryAggregation = result.getAggregation("totalcategories", TermsAggregation.class);
+		System.out.println( "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+categoryAggregation.getBuckets().size());
+		return categoryAggregation.getBuckets();
+	//return	elasticsearchTemplate.queryForList(searchQuery, Product.class);
 		
 		
 	}

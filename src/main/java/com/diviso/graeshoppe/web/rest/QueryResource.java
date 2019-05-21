@@ -278,7 +278,7 @@ public class QueryResource {
 	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
 	}
 	@GetMapping("/findCategoryAndCount")
-	public List<Product>  findCategoryAndCount(Pageable pageable){
+	public List<Entry>  findCategoryAndCount(Pageable pageable){
 		return queryService.findCategoryAndCount(pageable);
 	}
 }
