@@ -305,8 +305,9 @@ public class QueryServiceImpl implements QueryService {
 	public List<Product> findCategoryAndCount(Pageable pageable) {
 System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				  .withQuery(matchAllQuery())
-				  .withSearchType(QUERY_THEN_FETCH)
+				 // .withQuery(matchAllQuery())
+				 // .withSearchType(QUERY_THEN_FETCH)
+				.withQuery(termQuery("categories.name.keyword","Starters"))
 				  .withIndices("product").withTypes("product")
 				  //.addAggregation(AggregationBuilders.terms("totalcategories").field("categories.name.keyword"))
 				  .build();
