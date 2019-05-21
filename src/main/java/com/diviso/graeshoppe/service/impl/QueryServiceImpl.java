@@ -295,7 +295,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<UserRating> findUserRatingByRegNo(String regNo) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("store.regNo.keyword", regNo))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", regNo))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}	
