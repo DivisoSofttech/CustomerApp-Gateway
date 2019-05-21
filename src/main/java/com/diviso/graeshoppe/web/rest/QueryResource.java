@@ -44,6 +44,8 @@ import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.service.QueryService;
 
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+
 
 @RestController
 @RequestMapping("/api/query")
@@ -275,5 +277,8 @@ public class QueryResource {
 		
 	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
 	}
-	
+	@GetMapping("/findCategoryAndCount")
+	public List<Entry> findCategoryAndCount(Pageable pageable){
+		return queryService.findCategoryAndCount(pageable);
+	}
 }

@@ -19,6 +19,8 @@ import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+
 public interface QueryService {
 public Page<Category> findAllCategories(Pageable pageable);
 public Page<Product> findProductByCategoryId(Long categoryId,String userId,Pageable pageable);
@@ -75,5 +77,6 @@ public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
  * @return
  */
 public Page<UserRating> findUserRatingByRegNo(String regNo);
+public List<Entry> findCategoryAndCount(Pageable pageable);
 
 }

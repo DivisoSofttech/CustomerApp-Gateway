@@ -43,6 +43,7 @@ import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.core.search.aggregation.TermsAggregation;
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -300,4 +301,27 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}	
 
+	@Override
+	public List<Entry> findCategoryAndCount(Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				  .withQuery(matchAllQuery())
+				  .withSearchType(QUERY_THEN_FETCH)
+				  .withIndices("product").withTypes("product")
+				  .addAggregation(AggregationBuilders.terms("totalcategories").field("categories.name.keyword"))
+				  .build();
+		
+	
+		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
+		TermsAggregation categoryAggregation = result.getAggregation("totalcategories", TermsAggregation.class);
+		return categoryAggregation.getBuckets();
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }
