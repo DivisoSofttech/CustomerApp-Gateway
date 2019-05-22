@@ -1,112 +1,106 @@
 package com.diviso.graeshoppe.client.store.domain;
 
-import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 
-import java.time.Instant;
-import java.time.OffsetDateTime;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
+import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
- * DeliveryInfo
+ * A DeliveryInfo.
  */
-@Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-20T12:06:06.200+05:30[Asia/Calcutta]")
+
 @Document(indexName = "deliveryinfo")
-public class DeliveryInfo  {
-  @JsonProperty("id")
-  private Long id = null;
+public class DeliveryInfo implements Serializable {
 
-  @JsonProperty("startingTime")
-  private Instant startingTime = null;
+    private static final long serialVersionUID = 1L;
 
-  public DeliveryInfo id(Long id) {
-    this.id = id;
-    return this;
-  }
+    private Long id;
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+    private Instant startingTime;
 
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public DeliveryInfo startingTime(Instant startingTime) {
-    this.startingTime = startingTime;
-    return this;
-  }
-
-  /**
-   * Get startingTime
-   * @return startingTime
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Instant getStartingTime() {
-    return startingTime;
-  }
-
-  public void setStartingTime(Instant startingTime) {
-    this.startingTime = startingTime;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    private Set<Type> types = new HashSet<>();
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+        return id;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    DeliveryInfo deliveryInfo = (DeliveryInfo) o;
-    return Objects.equals(this.id, deliveryInfo.id) &&
-        Objects.equals(this.startingTime, deliveryInfo.startingTime);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, startingTime);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class DeliveryInfoDTO {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public Instant getStartingTime() {
+        return startingTime;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public DeliveryInfo startingTime(Instant startingTime) {
+        this.startingTime = startingTime;
+        return this;
+    }
+
+    public void setStartingTime(Instant startingTime) {
+        this.startingTime = startingTime;
+    }
+
+    public Set<Type> getTypes() {
+        return types;
+    }
+
+    public DeliveryInfo types(Set<Type> types) {
+        this.types = types;
+        return this;
+    }
+
+    public DeliveryInfo addType(Type type) {
+        this.types.add(type);
+        type.setDeliveryInfo(this);
+        return this;
+    }
+
+    public DeliveryInfo removeType(Type type) {
+        this.types.remove(type);
+        type.setDeliveryInfo(null);
+        return this;
+    }
+
+    public void setTypes(Set<Type> types) {
+        this.types = types;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        DeliveryInfo deliveryInfo = (DeliveryInfo) o;
+        if (deliveryInfo.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), deliveryInfo.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "DeliveryInfo{" +
+            "id=" + getId() +
+            ", startingTime='" + getStartingTime() + "'" +
+            "}";
+    }
 }
-

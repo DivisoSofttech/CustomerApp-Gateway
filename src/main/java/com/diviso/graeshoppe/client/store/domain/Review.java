@@ -1,179 +1,155 @@
 package com.diviso.graeshoppe.client.store.domain;
 
-import java.time.OffsetDateTime;
-import java.util.Objects;
 
-import javax.validation.Valid;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.Cache;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
+
+import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.validation.annotation.Validated;
-
-import io.swagger.annotations.ApiModelProperty;
+import java.io.Serializable;
+import java.time.ZonedDateTime;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Objects;
 
 /**
- * Review
+ * A Review.
  */
-@Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T15:08:38.225+05:30[Asia/Kolkata]")
+
 @Document(indexName = "review")
-public class Review   {
-  
-  private Long id = null;
+public class Review implements Serializable {
 
-  private String review = null;
+    private static final long serialVersionUID = 1L;
 
-  private OffsetDateTime reviewedDate = null;
+    private Long id;
 
-  private Long storeId = null;
+    private String userName;
 
-  private String userName = null;
+    private String review;
 
-  public Review id(Long id) {
-    this.id = id;
-    return this;
-  }
+    private ZonedDateTime reviewedDate;
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+    private Store store;
 
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Review review(String review) {
-    this.review = review;
-    return this;
-  }
-
-  /**
-   * Get review
-   * @return review
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getReview() {
-    return review;
-  }
-
-  public void setReview(String review) {
-    this.review = review;
-  }
-
-  public Review reviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-    return this;
-  }
-
-  /**
-   * Get reviewedDate
-   * @return reviewedDate
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getReviewedDate() {
-    return reviewedDate;
-  }
-
-  public void setReviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-  }
-
-  public Review storeId(Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
-
-  /**
-   * Get storeId
-   * @return storeId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getStoreId() {
-    return storeId;
-  }
-
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
-  }
-
-  public Review userName(String userName) {
-    this.userName = userName;
-    return this;
-  }
-
-  /**
-   * Get userName
-   * @return userName
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getUserName() {
-    return userName;
-  }
-
-  public void setUserName(String userName) {
-    this.userName = userName;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    private Set<Reply> replies = new HashSet<>();
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+        return id;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    Review reviewDTO = (Review) o;
-    return Objects.equals(this.id, reviewDTO.id) &&
-        Objects.equals(this.review, reviewDTO.review) &&
-        Objects.equals(this.reviewedDate, reviewDTO.reviewedDate) &&
-        Objects.equals(this.storeId, reviewDTO.storeId) &&
-        Objects.equals(this.userName, reviewDTO.userName);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, review, reviewedDate, storeId, userName);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class ReviewDTO {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    review: ").append(toIndentedString(review)).append("\n");
-    sb.append("    reviewedDate: ").append(toIndentedString(reviewedDate)).append("\n");
-    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
-    sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public String getUserName() {
+        return userName;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public Review userName(String userName) {
+        this.userName = userName;
+        return this;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getReview() {
+        return review;
+    }
+
+    public Review review(String review) {
+        this.review = review;
+        return this;
+    }
+
+    public void setReview(String review) {
+        this.review = review;
+    }
+
+    public ZonedDateTime getReviewedDate() {
+        return reviewedDate;
+    }
+
+    public Review reviewedDate(ZonedDateTime reviewedDate) {
+        this.reviewedDate = reviewedDate;
+        return this;
+    }
+
+    public void setReviewedDate(ZonedDateTime reviewedDate) {
+        this.reviewedDate = reviewedDate;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public Review store(Store store) {
+        this.store = store;
+        return this;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
+
+    public Set<Reply> getReplies() {
+        return replies;
+    }
+
+    public Review replies(Set<Reply> replies) {
+        this.replies = replies;
+        return this;
+    }
+
+    public Review addReply(Reply reply) {
+        this.replies.add(reply);
+        reply.setReview(this);
+        return this;
+    }
+
+    public Review removeReply(Reply reply) {
+        this.replies.remove(reply);
+        reply.setReview(null);
+        return this;
+    }
+
+    public void setReplies(Set<Reply> replies) {
+        this.replies = replies;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Review review = (Review) o;
+        if (review.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), review.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Review{" +
+            "id=" + getId() +
+            ", userName='" + getUserName() + "'" +
+            ", review='" + getReview() + "'" +
+            ", reviewedDate='" + getReviewedDate() + "'" +
+            "}";
+    }
 }
-
