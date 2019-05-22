@@ -44,6 +44,8 @@ import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.service.QueryService;
 
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+
 
 @RestController
 @RequestMapping("/api/query")
@@ -242,6 +244,10 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllUserRatings(pageable).getContent());
 	}
 	
+	@GetMapping("/user-rating/{regNo}")
+	public ResponseEntity<List<UserRating>> findUserRatingByRegNo(@PathVariable String regNo){
+		return ResponseEntity.ok().body(queryService.findUserRatingByRegNo(regNo).getContent());
+	}
 	@GetMapping("/stores")
 	public ResponseEntity<List<Store>> findAllStores(Pageable pageable){
 		return ResponseEntity.ok().body(queryService.findAllStores(pageable).getContent());
@@ -259,5 +265,20 @@ public class QueryResource {
 	@GetMapping("/store/{regNo}")
 	public ResponseEntity<Store> findStoreByRegisterNumber(@PathVariable String regNo){
 		return ResponseEntity.ok().body(queryService.findStoreByRegNo(regNo));
+	}
+	
+	@GetMapping("/review/{userName}")
+	public ResponseEntity<List<Review>> findReviewsByStoreId(@PathVariable String userName){
+		return ResponseEntity.ok().body(queryService.findReviewByStoreId(userName).getContent());
+	}
+	
+	@GetMapping("/stockcurrent/{storeId}")
+	public ResponseEntity<List<StockCurrent>> findStockCurrentByStoreId(@PathVariable String storeId){
+		
+	return	ResponseEntity.ok().body(queryService.findStockCurrentByStoreId(storeId).getContent());
+	}
+	@GetMapping("/findCategoryAndCount")
+	public List<Entry>  findCategoryAndCount(Pageable pageable){
+		return queryService.findCategoryAndCount(pageable);
 	}
 }

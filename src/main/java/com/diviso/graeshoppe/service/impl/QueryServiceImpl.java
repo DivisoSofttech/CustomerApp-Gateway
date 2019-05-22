@@ -43,6 +43,7 @@ import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.core.search.aggregation.TermsAggregation;
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -268,6 +269,63 @@ public class QueryServiceImpl implements QueryService {
 	
 	
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findReviewByStoreId(java.lang.String)
+	 */
+	@Override
+	public Page<Review> findReviewByStoreId(String userName) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userName", userName))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByStoreId(java.lang.String)
+	 */
+	@Override
+	public Page<StockCurrent> findStockCurrentByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.userId", storeId))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findUserRatingByRegNo(java.lang.String)
+	 */
+	@Override
+	public Page<UserRating> findUserRatingByRegNo(String regNo) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", regNo))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}	
 
+	@Override
+	public List<Entry> findCategoryAndCount(Pageable pageable) {
+System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				 .withQuery(matchAllQuery())
+				  .withSearchType(QUERY_THEN_FETCH)
+				//.withQuery(termQuery("categories.name.keyword","Starters"))
+				  .withIndices("product").withTypes("product")
+				  .addAggregation(AggregationBuilders.terms("totalcategories").field("categories.name.keyword"))
+				  .build();
+		
+	
+		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
+		TermsAggregation categoryAggregation = result.getAggregation("totalcategories", TermsAggregation.class);
+		System.out.println( "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+categoryAggregation.getBuckets().size());
+		return categoryAggregation.getBuckets();
+	//return	elasticsearchTemplate.queryForList(searchQuery, Product.class);
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 }

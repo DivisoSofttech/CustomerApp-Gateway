@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
@@ -17,6 +18,8 @@ import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
+
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 public interface QueryService {
 public Page<Category> findAllCategories(Pageable pageable);
@@ -61,5 +64,19 @@ public Page<Product> findAllProductsByStoreId(String storeId);
  * @return
  */
 public Store findStoreByRegNo(String regNo);
+/**
+ * @param storeId
+ */
+public Page<Review> findReviewByStoreId(String userName);
+/**
+ * @param storeId
+ */
+public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
+/**
+ * @param regNo
+ * @return
+ */
+public Page<UserRating> findUserRatingByRegNo(String regNo);
+public List<Entry>  findCategoryAndCount(Pageable pageable);
 
 }
