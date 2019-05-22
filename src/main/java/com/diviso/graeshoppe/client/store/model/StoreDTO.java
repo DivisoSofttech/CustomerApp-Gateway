@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import java.time.Instant;
 import java.time.OffsetDateTime;
 
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -20,7 +22,7 @@ import javax.validation.constraints.*;
 @Document(indexName = "store")
 public class StoreDTO   {
   @JsonProperty("closingTime")
-  private OffsetDateTime closingTime = null;
+  private Instant closingTime = null;
 
   @JsonProperty("contactNo")
   private Long contactNo = null;
@@ -61,7 +63,7 @@ public class StoreDTO   {
   @JsonProperty("totalRating")
   private Double totalRating = null;
 
-  public StoreDTO closingTime(OffsetDateTime closingTime) {
+  public StoreDTO closingTime(Instant closingTime) {
     this.closingTime = closingTime;
     return this;
   }
@@ -74,11 +76,11 @@ public class StoreDTO   {
 
   @Valid
 
-  public OffsetDateTime getClosingTime() {
+  public Instant getClosingTime() {
     return closingTime;
   }
 
-  public void setClosingTime(OffsetDateTime closingTime) {
+  public void setClosingTime(Instant closingTime) {
     this.closingTime = closingTime;
   }
 

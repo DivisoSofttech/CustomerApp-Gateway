@@ -87,6 +87,11 @@ public class QueryResource {
 		return queryService.findProductByCategoryId(categoryId,userId,pageable);
 	}
 	
+	@GetMapping("/customers/{name}")	
+	public Page<Customer> findCustomerByName(@PathVariable String name, Pageable pageable){
+		return queryService.findCustomerByName(name, pageable);
+	}
+	
 	@GetMapping("/findStockCurrentByProductId/{productId}")	
 	public Page<StockCurrent> findStockCurrentByProductId(@PathVariable Long productId,Pageable pageable){
 		return queryService.findStockCurrentByProductId(productId,pageable);
