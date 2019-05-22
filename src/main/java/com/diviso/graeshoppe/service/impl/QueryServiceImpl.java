@@ -329,6 +329,15 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 		
 		
 	}
+
+	@Override
+	public Page<Category> findCategoryByUserId(String userId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery()
+						.must(QueryBuilders.matchQuery("userId", userId)))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
+	}
 	
 	
 	

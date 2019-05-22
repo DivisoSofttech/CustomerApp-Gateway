@@ -79,5 +79,6 @@ public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
 public Page<UserRating> findUserRatingByRegNo(String regNo);
 public List<Entry>  findCategoryAndCount(Pageable pageable);
 public Page<Customer> findCustomerByName(String name, Pageable pageable);
+public Page<Category> findCategoryByUserId(String userId, Pageable pageable);
 
 }

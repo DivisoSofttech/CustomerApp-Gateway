@@ -24,6 +24,7 @@ import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockDiaryResourceApi;
 import com.diviso.graeshoppe.client.product.api.UomResourceApi;
+import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
@@ -85,6 +86,11 @@ public class QueryResource {
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId,@PathVariable String userId,Pageable pageable) {
 		return queryService.findProductByCategoryId(categoryId,userId,pageable);
+	}
+	
+	@GetMapping("/findCategoryByUserId/{userId}")
+	public Page<Category> findCategoryIdByUserId(@PathVariable String userId,Pageable pageable) {
+		return queryService.findCategoryByUserId(userId,pageable);
 	}
 	
 	@GetMapping("/customers/findByName/{name}")	
