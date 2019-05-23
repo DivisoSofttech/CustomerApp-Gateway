@@ -27,6 +27,7 @@ public class RatingReview {
 
 	UserRatingDTO rating;
 	ReviewDTO review;
+	
 	public UserRatingDTO getRating() {
 		return rating;
 	}

@@ -303,7 +303,7 @@ public class QueryResource {
 		return queryService.findCategoryAndCount(pageable);
 	}
 
-	@GetMapping("/findRatingReview/{storeId}/{name}")
+	/*@GetMapping("/findRatingReview/{storeId}/{name}")
 	public ResponseEntity<RatingReview> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
 			@PathVariable String name) {
 
@@ -314,6 +314,6 @@ public class QueryResource {
 		ratingReview.setReview(review);
 		return ResponseEntity.ok().body(ratingReview);
 
-	}
+	}*/
 	
 }

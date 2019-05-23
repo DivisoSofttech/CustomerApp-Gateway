@@ -40,15 +40,15 @@ import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
-import com.diviso.graeshoppe.client.store.domain.Review;
-import com.diviso.graeshoppe.client.store.domain.Store;
+
+
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.ReplyDTO;
 import com.diviso.graeshoppe.client.store.model.ReviewDTO;
 import com.diviso.graeshoppe.client.store.model.StoreDTO;
 import com.diviso.graeshoppe.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.service.QueryService;
-import com.diviso.graeshoppe.web.rest.errors.BadRequestAlertException;
+
 
 @RestController
 @RequestMapping("/api/command")
