@@ -88,8 +88,7 @@ public class QueryResource {
 	UserRatingResourceApi userRatingResourceApi;
 	@Autowired
 	ReviewResourceApi reviewResourceApi;
-	
-	
+
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
@@ -323,27 +322,29 @@ public class QueryResource {
 
 	@GetMapping("/findRatingReview/{storeId}")
 	public ResponseEntity<List<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
-			/*@PathVariable String name*/Pageable pageable) {
+			/* @PathVariable String name */Pageable pageable) {
 		List<RatingReview> listOfRatingreview = new ArrayList<RatingReview>();
-		
-		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
-		
-		for(Customer c:customerList){
-			
-		UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
-		
-		Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
-		
-		RatingReview ratingReview = new RatingReview();
 
-		ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
-		
-		ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
-		
-		listOfRatingreview.add(ratingReview);
-		
+		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
+
+		for (Customer c : customerList) {
+
+			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
+
+			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
+			
+			if (rating != null) {
+				
+				RatingReview ratingReview = new RatingReview();
+
+				ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
+
+				ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
+
+				listOfRatingreview.add(ratingReview);
+			}
 		}
-		
+
 		return ResponseEntity.ok().body(listOfRatingreview);
 
 	}
