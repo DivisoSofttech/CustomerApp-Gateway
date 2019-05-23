@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diviso.graeshoppe.client.customer.api.AddressResourceApi;
+import com.diviso.graeshoppe.client.order.api.AddressResourceApi;
 import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
@@ -66,8 +66,8 @@ public class OrderCommandResource {
 	}
 
 	@GetMapping("/orders/addresses/{customerId}")
-	public ResponseEntity<List<AddressDTO>> getAllSavedAddress(@PathVariable String cutomerId) {
-		return addressResourceApi.getAllAddressesUsingGET(1, 10, new ArrayList<>());
+	public ResponseEntity<List<AddressDTO>> getAllSavedAddress(@PathVariable String customerId) {
+		return addressResourceApi.getAllAddressesByCustomerIdUsingGET(customerId, 1, 10, new ArrayList<>());
 	}
 
 	@PostMapping("/orders/addresses")
