@@ -83,11 +83,12 @@ public class QueryResource {
 
 	@Autowired
 	private StockDiaryResourceApi stockDiaryResourceApi;
-	
+
 	@Autowired
 	UserRatingResourceApi userRatingResourceApi;
 	@Autowired
 	ReviewResourceApi reviewResourceApi;
+	
 	
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -311,38 +312,49 @@ public class QueryResource {
 	}
 
 	@GetMapping("/rating/{storeId}/{name}")
-	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name){
+	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findRatingByStoreIdAndCustomerName(storeId, name);
 	}
-	
+
 	@GetMapping("/review/{storeId}/{name}")
-	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name){
+	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
-	
-	@GetMapping("/findRatingReview/{storeId}/{name}")
-	public ResponseEntity<RatingReview> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name) {
 
-		UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, name);
-		Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, name);
-		RatingReview ratingReview = new RatingReview();
+	@GetMapping("/findRatingReview/{storeId}")
+	public ResponseEntity<List<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
+			/*@PathVariable String name*/Pageable pageable) {
+		List<RatingReview> listOfRatingreview = new ArrayList<RatingReview>();
 		
+		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
+		
+		for(Customer c:customerList){
+			
+		UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
+		
+		Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
+		
+		RatingReview ratingReview = new RatingReview();
+
 		ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
+		
 		ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
-		return ResponseEntity.ok().body(ratingReview);
+		
+		listOfRatingreview.add(ratingReview);
+		
+		}
+		
+		return ResponseEntity.ok().body(listOfRatingreview);
 
 	}
-	
+
 	@GetMapping("/findStore/{name}")
-	public ResponseEntity<List<Store>> findAllStoreByName(@PathVariable String name){
+	public ResponseEntity<List<Store>> findAllStoreByName(@PathVariable String name) {
 		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
 	}
-	
+
 	@GetMapping("/findProduct/{name}")
-	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name){
+	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name) {
 		return ResponseEntity.ok().body(queryService.findAllProductByName(name).getContent());
 	}
 }
