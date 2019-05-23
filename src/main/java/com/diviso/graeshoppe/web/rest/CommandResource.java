@@ -319,19 +319,23 @@ public class CommandResource {
 		if (userRatingDTO.getRating() != null) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
 			StoreDTO store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
+			
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
+			
 
-			if (alreadyRatedUser.getId() == null) {
+			if (alreadyRatedUser == null) {
 				log.info("............create................");
 				reviewResourceApi.createReviewUsingPOST(reviewDTO);
 				userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
 
-			}
+			}else{
+				
 			if (alreadyRatedUser.getId() != null) {
 				log.info("....................UPDATE..............");
 				reviewResourceApi.updateReviewUsingPUT(reviewDTO);
 				userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+			}
 			}
 
 		}
