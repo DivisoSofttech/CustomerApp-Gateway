@@ -40,6 +40,8 @@ import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
+import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
+import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
@@ -81,7 +83,12 @@ public class QueryResource {
 
 	@Autowired
 	private StockDiaryResourceApi stockDiaryResourceApi;
-
+	
+	@Autowired
+	UserRatingResourceApi userRatingResourceApi;
+	@Autowired
+	ReviewResourceApi reviewResourceApi;
+	
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
@@ -314,17 +321,19 @@ public class QueryResource {
 			@PathVariable String name){
 		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
-	/*@GetMapping("/findRatingReview/{storeId}/{name}")
+	
+	@GetMapping("/findRatingReview/{storeId}/{name}")
 	public ResponseEntity<RatingReview> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
 			@PathVariable String name) {
 
 		UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, name);
 		Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 		RatingReview ratingReview = new RatingReview();
-		ratingReview.setRating(rating);
-		ratingReview.setReview(review);
+		
+		ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
+		ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
 		return ResponseEntity.ok().body(ratingReview);
 
-	}*/
+	}
 	
 }
