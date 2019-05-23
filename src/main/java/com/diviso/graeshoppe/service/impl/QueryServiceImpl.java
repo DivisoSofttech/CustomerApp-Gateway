@@ -329,6 +329,39 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 		
 		
 	}
+
+	@Override
+	public Page<Category> findCategoryByUserId(String userId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery()
+						.must(QueryBuilders.matchQuery("userId", userId)))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findRatingByStoreIdAndCustomerName()
+	 */
+	@Override
+	public UserRating findRatingByStoreIdAndCustomerName(String storeId,String name) {
+
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
+				.must(QueryBuilders.matchQuery("userName", name)).toString());
+			
+		return elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findReviewByStoreIdAndCustomerName(java.lang.String, java.lang.String)
+	 */
+	@Override
+	public Review findReviewByStoreIdAndCustomerName(String storeId, String name) {
+		
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
+				.must(QueryBuilders.matchQuery("userName", name)).toString());
+			
+		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
+	}
 	
 	
 	
