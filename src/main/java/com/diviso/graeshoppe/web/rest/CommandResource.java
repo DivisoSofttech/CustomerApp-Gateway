@@ -39,6 +39,8 @@ import com.diviso.graeshoppe.client.store.api.ReplyResourceApi;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
+import com.diviso.graeshoppe.client.store.domain.RatingReview;
+import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.ReplyDTO;
@@ -308,8 +310,11 @@ public class CommandResource {
 	}
 
 	@PostMapping("/rating-review")
-	public void createRatingAndReview(@RequestBody UserRatingDTO userRatingDTO, @RequestBody ReviewDTO reviewDTO) {
+	public void createRatingAndReview(@RequestBody RatingReview ratingReview) {
 
+		UserRatingDTO userRatingDTO=ratingReview.getRating();
+		ReviewDTO reviewDTO=ratingReview.getReview();
+		
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
 		if (userRatingDTO.getRating() != null) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
