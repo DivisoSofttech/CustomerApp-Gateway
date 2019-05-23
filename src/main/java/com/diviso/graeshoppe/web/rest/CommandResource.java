@@ -320,39 +320,39 @@ public class CommandResource {
 
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
-			
 
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
-				
-				ResponseEntity<ReviewDTO> review=reviewResourceApi.createReviewUsingPOST(reviewDTO);
-				
-				ResponseEntity<UserRatingDTO> ratingDTO=userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
+
+				ResponseEntity<ReviewDTO> review = reviewResourceApi.createReviewUsingPOST(reviewDTO);
+
+				ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
+						.createUserRatingUsingPOST(userRatingDTO);
 				ratingReview.setRating(ratingDTO.getBody());
 				ratingReview.setReview(review.getBody());
-			} 
+			} else {
 
-			else{
+				if (alreadyRatedUser.getId() != null) {
 					log.info("....................UPDATE..............");
-					
+
 					userRatingDTO.setId(alreadyRatedUser.getId());
-					
+
 					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
-				
+
 					reviewDTO.setId(alreadyreviewed.getId());
-					
-					ResponseEntity<ReviewDTO> review= reviewResourceApi.updateReviewUsingPUT(reviewDTO);
-					
-					ResponseEntity<UserRatingDTO> ratingDTO= userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+
+					ResponseEntity<ReviewDTO> review = reviewResourceApi.updateReviewUsingPUT(reviewDTO);
+
+					ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
+							.updateUserRatingUsingPUT(userRatingDTO);
 					ratingReview.setRating(ratingDTO.getBody());
 					ratingReview.setReview(review.getBody());
-					
 				}
-			
+				}
 
+			}
+			return ratingReview;
 		}
-		return ratingReview;
-	}
-
+	
 }
