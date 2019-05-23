@@ -5,11 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.Instant;
 import java.time.OffsetDateTime;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -18,11 +14,11 @@ import javax.validation.constraints.*;
  * StoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-20T12:06:06.200+05:30[Asia/Calcutta]")
-@Document(indexName = "store")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-22T15:41:48.191+05:30[Asia/Kolkata]")
+
 public class StoreDTO   {
   @JsonProperty("closingTime")
-  private Instant closingTime = null;
+  private OffsetDateTime closingTime = null;
 
   @JsonProperty("contactNo")
   private Long contactNo = null;
@@ -63,7 +59,7 @@ public class StoreDTO   {
   @JsonProperty("totalRating")
   private Double totalRating = null;
 
-  public StoreDTO closingTime(Instant closingTime) {
+  public StoreDTO closingTime(OffsetDateTime closingTime) {
     this.closingTime = closingTime;
     return this;
   }
@@ -76,11 +72,11 @@ public class StoreDTO   {
 
   @Valid
 
-  public Instant getClosingTime() {
+  public OffsetDateTime getClosingTime() {
     return closingTime;
   }
 
-  public void setClosingTime(Instant closingTime) {
+  public void setClosingTime(OffsetDateTime closingTime) {
     this.closingTime = closingTime;
   }
 
