@@ -374,16 +374,17 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	}
 
 	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName()
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.lang.String)
 	 */
 	@Override
 	public Page<Product> findAllProductByName(String name) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
-				.build();
-		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+		
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
+					.build();
+			return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+		
 	}
-	
-	
+
 	
 	
 	
