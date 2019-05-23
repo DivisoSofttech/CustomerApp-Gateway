@@ -15,6 +15,9 @@
  */
 package com.diviso.graeshoppe.client.store.domain;
 
+import com.diviso.graeshoppe.client.store.model.ReviewDTO;
+import com.diviso.graeshoppe.client.store.model.UserRatingDTO;
+
 /**
  * TODO Provide a detailed description here 
  * @author MayaSanjeev
@@ -22,23 +25,28 @@ package com.diviso.graeshoppe.client.store.domain;
  */
 public class RatingReview {
 
-	UserRating rating;
-	Review review;
-	public UserRating getRating() {
+	UserRatingDTO rating;
+	ReviewDTO review;
+	
+	public UserRatingDTO getRating() {
 		return rating;
 	}
-	public void setRating(UserRating rating) {
+	public void setRating(UserRatingDTO rating) {
 		this.rating = rating;
 	}
-	public Review getReview() {
+	public ReviewDTO getReview() {
 		return review;
 	}
-	public void setReview(Review review) {
+	public void setReview(ReviewDTO review) {
 		this.review = review;
 	}
 	@Override
 	public String toString() {
-		return "RatingReview [rating=" + rating + ", review=" + review + "]";
+		return "RatingReview [rating=" + rating + ", review=" + review + ", getRating()=" + getRating()
+				+ ", getReview()=" + getReview() + ", getClass()=" + getClass() + ", hashCode()=" + hashCode()
+				+ ", toString()=" + super.toString() + "]";
 	}
+	
+	
 	
 }
