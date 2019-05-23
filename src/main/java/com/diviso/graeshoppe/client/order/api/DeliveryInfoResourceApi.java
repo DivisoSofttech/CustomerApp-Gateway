@@ -3,9 +3,9 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package com.diviso.graeshoppe.client.store.api;
+package com.diviso.graeshoppe.client.order.api;
 
-import com.diviso.graeshoppe.client.store.model.DeliveryInfoDTO;
+import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-22T15:41:48.191+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-22T15:41:54.172+05:30[Asia/Kolkata]")
 
 @Api(value = "DeliveryInfoResource", description = "the DeliveryInfoResource API")
 public interface DeliveryInfoResourceApi {
