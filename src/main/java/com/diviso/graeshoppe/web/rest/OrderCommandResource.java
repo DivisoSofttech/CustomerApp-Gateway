@@ -31,12 +31,13 @@ import com.diviso.graeshoppe.client.order.model.Order;
 @RestController
 @RequestMapping("/api/command")
 public class OrderCommandResource {
-
 	@Autowired
 	private OrderCommandResourceApi orderCommandResourceApi;
-
 	@Autowired
 	private OrderLineResourceApi orderLineResourceApi;
+	
+	@Autowired
+	private OrderResourceApi orderResourceApi;
 	@Autowired
 	private DeliveryInfoResourceApi deliveryInfoResourceApi;
 	@Autowired
@@ -61,24 +62,23 @@ public class OrderCommandResource {
 			createOrderLine(orderLineDTO);
 		});
 
-		System.out.println("Links are "+result.getBody().getLinks()+"++++++++++++++++++++++++++++");
 		return result;
 	}
 
-	@GetMapping("/orders/addresses")
-	public ResponseEntity<List<AddressDTO>> getAllSavedAddress() {
+	@GetMapping("/orders/addresses/{customerId}")
+	public ResponseEntity<List<AddressDTO>> getAllSavedAddress(@PathVariable String cutomerId) {
 		return addressResourceApi.getAllAddressesUsingGET(1, 10, new ArrayList<>());
 	}
 
 	@PostMapping("/orders/addresses")
 	public ResponseEntity<AddressDTO> createAddress(AddressDTO addressDTO) {
-		ResponseEntity<AddressDTO> result= addressResourceApi.createAddressUsingPOST(addressDTO);
+		ResponseEntity<AddressDTO> result = addressResourceApi.createAddressUsingPOST(addressDTO);
 		return result;
 	}
 
-	@PostMapping("/orders/collectDeliveryDetails")
-	public void collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo) {
-		AddressDTO addressDTO=new AddressDTO();
+	@PostMapping("/orders/collectDeliveryDetails/{orderId}")
+	public void collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo,@PathVariable Long orderId) {
+		AddressDTO addressDTO = new AddressDTO();
 		addressDTO.setAddressType(deliveryInfo.getDeliveryAddress().getAddressType());
 		addressDTO.setAlternatePhone(deliveryInfo.getDeliveryAddress().getAlternatePhone());
 		addressDTO.setCity(deliveryInfo.getDeliveryAddress().getCity());
@@ -90,35 +90,35 @@ public class OrderCommandResource {
 		addressDTO.setPincode(deliveryInfo.getDeliveryAddress().getPincode());
 		addressDTO.setRoadNameAreaOrStreet(deliveryInfo.getDeliveryAddress().getRoadNameAreaOrStreet());
 		addressDTO.setState(deliveryInfo.getDeliveryAddress().getState());
-		Long addressId=createAddress(addressDTO).getBody().getId();
-		
+		Long addressId = createAddress(addressDTO).getBody().getId();
+
 		DeliveryInfoDTO deliveryInfoDTO = new DeliveryInfoDTO();
 		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
 		deliveryInfoDTO.setExpectedDelivery(Instant.now());
 		deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
-		createDeliveryInfo(deliveryInfoDTO);
+		ResponseEntity<DeliveryInfoDTO> deliveryInfoResult=createDeliveryInfo(deliveryInfoDTO);
 		deliveryInfoDTO.setDeliveryAddressId(addressId);
-		createAddress(addressDTO);
+		long deliveryId=deliveryInfoResult.getBody().getId();
+		OrderDTO orderResult=orderResourceApi.getOrderUsingGET(orderId).getBody();
+		orderResult.setDeliveryInfoId(deliveryId);
+		updateOrder(orderResult);
 	}
 
 	@PostMapping("/orders/confirmDelivery/{phone}/{taskId}")
 	public ResponseEntity<CommandResource> confirmDelivery(@PathVariable Long phone, @PathVariable String taskId) {
 		return orderCommandResourceApi.confirmDeliveryUsingPOST(phone, taskId);
 	}
-	
-	
+
 	@PostMapping("/orders/makePayment/{taskId}")
-	public ResponseEntity<CommandResource> createPayment(@RequestBody PaymentDTO paymentDTO,@PathVariable String taskId) {
-		 paymentCommandResourceApi.createPaymentUsingPOST(paymentDTO);
+	public ResponseEntity<CommandResource> createPayment(@RequestBody PaymentDTO paymentDTO,
+			@PathVariable String taskId) {
+		paymentCommandResourceApi.createPaymentUsingPOST(paymentDTO);
 		return paymentCommandResourceApi.makePaymentUsingPOST(paymentDTO.getStatus(), taskId);
 
 	}
 
-	
-	
 	/////////////////////////////////////////////////////////////////////////////
-	
 
 	public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) {
 
@@ -141,7 +141,5 @@ public class OrderCommandResource {
 	public ResponseEntity<OrderDTO> updateOrder(OrderDTO orderDTO) {
 		return orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 	}
-
-	
 
 }

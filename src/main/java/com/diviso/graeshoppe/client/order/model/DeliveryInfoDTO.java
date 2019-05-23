@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -16,7 +14,7 @@ import javax.validation.constraints.*;
  * DeliveryInfoDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-22T15:41:54.172+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:07:30.584+05:30[Asia/Kolkata]")
 
 public class DeliveryInfoDTO   {
   @JsonProperty("deliveryAddressId")
@@ -29,7 +27,7 @@ public class DeliveryInfoDTO   {
   private String deliveryType = null;
 
   @JsonProperty("expectedDelivery")
-  private Instant expectedDelivery = null;
+  private OffsetDateTime expectedDelivery = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -94,7 +92,7 @@ public class DeliveryInfoDTO   {
     this.deliveryType = deliveryType;
   }
 
-  public DeliveryInfoDTO expectedDelivery(Instant expectedDelivery) {
+  public DeliveryInfoDTO expectedDelivery(OffsetDateTime expectedDelivery) {
     this.expectedDelivery = expectedDelivery;
     return this;
   }
@@ -107,11 +105,11 @@ public class DeliveryInfoDTO   {
 
   @Valid
 
-  public Instant getExpectedDelivery() {
+  public OffsetDateTime getExpectedDelivery() {
     return expectedDelivery;
   }
 
-  public void setExpectedDelivery(Instant expectedDelivery) {
+  public void setExpectedDelivery(OffsetDateTime expectedDelivery) {
     this.expectedDelivery = expectedDelivery;
   }
 

@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.store.model.Review;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -11,28 +12,28 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ReviewDTO
+ * Reply
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:07:25.498+05:30[Asia/Kolkata]")
 
-public class ReviewDTO   {
+public class Reply   {
   @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("repliedDate")
+  private OffsetDateTime repliedDate = null;
+
+  @JsonProperty("reply")
+  private String reply = null;
+
   @JsonProperty("review")
-  private String review = null;
-
-  @JsonProperty("reviewedDate")
-  private OffsetDateTime reviewedDate = null;
-
-  @JsonProperty("storeId")
-  private Long storeId = null;
+  private Review review = null;
 
   @JsonProperty("userName")
   private String userName = null;
 
-  public ReviewDTO id(Long id) {
+  public Reply id(Long id) {
     this.id = id;
     return this;
   }
@@ -52,7 +53,48 @@ public class ReviewDTO   {
     this.id = id;
   }
 
-  public ReviewDTO review(String review) {
+  public Reply repliedDate(OffsetDateTime repliedDate) {
+    this.repliedDate = repliedDate;
+    return this;
+  }
+
+  /**
+   * Get repliedDate
+   * @return repliedDate
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getRepliedDate() {
+    return repliedDate;
+  }
+
+  public void setRepliedDate(OffsetDateTime repliedDate) {
+    this.repliedDate = repliedDate;
+  }
+
+  public Reply reply(String reply) {
+    this.reply = reply;
+    return this;
+  }
+
+  /**
+   * Get reply
+   * @return reply
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getReply() {
+    return reply;
+  }
+
+  public void setReply(String reply) {
+    this.reply = reply;
+  }
+
+  public Reply review(Review review) {
     this.review = review;
     return this;
   }
@@ -63,57 +105,17 @@ public class ReviewDTO   {
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getReview() {
+  public Review getReview() {
     return review;
   }
 
-  public void setReview(String review) {
+  public void setReview(Review review) {
     this.review = review;
   }
 
-  public ReviewDTO reviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-    return this;
-  }
-
-  /**
-   * Get reviewedDate
-   * @return reviewedDate
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OffsetDateTime getReviewedDate() {
-    return reviewedDate;
-  }
-
-  public void setReviewedDate(OffsetDateTime reviewedDate) {
-    this.reviewedDate = reviewedDate;
-  }
-
-  public ReviewDTO storeId(Long storeId) {
-    this.storeId = storeId;
-    return this;
-  }
-
-  /**
-   * Get storeId
-   * @return storeId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getStoreId() {
-    return storeId;
-  }
-
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
-  }
-
-  public ReviewDTO userName(String userName) {
+  public Reply userName(String userName) {
     this.userName = userName;
     return this;
   }
@@ -142,28 +144,28 @@ public class ReviewDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ReviewDTO reviewDTO = (ReviewDTO) o;
-    return Objects.equals(this.id, reviewDTO.id) &&
-        Objects.equals(this.review, reviewDTO.review) &&
-        Objects.equals(this.reviewedDate, reviewDTO.reviewedDate) &&
-        Objects.equals(this.storeId, reviewDTO.storeId) &&
-        Objects.equals(this.userName, reviewDTO.userName);
+    Reply reply = (Reply) o;
+    return Objects.equals(this.id, reply.id) &&
+        Objects.equals(this.repliedDate, reply.repliedDate) &&
+        Objects.equals(this.reply, reply.reply) &&
+        Objects.equals(this.review, reply.review) &&
+        Objects.equals(this.userName, reply.userName);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, review, reviewedDate, storeId, userName);
+    return Objects.hash(id, repliedDate, reply, review, userName);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ReviewDTO {\n");
+    sb.append("class Reply {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    repliedDate: ").append(toIndentedString(repliedDate)).append("\n");
+    sb.append("    reply: ").append(toIndentedString(reply)).append("\n");
     sb.append("    review: ").append(toIndentedString(review)).append("\n");
-    sb.append("    reviewedDate: ").append(toIndentedString(reviewedDate)).append("\n");
-    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
     sb.append("}");
     return sb.toString();

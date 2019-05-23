@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-22T15:41:54.172+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:07:30.584+05:30[Asia/Kolkata]")
 
 @Api(value = "PaymentCommandResource", description = "the PaymentCommandResource API")
 public interface PaymentCommandResourceApi {
@@ -80,66 +80,6 @@ public interface PaymentCommandResourceApi {
     ResponseEntity<PaymentDTO> getPaymentUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingDELETE", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 204, message = "No Content"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.DELETE)
-    ResponseEntity<CommandResource> makePaymentUsingDELETE(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingGET", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<CommandResource> makePaymentUsingGET(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingHEAD", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 204, message = "No Content"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.HEAD)
-    ResponseEntity<CommandResource> makePaymentUsingHEAD(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingOPTIONS", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 204, message = "No Content"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.OPTIONS)
-    ResponseEntity<CommandResource> makePaymentUsingOPTIONS(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingPATCH", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 204, message = "No Content"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.PATCH)
-    ResponseEntity<CommandResource> makePaymentUsingPATCH(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
     @ApiOperation(value = "makePayment", nickname = "makePaymentUsingPOST", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
@@ -151,19 +91,6 @@ public interface PaymentCommandResourceApi {
         produces = "*/*", 
         method = RequestMethod.POST)
     ResponseEntity<CommandResource> makePaymentUsingPOST(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
-
-
-    @ApiOperation(value = "makePayment", nickname = "makePaymentUsingPUT", notes = "", response = CommandResource.class, tags={ "payment-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 201, message = "Created"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/payments/makePayment/{taskId}",
-        produces = "*/*", 
-        method = RequestMethod.PUT)
-    ResponseEntity<CommandResource> makePaymentUsingPUT(@NotNull @ApiParam(value = "status", required = true) @Valid @RequestParam(value = "status", required = true) String status,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId);
 
 
     @ApiOperation(value = "searchPayments", nickname = "searchPaymentsUsingGET", notes = "", response = PaymentDTO.class, responseContainer = "List", tags={ "payment-command-resource", })

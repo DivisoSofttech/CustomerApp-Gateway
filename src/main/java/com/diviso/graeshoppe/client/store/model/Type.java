@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -10,19 +11,43 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * PropreitorDTO
+ * Type
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:07:25.498+05:30[Asia/Kolkata]")
 
-public class PropreitorDTO   {
+public class Type   {
+  @JsonProperty("deliveryInfo")
+  private DeliveryInfo deliveryInfo = null;
+
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  public PropreitorDTO id(Long id) {
+  public Type deliveryInfo(DeliveryInfo deliveryInfo) {
+    this.deliveryInfo = deliveryInfo;
+    return this;
+  }
+
+  /**
+   * Get deliveryInfo
+   * @return deliveryInfo
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public DeliveryInfo getDeliveryInfo() {
+    return deliveryInfo;
+  }
+
+  public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
+    this.deliveryInfo = deliveryInfo;
+  }
+
+  public Type id(Long id) {
     this.id = id;
     return this;
   }
@@ -42,7 +67,7 @@ public class PropreitorDTO   {
     this.id = id;
   }
 
-  public PropreitorDTO name(String name) {
+  public Type name(String name) {
     this.name = name;
     return this;
   }
@@ -71,21 +96,23 @@ public class PropreitorDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PropreitorDTO propreitorDTO = (PropreitorDTO) o;
-    return Objects.equals(this.id, propreitorDTO.id) &&
-        Objects.equals(this.name, propreitorDTO.name);
+    Type type = (Type) o;
+    return Objects.equals(this.deliveryInfo, type.deliveryInfo) &&
+        Objects.equals(this.id, type.id) &&
+        Objects.equals(this.name, type.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(deliveryInfo, id, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PropreitorDTO {\n");
+    sb.append("class Type {\n");
     
+    sb.append("    deliveryInfo: ").append(toIndentedString(deliveryInfo)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");

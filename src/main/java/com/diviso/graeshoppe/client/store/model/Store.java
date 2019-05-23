@@ -1,30 +1,36 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.Propreitor;
+import com.diviso.graeshoppe.client.store.model.Review;
+import com.diviso.graeshoppe.client.store.model.UserRating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * StoreDTO
+ * Store
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:07:25.498+05:30[Asia/Kolkata]")
 
-public class StoreDTO   {
+public class Store   {
   @JsonProperty("closingTime")
   private OffsetDateTime closingTime = null;
 
   @JsonProperty("contactNo")
   private Long contactNo = null;
 
-  @JsonProperty("deliveryInfoId")
-  private Long deliveryInfoId = null;
+  @JsonProperty("deliveryInfo")
+  private DeliveryInfo deliveryInfo = null;
 
   @JsonProperty("email")
   private String email = null;
@@ -50,16 +56,24 @@ public class StoreDTO   {
   @JsonProperty("openingTime")
   private OffsetDateTime openingTime = null;
 
-  @JsonProperty("propreitorId")
-  private Long propreitorId = null;
+  @JsonProperty("propreitor")
+  private Propreitor propreitor = null;
 
   @JsonProperty("regNo")
   private String regNo = null;
 
+  @JsonProperty("reviews")
+  @Valid
+  private List<Review> reviews = null;
+
   @JsonProperty("totalRating")
   private Double totalRating = null;
 
-  public StoreDTO closingTime(OffsetDateTime closingTime) {
+  @JsonProperty("userRatings")
+  @Valid
+  private List<UserRating> userRatings = null;
+
+  public Store closingTime(OffsetDateTime closingTime) {
     this.closingTime = closingTime;
     return this;
   }
@@ -80,7 +94,7 @@ public class StoreDTO   {
     this.closingTime = closingTime;
   }
 
-  public StoreDTO contactNo(Long contactNo) {
+  public Store contactNo(Long contactNo) {
     this.contactNo = contactNo;
     return this;
   }
@@ -100,27 +114,28 @@ public class StoreDTO   {
     this.contactNo = contactNo;
   }
 
-  public StoreDTO deliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
+  public Store deliveryInfo(DeliveryInfo deliveryInfo) {
+    this.deliveryInfo = deliveryInfo;
     return this;
   }
 
   /**
-   * Get deliveryInfoId
-   * @return deliveryInfoId
+   * Get deliveryInfo
+   * @return deliveryInfo
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getDeliveryInfoId() {
-    return deliveryInfoId;
+  public DeliveryInfo getDeliveryInfo() {
+    return deliveryInfo;
   }
 
-  public void setDeliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
+  public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
+    this.deliveryInfo = deliveryInfo;
   }
 
-  public StoreDTO email(String email) {
+  public Store email(String email) {
     this.email = email;
     return this;
   }
@@ -140,7 +155,7 @@ public class StoreDTO   {
     this.email = email;
   }
 
-  public StoreDTO id(Long id) {
+  public Store id(Long id) {
     this.id = id;
     return this;
   }
@@ -160,7 +175,7 @@ public class StoreDTO   {
     this.id = id;
   }
 
-  public StoreDTO image(byte[] image) {
+  public Store image(byte[] image) {
     this.image = image;
     return this;
   }
@@ -180,7 +195,7 @@ public class StoreDTO   {
     this.image = image;
   }
 
-  public StoreDTO imageContentType(String imageContentType) {
+  public Store imageContentType(String imageContentType) {
     this.imageContentType = imageContentType;
     return this;
   }
@@ -200,7 +215,7 @@ public class StoreDTO   {
     this.imageContentType = imageContentType;
   }
 
-  public StoreDTO info(String info) {
+  public Store info(String info) {
     this.info = info;
     return this;
   }
@@ -220,7 +235,7 @@ public class StoreDTO   {
     this.info = info;
   }
 
-  public StoreDTO location(String location) {
+  public Store location(String location) {
     this.location = location;
     return this;
   }
@@ -240,7 +255,7 @@ public class StoreDTO   {
     this.location = location;
   }
 
-  public StoreDTO name(String name) {
+  public Store name(String name) {
     this.name = name;
     return this;
   }
@@ -260,7 +275,7 @@ public class StoreDTO   {
     this.name = name;
   }
 
-  public StoreDTO openingTime(OffsetDateTime openingTime) {
+  public Store openingTime(OffsetDateTime openingTime) {
     this.openingTime = openingTime;
     return this;
   }
@@ -281,27 +296,28 @@ public class StoreDTO   {
     this.openingTime = openingTime;
   }
 
-  public StoreDTO propreitorId(Long propreitorId) {
-    this.propreitorId = propreitorId;
+  public Store propreitor(Propreitor propreitor) {
+    this.propreitor = propreitor;
     return this;
   }
 
   /**
-   * Get propreitorId
-   * @return propreitorId
+   * Get propreitor
+   * @return propreitor
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getPropreitorId() {
-    return propreitorId;
+  public Propreitor getPropreitor() {
+    return propreitor;
   }
 
-  public void setPropreitorId(Long propreitorId) {
-    this.propreitorId = propreitorId;
+  public void setPropreitor(Propreitor propreitor) {
+    this.propreitor = propreitor;
   }
 
-  public StoreDTO regNo(String regNo) {
+  public Store regNo(String regNo) {
     this.regNo = regNo;
     return this;
   }
@@ -321,7 +337,36 @@ public class StoreDTO   {
     this.regNo = regNo;
   }
 
-  public StoreDTO totalRating(Double totalRating) {
+  public Store reviews(List<Review> reviews) {
+    this.reviews = reviews;
+    return this;
+  }
+
+  public Store addReviewsItem(Review reviewsItem) {
+    if (this.reviews == null) {
+      this.reviews = new ArrayList<Review>();
+    }
+    this.reviews.add(reviewsItem);
+    return this;
+  }
+
+  /**
+   * Get reviews
+   * @return reviews
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Review> getReviews() {
+    return reviews;
+  }
+
+  public void setReviews(List<Review> reviews) {
+    this.reviews = reviews;
+  }
+
+  public Store totalRating(Double totalRating) {
     this.totalRating = totalRating;
     return this;
   }
@@ -341,6 +386,35 @@ public class StoreDTO   {
     this.totalRating = totalRating;
   }
 
+  public Store userRatings(List<UserRating> userRatings) {
+    this.userRatings = userRatings;
+    return this;
+  }
+
+  public Store addUserRatingsItem(UserRating userRatingsItem) {
+    if (this.userRatings == null) {
+      this.userRatings = new ArrayList<UserRating>();
+    }
+    this.userRatings.add(userRatingsItem);
+    return this;
+  }
+
+  /**
+   * Get userRatings
+   * @return userRatings
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<UserRating> getUserRatings() {
+    return userRatings;
+  }
+
+  public void setUserRatings(List<UserRating> userRatings) {
+    this.userRatings = userRatings;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -350,36 +424,38 @@ public class StoreDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StoreDTO storeDTO = (StoreDTO) o;
-    return Objects.equals(this.closingTime, storeDTO.closingTime) &&
-        Objects.equals(this.contactNo, storeDTO.contactNo) &&
-        Objects.equals(this.deliveryInfoId, storeDTO.deliveryInfoId) &&
-        Objects.equals(this.email, storeDTO.email) &&
-        Objects.equals(this.id, storeDTO.id) &&
-        Objects.equals(this.image, storeDTO.image) &&
-        Objects.equals(this.imageContentType, storeDTO.imageContentType) &&
-        Objects.equals(this.info, storeDTO.info) &&
-        Objects.equals(this.location, storeDTO.location) &&
-        Objects.equals(this.name, storeDTO.name) &&
-        Objects.equals(this.openingTime, storeDTO.openingTime) &&
-        Objects.equals(this.propreitorId, storeDTO.propreitorId) &&
-        Objects.equals(this.regNo, storeDTO.regNo) &&
-        Objects.equals(this.totalRating, storeDTO.totalRating);
+    Store store = (Store) o;
+    return Objects.equals(this.closingTime, store.closingTime) &&
+        Objects.equals(this.contactNo, store.contactNo) &&
+        Objects.equals(this.deliveryInfo, store.deliveryInfo) &&
+        Objects.equals(this.email, store.email) &&
+        Objects.equals(this.id, store.id) &&
+        Objects.equals(this.image, store.image) &&
+        Objects.equals(this.imageContentType, store.imageContentType) &&
+        Objects.equals(this.info, store.info) &&
+        Objects.equals(this.location, store.location) &&
+        Objects.equals(this.name, store.name) &&
+        Objects.equals(this.openingTime, store.openingTime) &&
+        Objects.equals(this.propreitor, store.propreitor) &&
+        Objects.equals(this.regNo, store.regNo) &&
+        Objects.equals(this.reviews, store.reviews) &&
+        Objects.equals(this.totalRating, store.totalRating) &&
+        Objects.equals(this.userRatings, store.userRatings);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, deliveryInfoId, email, id, image, imageContentType, info, location, name, openingTime, propreitorId, regNo, totalRating);
+    return Objects.hash(closingTime, contactNo, deliveryInfo, email, id, image, imageContentType, info, location, name, openingTime, propreitor, regNo, reviews, totalRating, userRatings);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StoreDTO {\n");
+    sb.append("class Store {\n");
     
     sb.append("    closingTime: ").append(toIndentedString(closingTime)).append("\n");
     sb.append("    contactNo: ").append(toIndentedString(contactNo)).append("\n");
-    sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
+    sb.append("    deliveryInfo: ").append(toIndentedString(deliveryInfo)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
@@ -388,9 +464,11 @@ public class StoreDTO   {
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    openingTime: ").append(toIndentedString(openingTime)).append("\n");
-    sb.append("    propreitorId: ").append(toIndentedString(propreitorId)).append("\n");
+    sb.append("    propreitor: ").append(toIndentedString(propreitor)).append("\n");
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
+    sb.append("    reviews: ").append(toIndentedString(reviews)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
+    sb.append("    userRatings: ").append(toIndentedString(userRatings)).append("\n");
     sb.append("}");
     return sb.toString();
   }
