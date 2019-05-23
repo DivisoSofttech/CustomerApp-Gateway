@@ -332,7 +332,7 @@ public class CommandResource {
 				ratingReview.setReview(review.getBody());
 			} 
 
-				if (alreadyRatedUser.getId() != null) {
+			else{
 					log.info("....................UPDATE..............");
 					
 					userRatingDTO.setId(alreadyRatedUser.getId());
