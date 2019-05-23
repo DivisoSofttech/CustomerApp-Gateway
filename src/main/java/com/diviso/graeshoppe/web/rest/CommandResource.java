@@ -320,6 +320,7 @@ public class CommandResource {
 
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
+			
 
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
@@ -329,7 +330,7 @@ public class CommandResource {
 				ResponseEntity<UserRatingDTO> ratingDTO=userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
 				ratingReview.setRating(ratingDTO.getBody());
 				ratingReview.setReview(review.getBody());
-			} else {
+			} 
 
 				if (alreadyRatedUser.getId() != null) {
 					log.info("....................UPDATE..............");
@@ -338,7 +339,7 @@ public class CommandResource {
 					
 					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
-					
+				
 					reviewDTO.setId(alreadyreviewed.getId());
 					
 					ResponseEntity<ReviewDTO> review= reviewResourceApi.updateReviewUsingPUT(reviewDTO);
@@ -348,7 +349,7 @@ public class CommandResource {
 					ratingReview.setReview(review.getBody());
 					
 				}
-			}
+			
 
 		}
 		return ratingReview;
