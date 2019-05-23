@@ -308,7 +308,7 @@ public class CommandResource {
 	}
 
 	@PostMapping("/rating-review")
-	public void createRatingAndReview(@RequestBody RatingReview ratingReview) {
+	public RatingReview createRatingAndReview(@RequestBody RatingReview ratingReview) {
 
 		UserRatingDTO userRatingDTO = ratingReview.getRating();
 		ReviewDTO reviewDTO = ratingReview.getReview();
@@ -324,10 +324,11 @@ public class CommandResource {
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
 				
-				reviewResourceApi.createReviewUsingPOST(reviewDTO);
+				ResponseEntity<ReviewDTO> review=reviewResourceApi.createReviewUsingPOST(reviewDTO);
 				
-				userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
-
+				ResponseEntity<UserRatingDTO> ratingDTO=userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
+				ratingReview.setRating(ratingDTO.getBody());
+				ratingReview.setReview(review.getBody());
 			} else {
 
 				if (alreadyRatedUser.getId() != null) {
@@ -340,13 +341,17 @@ public class CommandResource {
 					
 					reviewDTO.setId(alreadyreviewed.getId());
 					
-					reviewResourceApi.updateReviewUsingPUT(reviewDTO);
+					ResponseEntity<ReviewDTO> review= reviewResourceApi.updateReviewUsingPUT(reviewDTO);
 					
-					userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+					ResponseEntity<UserRatingDTO> ratingDTO= userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+					ratingReview.setRating(ratingDTO.getBody());
+					ratingReview.setReview(review.getBody());
+					
 				}
 			}
 
 		}
+		return ratingReview;
 	}
 
 }
