@@ -345,8 +345,8 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId,String name) {
 
-		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
-				.must(QueryBuilders.matchQuery("userName", name)).toString());
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
+				.must(QueryBuilders.termQuery("userName", name)).toString());
 			
 		return elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 	}
@@ -357,8 +357,8 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	@Override
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name) {
 		
-		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
-				.must(QueryBuilders.matchQuery("userName", name)).toString());
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
+				.must(QueryBuilders.termQuery("userName", name)).toString());
 			
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
 	}
