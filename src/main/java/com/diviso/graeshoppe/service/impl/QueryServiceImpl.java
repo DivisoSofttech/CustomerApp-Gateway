@@ -379,7 +379,7 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	@Override
 	public Page<Product> findAllProductByName(String name) {
 		
-			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", name))
 					.build();
 			return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 		
