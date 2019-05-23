@@ -310,8 +310,9 @@ public class CommandResource {
 	@PostMapping("/rating-review")
 	public void createRatingAndReview(@RequestBody UserRatingDTO userRatingDTO, @RequestBody ReviewDTO reviewDTO) {
 
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
 		if (userRatingDTO.getRating() != null) {
-
+			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
 			StoreDTO store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
