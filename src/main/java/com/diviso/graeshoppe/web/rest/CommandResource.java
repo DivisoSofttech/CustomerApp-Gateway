@@ -339,6 +339,7 @@ public class CommandResource {
 
 					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
+					log.info("...................   "+alreadyreviewed+"     ...............");
 
 					reviewDTO.setId(alreadyreviewed.getId());
 
