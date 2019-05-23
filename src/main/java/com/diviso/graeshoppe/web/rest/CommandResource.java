@@ -40,15 +40,13 @@ import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
-
-
+import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.ReplyDTO;
 import com.diviso.graeshoppe.client.store.model.ReviewDTO;
 import com.diviso.graeshoppe.client.store.model.StoreDTO;
 import com.diviso.graeshoppe.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.service.QueryService;
-
 
 @RestController
 @RequestMapping("/api/command")
@@ -312,30 +310,40 @@ public class CommandResource {
 	@PostMapping("/rating-review")
 	public void createRatingAndReview(@RequestBody RatingReview ratingReview) {
 
-		UserRatingDTO userRatingDTO=ratingReview.getRating();
-		ReviewDTO reviewDTO=ratingReview.getReview();
-		
+		UserRatingDTO userRatingDTO = ratingReview.getRating();
+		ReviewDTO reviewDTO = ratingReview.getReview();
+
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
 		if (userRatingDTO.getRating() != null) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
 			StoreDTO store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
-			
+
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
-			
 
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
+				
 				reviewResourceApi.createReviewUsingPOST(reviewDTO);
+				
 				userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
 
-			}else{
-				
-			if (alreadyRatedUser.getId() != null) {
-				log.info("....................UPDATE..............");
-				reviewResourceApi.updateReviewUsingPUT(reviewDTO);
-				userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
-			}
+			} else {
+
+				if (alreadyRatedUser.getId() != null) {
+					log.info("....................UPDATE..............");
+					
+					userRatingDTO.setId(alreadyRatedUser.getId());
+					
+					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
+							userRatingDTO.getUserName());
+					
+					reviewDTO.setId(alreadyreviewed.getId());
+					
+					reviewResourceApi.updateReviewUsingPUT(reviewDTO);
+					
+					userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+				}
 			}
 
 		}
