@@ -362,6 +362,26 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 			
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllStoreByName(java.lang.String)
+	 */
+	@Override
+	public Page<Store> findAllStoreByName(String name) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName()
+	 */
+	@Override
+	public Page<Product> findAllProductByName(String name) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+	}
 	
 	
 	

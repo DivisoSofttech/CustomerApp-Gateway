@@ -336,4 +336,13 @@ public class QueryResource {
 
 	}
 	
+	@GetMapping("/findStore/{name}")
+	public ResponseEntity<List<Store>> findAllStoreByName(@PathVariable String name){
+		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
+	}
+	
+	@GetMapping("/findProduct/{name}")
+	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name){
+		return ResponseEntity.ok().body(queryService.findAllProductByName(name).getContent());
+	}
 }
