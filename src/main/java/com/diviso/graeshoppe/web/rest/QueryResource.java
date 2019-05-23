@@ -339,8 +339,9 @@ public class QueryResource {
 
 				ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
 
+				if(review!=null){
 				ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
-
+				}
 				listOfRatingreview.add(ratingReview);
 			}
 		}
