@@ -336,7 +336,7 @@ public class CommandResource {
 					log.info("....................UPDATE..............");
 
 					userRatingDTO.setId(alreadyRatedUser.getId());
-
+					log.info("................username:............"+userRatingDTO.getUserName()+"..........storeId..........."+store.getRegNo()+"...........");
 					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
 					log.info("...................   "+alreadyreviewed+"     ...............");
