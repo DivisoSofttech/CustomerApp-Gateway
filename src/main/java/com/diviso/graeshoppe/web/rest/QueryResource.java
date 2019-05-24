@@ -53,6 +53,7 @@ import com.diviso.graeshoppe.service.QueryService;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @RestController
+@RequestMapping("/api/query")
 public class QueryResource {
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
@@ -359,8 +360,8 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
 	}
 
-	@GetMapping("/findProduct/{name}")
-	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name) {
-		return ResponseEntity.ok().body(queryService.findAllProductByName(name).getContent());
+	@GetMapping("/findProduct/{name}/{storeId}")
+	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name, @PathVariable String storeId) {
+		return ResponseEntity.ok().body(queryService.findAllProductByProductNameStoreId(name, storeId).getContent());
 	}
 }

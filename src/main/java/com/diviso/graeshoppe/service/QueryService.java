@@ -99,4 +99,6 @@ public Page<Store> findAllStoreByName(String name);
  */
 public Page<Product> findAllProductByName(String name);
 
+public Page<Product> findAllProductByProductNameStoreId(String productName, String storeId);
+
 }
