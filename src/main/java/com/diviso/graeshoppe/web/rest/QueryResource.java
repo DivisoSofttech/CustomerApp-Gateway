@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +42,8 @@ import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
+import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
+import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
@@ -49,9 +53,9 @@ import com.diviso.graeshoppe.service.QueryService;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @RestController
-@RequestMapping("/api/query")
 public class QueryResource {
 
+	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 	@Autowired
 	QueryService queryService;
 
@@ -81,6 +85,11 @@ public class QueryResource {
 
 	@Autowired
 	private StockDiaryResourceApi stockDiaryResourceApi;
+
+	@Autowired
+	UserRatingResourceApi userRatingResourceApi;
+	@Autowired
+	ReviewResourceApi reviewResourceApi;
 
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -304,27 +313,65 @@ public class QueryResource {
 	}
 
 	@GetMapping("/rating/{storeId}/{name}")
-	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name){
+	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findRatingByStoreIdAndCustomerName(storeId, name);
 	}
-	
+
 	@GetMapping("/review/{storeId}/{name}")
-	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name){
+	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
-	/*@GetMapping("/findRatingReview/{storeId}/{name}")
-	public ResponseEntity<RatingReview> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
-			@PathVariable String name) {
 
-		UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, name);
-		Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, name);
-		RatingReview ratingReview = new RatingReview();
-		ratingReview.setRating(rating);
-		ratingReview.setReview(review);
-		return ResponseEntity.ok().body(ratingReview);
+	@GetMapping("/findRatingReview/{storeId}")
+	public ResponseEntity<List<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
+			/* @PathVariable String name */Pageable pageable) {
+		List<RatingReview> listOfRatingreview = new ArrayList<RatingReview>();
 
-	}*/
-	
+		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
+
+		for (Customer c : customerList) {
+			
+        log.info(">>>>>>>>>>>>>>>>>>> customer:   "+c+"   >>>>>>>>>>>>>>>>");
+        
+			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
+			
+			log.info(">>>>>>>>>>>>>>>>>>> rating:  "+rating+"   >>>>>>>>>>>>>>>>");
+			
+			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
+			
+			log.info(">>>>>>>>>>>>>>>>>>> review:  "+review+"   >>>>>>>>>>>>>>>>");
+			
+			if (rating != null) {
+				
+				RatingReview ratingReview = new RatingReview();
+
+				ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
+
+				if(review!=null){
+					
+				ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
+				
+				}
+				
+				log.info(">>>>>>>>>>>>>>>>>>> ratingReview:  "+ratingReview+"   >>>>>>>>>>>>>>>>");
+				
+				listOfRatingreview.add(ratingReview);
+				
+				log.info(">>>>>>>>>>>>>>>>>>> listOfRatingreview:  "+listOfRatingreview+"   >>>>>>>>>>>>>>>>");
+			}
+		}
+
+		return ResponseEntity.ok().body(listOfRatingreview);
+
+	}
+
+	@GetMapping("/findStore/{name}")
+	public ResponseEntity<List<Store>> findAllStoreByName(@PathVariable String name) {
+		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
+	}
+
+	@GetMapping("/findProduct/{name}")
+	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name) {
+		return ResponseEntity.ok().body(queryService.findAllProductByName(name).getContent());
+	}
 }

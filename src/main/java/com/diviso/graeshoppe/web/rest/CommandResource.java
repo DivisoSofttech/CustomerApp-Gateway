@@ -308,7 +308,7 @@ public class CommandResource {
 	}
 
 	@PostMapping("/rating-review")
-	public void createRatingAndReview(@RequestBody RatingReview ratingReview) {
+	public RatingReview createRatingAndReview(@RequestBody RatingReview ratingReview) {
 
 		UserRatingDTO userRatingDTO = ratingReview.getRating();
 		ReviewDTO reviewDTO = ratingReview.getReview();
@@ -323,30 +323,42 @@ public class CommandResource {
 
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
-				
-				reviewResourceApi.createReviewUsingPOST(reviewDTO);
-				
-				userRatingResourceApi.createUserRatingUsingPOST(userRatingDTO);
 
+				ResponseEntity<ReviewDTO> review = reviewResourceApi.createReviewUsingPOST(reviewDTO);
+
+				ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
+						.createUserRatingUsingPOST(userRatingDTO);
+				ratingReview.setRating(ratingDTO.getBody());
+				ratingReview.setReview(review.getBody());
 			} else {
 
 				if (alreadyRatedUser.getId() != null) {
 					log.info("....................UPDATE..............");
-					
+
 					userRatingDTO.setId(alreadyRatedUser.getId());
+					
+					log.info("................username:............"+userRatingDTO.getUserName()+"..........storeId..........."+store.getRegNo()+"...........");
 					
 					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
 					
+					log.info("...................   "+alreadyreviewed+"     ...............");
+
 					reviewDTO.setId(alreadyreviewed.getId());
+
+					ResponseEntity<ReviewDTO> review = reviewResourceApi.updateReviewUsingPUT(reviewDTO);
+
+					ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
+							.updateUserRatingUsingPUT(userRatingDTO);
 					
-					reviewResourceApi.updateReviewUsingPUT(reviewDTO);
+					ratingReview.setRating(ratingDTO.getBody());
 					
-					userRatingResourceApi.updateUserRatingUsingPUT(userRatingDTO);
+					ratingReview.setReview(review.getBody());
 				}
+				}
+
 			}
-
+			return ratingReview;
 		}
-	}
-
+	
 }

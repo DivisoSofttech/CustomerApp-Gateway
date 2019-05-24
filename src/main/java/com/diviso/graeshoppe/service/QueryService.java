@@ -90,5 +90,13 @@ public UserRating findRatingByStoreIdAndCustomerName(String storeId,String name 
  * @return
  */
 public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
+/**
+ * @param name
+ */
+public Page<Store> findAllStoreByName(String name);
+/**
+ * @return
+ */
+public Page<Product> findAllProductByName(String name);
 
 }

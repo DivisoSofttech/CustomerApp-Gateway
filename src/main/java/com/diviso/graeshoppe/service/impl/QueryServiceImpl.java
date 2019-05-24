@@ -345,8 +345,8 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId,String name) {
 
-		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
-				.must(QueryBuilders.matchQuery("userName", name)).toString());
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
+				.must(QueryBuilders.termQuery("userName", name)).toString());
 			
 		return elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 	}
@@ -357,13 +357,34 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	@Override
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name) {
 		
-		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("store.regNo", storeId))
-				.must(QueryBuilders.matchQuery("userName", name)).toString());
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
+				.must(QueryBuilders.termQuery("userName", name)).toString());
 			
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
 	}
-	
-	
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllStoreByName(java.lang.String)
+	 */
+	@Override
+	public Page<Store> findAllStoreByName(String name) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name))
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.lang.String)
+	 */
+	@Override
+	public Page<Product> findAllProductByName(String name) {
+		
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", name))
+					.build();
+			return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+		
+	}
+
 	
 	
 	
