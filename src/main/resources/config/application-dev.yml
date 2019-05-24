@@ -20,7 +20,7 @@ logging:
         com.diviso.graeshoppe: DEBUG
 
 eureka:
-    instance:byta-tech.herokuapp.com
+    instance:
         prefer-ip-address: true
     client:
         service-url:
