@@ -36,9 +36,9 @@ public class Order implements Serializable {
 
     private Double grandTotal;
 
-    private DeliveryInfo deliveryInfo;
+    private OrderDeliveryInfo deliveryInfo;
 
-    private Payment payment;
+    private OrderPayment payment;
 
     private Set<OrderLine> orderLines = new HashSet<>();
     
@@ -115,29 +115,29 @@ public class Order implements Serializable {
         this.grandTotal = grandTotal;
     }
 
-    public DeliveryInfo getDeliveryInfo() {
+    public OrderDeliveryInfo getDeliveryInfo() {
         return deliveryInfo;
     }
 
-    public Order deliveryInfo(DeliveryInfo deliveryInfo) {
+    public Order deliveryInfo(OrderDeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
         return this;
     }
 
-    public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
+    public void setDeliveryInfo(OrderDeliveryInfo deliveryInfo) {
         this.deliveryInfo = deliveryInfo;
     }
 
-    public Payment getPayment() {
+    public OrderPayment getPayment() {
         return payment;
     }
 
-    public Order payment(Payment payment) {
+    public Order payment(OrderPayment payment) {
         this.payment = payment;
         return this;
     }
 
-    public void setPayment(Payment payment) {
+    public void setPayment(OrderPayment payment) {
         this.payment = payment;
     }
 

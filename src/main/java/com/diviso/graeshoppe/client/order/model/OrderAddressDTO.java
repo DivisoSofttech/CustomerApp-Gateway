@@ -10,12 +10,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * AddressDTO
+ * OrderAddressDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:21.066+05:30[Asia/Kolkata]")
 
-public class AddressDTO   {
+public class OrderAddressDTO   {
   @JsonProperty("addressType")
   private String addressType = null;
 
@@ -52,7 +52,7 @@ public class AddressDTO   {
   @JsonProperty("state")
   private String state = null;
 
-  public AddressDTO addressType(String addressType) {
+  public OrderAddressDTO addressType(String addressType) {
     this.addressType = addressType;
     return this;
   }
@@ -72,7 +72,7 @@ public class AddressDTO   {
     this.addressType = addressType;
   }
 
-  public AddressDTO alternatePhone(Long alternatePhone) {
+  public OrderAddressDTO alternatePhone(Long alternatePhone) {
     this.alternatePhone = alternatePhone;
     return this;
   }
@@ -92,7 +92,7 @@ public class AddressDTO   {
     this.alternatePhone = alternatePhone;
   }
 
-  public AddressDTO city(String city) {
+  public OrderAddressDTO city(String city) {
     this.city = city;
     return this;
   }
@@ -112,7 +112,7 @@ public class AddressDTO   {
     this.city = city;
   }
 
-  public AddressDTO customerId(String customerId) {
+  public OrderAddressDTO customerId(String customerId) {
     this.customerId = customerId;
     return this;
   }
@@ -132,7 +132,7 @@ public class AddressDTO   {
     this.customerId = customerId;
   }
 
-  public AddressDTO houseNoOrBuildingName(String houseNoOrBuildingName) {
+  public OrderAddressDTO houseNoOrBuildingName(String houseNoOrBuildingName) {
     this.houseNoOrBuildingName = houseNoOrBuildingName;
     return this;
   }
@@ -152,7 +152,7 @@ public class AddressDTO   {
     this.houseNoOrBuildingName = houseNoOrBuildingName;
   }
 
-  public AddressDTO id(Long id) {
+  public OrderAddressDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -172,7 +172,7 @@ public class AddressDTO   {
     this.id = id;
   }
 
-  public AddressDTO landmark(String landmark) {
+  public OrderAddressDTO landmark(String landmark) {
     this.landmark = landmark;
     return this;
   }
@@ -192,7 +192,7 @@ public class AddressDTO   {
     this.landmark = landmark;
   }
 
-  public AddressDTO name(String name) {
+  public OrderAddressDTO name(String name) {
     this.name = name;
     return this;
   }
@@ -212,7 +212,7 @@ public class AddressDTO   {
     this.name = name;
   }
 
-  public AddressDTO phone(Long phone) {
+  public OrderAddressDTO phone(Long phone) {
     this.phone = phone;
     return this;
   }
@@ -232,7 +232,7 @@ public class AddressDTO   {
     this.phone = phone;
   }
 
-  public AddressDTO pincode(Long pincode) {
+  public OrderAddressDTO pincode(Long pincode) {
     this.pincode = pincode;
     return this;
   }
@@ -252,7 +252,7 @@ public class AddressDTO   {
     this.pincode = pincode;
   }
 
-  public AddressDTO roadNameAreaOrStreet(String roadNameAreaOrStreet) {
+  public OrderAddressDTO roadNameAreaOrStreet(String roadNameAreaOrStreet) {
     this.roadNameAreaOrStreet = roadNameAreaOrStreet;
     return this;
   }
@@ -272,7 +272,7 @@ public class AddressDTO   {
     this.roadNameAreaOrStreet = roadNameAreaOrStreet;
   }
 
-  public AddressDTO state(String state) {
+  public OrderAddressDTO state(String state) {
     this.state = state;
     return this;
   }
@@ -301,7 +301,7 @@ public class AddressDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AddressDTO addressDTO = (AddressDTO) o;
+    OrderAddressDTO addressDTO = (OrderAddressDTO) o;
     return Objects.equals(this.addressType, addressDTO.addressType) &&
         Objects.equals(this.alternatePhone, addressDTO.alternatePhone) &&
         Objects.equals(this.city, addressDTO.city) &&
@@ -324,7 +324,7 @@ public class AddressDTO   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AddressDTO {\n");
+    sb.append("class OrderAddressDTO {\n");
     
     sb.append("    addressType: ").append(toIndentedString(addressType)).append("\n");
     sb.append("    alternatePhone: ").append(toIndentedString(alternatePhone)).append("\n");

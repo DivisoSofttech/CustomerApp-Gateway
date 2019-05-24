@@ -10,12 +10,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * PaymentDTO
+ * OrderPaymentDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:21.066+05:30[Asia/Kolkata]")
 
-public class PaymentDTO   {
+public class OrderPaymentDTO   {
   @JsonProperty("amount")
   private Double amount = null;
 
@@ -37,7 +37,7 @@ public class PaymentDTO   {
   @JsonProperty("total")
   private Double total = null;
 
-  public PaymentDTO amount(Double amount) {
+  public OrderPaymentDTO amount(Double amount) {
     this.amount = amount;
     return this;
   }
@@ -57,7 +57,7 @@ public class PaymentDTO   {
     this.amount = amount;
   }
 
-  public PaymentDTO id(Long id) {
+  public OrderPaymentDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -77,7 +77,7 @@ public class PaymentDTO   {
     this.id = id;
   }
 
-  public PaymentDTO paymentType(String paymentType) {
+  public OrderPaymentDTO paymentType(String paymentType) {
     this.paymentType = paymentType;
     return this;
   }
@@ -97,7 +97,7 @@ public class PaymentDTO   {
     this.paymentType = paymentType;
   }
 
-  public PaymentDTO ref(String ref) {
+  public OrderPaymentDTO ref(String ref) {
     this.ref = ref;
     return this;
   }
@@ -117,7 +117,7 @@ public class PaymentDTO   {
     this.ref = ref;
   }
 
-  public PaymentDTO status(String status) {
+  public OrderPaymentDTO status(String status) {
     this.status = status;
     return this;
   }
@@ -137,7 +137,7 @@ public class PaymentDTO   {
     this.status = status;
   }
 
-  public PaymentDTO tax(Double tax) {
+  public OrderPaymentDTO tax(Double tax) {
     this.tax = tax;
     return this;
   }
@@ -157,7 +157,7 @@ public class PaymentDTO   {
     this.tax = tax;
   }
 
-  public PaymentDTO total(Double total) {
+  public OrderPaymentDTO total(Double total) {
     this.total = total;
     return this;
   }
@@ -186,7 +186,7 @@ public class PaymentDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    PaymentDTO paymentDTO = (PaymentDTO) o;
+    OrderPaymentDTO paymentDTO = (OrderPaymentDTO) o;
     return Objects.equals(this.amount, paymentDTO.amount) &&
         Objects.equals(this.id, paymentDTO.id) &&
         Objects.equals(this.paymentType, paymentDTO.paymentType) &&
@@ -204,7 +204,7 @@ public class PaymentDTO   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class PaymentDTO {\n");
+    sb.append("class OrderPaymentDTO {\n");
     
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");

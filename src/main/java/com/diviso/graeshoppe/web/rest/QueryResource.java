@@ -331,11 +331,17 @@ public class QueryResource {
 		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
 
 		for (Customer c : customerList) {
+			
         log.info(">>>>>>>>>>>>>>>>>>> customer:   "+c+"   >>>>>>>>>>>>>>>>");
+        
 			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
+			
 			log.info(">>>>>>>>>>>>>>>>>>> rating:  "+rating+"   >>>>>>>>>>>>>>>>");
+			
 			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
+			
 			log.info(">>>>>>>>>>>>>>>>>>> review:  "+review+"   >>>>>>>>>>>>>>>>");
+			
 			if (rating != null) {
 				
 				RatingReview ratingReview = new RatingReview();
@@ -343,10 +349,15 @@ public class QueryResource {
 				ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
 
 				if(review!=null){
+					
 				ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
+				
 				}
+				
 				log.info(">>>>>>>>>>>>>>>>>>> ratingReview:  "+ratingReview+"   >>>>>>>>>>>>>>>>");
+				
 				listOfRatingreview.add(ratingReview);
+				
 				log.info(">>>>>>>>>>>>>>>>>>> listOfRatingreview:  "+listOfRatingreview+"   >>>>>>>>>>>>>>>>");
 			}
 		}

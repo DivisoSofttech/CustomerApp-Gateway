@@ -5,7 +5,7 @@
  */
 package com.diviso.graeshoppe.client.order.api;
 
-import com.diviso.graeshoppe.client.order.model.AddressDTO;
+import com.diviso.graeshoppe.client.order.model.OrderAddressDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,9 +30,9 @@ import java.util.Optional;
 @Api(value = "AddressResource", description = "the AddressResource API")
 public interface AddressResourceApi {
 
-    @ApiOperation(value = "createAddress", nickname = "createAddressUsingPOST", notes = "", response = AddressDTO.class, tags={ "address-resource", })
+    @ApiOperation(value = "createAddress", nickname = "createAddressUsingPOST", notes = "", response = OrderAddressDTO.class, tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -41,7 +41,7 @@ public interface AddressResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<AddressDTO> createAddressUsingPOST(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody AddressDTO addressDTO);
+    ResponseEntity<OrderAddressDTO> createAddressUsingPOST(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody OrderAddressDTO addressDTO);
 
 
     @ApiOperation(value = "deleteAddress", nickname = "deleteAddressUsingDELETE", notes = "", tags={ "address-resource", })
@@ -55,57 +55,57 @@ public interface AddressResourceApi {
     ResponseEntity<Void> deleteAddressUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "getAddress", nickname = "getAddressUsingGET", notes = "", response = AddressDTO.class, tags={ "address-resource", })
+    @ApiOperation(value = "getAddress", nickname = "getAddressUsingGET", notes = "", response = OrderAddressDTO.class, tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/addresses/{id}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<AddressDTO> getAddressUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+    ResponseEntity<OrderAddressDTO> getAddressUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "getAllAddressesByCustomerId", nickname = "getAllAddressesByCustomerIdUsingGET", notes = "", response = AddressDTO.class, responseContainer = "List", tags={ "address-resource", })
+    @ApiOperation(value = "getAllAddressesByCustomerId", nickname = "getAllAddressesByCustomerIdUsingGET", notes = "", response = OrderAddressDTO.class, responseContainer = "List", tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/addresses/findByCustomerId/{customerId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<AddressDTO>> getAllAddressesByCustomerIdUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<List<OrderAddressDTO>> getAllAddressesByCustomerIdUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "getAllAddresses", nickname = "getAllAddressesUsingGET", notes = "", response = AddressDTO.class, responseContainer = "List", tags={ "address-resource", })
+    @ApiOperation(value = "getAllAddresses", nickname = "getAllAddressesUsingGET", notes = "", response = OrderAddressDTO.class, responseContainer = "List", tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/addresses",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<AddressDTO>> getAllAddressesUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<List<OrderAddressDTO>> getAllAddressesUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "searchAddresses", nickname = "searchAddressesUsingGET", notes = "", response = AddressDTO.class, responseContainer = "List", tags={ "address-resource", })
+    @ApiOperation(value = "searchAddresses", nickname = "searchAddressesUsingGET", notes = "", response = OrderAddressDTO.class, responseContainer = "List", tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/_search/addresses",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<AddressDTO>> searchAddressesUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<List<OrderAddressDTO>> searchAddressesUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "updateAddress", nickname = "updateAddressUsingPUT", notes = "", response = AddressDTO.class, tags={ "address-resource", })
+    @ApiOperation(value = "updateAddress", nickname = "updateAddressUsingPUT", notes = "", response = OrderAddressDTO.class, tags={ "address-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = OrderAddressDTO.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -114,6 +114,6 @@ public interface AddressResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.PUT)
-    ResponseEntity<AddressDTO> updateAddressUsingPUT(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody AddressDTO addressDTO);
+    ResponseEntity<OrderAddressDTO> updateAddressUsingPUT(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody OrderAddressDTO addressDTO);
 
 }

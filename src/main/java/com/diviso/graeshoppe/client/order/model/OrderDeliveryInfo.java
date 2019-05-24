@@ -12,11 +12,11 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A DeliveryInfo.
+ * A OrderDeliveryInfo.
  */
 
 @Document(indexName = "deliveryinfo")
-public class DeliveryInfo implements Serializable {
+public class OrderDeliveryInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -29,7 +29,7 @@ public class DeliveryInfo implements Serializable {
 
     private Double deliveryCharge;
 
-    private Address deliveryAddress;
+    private OrderAddress deliveryAddress;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -44,7 +44,7 @@ public class DeliveryInfo implements Serializable {
         return deliveryType;
     }
 
-    public DeliveryInfo deliveryType(String deliveryType) {
+    public OrderDeliveryInfo deliveryType(String deliveryType) {
         this.deliveryType = deliveryType;
         return this;
     }
@@ -57,7 +57,7 @@ public class DeliveryInfo implements Serializable {
         return expectedDelivery;
     }
 
-    public DeliveryInfo expectedDelivery(Instant expectedDelivery) {
+    public OrderDeliveryInfo expectedDelivery(Instant expectedDelivery) {
         this.expectedDelivery = expectedDelivery;
         return this;
     }
@@ -70,7 +70,7 @@ public class DeliveryInfo implements Serializable {
         return deliveryCharge;
     }
 
-    public DeliveryInfo deliveryCharge(Double deliveryCharge) {
+    public OrderDeliveryInfo deliveryCharge(Double deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
         return this;
     }
@@ -79,16 +79,16 @@ public class DeliveryInfo implements Serializable {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public Address getDeliveryAddress() {
+    public OrderAddress getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    public DeliveryInfo deliveryAddress(Address address) {
+    public OrderDeliveryInfo deliveryAddress(OrderAddress address) {
         this.deliveryAddress = address;
         return this;
     }
 
-    public void setDeliveryAddress(Address address) {
+    public void setDeliveryAddress(OrderAddress address) {
         this.deliveryAddress = address;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
@@ -101,7 +101,7 @@ public class DeliveryInfo implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        DeliveryInfo deliveryInfo = (DeliveryInfo) o;
+        OrderDeliveryInfo deliveryInfo = (OrderDeliveryInfo) o;
         if (deliveryInfo.getId() == null || getId() == null) {
             return false;
         }
@@ -115,7 +115,7 @@ public class DeliveryInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "DeliveryInfo{" +
+        return "OrderDeliveryInfo{" +
             "id=" + getId() +
             ", deliveryType='" + getDeliveryType() + "'" +
             ", expectedDelivery='" + getExpectedDelivery() + "'" +
