@@ -401,12 +401,12 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 				 .withQuery(matchAllQuery())
 				  .withSearchType(QUERY_THEN_FETCH)
 				  .withIndices("userrating").withTypes("userrating")
-				  .addAggregation(AggregationBuilders.terms("rating").field("rating"))
+				  .addAggregation(AggregationBuilders.terms("ratings").field("rating"))
 				  .build();
 		
 	
 		AggregatedPage<UserRating> result = elasticsearchTemplate.queryForPage(searchQuery, UserRating.class);
-		TermsAggregation categoryAggregation = result.getAggregation("rating", TermsAggregation.class);
+		TermsAggregation categoryAggregation = result.getAggregation("ratings", TermsAggregation.class);
 		System.out.println( "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+categoryAggregation.getBuckets().size());
 		return categoryAggregation.getBuckets();
 	}
