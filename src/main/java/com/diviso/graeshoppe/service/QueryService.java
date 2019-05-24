@@ -99,10 +99,14 @@ public Page<Store> findAllStoreByName(String name);
  */
 public Page<Product> findAllProductByName(String name);
 
+<<<<<<< HEAD
 public Page<Product> findAllProductByProductNameStoreId(String productName, String storeId);
 /**
  * @param pageable
  */
 public List<Entry> findRatingCount(Pageable pageable);
+=======
+public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId);
+>>>>>>> ec1695cf253edb63b631efb43e6aa7d5f22df152
 
 }
