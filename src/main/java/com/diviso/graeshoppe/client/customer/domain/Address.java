@@ -12,7 +12,7 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Address.
+ * A OrderAddress.
  */
 
 @Document(indexName = "address")
@@ -135,7 +135,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address{" +
+        return "OrderAddress{" +
             "id=" + getId() +
             ", addressLine1='" + getAddressLine1() + "'" +
             ", addressLine2='" + getAddressLine2() + "'" +

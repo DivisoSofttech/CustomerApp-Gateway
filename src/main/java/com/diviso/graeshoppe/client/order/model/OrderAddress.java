@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Address.
+ * A OrderAddress.
  */
 
 @Document(indexName = "address")
-public class Address implements Serializable {
+public class OrderAddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -56,7 +56,7 @@ public class Address implements Serializable {
         return customerId;
     }
 
-    public Address customerId(String customerId) {
+    public OrderAddress customerId(String customerId) {
         this.customerId = customerId;
         return this;
     }
@@ -69,7 +69,7 @@ public class Address implements Serializable {
         return pincode;
     }
 
-    public Address pincode(Long pincode) {
+    public OrderAddress pincode(Long pincode) {
         this.pincode = pincode;
         return this;
     }
@@ -82,7 +82,7 @@ public class Address implements Serializable {
         return houseNoOrBuildingName;
     }
 
-    public Address houseNoOrBuildingName(String houseNoOrBuildingName) {
+    public OrderAddress houseNoOrBuildingName(String houseNoOrBuildingName) {
         this.houseNoOrBuildingName = houseNoOrBuildingName;
         return this;
     }
@@ -95,7 +95,7 @@ public class Address implements Serializable {
         return roadNameAreaOrStreet;
     }
 
-    public Address roadNameAreaOrStreet(String roadNameAreaOrStreet) {
+    public OrderAddress roadNameAreaOrStreet(String roadNameAreaOrStreet) {
         this.roadNameAreaOrStreet = roadNameAreaOrStreet;
         return this;
     }
@@ -108,7 +108,7 @@ public class Address implements Serializable {
         return city;
     }
 
-    public Address city(String city) {
+    public OrderAddress city(String city) {
         this.city = city;
         return this;
     }
@@ -121,7 +121,7 @@ public class Address implements Serializable {
         return state;
     }
 
-    public Address state(String state) {
+    public OrderAddress state(String state) {
         this.state = state;
         return this;
     }
@@ -134,7 +134,7 @@ public class Address implements Serializable {
         return landmark;
     }
 
-    public Address landmark(String landmark) {
+    public OrderAddress landmark(String landmark) {
         this.landmark = landmark;
         return this;
     }
@@ -147,7 +147,7 @@ public class Address implements Serializable {
         return name;
     }
 
-    public Address name(String name) {
+    public OrderAddress name(String name) {
         this.name = name;
         return this;
     }
@@ -160,7 +160,7 @@ public class Address implements Serializable {
         return phone;
     }
 
-    public Address phone(Long phone) {
+    public OrderAddress phone(Long phone) {
         this.phone = phone;
         return this;
     }
@@ -173,7 +173,7 @@ public class Address implements Serializable {
         return alternatePhone;
     }
 
-    public Address alternatePhone(Long alternatePhone) {
+    public OrderAddress alternatePhone(Long alternatePhone) {
         this.alternatePhone = alternatePhone;
         return this;
     }
@@ -186,7 +186,7 @@ public class Address implements Serializable {
         return addressType;
     }
 
-    public Address addressType(String addressType) {
+    public OrderAddress addressType(String addressType) {
         this.addressType = addressType;
         return this;
     }
@@ -204,7 +204,7 @@ public class Address implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Address address = (Address) o;
+        OrderAddress address = (OrderAddress) o;
         if (address.getId() == null || getId() == null) {
             return false;
         }
@@ -218,7 +218,7 @@ public class Address implements Serializable {
 
     @Override
     public String toString() {
-        return "Address{" +
+        return "OrderAddress{" +
             "id=" + getId() +
             ", customerId='" + getCustomerId() + "'" +
             ", pincode=" + getPincode() +

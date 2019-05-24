@@ -13,12 +13,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeliveryInfoDTO
+ * OrderDeliveryInfoDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:21.066+05:30[Asia/Kolkata]")
 
-public class DeliveryInfoDTO   {
+public class OrderDeliveryInfoDTO   {
   @JsonProperty("deliveryAddressId")
   private Long deliveryAddressId = null;
 
@@ -34,7 +34,7 @@ public class DeliveryInfoDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  public DeliveryInfoDTO deliveryAddressId(Long deliveryAddressId) {
+  public OrderDeliveryInfoDTO deliveryAddressId(Long deliveryAddressId) {
     this.deliveryAddressId = deliveryAddressId;
     return this;
   }
@@ -54,7 +54,7 @@ public class DeliveryInfoDTO   {
     this.deliveryAddressId = deliveryAddressId;
   }
 
-  public DeliveryInfoDTO deliveryCharge(Double deliveryCharge) {
+  public OrderDeliveryInfoDTO deliveryCharge(Double deliveryCharge) {
     this.deliveryCharge = deliveryCharge;
     return this;
   }
@@ -74,7 +74,7 @@ public class DeliveryInfoDTO   {
     this.deliveryCharge = deliveryCharge;
   }
 
-  public DeliveryInfoDTO deliveryType(String deliveryType) {
+  public OrderDeliveryInfoDTO deliveryType(String deliveryType) {
     this.deliveryType = deliveryType;
     return this;
   }
@@ -94,7 +94,7 @@ public class DeliveryInfoDTO   {
     this.deliveryType = deliveryType;
   }
 
-  public DeliveryInfoDTO expectedDelivery(Instant expectedDelivery) {
+  public OrderDeliveryInfoDTO expectedDelivery(Instant expectedDelivery) {
     this.expectedDelivery = expectedDelivery;
     return this;
   }
@@ -115,7 +115,7 @@ public class DeliveryInfoDTO   {
     this.expectedDelivery = expectedDelivery;
   }
 
-  public DeliveryInfoDTO id(Long id) {
+  public OrderDeliveryInfoDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -144,7 +144,7 @@ public class DeliveryInfoDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeliveryInfoDTO deliveryInfoDTO = (DeliveryInfoDTO) o;
+    OrderDeliveryInfoDTO deliveryInfoDTO = (OrderDeliveryInfoDTO) o;
     return Objects.equals(this.deliveryAddressId, deliveryInfoDTO.deliveryAddressId) &&
         Objects.equals(this.deliveryCharge, deliveryInfoDTO.deliveryCharge) &&
         Objects.equals(this.deliveryType, deliveryInfoDTO.deliveryType) &&
@@ -160,7 +160,7 @@ public class DeliveryInfoDTO   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeliveryInfoDTO {\n");
+    sb.append("class OrderDeliveryInfoDTO {\n");
     
     sb.append("    deliveryAddressId: ").append(toIndentedString(deliveryAddressId)).append("\n");
     sb.append("    deliveryCharge: ").append(toIndentedString(deliveryCharge)).append("\n");

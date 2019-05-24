@@ -11,11 +11,11 @@ import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Payment.
+ * A OrderPayment.
  */
 
 @Document(indexName = "payment")
-public class Payment implements Serializable {
+public class OrderPayment implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
@@ -48,7 +48,7 @@ public class Payment implements Serializable {
         return ref;
     }
 
-    public Payment ref(String ref) {
+    public OrderPayment ref(String ref) {
         this.ref = ref;
         return this;
     }
@@ -61,7 +61,7 @@ public class Payment implements Serializable {
         return paymentType;
     }
 
-    public Payment paymentType(String paymentType) {
+    public OrderPayment paymentType(String paymentType) {
         this.paymentType = paymentType;
         return this;
     }
@@ -74,7 +74,7 @@ public class Payment implements Serializable {
         return amount;
     }
 
-    public Payment amount(Double amount) {
+    public OrderPayment amount(Double amount) {
         this.amount = amount;
         return this;
     }
@@ -87,7 +87,7 @@ public class Payment implements Serializable {
         return tax;
     }
 
-    public Payment tax(Double tax) {
+    public OrderPayment tax(Double tax) {
         this.tax = tax;
         return this;
     }
@@ -100,7 +100,7 @@ public class Payment implements Serializable {
         return total;
     }
 
-    public Payment total(Double total) {
+    public OrderPayment total(Double total) {
         this.total = total;
         return this;
     }
@@ -113,7 +113,7 @@ public class Payment implements Serializable {
         return status;
     }
 
-    public Payment status(String status) {
+    public OrderPayment status(String status) {
         this.status = status;
         return this;
     }
@@ -131,7 +131,7 @@ public class Payment implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Payment payment = (Payment) o;
+        OrderPayment payment = (OrderPayment) o;
         if (payment.getId() == null || getId() == null) {
             return false;
         }
@@ -145,7 +145,7 @@ public class Payment implements Serializable {
 
     @Override
     public String toString() {
-        return "Payment{" +
+        return "OrderPayment{" +
             "id=" + getId() +
             ", ref='" + getRef() + "'" +
             ", paymentType='" + getPaymentType() + "'" +

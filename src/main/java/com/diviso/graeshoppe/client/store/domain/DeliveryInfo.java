@@ -15,7 +15,7 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * A DeliveryInfo.
+ * A OrderDeliveryInfo.
  */
 
 @Document(indexName = "deliveryinfo")
@@ -98,7 +98,7 @@ public class DeliveryInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "DeliveryInfo{" +
+        return "OrderDeliveryInfo{" +
             "id=" + getId() +
             ", startingTime='" + getStartingTime() + "'" +
             "}";
