@@ -371,8 +371,8 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
 	}
 
-	@GetMapping("/findProduct/{name}/{storeId}")
-	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name, @PathVariable String storeId) {
-		return ResponseEntity.ok().body(queryService.findAllProductByProductNameStoreId(name, storeId).getContent());
+	@GetMapping("/findStocks/{name}/{storeId}")
+	public ResponseEntity<List<StockCurrent>> findAllStockCurrentByProductNameStoreId(@PathVariable String name, @PathVariable String storeId) {
+		return ResponseEntity.ok().body(queryService.findAllStockCurrentByProductNameStoreId(name, storeId).getContent());
 	}
 }

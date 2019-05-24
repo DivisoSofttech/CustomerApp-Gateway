@@ -386,10 +386,10 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 	}
 
 	@Override
-	public Page<Product> findAllProductByProductNameStoreId(String productName, String storeId) {
-		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-				.must(QueryBuilders.termQuery("name", productName)).toString());
-		return elasticsearchOperations.queryForPage(stringQuery, Product.class);
+	public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId) {
+		StringQuery stringQuery = new StringQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.userId", storeId))
+				.must(QueryBuilders.termQuery("product.name", productName)).toString());
+		return elasticsearchOperations.queryForPage(stringQuery, StockCurrent.class);
 	}
 	
 	

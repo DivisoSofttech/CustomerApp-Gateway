@@ -102,6 +102,7 @@ public class Product   {
   @JsonProperty("taxCategory")
   private TaxCategory taxCategory = null;
 
+  // storeId
   @JsonProperty("userId")
   private String userId = null;
 
