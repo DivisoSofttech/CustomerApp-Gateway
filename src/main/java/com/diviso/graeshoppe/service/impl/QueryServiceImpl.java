@@ -391,6 +391,25 @@ System.out.println("+enter>>>>>>>>><<<<<<<<<<<<<<<<<<>>>>>>>>>+");
 				.must(QueryBuilders.termQuery("name", productName)).toString());
 		return elasticsearchOperations.queryForPage(stringQuery, Product.class);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findRatingCount(org.springframework.data.domain.Pageable)
+	 */
+	@Override
+	public List<Entry> findRatingCount(Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				 .withQuery(matchAllQuery())
+				  .withSearchType(QUERY_THEN_FETCH)
+				  .withIndices("userrating").withTypes("userrating")
+				  .addAggregation(AggregationBuilders.terms("rating").field("rating"))
+				  .build();
+		
+	
+		AggregatedPage<UserRating> result = elasticsearchTemplate.queryForPage(searchQuery, UserRating.class);
+		TermsAggregation categoryAggregation = result.getAggregation("rating", TermsAggregation.class);
+		System.out.println( "@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@"+categoryAggregation.getBuckets().size());
+		return categoryAggregation.getBuckets();
+	}
 	
 	
 }

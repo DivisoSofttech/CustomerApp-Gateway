@@ -249,6 +249,7 @@ public class CommandResource {
 
 	@PostMapping("/stores")
 	public ResponseEntity<StoreDTO> createStore(@RequestBody StoreDTO storeDTO) {
+		
 		return this.storeResourceApi.createStoreUsingPOST(storeDTO);
 	}
 

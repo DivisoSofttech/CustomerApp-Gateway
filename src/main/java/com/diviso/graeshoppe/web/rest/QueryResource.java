@@ -375,4 +375,9 @@ public class QueryResource {
 	public ResponseEntity<List<Product>> findAllProductByName(@PathVariable String name, @PathVariable String storeId) {
 		return ResponseEntity.ok().body(queryService.findAllProductByProductNameStoreId(name, storeId).getContent());
 	}
+	
+	public List<Entry> findRatingCount(Pageable pageable){
+		queryService.findRatingCount(pageable);
+		return null;
+	}
 }
