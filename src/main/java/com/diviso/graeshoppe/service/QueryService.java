@@ -8,6 +8,8 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
+import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.order.model.OrderAddress;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -107,6 +109,10 @@ public Page<Product> findAllProductByProductNameStoreId(String productName, Stri
 public List<Entry> findRatingCount(Pageable pageable);
 
 public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId);
+
+public Page<OrderAddress> findByCustomerId(String customerId,Pageable pageable);
+
+public Order findById(Long id);
 
 
 }

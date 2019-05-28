@@ -4,5 +4,5 @@ import org.springframework.cloud.openfeign.FeignClient;
 import com.diviso.graeshoppe.client.order.OrderClientConfiguration;
 
 @FeignClient(name="${order.name:order}", url="${order.url:35.237.237.182:8088/}", configuration = OrderClientConfiguration.class)
-public interface OrderResourceApiClient extends OrderResourceApi {
+public interface DeliveryInfoCommandResourceApiClient extends DeliveryInfoCommandResourceApi {
 }

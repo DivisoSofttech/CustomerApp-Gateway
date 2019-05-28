@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * TypeDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:15.734+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
 
 public class TypeDTO   {
   @JsonProperty("deliveryInfoId")

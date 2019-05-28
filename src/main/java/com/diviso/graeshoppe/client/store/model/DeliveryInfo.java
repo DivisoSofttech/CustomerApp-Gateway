@@ -14,10 +14,10 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * OrderDeliveryInfo
+ * DeliveryInfo
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:15.734+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
 
 public class DeliveryInfo   {
   @JsonProperty("id")
@@ -123,7 +123,7 @@ public class DeliveryInfo   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OrderDeliveryInfo {\n");
+    sb.append("class DeliveryInfo {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");

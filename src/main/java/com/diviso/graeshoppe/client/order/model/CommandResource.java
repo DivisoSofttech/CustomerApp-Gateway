@@ -16,9 +16,40 @@ import javax.validation.constraints.*;
  * CommandResource
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-23T15:17:21.066+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
 
 public class CommandResource   {
+	
+	private Long selfId;
+	/**
+	 * @return the selfId
+	 */
+	public Long getSelfId() {
+		return selfId;
+	}
+
+	/**
+	 * @param selfId the selfId to set
+	 */
+	public void setSelfId(Long selfId) {
+		this.selfId = selfId;
+	}
+
+	/**
+	 * @return the nextTaskId
+	 */
+	public String getNextTaskId() {
+		return nextTaskId;
+	}
+
+	/**
+	 * @param nextTaskId the nextTaskId to set
+	 */
+	public void setNextTaskId(String nextTaskId) {
+		this.nextTaskId = nextTaskId;
+	}
+
+	private String nextTaskId;
   @JsonProperty("_links")
   @Valid
   private List<Link> links = null;

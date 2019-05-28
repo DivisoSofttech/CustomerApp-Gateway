@@ -14,7 +14,7 @@ import java.util.Objects;
  * A OrderAddress.
  */
 
-@Document(indexName = "address")
+@Document(indexName = "orderaddress")
 public class OrderAddress implements Serializable {
 
     private static final long serialVersionUID = 1L;
