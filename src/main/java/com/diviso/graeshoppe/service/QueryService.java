@@ -113,6 +113,10 @@ public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String product
 public Page<OrderAddress> findByCustomerId(String customerId,Pageable pageable);
 
 public Order findById(Long id);
+/**
+ * @param deliveryType
+ */
+public Page<Store> findStoreByType(String deliveryType);
 
 
 }

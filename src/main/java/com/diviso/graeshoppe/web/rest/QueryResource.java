@@ -375,9 +375,15 @@ public class QueryResource {
 	public ResponseEntity<List<StockCurrent>> findAllStockCurrentByProductNameStoreId(@PathVariable String name, @PathVariable String storeId) {
 		return ResponseEntity.ok().body(queryService.findAllStockCurrentByProductNameStoreId(name, storeId).getContent());
 	}
-	@GetMapping("/rating-count")
+	@GetMapping("/rating-count") 
 	public List<Entry> findRatingCount(Pageable pageable){
 		queryService.findRatingCount(pageable);
 		return null;
+	}
+	
+	@GetMapping("/storesByDeliveryType/{deliveryType}")
+	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType ){
+		log.info("..............."+deliveryType);
+		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
 }
