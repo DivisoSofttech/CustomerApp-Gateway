@@ -452,7 +452,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Store> findStoreByType(String deliveryType) {
 	
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("deliveryInfos.type.name", deliveryType))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("deliveryInfos.type.name.keyword", deliveryType))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
