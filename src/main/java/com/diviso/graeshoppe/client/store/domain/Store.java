@@ -8,6 +8,8 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.data.elasticsearch.annotations.GeoPointField;
+
 import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
@@ -18,40 +20,35 @@ import java.util.Objects;
  * A Store.
  */
 
+
 @Document(indexName = "store")
 public class Store implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-
     private Long id;
-
 
     private String regNo;
 
+  
     private String name;
 
     @Lob
     private byte[] image;
 
-
     private String imageContentType;
 
-
+ 
     private Double totalRating;
 
-
+   @GeoPointField
     private String location;
 
 
     private Long contactNo;
 
-
     private String email;
 
 
     private Instant openingTime;
-
 
     private Instant closingTime;
 
@@ -61,11 +58,12 @@ public class Store implements Serializable {
 
     private Propreitor propreitor;
 
-    private DeliveryInfo deliveryInfo;
-
     private Set<Review> reviews = new HashSet<>();
 
     private Set<UserRating> userRatings = new HashSet<>();
+
+    private Set<DeliveryInfo> deliveryInfos = new HashSet<>();
+    
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -231,19 +229,6 @@ public class Store implements Serializable {
         this.propreitor = propreitor;
     }
 
-    public DeliveryInfo getDeliveryInfo() {
-        return deliveryInfo;
-    }
-
-    public Store deliveryInfo(DeliveryInfo deliveryInfo) {
-        this.deliveryInfo = deliveryInfo;
-        return this;
-    }
-
-    public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
-        this.deliveryInfo = deliveryInfo;
-    }
-
     public Set<Review> getReviews() {
         return reviews;
     }
@@ -292,6 +277,31 @@ public class Store implements Serializable {
 
     public void setUserRatings(Set<UserRating> userRatings) {
         this.userRatings = userRatings;
+    }
+
+    public Set<DeliveryInfo> getDeliveryInfos() {
+        return deliveryInfos;
+    }
+
+    public Store deliveryInfos(Set<DeliveryInfo> deliveryInfos) {
+        this.deliveryInfos = deliveryInfos;
+        return this;
+    }
+
+    public Store addDeliveryInfo(DeliveryInfo deliveryInfo) {
+        this.deliveryInfos.add(deliveryInfo);
+        deliveryInfo.setStore(this);
+        return this;
+    }
+
+    public Store removeDeliveryInfo(DeliveryInfo deliveryInfo) {
+        this.deliveryInfos.remove(deliveryInfo);
+        deliveryInfo.setStore(null);
+        return this;
+    }
+
+    public void setDeliveryInfos(Set<DeliveryInfo> deliveryInfos) {
+        this.deliveryInfos = deliveryInfos;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

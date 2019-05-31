@@ -13,37 +13,14 @@ import javax.validation.constraints.*;
  * TypeDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
 
 public class TypeDTO   {
-  @JsonProperty("deliveryInfoId")
-  private Long deliveryInfoId = null;
-
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("name")
   private String name = null;
-
-  public TypeDTO deliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
-    return this;
-  }
-
-  /**
-   * Get deliveryInfoId
-   * @return deliveryInfoId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getDeliveryInfoId() {
-    return deliveryInfoId;
-  }
-
-  public void setDeliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
-  }
 
   public TypeDTO id(Long id) {
     this.id = id;
@@ -95,14 +72,13 @@ public class TypeDTO   {
       return false;
     }
     TypeDTO typeDTO = (TypeDTO) o;
-    return Objects.equals(this.deliveryInfoId, typeDTO.deliveryInfoId) &&
-        Objects.equals(this.id, typeDTO.id) &&
+    return Objects.equals(this.id, typeDTO.id) &&
         Objects.equals(this.name, typeDTO.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deliveryInfoId, id, name);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -110,7 +86,6 @@ public class TypeDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class TypeDTO {\n");
     
-    sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");

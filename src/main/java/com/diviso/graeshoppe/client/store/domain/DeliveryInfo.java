@@ -20,87 +20,106 @@ import java.util.Objects;
 
 @Document(indexName = "deliveryinfo")
 public class DeliveryInfo implements Serializable {
+	
+	    private Long id;
 
-    private static final long serialVersionUID = 1L;
+	   
+	    private Instant startingTime;
 
-    private Long id;
+	    private Instant endTime;
 
-    private Instant startingTime;
+	    private Store store;
 
-    private Set<Type> types = new HashSet<>();
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	    private Type type;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	    public Long getId() {
+	        return id;
+	    }
 
-    public Instant getStartingTime() {
-        return startingTime;
-    }
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-    public DeliveryInfo startingTime(Instant startingTime) {
-        this.startingTime = startingTime;
-        return this;
-    }
+	    public Instant getStartingTime() {
+	        return startingTime;
+	    }
 
-    public void setStartingTime(Instant startingTime) {
-        this.startingTime = startingTime;
-    }
+	    public DeliveryInfo startingTime(Instant startingTime) {
+	        this.startingTime = startingTime;
+	        return this;
+	    }
 
-    public Set<Type> getTypes() {
-        return types;
-    }
+	    public void setStartingTime(Instant startingTime) {
+	        this.startingTime = startingTime;
+	    }
 
-    public DeliveryInfo types(Set<Type> types) {
-        this.types = types;
-        return this;
-    }
+	    public Instant getEndTime() {
+	        return endTime;
+	    }
 
-    public DeliveryInfo addType(Type type) {
-        this.types.add(type);
-        type.setDeliveryInfo(this);
-        return this;
-    }
+	    public DeliveryInfo endTime(Instant endTime) {
+	        this.endTime = endTime;
+	        return this;
+	    }
 
-    public DeliveryInfo removeType(Type type) {
-        this.types.remove(type);
-        type.setDeliveryInfo(null);
-        return this;
-    }
+	    public void setEndTime(Instant endTime) {
+	        this.endTime = endTime;
+	    }
 
-    public void setTypes(Set<Type> types) {
-        this.types = types;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+	    public Store getStore() {
+	        return store;
+	    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        DeliveryInfo deliveryInfo = (DeliveryInfo) o;
-        if (deliveryInfo.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), deliveryInfo.getId());
-    }
+	    public DeliveryInfo store(Store store) {
+	        this.store = store;
+	        return this;
+	    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	    public void setStore(Store store) {
+	        this.store = store;
+	    }
 
-    @Override
-    public String toString() {
-        return "OrderDeliveryInfo{" +
-            "id=" + getId() +
-            ", startingTime='" + getStartingTime() + "'" +
-            "}";
-    }
+	    public Type getType() {
+	        return type;
+	    }
+
+	    public DeliveryInfo type(Type type) {
+	        this.type = type;
+	        return this;
+	    }
+
+	    public void setType(Type type) {
+	        this.type = type;
+	    }
+	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+	    @Override
+	    public boolean equals(Object o) {
+	        if (this == o) {
+	            return true;
+	        }
+	        if (o == null || getClass() != o.getClass()) {
+	            return false;
+	        }
+	        DeliveryInfo deliveryInfo = (DeliveryInfo) o;
+	        if (deliveryInfo.getId() == null || getId() == null) {
+	            return false;
+	        }
+	        return Objects.equals(getId(), deliveryInfo.getId());
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hashCode(getId());
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "DeliveryInfo{" +
+	            "id=" + getId() +
+	            ", startingTime='" + getStartingTime() + "'" +
+	            ", endTime='" + getEndTime() + "'" +
+	            "}";
+	    }
 }

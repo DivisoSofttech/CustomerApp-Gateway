@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * StoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
 
 public class StoreDTO   {
   @JsonProperty("closingTime")
@@ -22,9 +22,6 @@ public class StoreDTO   {
 
   @JsonProperty("contactNo")
   private Long contactNo = null;
-
-  @JsonProperty("deliveryInfoId")
-  private Long deliveryInfoId = null;
 
   @JsonProperty("email")
   private String email = null;
@@ -98,26 +95,6 @@ public class StoreDTO   {
 
   public void setContactNo(Long contactNo) {
     this.contactNo = contactNo;
-  }
-
-  public StoreDTO deliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
-    return this;
-  }
-
-  /**
-   * Get deliveryInfoId
-   * @return deliveryInfoId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getDeliveryInfoId() {
-    return deliveryInfoId;
-  }
-
-  public void setDeliveryInfoId(Long deliveryInfoId) {
-    this.deliveryInfoId = deliveryInfoId;
   }
 
   public StoreDTO email(String email) {
@@ -353,7 +330,6 @@ public class StoreDTO   {
     StoreDTO storeDTO = (StoreDTO) o;
     return Objects.equals(this.closingTime, storeDTO.closingTime) &&
         Objects.equals(this.contactNo, storeDTO.contactNo) &&
-        Objects.equals(this.deliveryInfoId, storeDTO.deliveryInfoId) &&
         Objects.equals(this.email, storeDTO.email) &&
         Objects.equals(this.id, storeDTO.id) &&
         Objects.equals(this.image, storeDTO.image) &&
@@ -369,7 +345,7 @@ public class StoreDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, deliveryInfoId, email, id, image, imageContentType, info, location, name, openingTime, propreitorId, regNo, totalRating);
+    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, name, openingTime, propreitorId, regNo, totalRating);
   }
 
   @Override
@@ -379,7 +355,6 @@ public class StoreDTO   {
     
     sb.append("    closingTime: ").append(toIndentedString(closingTime)).append("\n");
     sb.append("    contactNo: ").append(toIndentedString(contactNo)).append("\n");
-    sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");

@@ -1,7 +1,6 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -14,38 +13,14 @@ import javax.validation.constraints.*;
  * Type
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
 
 public class Type   {
-  @JsonProperty("deliveryInfo")
-  private DeliveryInfo deliveryInfo = null;
-
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("name")
   private String name = null;
-
-  public Type deliveryInfo(DeliveryInfo deliveryInfo) {
-    this.deliveryInfo = deliveryInfo;
-    return this;
-  }
-
-  /**
-   * Get deliveryInfo
-   * @return deliveryInfo
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public DeliveryInfo getDeliveryInfo() {
-    return deliveryInfo;
-  }
-
-  public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
-    this.deliveryInfo = deliveryInfo;
-  }
 
   public Type id(Long id) {
     this.id = id;
@@ -97,14 +72,13 @@ public class Type   {
       return false;
     }
     Type type = (Type) o;
-    return Objects.equals(this.deliveryInfo, type.deliveryInfo) &&
-        Objects.equals(this.id, type.id) &&
+    return Objects.equals(this.id, type.id) &&
         Objects.equals(this.name, type.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deliveryInfo, id, name);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -112,7 +86,6 @@ public class Type   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Type {\n");
     
-    sb.append("    deliveryInfo: ").append(toIndentedString(deliveryInfo)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");

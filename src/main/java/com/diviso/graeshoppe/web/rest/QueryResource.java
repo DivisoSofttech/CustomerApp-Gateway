@@ -375,6 +375,7 @@ public class QueryResource {
 	public ResponseEntity<List<StockCurrent>> findAllStockCurrentByProductNameStoreId(@PathVariable String name, @PathVariable String storeId) {
 		return ResponseEntity.ok().body(queryService.findAllStockCurrentByProductNameStoreId(name, storeId).getContent());
 	}
+	
 	@GetMapping("/rating-count") 
 	public List<Entry> findRatingCount(Pageable pageable){
 		queryService.findRatingCount(pageable);

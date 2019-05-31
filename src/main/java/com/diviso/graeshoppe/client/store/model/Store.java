@@ -20,7 +20,7 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:25.711+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
 
 public class Store   {
   @JsonProperty("closingTime")
@@ -29,8 +29,9 @@ public class Store   {
   @JsonProperty("contactNo")
   private Long contactNo = null;
 
-  @JsonProperty("deliveryInfo")
-  private DeliveryInfo deliveryInfo = null;
+  @JsonProperty("deliveryInfos")
+  @Valid
+  private List<DeliveryInfo> deliveryInfos = null;
 
   @JsonProperty("email")
   private String email = null;
@@ -114,25 +115,33 @@ public class Store   {
     this.contactNo = contactNo;
   }
 
-  public Store deliveryInfo(DeliveryInfo deliveryInfo) {
-    this.deliveryInfo = deliveryInfo;
+  public Store deliveryInfos(List<DeliveryInfo> deliveryInfos) {
+    this.deliveryInfos = deliveryInfos;
+    return this;
+  }
+
+  public Store addDeliveryInfosItem(DeliveryInfo deliveryInfosItem) {
+    if (this.deliveryInfos == null) {
+      this.deliveryInfos = new ArrayList<DeliveryInfo>();
+    }
+    this.deliveryInfos.add(deliveryInfosItem);
     return this;
   }
 
   /**
-   * Get deliveryInfo
-   * @return deliveryInfo
+   * Get deliveryInfos
+   * @return deliveryInfos
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public DeliveryInfo getDeliveryInfo() {
-    return deliveryInfo;
+  public List<DeliveryInfo> getDeliveryInfos() {
+    return deliveryInfos;
   }
 
-  public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
-    this.deliveryInfo = deliveryInfo;
+  public void setDeliveryInfos(List<DeliveryInfo> deliveryInfos) {
+    this.deliveryInfos = deliveryInfos;
   }
 
   public Store email(String email) {
@@ -427,7 +436,7 @@ public class Store   {
     Store store = (Store) o;
     return Objects.equals(this.closingTime, store.closingTime) &&
         Objects.equals(this.contactNo, store.contactNo) &&
-        Objects.equals(this.deliveryInfo, store.deliveryInfo) &&
+        Objects.equals(this.deliveryInfos, store.deliveryInfos) &&
         Objects.equals(this.email, store.email) &&
         Objects.equals(this.id, store.id) &&
         Objects.equals(this.image, store.image) &&
@@ -445,7 +454,7 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, deliveryInfo, email, id, image, imageContentType, info, location, name, openingTime, propreitor, regNo, reviews, totalRating, userRatings);
+    return Objects.hash(closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, name, openingTime, propreitor, regNo, reviews, totalRating, userRatings);
   }
 
   @Override
@@ -455,7 +464,7 @@ public class Store   {
     
     sb.append("    closingTime: ").append(toIndentedString(closingTime)).append("\n");
     sb.append("    contactNo: ").append(toIndentedString(contactNo)).append("\n");
-    sb.append("    deliveryInfo: ").append(toIndentedString(deliveryInfo)).append("\n");
+    sb.append("    deliveryInfos: ").append(toIndentedString(deliveryInfos)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");

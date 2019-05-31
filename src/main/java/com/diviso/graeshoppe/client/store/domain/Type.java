@@ -18,75 +18,60 @@ import java.util.Objects;
 @Document(indexName = "type")
 public class Type implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+	
+	    private Long id;
 
-    private Long id;
+	    private String name;
 
-    private String name;
+	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	    public Long getId() {
+	        return id;
+	    }
 
-    private DeliveryInfo deliveryInfo;
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	    public String getName() {
+	        return name;
+	    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	    public Type name(String name) {
+	        this.name = name;
+	        return this;
+	    }
 
-    public String getName() {
-        return name;
-    }
+	    public void setName(String name) {
+	        this.name = name;
+	    }
+	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    public Type name(String name) {
-        this.name = name;
-        return this;
-    }
+	    @Override
+	    public boolean equals(Object o) {
+	        if (this == o) {
+	            return true;
+	        }
+	        if (o == null || getClass() != o.getClass()) {
+	            return false;
+	        }
+	        Type type = (Type) o;
+	        if (type.getId() == null || getId() == null) {
+	            return false;
+	        }
+	        return Objects.equals(getId(), type.getId());
+	    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	    @Override
+	    public int hashCode() {
+	        return Objects.hashCode(getId());
+	    }
 
-    public DeliveryInfo getDeliveryInfo() {
-        return deliveryInfo;
-    }
+	    @Override
+	    public String toString() {
+	        return "Type{" +
+	            "id=" + getId() +
+	            ", name='" + getName() + "'" +
+	            "}";
+	    }
+	}
 
-    public Type deliveryInfo(DeliveryInfo deliveryInfo) {
-        this.deliveryInfo = deliveryInfo;
-        return this;
-    }
-
-    public void setDeliveryInfo(DeliveryInfo deliveryInfo) {
-        this.deliveryInfo = deliveryInfo;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Type type = (Type) o;
-        if (type.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), type.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "Type{" +
-            "id=" + getId() +
-            ", name='" + getName() + "'" +
-            "}";
-    }
-}
