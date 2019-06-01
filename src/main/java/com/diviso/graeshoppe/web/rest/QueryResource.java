@@ -391,6 +391,36 @@ public class QueryResource {
 		log.info("..............."+deliveryType);
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
+	//.........................................................................................
+	/**
+     * GET  /findCategoryByStoreId/:userId .
+     *
+     * @param userId 
+     * @return the ResponseEntity with status 200 (OK) and with body the Category or with status 404 (Not Found)
+     */
+	
+	@GetMapping("/findCategoryByStoreId/{userId}")
+	 public ResponseEntity<Page<Category>> findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
+	 log.debug("REST request to findCategoryByStoreId : {}", userId);
+		return ResponseEntity.ok().body(new PageImpl(queryService.findCategoryByStoreId(userId,pageable)));
+	 }
+	
+	/**
+     * GET  /findProductByStoreIdAndCategoryName/:userId,categoryName.
+     *
+     * @param userId , categoryName.
+     * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
+     */
+	
+	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
+	 public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,@PathVariable("categoryName") String categoryName,Pageable pageable){
+	 log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId,categoryName);
+		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryName,pageable));
+	 }
+	
+	
+	
+	
 	
 	
 	

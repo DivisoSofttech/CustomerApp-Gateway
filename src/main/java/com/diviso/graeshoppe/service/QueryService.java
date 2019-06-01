@@ -117,6 +117,8 @@ public Order findById(Long id);
  * @param deliveryType
  */
 public Page<Store> findStoreByType(String deliveryType);
+public List findCategoryByStoreId(String userId, Pageable pageable);
+public Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable);
 
 
 }
