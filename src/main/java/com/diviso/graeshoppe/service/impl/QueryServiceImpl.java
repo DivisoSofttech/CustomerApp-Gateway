@@ -235,14 +235,14 @@ public class QueryServiceImpl implements QueryService {
 	public Page<Store> findAllStores(Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
-	Page<Store> storePage= elasticsearchOperations.queryForPage(searchQuery, Store.class);
-	
-	storePage.forEach(store->{
-		List<UserRating> userRating= findUserRatingByRegNo(store.getRegNo()).getContent();
-		store.setUserRatings(new HashSet<UserRating>(userRating));
-	 });
-	
-	return storePage;
+		Page<Store> storePage = elasticsearchOperations.queryForPage(searchQuery, Store.class);
+
+		storePage.forEach(store -> {
+			List<UserRating> userRating = findUserRatingByRegNo(store.getRegNo()).getContent();
+			store.setUserRatings(new HashSet<UserRating>(userRating));
+		});
+
+		return storePage;
 	}
 
 	/*
@@ -342,8 +342,6 @@ public class QueryServiceImpl implements QueryService {
 		// returncustom elasticsearchTemplate.queryForList(searchQuery, Product.class);
 
 	}
-	
-	
 
 	@Override
 	public Page<Category> findCategoryByUserId(String userId, Pageable pageable) {
@@ -470,11 +468,10 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
-	
-	/*to find category by storeId 
+	/*
+	 * to find category by storeId
 	 */
-	
-	
+
 	@Override
 	public List<Category> findCategoryByStoreId(String userId, Pageable pageable) {
 		List<Category> categoryList = new ArrayList<>();
@@ -492,33 +489,23 @@ public class QueryServiceImpl implements QueryService {
 		return categoryList;
 	}
 
-	
-	/*to find Product by storeId and categoryName 
+	/*
+	 * to find Product by storeId and categoryName
 	 */
 	@Override
 	public Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable) {
-		
+
 		List<Category> categoryList = new ArrayList<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
 		sourceFilter.withExcludes("categories");
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword",userId ))
-				.must(QueryBuilders.termQuery("categories.name.keyword", categoryName)))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword", userId))
+						.must(QueryBuilders.termQuery("categories.name.keyword", categoryName)))
 				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		Page<Product> p=	elasticsearchOperations.queryForPage(searchQuery, Product.class);
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<findProductByStoreIdAndCategoryName>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+p.getContent().size());
-		return p;
-		
+
+		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+
 	}
 
 }
