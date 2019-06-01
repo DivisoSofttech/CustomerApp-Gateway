@@ -502,7 +502,9 @@ public class QueryServiceImpl implements QueryService {
 						.must(QueryBuilders.matchQuery("categories.name.keyword", "arabian special")))
 				.build();
 		
-		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
+		Page<Product> p=	elasticsearchOperations.queryForPage(searchQuery, Product.class);
+		System.out.println(p.getContent());
+		return p;
 		
 	}
 
