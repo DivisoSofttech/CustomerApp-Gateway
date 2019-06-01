@@ -6,6 +6,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilders;
@@ -233,7 +234,14 @@ public class QueryServiceImpl implements QueryService {
 	public Page<Store> findAllStores(Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	Page<Store> storePage= elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	
+	storePage.forEach(store->{
+		List<UserRating> userRating= findUserRatingByRegNo(store.getRegNo()).getContent();
+		store.setUserRatings(new HashSet<UserRating>(userRating));
+	 });
+	
+	return storePage;
 	}
 
 	/*
@@ -333,6 +341,8 @@ public class QueryServiceImpl implements QueryService {
 		// returncustom elasticsearchTemplate.queryForList(searchQuery, Product.class);
 
 	}
+	
+	
 
 	@Override
 	public Page<Category> findCategoryByUserId(String userId, Pageable pageable) {
