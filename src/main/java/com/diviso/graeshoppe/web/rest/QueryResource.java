@@ -391,7 +391,7 @@ public class QueryResource {
 		log.info("..............."+deliveryType);
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
-	
+	//.........................................................................................
 	/**
      * GET  /findCategoryByStoreId/:userId .
      *
@@ -405,6 +405,18 @@ public class QueryResource {
 		return ResponseEntity.ok().body(new PageImpl(queryService.findCategoryByStoreId(userId,pageable)));
 	 }
 	
+	/**
+     * GET  /findProductByStoreIdAndCategoryName/:userId,categoryName.
+     *
+     * @param userId , categoryName.
+     * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
+     */
+	
+	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
+	 public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,@PathVariable("categoryName") String categoryName,Pageable pageable){
+	 log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId,categoryName);
+		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryName,pageable));
+	 }
 	
 	
 	
