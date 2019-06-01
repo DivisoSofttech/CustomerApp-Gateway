@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
@@ -445,17 +446,40 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
-	
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.String)
 	 */
 	@Override
 	public Page<Store> findStoreByType(String deliveryType) {
-	
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("deliveryInfos.type.name.keyword", deliveryType))
-				.build();
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(termQuery("deliveryInfos.type.name.keyword", deliveryType)).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
-}
+	
+	/*to find category by storeId 
+	 */
+	
+	
+	@Override
+	public List<Category> findCategoryByStoreId(String userId, Pageable pageable) {
+		List<Category> categoryList = new ArrayList<>();
+		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
+		sourceFilter.withExcludes("product");
 
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userId", userId))
+				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
+		List<Product> productList = elasticsearchOperations.queryForList(searchQuery, Product.class);
+
+		for (Product product : productList) {
+
+			categoryList.addAll(product.getCategories());
+		}
+		return categoryList;
+	}
+
+}

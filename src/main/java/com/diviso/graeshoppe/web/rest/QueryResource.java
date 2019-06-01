@@ -392,6 +392,24 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
 	
+	/**
+     * GET  /findCategoryByStoreId/:userId .
+     *
+     * @param userId 
+     * @return the ResponseEntity with status 200 (OK) and with body the Category or with status 404 (Not Found)
+     */
+	
+	@GetMapping("/findCategoryByStoreId/{userId}")
+	 public ResponseEntity<Page<Category>> findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
+	 log.debug("REST request to findCategoryByStoreId : {}", userId);
+		return ResponseEntity.ok().body(new PageImpl(queryService.findCategoryByStoreId(userId,pageable)));
+	 }
+	
+	
+	
+	
+	
+	
 	
 	
 }
