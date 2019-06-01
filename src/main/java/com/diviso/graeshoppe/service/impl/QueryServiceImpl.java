@@ -503,7 +503,7 @@ public class QueryServiceImpl implements QueryService {
 				.build();
 		
 		Page<Product> p=	elasticsearchOperations.queryForPage(searchQuery, Product.class);
-		System.out.println(p.getContent());
+		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<findProductByStoreIdAndCategoryName>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+p.getContent().size());
 		return p;
 		
 	}
