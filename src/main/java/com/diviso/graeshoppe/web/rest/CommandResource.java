@@ -2,6 +2,9 @@ package com.diviso.graeshoppe.web.rest;
 
 import java.time.Instant;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -90,6 +93,9 @@ public class CommandResource {
 	@Autowired
 	QueryService queryService;
 
+	@Autowired
+	QueryResource queryResource;
+	
 	private final Logger log = LoggerFactory.getLogger(CommandResource.class);
 
 	@PostMapping("/customers/register-customer")
@@ -309,15 +315,15 @@ public class CommandResource {
 	}
 
 	@PostMapping("/rating-review")
-	public RatingReview createRatingAndReview(@RequestBody RatingReview ratingReview) {
+	public  ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,Pageable pageable) {
 
 		UserRatingDTO userRatingDTO = ratingReview.getRating();
 		ReviewDTO reviewDTO = ratingReview.getReview();
-
+		StoreDTO store=null;
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
 		if (userRatingDTO.getRating() != null) {
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
-			StoreDTO store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
+			 store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
 
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
@@ -362,7 +368,7 @@ public class CommandResource {
 			}
 
 		}
-		return ratingReview;
+		 return queryResource.findRatingReviewByStoreidAndCustomerName(store.getRegNo(), pageable);
 	}
 
 }

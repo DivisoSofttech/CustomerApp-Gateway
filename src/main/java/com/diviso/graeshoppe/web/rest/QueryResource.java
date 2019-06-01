@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -324,7 +325,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findRatingReview/{storeId}")
-	public ResponseEntity<List<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
+	public ResponseEntity<Page<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
 			/* @PathVariable String name */Pageable pageable) {
 		List<RatingReview> listOfRatingreview = new ArrayList<RatingReview>();
 
@@ -361,8 +362,10 @@ public class QueryResource {
 				log.info(">>>>>>>>>>>>>>>>>>> listOfRatingreview:  "+listOfRatingreview+"   >>>>>>>>>>>>>>>>");
 			}
 		}
+		
+		Page<RatingReview> page=new PageImpl(listOfRatingreview);
 
-		return ResponseEntity.ok().body(listOfRatingreview);
+		return ResponseEntity.ok().body(page);
 
 	}
 
@@ -382,9 +385,13 @@ public class QueryResource {
 		return null;
 	}
 	
+	//..................elastic bug ...................
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
 	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType ){
 		log.info("..............."+deliveryType);
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
+	
+	
+	
 }
