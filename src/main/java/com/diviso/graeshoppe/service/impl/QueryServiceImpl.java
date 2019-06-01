@@ -497,10 +497,23 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword",userId ))
-						.must(QueryBuilders.termQuery("categories.name.keyword", categoryName)))
-				.build();
+		
+		List<Category> categoryList = new ArrayList<>();
+		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
+		sourceFilter.withExcludes("categories");
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword",userId ))
+				.must(QueryBuilders.termQuery("categories.name.keyword", categoryName)))
+				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		
 		Page<Product> p=	elasticsearchOperations.queryForPage(searchQuery, Product.class);
 		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<<<<findProductByStoreIdAndCategoryName>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"+p.getContent().size());
