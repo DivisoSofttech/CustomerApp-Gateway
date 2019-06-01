@@ -412,10 +412,10 @@ public class QueryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
      */
 	
-	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
-	 public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,@PathVariable("categoryName") String categoryName,Pageable pageable){
-	 log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId,categoryName);
-		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryName,pageable));
+	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
+	 public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,@PathVariable("categoryId") Long categoryId,Pageable pageable){
+	 log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId,categoryId);
+		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryId,pageable));
 	 }
 	
 	
