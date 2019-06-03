@@ -8,6 +8,7 @@ import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -15,6 +16,7 @@ import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
@@ -23,6 +25,7 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Order;
@@ -35,6 +38,7 @@ import com.diviso.graeshoppe.client.product.model.StockLine;
 import com.diviso.graeshoppe.client.product.model.Uom;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -507,5 +511,23 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 
 	}
+	/*
+	 * to find Store by typeName
+	 */
+	@Override
+	public Page<Store> findStoreByTypeName(String name, Pageable pageable) {
+		Set<Store> storeSet = new HashSet<>();
+		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
+		sourceFilter.withExcludes("deliveryinfo","type");
 
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("type.name.keyword",name)))
+				.withIndices("deliveryinfo").withTypes("deliveryinfo").withSourceFilter(sourceFilter.build()).build();
+		
+		List<DeliveryInfo> deliveryInfoList=elasticsearchOperations.queryForList(searchQuery, DeliveryInfo.class);
+        for(DeliveryInfo delivery: deliveryInfoList) {
+        	storeSet.add(delivery.getStore());
+        }
+		return new PageImpl( new ArrayList<Store>(storeSet));
+	}
 }

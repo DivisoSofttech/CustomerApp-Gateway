@@ -418,8 +418,17 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryId,pageable));
 	 }
 	
-	
-	
+	/**
+     * GET  /findStoreByTypeName/:typeName.
+     *
+     * @param typeName
+     * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
+     */
+
+	 @GetMapping("/findStoreByTypeName/{name}")
+	 public Page<Store> findStoreByTypeName(@PathVariable  String name,Pageable pageable){
+		 return queryService.findStoreByTypeName(name,pageable);
+	 } 
 	
 	
 	
