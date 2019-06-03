@@ -480,7 +480,7 @@ public class QueryServiceImpl implements QueryService {
 	public List<Category> findCategoryByStoreId(String userId, Pageable pageable) {
 		List<Category> categoryList = new ArrayList<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("product");
+		sourceFilter.withExcludes("product","categories.image");
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userId", userId))
 				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
