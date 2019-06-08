@@ -333,38 +333,38 @@ public class QueryResource {
 		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
 
 		for (Customer c : customerList) {
-			
-        log.info(">>>>>>>>>>>>>>>>>>> customer:   "+c+"   >>>>>>>>>>>>>>>>");
-        
+
+			log.info(">>>>>>>>>>>>>>>>>>> customer:   " + c + "   >>>>>>>>>>>>>>>>");
+
 			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
-			
-			log.info(">>>>>>>>>>>>>>>>>>> rating:  "+rating+"   >>>>>>>>>>>>>>>>");
-			
+
+			log.info(">>>>>>>>>>>>>>>>>>> rating:  " + rating + "   >>>>>>>>>>>>>>>>");
+
 			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
-			
-			log.info(">>>>>>>>>>>>>>>>>>> review:  "+review+"   >>>>>>>>>>>>>>>>");
-			
+
+			log.info(">>>>>>>>>>>>>>>>>>> review:  " + review + "   >>>>>>>>>>>>>>>>");
+
 			if (rating != null) {
-				
+
 				RatingReview ratingReview = new RatingReview();
 
 				ratingReview.setRating(userRatingResourceApi.modelToDtoUsingPOST1(rating).getBody());
 
-				if(review!=null){
-					
-				ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
-				
+				if (review != null) {
+
+					ratingReview.setReview(reviewResourceApi.modelToDtoUsingPOST(review).getBody());
+
 				}
-				
-				log.info(">>>>>>>>>>>>>>>>>>> ratingReview:  "+ratingReview+"   >>>>>>>>>>>>>>>>");
-				
+
+				log.info(">>>>>>>>>>>>>>>>>>> ratingReview:  " + ratingReview + "   >>>>>>>>>>>>>>>>");
+
 				listOfRatingreview.add(ratingReview);
-				
-				log.info(">>>>>>>>>>>>>>>>>>> listOfRatingreview:  "+listOfRatingreview+"   >>>>>>>>>>>>>>>>");
+
+				log.info(">>>>>>>>>>>>>>>>>>> listOfRatingreview:  " + listOfRatingreview + "   >>>>>>>>>>>>>>>>");
 			}
 		}
-		
-		Page<RatingReview> page=new PageImpl(listOfRatingreview);
+
+		Page<RatingReview> page = new PageImpl(listOfRatingreview);
 
 		return ResponseEntity.ok().body(page);
 
@@ -376,69 +376,77 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findStocks/{name}/{storeId}")
-	public ResponseEntity<List<StockCurrent>> findAllStockCurrentByProductNameStoreId(@PathVariable String name, @PathVariable String storeId) {
-		return ResponseEntity.ok().body(queryService.findAllStockCurrentByProductNameStoreId(name, storeId).getContent());
+	public ResponseEntity<List<StockCurrent>> findAllStockCurrentByProductNameStoreId(@PathVariable String name,
+			@PathVariable String storeId) {
+		return ResponseEntity.ok()
+				.body(queryService.findAllStockCurrentByProductNameStoreId(name, storeId).getContent());
 	}
-	
-	@GetMapping("/rating-count") 
-	public List<Entry> findRatingCount(Pageable pageable){
+
+	@GetMapping("/rating-count")
+	public List<Entry> findRatingCount(Pageable pageable) {
 		queryService.findRatingCount(pageable);
 		return null;
 	}
-	
-	//..................elastic bug ...................
+
+	// ..................elastic bug ...................
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
-	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType ){
-		log.info("..............."+deliveryType);
+	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType) {
+		log.info("..............." + deliveryType);
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
-	//.........................................................................................
-	/**
-     * GET  /findCategoryByStoreId/:userId .
-     *
-     * @param userId 
-     * @return the ResponseEntity with status 200 (OK) and with body the Category or with status 404 (Not Found)
-     */
-	
-	@GetMapping("/findCategoryByStoreId/{userId}")
-	 public ResponseEntity<Page<Category>>findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
-	 log.debug("REST request to findCategoryByStoreId : {}", userId);
-	 
-	 List<Category> categoryList = new ArrayList<>();
-	 categoryList.addAll(queryService.findCategoryByStoreId(userId,pageable));
-		return ResponseEntity.ok().body(new PageImpl(categoryList));
-	 }
-	
-	/**
-     * GET  /findProductByStoreIdAndCategoryName/:userId,categoryName.
-     *
-     * @param userId , categoryName.
-     * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
-     */
-	
-	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
-	 public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,@PathVariable("categoryId") Long categoryId,Pageable pageable){
-	 log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId,categoryId);
-		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId,categoryId,pageable));
-	 }
-	
-	/**
-     * GET  /findStoreByTypeName/:typeName.
-     *
-     * @param typeName
-     * @return the ResponseEntity with status 200 (OK) and with body the Product or with status 404 (Not Found)
-     */
 
-	 @GetMapping("/findStoreByTypeName/{name}")
-	 public Page<Store> findStoreByTypeName(@PathVariable  String name,Pageable pageable){
-		 return queryService.findStoreByTypeName(name,pageable);
-	 } 
-	
-	
-	 @GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
-	 public List<StockCurrent> findProductByStoreIdAndCategoryId(@PathVariable("userId") String userId,@PathVariable("categoryId") Long categoryId,Pageable pageable){
-	 log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId,categoryId);
-		return queryService.findStockCurrentByStoreIdAndCategoryId(userId,categoryId,pageable);
-	 }
-	
+	// .........................................................................................
+	/**
+	 * GET /findCategoryByStoreId/:userId .
+	 *
+	 * @param userId
+	 * @return the ResponseEntity with status 200 (OK) and with body the Category or
+	 *         with status 404 (Not Found)
+	 */
+
+	@GetMapping("/findCategoryByStoreId/{userId}")
+	public ResponseEntity<Page<Category>> findCategoryByStoreId(@PathVariable("userId") String userId,
+			Pageable pageable) {
+		log.debug("REST request to findCategoryByStoreId : {}", userId);
+
+		List<Category> categoryList = new ArrayList<>();
+		categoryList.addAll(queryService.findCategoryByStoreId(userId, pageable));
+		return ResponseEntity.ok().body(new PageImpl(categoryList));
+	}
+
+	/**
+	 * GET /findProductByStoreIdAndCategoryName/:userId,categoryName.
+	 *
+	 * @param userId , categoryName.
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
+	 *         with status 404 (Not Found)
+	 */
+
+	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
+	public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,
+			@PathVariable("categoryId") Long categoryId, Pageable pageable) {
+		log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId, categoryId);
+		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId, categoryId, pageable));
+	}
+
+	/**
+	 * GET /findStoreByTypeName/:typeName.
+	 *
+	 * @param typeName
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
+	 *         with status 404 (Not Found)
+	 */
+
+	@GetMapping("/findStoreByTypeName/{name}")
+	public Page<Store> findStoreByTypeName(@PathVariable String name, Pageable pageable) {
+		return queryService.findStoreByTypeName(name, pageable);
+	}
+
+	@GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
+	public List<StockCurrent> findProductByStoreIdAndCategoryId(@PathVariable("userId") String userId,
+			@PathVariable("categoryId") Long categoryId, Pageable pageable) {
+		log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId, categoryId);
+		return queryService.findStockCurrentByStoreIdAndCategoryId(userId, categoryId, pageable);
+	}
+
 }
