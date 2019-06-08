@@ -540,7 +540,7 @@ public class QueryServiceImpl implements QueryService {
 
 		List<StockCurrent> stockCurrentList = new ArrayList<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("categories", "product");
+		sourceFilter.withExcludes("categories");
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword", userId))
