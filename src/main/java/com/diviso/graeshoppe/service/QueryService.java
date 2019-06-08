@@ -126,6 +126,6 @@ public Page<Store> findStoreByTypeName(String name, Pageable pageable);
  * @param pageable
  * @return
  */
-Page<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
+List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
 }

@@ -432,9 +432,9 @@ public class QueryResource {
 	
 	
 	 @GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
-	 public ResponseEntity<Page<StockCurrent>> findProductByStoreIdAndCategoryId(@PathVariable("userId") String userId,@PathVariable("categoryId") Long categoryId,Pageable pageable){
+	 public List<StockCurrent> findProductByStoreIdAndCategoryId(@PathVariable("userId") String userId,@PathVariable("categoryId") Long categoryId,Pageable pageable){
 	 log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId,categoryId);
-		return ResponseEntity.ok().body(queryService.findStockCurrentByStoreIdAndCategoryId(userId,categoryId,pageable));
+		return queryService.findStockCurrentByStoreIdAndCategoryId(userId,categoryId,pageable);
 	 }
 	
 }

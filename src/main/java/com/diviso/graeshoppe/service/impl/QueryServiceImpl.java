@@ -535,7 +535,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId,
+	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId,
 			Pageable pageable) {
 
 		List<StockCurrent> stockCurrentList = new ArrayList<>();
@@ -561,7 +561,7 @@ public class QueryServiceImpl implements QueryService {
 			
 		}
 		
-		return new PageImpl(stockCurrentList);
+		return stockCurrentList;
 
 	}
 
