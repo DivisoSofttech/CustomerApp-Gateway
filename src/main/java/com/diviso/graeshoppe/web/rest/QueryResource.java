@@ -401,9 +401,12 @@ public class QueryResource {
      */
 	
 	@GetMapping("/findCategoryByStoreId/{userId}")
-	 public Set<Category> findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
+	 public ResponseEntity<Page<Category>>findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
 	 log.debug("REST request to findCategoryByStoreId : {}", userId);
-		return queryService.findCategoryByStoreId(userId,pageable);
+	 
+	 List<Category> categoryList = new ArrayList<>();
+	 categoryList.addAll(queryService.findCategoryByStoreId(userId,pageable));
+		return ResponseEntity.ok().body(new PageImpl(categoryList));
 	 }
 	
 	/**
