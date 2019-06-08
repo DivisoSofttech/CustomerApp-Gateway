@@ -2,6 +2,7 @@ package com.diviso.graeshoppe.web.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -400,9 +401,9 @@ public class QueryResource {
      */
 	
 	@GetMapping("/findCategoryByStoreId/{userId}")
-	 public ResponseEntity<Page<Category>> findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
+	 public Set<Category> findCategoryByStoreId(@PathVariable("userId") String userId,Pageable pageable){
 	 log.debug("REST request to findCategoryByStoreId : {}", userId);
-		return ResponseEntity.ok().body(new PageImpl(queryService.findCategoryByStoreId(userId,pageable)));
+		return queryService.findCategoryByStoreId(userId,pageable);
 	 }
 	
 	/**

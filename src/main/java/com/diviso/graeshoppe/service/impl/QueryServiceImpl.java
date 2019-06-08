@@ -479,8 +479,8 @@ public class QueryServiceImpl implements QueryService {
 	 */
 
 	@Override
-	public List<Category> findCategoryByStoreId(String userId, Pageable pageable) {
-		List<Category> categoryList = new ArrayList<>();
+	public Set<Category> findCategoryByStoreId(String userId, Pageable pageable) {
+		Set<Category> categorySet = new HashSet<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
 		sourceFilter.withExcludes("product", "categories.image");
 
@@ -490,9 +490,9 @@ public class QueryServiceImpl implements QueryService {
 
 		for (Product product : productList) {
 
-			categoryList.addAll(product.getCategories());
+			categorySet.addAll(product.getCategories());
 		}
-		return categoryList;
+		return categorySet;
 	}
 
 	/*

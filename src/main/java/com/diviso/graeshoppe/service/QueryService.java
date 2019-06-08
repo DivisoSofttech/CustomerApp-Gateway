@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -117,7 +118,7 @@ public Order findById(Long id);
  * @param deliveryType
  */
 public Page<Store> findStoreByType(String deliveryType);
-public List findCategoryByStoreId(String userId, Pageable pageable);
+public Set<Category> findCategoryByStoreId(String userId, Pageable pageable);
 public Page<Product> findProductByStoreIdAndCategoryName(String userId, Long categoryId, Pageable pageable);
 public Page<Store> findStoreByTypeName(String name, Pageable pageable);
 /**
