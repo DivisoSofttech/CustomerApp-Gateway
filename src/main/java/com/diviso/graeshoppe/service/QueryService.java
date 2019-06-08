@@ -120,5 +120,12 @@ public Page<Store> findStoreByType(String deliveryType);
 public List findCategoryByStoreId(String userId, Pageable pageable);
 public Page<Product> findProductByStoreIdAndCategoryName(String userId, Long categoryId, Pageable pageable);
 public Page<Store> findStoreByTypeName(String name, Pageable pageable);
+/**
+ * @param userId
+ * @param categoryId
+ * @param pageable
+ * @return
+ */
+Page<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
 }
