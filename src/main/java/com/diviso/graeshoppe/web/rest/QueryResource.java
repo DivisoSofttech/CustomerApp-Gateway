@@ -23,6 +23,7 @@ import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
+import com.diviso.graeshoppe.client.order.model.*;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
@@ -448,5 +449,18 @@ public class QueryResource {
 		log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId, categoryId);
 		return queryService.findStockCurrentByStoreIdAndCategoryId(userId, categoryId, pageable);
 	}
+	
+	
+	@GetMapping("/ordersByCustomerId/{customerId}")
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId) {
+
+		return queryService.findOrderByCustomerId(customerId);
+
+	}
+	
+	
+	
+	
+	
 
 }
