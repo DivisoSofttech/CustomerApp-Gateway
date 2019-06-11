@@ -167,7 +167,7 @@ public interface QueryService {
 	 */
 	List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
-	Page<Order> findOrderByCustomerId(String customerId);
+	Page<Order> findOrderByCustomerId(String customerId,Pageable pageable);
 
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId);
 }
