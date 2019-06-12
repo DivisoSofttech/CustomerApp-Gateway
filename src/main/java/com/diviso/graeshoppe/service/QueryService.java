@@ -107,7 +107,7 @@ public interface QueryService {
 
 	public List<Entry> findCategoryAndCount(Pageable pageable);
 
-	public Page<Customer> findCustomerByName(String name, Pageable pageable);
+	public Customer findCustomerByName(String name, Pageable pageable);
 
 	public Page<Category> findCategoryByUserId(String userId, Pageable pageable);
 

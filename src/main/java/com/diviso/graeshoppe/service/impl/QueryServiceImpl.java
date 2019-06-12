@@ -97,10 +97,10 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<Customer> findCustomerByName(String name, Pageable pageable) {
+	public Customer findCustomerByName(String name, Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Customer.class);
+		StringQuery searchQuery = new StringQuery(termQuery("name", name).toString());
+		return elasticsearchOperations.queryForObject(searchQuery, Customer.class);
 	}
 
 	@Override

@@ -107,8 +107,8 @@ public class QueryResource {
 	}
 
 	@GetMapping("/customers/findByName/{name}")
-	public Page<Customer> findCustomerByName(@PathVariable String name, Pageable pageable) {
-		return queryService.findCustomerByName(name, pageable);
+	public ResponseEntity<CustomerDTO> findCustomerByName(@PathVariable String name, Pageable pageable) {
+		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByName(name, pageable));
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
@@ -325,7 +325,7 @@ public class QueryResource {
 	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
-
+                 
 	@GetMapping("/findRatingReview/{storeId}")
 	public ResponseEntity<Page<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
 			/* @PathVariable String name */Pageable pageable) {

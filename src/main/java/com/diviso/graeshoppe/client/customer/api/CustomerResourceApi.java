@@ -5,6 +5,7 @@
  */
 package com.diviso.graeshoppe.client.customer.api;
 
+import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -115,5 +116,20 @@ public interface CustomerResourceApi {
         consumes = "application/json",
         method = RequestMethod.PUT)
     ResponseEntity<CustomerDTO> updateCustomerUsingPUT(@ApiParam(value = "customerDTO" ,required=true )  @Valid @RequestBody CustomerDTO customerDTO);
+
+    
+
+    @ApiOperation(value = "modelToDto", nickname = "modelToDtoUsingPOST", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = CustomerDTO.class),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/customer/modelToDto",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<CustomerDTO> modelToDtoUsingPOST(@ApiParam(value = "customer" ,required=true )  @Valid @RequestBody Customer customer);
 
 }
