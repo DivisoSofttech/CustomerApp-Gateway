@@ -1,8 +1,11 @@
 package com.diviso.graeshoppe.client.aggregators;
 
 public class CustomerAggregator {
+	
 	private String name;
 	private String mobileNumber;
+	private String reference;
+	
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
@@ -56,6 +59,18 @@ public class CustomerAggregator {
 	 */
 	public void setName(String name) {
 		this.name = name;
+	}
+	/**
+	 * @return the reference
+	 */
+	public String getReference() {
+		return reference;
+	}
+	/**
+	 * @param reference the reference to set
+	 */
+	public void setReference(String reference) {
+		this.reference = reference;
 	}
 	/**
 	 * @return the mobileNumber

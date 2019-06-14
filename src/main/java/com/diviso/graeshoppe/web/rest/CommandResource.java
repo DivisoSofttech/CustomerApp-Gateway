@@ -104,6 +104,7 @@ public class CommandResource {
 		CustomerDTO customerDTO = new CustomerDTO();
 		ContactDTO contactDTO = new ContactDTO();
 		customerDTO.setName(customerAggregator.getName());
+		customerDTO.setReference(customerAggregator.getReference())
 		contactDTO.setMobileNumber(customerAggregator.getMobileNumber());
 		ContactDTO resultDTO = contactResourceApi.createContactUsingPOST(contactDTO).getBody();
 		customerDTO.setContactId(resultDTO.getId());
