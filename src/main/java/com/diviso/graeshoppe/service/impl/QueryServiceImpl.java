@@ -547,11 +547,7 @@ public class QueryServiceImpl implements QueryService {
 			stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
 			System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
 		}
-		for (StockCurrent stockCurrent : stockCurrentList) {
-
-			System.out.println(stockCurrent);
-
-		}
+		
 
 		return stockCurrentList;
 
