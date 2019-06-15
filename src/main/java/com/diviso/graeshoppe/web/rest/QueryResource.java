@@ -101,7 +101,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/customers/findByReference/{reference}")
-	public ResponseEntity<CustomerDTO> findCustomerByName(@PathVariable String reference) {
+	public ResponseEntity<CustomerDTO> findCustomerByReference(@PathVariable String reference) {
 		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByReference);
 	}
 
@@ -178,6 +178,7 @@ public class QueryResource {
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
 		return this.productResourceApi.getProductUsingGET(id);
 	}
+
 
 	@GetMapping("/stocklines")
 	public ResponseEntity<List<StockLine>> findAllStockLines(Pageable pageable) {
