@@ -102,7 +102,7 @@ public class QueryResource {
 
 	@GetMapping("/customers/findByReference/{reference}")
 	public ResponseEntity<CustomerDTO> findCustomerByReference(@PathVariable String reference) {
-		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByReference);
+		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByReference(reference));
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
