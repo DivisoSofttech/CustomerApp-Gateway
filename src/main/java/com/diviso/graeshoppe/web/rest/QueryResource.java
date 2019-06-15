@@ -64,9 +64,6 @@ public class QueryResource {
 	QueryService queryService;
 
 	@Autowired
-	SaleResourceApi saleResourceApi;
-
-	@Autowired
 	UomResourceApi uomResourceApi;
 
 	@Autowired
@@ -77,9 +74,6 @@ public class QueryResource {
 
 	@Autowired
 	private ProductResourceApi productResourceApi;
-
-	@Autowired
-	private TicketLineResourceApi ticketLineResourceApi;
 
 	@Autowired
 	private ContactResourceApi contactResourceApi;
@@ -106,9 +100,9 @@ public class QueryResource {
 		return queryService.findCategoryByUserId(userId, pageable);
 	}
 
-	@GetMapping("/customers/findByName/{name}")
-	public ResponseEntity<CustomerDTO> findCustomerByName(@PathVariable String name, Pageable pageable) {
-		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByName(name, pageable));
+	@GetMapping("/customers/findByReference/{reference}")
+	public ResponseEntity<CustomerDTO> findCustomerByName(@PathVariable String reference) {
+		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByReference);
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
@@ -156,14 +150,6 @@ public class QueryResource {
 		return this.contactResourceApi.getContactUsingGET(id);
 	}
 
-	@GetMapping("/findAllUom")
-	public ResponseEntity<List<UomDTO>> findAllUom(@RequestParam(required = false) Integer page,
-			@RequestParam(required = false) Integer size,
-			@RequestParam(value = "sort", required = false) ArrayList<String> sort) {
-
-		return uomResourceApi.getAllUomsUsingGET(page, size, sort);
-	}
-
 	@GetMapping("/findAllCateogories")
 	public ResponseEntity<List<CategoryDTO>> findAllCategories(@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size,
@@ -188,44 +174,9 @@ public class QueryResource {
 		return productResourceApi.listToDtoUsingPOST(queryService.findAllProduct(page).getContent());
 	}
 
-	@GetMapping("/ticket-lines")
-	public ResponseEntity<List<TicketLineDTO>> findAllTicketlines(Integer page, Integer size, ArrayList<String> sort) {
-		return ticketLineResourceApi.getAllTicketLinesUsingGET(page, size, sort);
-	}
-
-	@GetMapping("/ticket-lines/{saleId}")
-	public ResponseEntity<List<TicketLine>> findAllTicketLinesBySaleId(@PathVariable Long saleId) {
-		return ResponseEntity.ok().body(queryService.findTicketLinesBySaleId(saleId));
-	}
-
-	@GetMapping("/ticket-lines/{id}")
-	public ResponseEntity<TicketLineDTO> findOneTicketLines(@PathVariable Long id) {
-		return ticketLineResourceApi.getTicketLineUsingGET(id);
-	}
-
 	@GetMapping("/products/{id}")
 	public ResponseEntity<ProductDTO> findProduct(@PathVariable Long id) {
 		return this.productResourceApi.getProductUsingGET(id);
-	}
-
-	@GetMapping("/products/export")
-	public ResponseEntity<byte[]> exportProducts() {
-		return this.productResourceApi.getPdfAllProdutsWithPriceUsingGET();
-	}
-
-	@GetMapping("/customers/export")
-	public ResponseEntity<byte[]> exportCustomers() {
-		return this.customerResourceApi.getPdfAllCustomersUsingGET();
-	}
-
-	@GetMapping("/sales/{id}")
-	public ResponseEntity<SaleDTO> findSaleById(@PathVariable Long id) {
-		return this.saleResourceApi.getSaleUsingGET(id);
-	}
-
-	@GetMapping("/sales")
-	public Page<Sale> findSales(Pageable pageable) {
-		return queryService.findSales(pageable);
 	}
 
 	@GetMapping("/stocklines")

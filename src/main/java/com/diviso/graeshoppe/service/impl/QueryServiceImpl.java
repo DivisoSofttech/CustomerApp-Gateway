@@ -97,9 +97,9 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Customer findCustomerByName(String name, Pageable pageable) {
+	public Customer findCustomerByReference(String reference) {
 
-		StringQuery searchQuery = new StringQuery(termQuery("name", name).toString());
+		StringQuery searchQuery = new StringQuery(termQuery("reference", reference).toString());
 		return elasticsearchOperations.queryForObject(searchQuery, Customer.class);
 	}
 
