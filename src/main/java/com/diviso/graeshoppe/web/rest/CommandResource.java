@@ -317,9 +317,12 @@ public class CommandResource {
 
 	@PostMapping("/rating-review")
 	public  ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,Pageable pageable) {
-
+		
+		
 		UserRatingDTO userRatingDTO = ratingReview.getRating();
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>ratingdto>>>>>>>>>>>>>>>>>>>>>>  "+userRatingDTO);
 		ReviewDTO reviewDTO = ratingReview.getReview();
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>reviewdto>>>>>>>>>>>>>>>>>>>>>>  "+reviewDTO);
 		StoreDTO store=null;
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
 		if (userRatingDTO.getRating() != null) {
