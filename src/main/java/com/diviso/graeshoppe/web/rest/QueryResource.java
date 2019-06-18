@@ -115,20 +115,11 @@ public class QueryResource {
 		return queryService.findStockCurrentByProductName(name, pageable);
 	}
 
-	@GetMapping("/findStockDiaryByProductId/{productId}")
-	public Page<StockDiary> findStockDiaryByProductId(@PathVariable Long productId, Pageable pageable) {
-		return queryService.findStockDiaryByProductId(productId, pageable);
-	}
-
 	@GetMapping("/findProductBySearchTerm/{searchTerm}")
 	public Page<Product> findAllProductBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
 		return queryService.findAllProductBySearchTerm(searchTerm, pageable);
 	}
 
-	@GetMapping("/findAllCustomer/{searchTerm}")
-	public Page<Customer> findAllCustomers(@PathVariable String searchTerm, Pageable pageable) {
-		return queryService.findAllCustomers(searchTerm, pageable);
-	}
 
 	@GetMapping("/findAllCustomers")
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
@@ -195,10 +186,6 @@ public class QueryResource {
 		return this.stockCurrentResourceApi.getStockCurrentUsingGET(id);
 	}
 
-	@GetMapping("/stock-diaries")
-	public ResponseEntity<List<StockDiary>> findAllStockDiaries(Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findAllStockDiaries(pageable).getContent());
-	}
 
 	@GetMapping("/stock-diaries/{id}")
 	public ResponseEntity<StockDiaryDTO> findOneStockDiary(@PathVariable Long id) {
@@ -323,9 +310,9 @@ public class QueryResource {
 
 	}
 
-	@GetMapping("/findStore/{name}")
-	public ResponseEntity<List<Store>> findAllStoreByName(@PathVariable String name) {
-		return ResponseEntity.ok().body(queryService.findAllStoreByName(name).getContent());
+	@GetMapping("/findStore/{searchTerm}")
+	public Page <Store> findStoreBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
+		return queryService.findStoreBySearchTerm(searchTerm, pageable);
 	}
 
 	@GetMapping("/findStocks/{name}/{storeId}")
@@ -341,7 +328,6 @@ public class QueryResource {
 		return null;
 	}
 
-	// ..................elastic bug ...................
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
 	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType) {
 		log.info("..............." + deliveryType);

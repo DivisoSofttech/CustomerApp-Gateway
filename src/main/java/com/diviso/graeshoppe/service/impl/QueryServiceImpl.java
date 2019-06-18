@@ -115,11 +115,6 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
 
-	@Override
-	public Page<StockDiary> findStockDiaryByProductId(Long productId, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.id", productId)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, StockDiary.class);
-	}
 
 	@Override
 	public Page<StockLine> findAllStockLines(Pageable pageable) {
@@ -150,53 +145,6 @@ public class QueryServiceImpl implements QueryService {
 	 * 
 	 * }
 	 */
-	@Override
-	public Page<Customer> findAllCustomers(String searchTerm, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).build();
-
-		return elasticsearchOperations.queryForPage(searchQuery, Customer.class);
-
-	}
-
-	@Override
-	public List<String> findAllUom(Pageable pageable) {
-		List<String> uomList = new ArrayList<String>();
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-				.withSearchType(QUERY_THEN_FETCH).withIndices("uom").withTypes("uom")
-				.addAggregation(AggregationBuilders.terms("distinct_uom").field("name.keyword")).build();
-
-		AggregatedPage<Uom> result = elasticsearchTemplate.queryForPage(searchQuery, Uom.class);
-		TermsAggregation uomAgg = result.getAggregation("distinct_uom", TermsAggregation.class);
-
-		System.out.println("<<<<<<<<<<<<<<<<<<<<<<<<<<" + uomAgg.getBuckets().size());
-
-		for (int i = 0; i < uomAgg.getBuckets().size(); i++) {
-			uomList.add(uomAgg.getBuckets().get(i).getKey());
-		}
-
-		return uomList;
-	}
-
-	@Override
-	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Customer.class);
-	}
-
-	@Override
-	public Page<Sale> findSales(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-				.withSort(SortBuilders.fieldSort("date").order(SortOrder.DESC)).withPageable(pageable).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Sale.class);
-
-	}
-
-	@Override
-	public List<TicketLine> findTicketLinesBySaleId(Long saleId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("sale.id", saleId)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, TicketLine.class).getContent();
-	}
 
 	@Override
 	public Page<StockCurrent> findAllStockCurrents(Pageable pageable) {
@@ -204,11 +152,6 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
 
-	@Override
-	public Page<StockDiary> findAllStockDiaries(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
-		return elasticsearchOperations.queryForPage(searchQuery, StockDiary.class);
-	}
 
 	@Override
 	public Page<Product> findAllProducts(Pageable pageable) {
@@ -381,18 +324,6 @@ public class QueryServiceImpl implements QueryService {
 						.must(QueryBuilders.termQuery("userName", name)).toString());
 
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
-	}
-
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findAllStoreByName(java.lang.
-	 * String)
-	 */
-	@Override
-	public Page<Store> findAllStoreByName(String name) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
 	/*
@@ -573,6 +504,23 @@ public class QueryServiceImpl implements QueryService {
 		StringQuery searchQuery = new StringQuery(termQuery("order.id", orderId).toString());
 		return elasticsearchOperations.queryForList(searchQuery, OrderLine.class);
 	}
+
+
+	@Override
+	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		return elasticsearchOperations.queryForPage(searchQuery, Customer.class);
+	}
+
+	@Override
+	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
 
 	
 	

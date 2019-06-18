@@ -30,10 +30,6 @@ public interface QueryService {
 
 	public Page<Product> findProductByCategoryId(Long categoryId, String userId, Pageable pageable);
 
-	public Page<Customer> findAllCustomers(String searchTerm, Pageable pageable);
-
-	public List<String> findAllUom(Pageable pageable);
-
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable);
 
 	/**
@@ -44,22 +40,14 @@ public interface QueryService {
 
 	public Page<StockLine> findAllStockLines(Pageable pageable);
 
-	/**
-	 * @return
-	 */
-	public Page<Sale> findSales(Pageable pageable);
-
-	public List<TicketLine> findTicketLinesBySaleId(Long saleId);
 
 	public Page<StockCurrent> findAllStockCurrents(Pageable pageable);
 
-	public Page<StockDiary> findAllStockDiaries(Pageable pageable);
 
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable);
 
 	public Page<StockCurrent> findStockCurrentByProductId(Long productId, Pageable pageable);
 
-	public Page<StockDiary> findStockDiaryByProductId(Long productId, Pageable pageable);
 
 	public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pageable);
 
@@ -123,10 +111,6 @@ public interface QueryService {
 	 */
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
 
-	/**
-	 * @param name
-	 */
-	public Page<Store> findAllStoreByName(String name);
 
 	/**
 	 * @return
@@ -165,9 +149,11 @@ public interface QueryService {
 	 * @param pageable
 	 * @return
 	 */
-	List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
+	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
-	Page<Order> findOrderByCustomerId(String customerId,Pageable pageable);
+	public Page<Order> findOrderByCustomerId(String customerId,Pageable pageable);
 
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId);
+
+	public Page<Store> findStoreBySearchTerm(String searchTerm,Pageable pageable);
 }
