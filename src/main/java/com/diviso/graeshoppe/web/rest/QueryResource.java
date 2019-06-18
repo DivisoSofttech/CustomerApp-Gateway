@@ -276,11 +276,11 @@ public class QueryResource {
 
 			log.info(">>>>>>>>>>>>>>>>>>> customer:   " + c + "   >>>>>>>>>>>>>>>>");
 
-			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getName());
+			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getReference());
 
 			log.info(">>>>>>>>>>>>>>>>>>> rating:  " + rating + "   >>>>>>>>>>>>>>>>");
 
-			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getName());
+			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getReference());
 
 			log.info(">>>>>>>>>>>>>>>>>>> review:  " + review + "   >>>>>>>>>>>>>>>>");
 

@@ -345,6 +345,7 @@ public class CommandResource {
 				ratingReview.setReview(review.getBody());
 			} else {
 
+				log.info("..............................ELSE>>>>>>>>>>>>>>>>>>>>>>>>>");
 				if (alreadyRatedUser.getId() != null) {
 					log.info("....................UPDATE..............");
 
