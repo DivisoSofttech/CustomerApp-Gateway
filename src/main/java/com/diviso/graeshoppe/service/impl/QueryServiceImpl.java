@@ -14,6 +14,8 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -45,6 +47,7 @@ import com.diviso.graeshoppe.client.store.domain.UserRating;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.web.rest.QueryResource;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
 
@@ -56,6 +59,8 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 public class QueryServiceImpl implements QueryService {
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
+	
+	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
 	public QueryServiceImpl(JestClient jestClient) {
 		this.jestClient = jestClient;
@@ -302,7 +307,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name) {
-
+log.info("....................... impl ................"+storeId+"      "+name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
 						.must(QueryBuilders.termQuery("reference", name)).toString());
