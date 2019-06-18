@@ -309,8 +309,8 @@ public class QueryServiceImpl implements QueryService {
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name) {
 System.out.println("....................... impl ................"+storeId+"      "+name);
 		StringQuery stringQuery = new StringQuery(
-				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-						.must(QueryBuilders.termQuery("reference", name)).toString());
+				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo.keyword", storeId))
+						.must(QueryBuilders.termQuery("reference.keyword", name)).toString());
 
 		return elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 	}
@@ -325,8 +325,8 @@ System.out.println("....................... impl ................"+storeId+"    
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name) {
 
 		StringQuery stringQuery = new StringQuery(
-				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-						.must(QueryBuilders.termQuery("reference", name)).toString());
+				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo.keyword", storeId))
+						.must(QueryBuilders.termQuery("reference.keyword", name)).toString());
 
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
 	}
