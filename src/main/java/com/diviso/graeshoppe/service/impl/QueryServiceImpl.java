@@ -307,7 +307,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name) {
-log.info("....................... impl ................"+storeId+"      "+name);
+System.out.println("....................... impl ................"+storeId+"      "+name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
 						.must(QueryBuilders.termQuery("reference", name)).toString());

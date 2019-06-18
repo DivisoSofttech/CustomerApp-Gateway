@@ -324,11 +324,11 @@ public class CommandResource {
 		ReviewDTO reviewDTO = ratingReview.getReview();
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>reviewdto>>>>>>>>>>>>>>>>>>>>>>  "+reviewDTO);
 		StoreDTO store=null;
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO+"     condition...     "+(userRatingDTO.getRating() != null));
 		if (userRatingDTO.getRating() != null) {
-			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>");
+			
 			 store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
-
+			 log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>"+store.getRegNo()+"     "+userRatingDTO.getUserName());
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
 			
