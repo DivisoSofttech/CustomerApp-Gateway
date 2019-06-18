@@ -326,7 +326,7 @@ System.out.println("....................... impl ................"+storeId+"    
 
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-						.must(QueryBuilders.termQuery("userName", name)).toString());
+						.must(QueryBuilders.termQuery("reference", name)).toString());
 
 		return elasticsearchOperations.queryForObject(stringQuery, Review.class);
 	}
