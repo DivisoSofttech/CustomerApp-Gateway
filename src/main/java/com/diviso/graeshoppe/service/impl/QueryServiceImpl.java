@@ -310,11 +310,21 @@ public class QueryServiceImpl implements QueryService {
 System.out.println("....................... impl ................"+storeId+"      "+name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-						.must(QueryBuilders.termQuery("userName", name)).toString());
-
-		return elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+				 		.must(QueryBuilders.termQuery("userName", name)).toString());
+		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+		return rating;
 	}
 
+	@Override
+	public UserRating findRatingByStoreId(String storeId) {
+System.out.println("....................... impl ................"+storeId);
+		StringQuery stringQuery = new StringQuery(
+				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId)).toString());
+		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+		return rating;
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

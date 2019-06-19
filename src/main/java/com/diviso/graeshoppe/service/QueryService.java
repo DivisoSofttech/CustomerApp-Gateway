@@ -156,4 +156,5 @@ public interface QueryService {
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId);
 
 	public Page<Store> findStoreBySearchTerm(String searchTerm,Pageable pageable);
+	public UserRating findRatingByStoreId(String storeId);
 }

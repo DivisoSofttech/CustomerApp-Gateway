@@ -396,7 +396,10 @@ public class QueryResource {
 
 	}
 	
-	
+	@GetMapping("/rating/{storeId}")
+	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId) {
+		return queryService.findRatingByStoreId(storeId);
+	}
 	
 	
 	
