@@ -47,9 +47,11 @@ import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
+import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.service.QueryService;
 
@@ -393,6 +395,13 @@ public class QueryResource {
 	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
 
 		return queryService.findOrderByCustomerId(customerId,pageable);
+
+	}
+	
+	@GetMapping("/deliveryTypes/{storeId}")
+	public Page<Type> findAllDeliveryTypesByStoreId(@PathVariable Long storeId,Pageable pageable) {
+
+		return queryService.findAllDeliveryTypesByStoreId(storeId,pageable);
 
 	}
 	

@@ -18,8 +18,10 @@ import com.diviso.graeshoppe.client.product.model.StockDiary;
 import com.diviso.graeshoppe.client.product.model.StockLine;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
+import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.order.model.*;
 
@@ -40,14 +42,11 @@ public interface QueryService {
 
 	public Page<StockLine> findAllStockLines(Pageable pageable);
 
-
 	public Page<StockCurrent> findAllStockCurrents(Pageable pageable);
-
 
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable);
 
 	public Page<StockCurrent> findStockCurrentByProductId(Long productId, Pageable pageable);
-
 
 	public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pageable);
 
@@ -111,7 +110,6 @@ public interface QueryService {
 	 */
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
 
-
 	/**
 	 * @return
 	 */
@@ -151,10 +149,13 @@ public interface QueryService {
 	 */
 	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
-	public Page<Order> findOrderByCustomerId(String customerId,Pageable pageable);
+	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable);
 
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId);
 
-	public Page<Store> findStoreBySearchTerm(String searchTerm,Pageable pageable);
+	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable);
+
 	public UserRating findRatingByStoreId(String storeId);
+
+	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
 }
