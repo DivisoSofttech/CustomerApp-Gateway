@@ -555,7 +555,9 @@ public class QueryServiceImpl implements QueryService {
 
 		});
 		
-		System.out.println(types);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+deliveryinfos);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+types);
+		
 		return new PageImpl(types);
 	
 	}
