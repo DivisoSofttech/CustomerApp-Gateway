@@ -544,7 +544,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("storeId", storeId)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.id", storeId)).build();
 
 		Page<DeliveryInfo> deliveryinfos = elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 
@@ -555,7 +555,7 @@ public class QueryServiceImpl implements QueryService {
 
 		});
 		
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+deliveryinfos);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+deliveryinfos.getContent());
 		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+types);
 		
 		return new PageImpl(types);
