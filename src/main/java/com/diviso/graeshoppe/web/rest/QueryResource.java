@@ -23,6 +23,7 @@ import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
+import com.diviso.graeshoppe.client.order.api.DeliveryInfoCommandResourceApi;
 import com.diviso.graeshoppe.client.order.model.*;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
@@ -419,7 +420,11 @@ public class QueryResource {
 
 		List<OrderLine> orderLines = queryService.findOrderLinesByOrderId(order.getId());
 
-		OrderDeliveryInfo orderDeliveryInfo = order.getDeliveryInfo();
+		log.info("...........................order.getDeliveryInfo().getId().........................."+order.getDeliveryInfo().getId());
+		
+		OrderDeliveryInfo orderDeliveryInfo = queryService.findDeliveryInfoById(order.getDeliveryInfo().getId());
+
+		log.info("......................orderDeliveryInfo..................:    " + orderDeliveryInfo);
 
 		OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
 

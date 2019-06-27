@@ -9,8 +9,6 @@ import org.springframework.data.domain.Slice;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
-import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderAddress;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -167,4 +165,10 @@ public interface QueryService {
 	Order findOrderByOrderId(String orderId);
 
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	public OrderDeliveryInfo findDeliveryInfoById(Long id);
 }

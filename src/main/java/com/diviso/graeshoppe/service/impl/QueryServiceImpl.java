@@ -31,6 +31,7 @@ import org.springframework.stereotype.Service;
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderAddress;
+import com.diviso.graeshoppe.client.order.model.OrderDeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderMaster;
 import com.diviso.graeshoppe.client.product.model.Category;
@@ -583,6 +584,15 @@ System.out.println("....................... impl ................"+name);
 		
 		return new PageImpl(types);
 	
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryInfoById(java.lang.Long)
+	 */
+	@Override
+	public OrderDeliveryInfo findDeliveryInfoById(Long id) {
+		StringQuery stringQuery = new StringQuery(matchQuery("id", id).toString());
+		return elasticsearchOperations.queryForObject(stringQuery, OrderDeliveryInfo.class);
 	}
 
 }
