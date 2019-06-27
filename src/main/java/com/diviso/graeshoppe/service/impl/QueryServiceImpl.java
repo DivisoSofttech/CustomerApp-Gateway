@@ -44,6 +44,7 @@ import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
@@ -60,7 +61,7 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 public class QueryServiceImpl implements QueryService {
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
-	
+
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
 	public QueryServiceImpl(JestClient jestClient) {
@@ -121,7 +122,6 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
 
-
 	@Override
 	public Page<StockLine> findAllStockLines(Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
@@ -157,7 +157,6 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
-
 
 	@Override
 	public Page<Product> findAllProducts(Pageable pageable) {
@@ -308,22 +307,23 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name) {
-System.out.println("....................... impl ................"+storeId+"      "+name);
+		System.out.println("....................... impl ................" + storeId + "      " + name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
-				 		.must(QueryBuilders.termQuery("userName", name)).toString());
-		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+						.must(QueryBuilders.termQuery("userName", name)).toString());
+		UserRating rating = elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 		return rating;
 	}
 
 	@Override
 	public UserRating findRatingByStoreId(String storeId) {
-System.out.println("....................... impl ................"+storeId);
+		System.out.println("....................... impl ................" + storeId);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId)).toString());
-		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+		UserRating rating = elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 		return rating;
 	}
+
 	
 	
 	@Override
@@ -369,7 +369,9 @@ System.out.println("....................... impl ................"+name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.userId", storeId))
 						.must(QueryBuilders.termQuery("product.name", productName)).toString());
+
 		return elasticsearchOperations.queryForPage(stringQuery, StockCurrent.class);
+
 	}
 
 	/*
@@ -503,14 +505,13 @@ System.out.println("....................... impl ................"+name);
 			stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
 			System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
 		}
-		
 
 		return stockCurrentList;
 
 	}
 
 	@Override
-	public Page<Order> findOrderByCustomerId(String customerId,Pageable pageable) {
+	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId", customerId)).build();
 
 		Page<Order> orderPage = elasticsearchOperations.queryForPage(searchQuery, Order.class);
@@ -530,7 +531,6 @@ System.out.println("....................... impl ................"+name);
 		return elasticsearchOperations.queryForList(searchQuery, OrderLine.class);
 	}
 
-
 	@Override
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
@@ -546,6 +546,7 @@ System.out.println("....................... impl ................"+name);
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
+
 	/* (non-Javadoc)
 	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.String)
 	 */
@@ -555,16 +556,33 @@ System.out.println("....................... impl ................"+name);
 		return elasticsearchOperations.queryForObject(stringQuery, Order.class);
 	}
 
-	
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findAllDeliveryInfosByStoreId(
+	 * java. lang .String)
+	 */
+	@Override
+	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.id", storeId)).build();
 
 
+		Page<DeliveryInfo> deliveryinfos = elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 
+		List<Type> types = new ArrayList<Type>();
+		
+		deliveryinfos.forEach(deliveryInfo -> {
+			types.add(deliveryInfo.getType());
+
+		});
+		
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+deliveryinfos.getContent());
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+types);
+		
+		return new PageImpl(types);
 	
-	
-	
-	
-	
-	
-	
-	
+	}
+
 }
