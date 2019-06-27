@@ -104,7 +104,7 @@ public class QueryResource {
 
 	@GetMapping("/customers/findByReference/{reference}")
 	public ResponseEntity<CustomerDTO> findCustomerByReference(@PathVariable String reference) {
-		return customerResourceApi.modelToDtoUsingPOST( queryService.findCustomerByReference(reference));
+		return customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
@@ -121,7 +121,6 @@ public class QueryResource {
 	public Page<Product> findAllProductBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
 		return queryService.findAllProductBySearchTerm(searchTerm, pageable);
 	}
-
 
 	@GetMapping("/findAllCustomers")
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
@@ -172,7 +171,6 @@ public class QueryResource {
 		return this.productResourceApi.getProductUsingGET(id);
 	}
 
-
 	@GetMapping("/stocklines")
 	public ResponseEntity<List<StockLine>> findAllStockLines(Pageable pageable) {
 		return ResponseEntity.ok().body(this.queryService.findAllStockLines(pageable).getContent());
@@ -187,7 +185,6 @@ public class QueryResource {
 	public ResponseEntity<StockCurrentDTO> findOneStockCurrent(@PathVariable Long id) {
 		return this.stockCurrentResourceApi.getStockCurrentUsingGET(id);
 	}
-
 
 	@GetMapping("/stock-diaries/{id}")
 	public ResponseEntity<StockDiaryDTO> findOneStockDiary(@PathVariable Long id) {
@@ -266,7 +263,7 @@ public class QueryResource {
 	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
-                 
+
 	@GetMapping("/findRatingReview/{storeId}")
 	public ResponseEntity<Page<RatingReview>> findRatingReviewByStoreidAndCustomerName(@PathVariable String storeId,
 			/* @PathVariable String name */Pageable pageable) {
@@ -313,7 +310,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findStore/{searchTerm}")
-	public Page <Store> findStoreBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
+	public Page<Store> findStoreBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
 		return queryService.findStoreBySearchTerm(searchTerm, pageable);
 	}
 
@@ -341,8 +338,8 @@ public class QueryResource {
 	 * GET /findCategoryByStoreId/:userId .
 	 *
 	 * @param userId
-	 * @return the ResponseEntity with status 200 (OK) and with body the Category or
-	 *         with status 404 (Not Found)
+	 * @return the ResponseEntity with status 200 (OK) and with body the
+	 *         Category or with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findCategoryByStoreId/{userId}")
@@ -358,9 +355,10 @@ public class QueryResource {
 	/**
 	 * GET /findProductByStoreIdAndCategoryName/:userId,categoryName.
 	 *
-	 * @param userId , categoryName.
-	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
-	 *         with status 404 (Not Found)
+	 * @param userId
+	 *            , categoryName.
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product
+	 *         or with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
@@ -374,8 +372,8 @@ public class QueryResource {
 	 * GET /findStoreByTypeName/:typeName.
 	 *
 	 * @param typeName
-	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
-	 *         with status 404 (Not Found)
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product
+	 *         or with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findStoreByTypeName/{name}")
@@ -389,53 +387,52 @@ public class QueryResource {
 		log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId, categoryId);
 		return queryService.findStockCurrentByStoreIdAndCategoryId(userId, categoryId, pageable);
 	}
-	
-	
+
 	@GetMapping("/ordersByCustomerId/{customerId}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId, Pageable pageable) {
 
-		return queryService.findOrderByCustomerId(customerId,pageable);
+		return queryService.findOrderByCustomerId(customerId, pageable);
 
 	}
-	
+
 	@GetMapping("/deliveryTypes/{storeId}")
-	public Page<Type> findAllDeliveryTypesByStoreId(@PathVariable Long storeId,Pageable pageable) {
+	public Page<Type> findAllDeliveryTypesByStoreId(@PathVariable Long storeId, Pageable pageable) {
 
-		return queryService.findAllDeliveryTypesByStoreId(storeId,pageable);
+		return queryService.findAllDeliveryTypesByStoreId(storeId, pageable);
 
 	}
-	
+
 	@GetMapping("/rating/{storeId}")
 	public UserRating findRatingByStoreId(@PathVariable String storeId) {
 		return queryService.findRatingByStoreId(storeId);
 	}
-	
+
 	@GetMapping("/ratingByName/{name}")
 	public UserRating findRatingByCustomerName(@PathVariable String name) {
 		return queryService.findRatingByStoreId(name);
 	}
-	
+
 	@GetMapping("/orderMaster/{orderId}")
-	public ResponseEntity<OrderMaster> findOrderMasterByOrderId(@PathVariable String orderId){
-		
-	Order order = queryService.findOrderByOrderId(orderId);
-	
-	List<OrderLine> orderLines = queryService.findOrderLinesByOrderId(order.getId());
-	
-	OrderDeliveryInfo orderDeliveryInfo = order.getDeliveryInfo();
-	
-	OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
-	
-	OrderMaster orderMaster = new OrderMaster();
-	
-	orderMaster.setAddress(orderAddress);
-	
-	orderMaster.setOrder(order);
-	
-	orderMaster.setOrderLines(orderLines);
-	
-	return ResponseEntity.ok().body(orderMaster);
-	
+	public ResponseEntity<OrderMaster> findOrderMasterByOrderId(@PathVariable String orderId) {
+
+		Order order = queryService.findOrderByOrderId(orderId);
+
+		List<OrderLine> orderLines = queryService.findOrderLinesByOrderId(order.getId());
+
+		OrderDeliveryInfo orderDeliveryInfo = order.getDeliveryInfo();
+
+		OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
+
+		OrderMaster orderMaster = new OrderMaster();
+
+		orderMaster.setAddress(orderAddress);
+
+		orderMaster.setOrder(order);
+
+		orderMaster.setOrderLines(orderLines);
+
+		return ResponseEntity.ok().body(orderMaster);
+
 	}
 
 }
