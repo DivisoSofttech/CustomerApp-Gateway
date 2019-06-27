@@ -157,4 +157,12 @@ public interface QueryService {
 
 	public Page<Store> findStoreBySearchTerm(String searchTerm,Pageable pageable);
 	public UserRating findRatingByStoreId(String storeId);
+
+	/**
+	 * @param name
+	 * @return
+	 */
+	UserRating findRatingByName(String name);
+
+	Order findOrderByOrderId(String orderId);
 }

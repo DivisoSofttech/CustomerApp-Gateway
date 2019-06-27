@@ -397,11 +397,36 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/rating/{storeId}")
-	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId) {
+	public UserRating findRatingByStoreId(@PathVariable String storeId) {
 		return queryService.findRatingByStoreId(storeId);
 	}
 	
+	@GetMapping("/ratingByName/{name}")
+	public UserRating findRatingByCustomerName(@PathVariable String name) {
+		return queryService.findRatingByStoreId(name);
+	}
 	
+	@GetMapping("/orderMaster/{orderId}")
+	public ResponseEntity<OrderMaster> findOrderMasterByOrderId(@PathVariable String orderId){
+		
+	Order order = queryService.findOrderByOrderId(orderId);
 	
+	List<OrderLine> orderLines = queryService.findOrderLinesByOrderId(order.getId());
+	
+	OrderDeliveryInfo orderDeliveryInfo = order.getDeliveryInfo();
+	
+	OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
+	
+	OrderMaster orderMaster = new OrderMaster();
+	
+	orderMaster.setAddress(orderAddress);
+	
+	orderMaster.setOrder(order);
+	
+	orderMaster.setOrderLines(orderLines);
+	
+	return ResponseEntity.ok().body(orderMaster);
+	
+	}
 
 }

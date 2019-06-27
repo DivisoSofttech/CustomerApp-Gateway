@@ -32,6 +32,7 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderAddress;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.order.model.OrderMaster;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -325,6 +326,14 @@ System.out.println("....................... impl ................"+storeId);
 	}
 	
 	
+	@Override
+	public UserRating findRatingByName(String name) {
+System.out.println("....................... impl ................"+name);
+		StringQuery stringQuery = new StringQuery(
+				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userName", name)).toString());
+		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+		return rating;
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -381,6 +390,7 @@ System.out.println("....................... impl ................"+storeId);
 				+ categoryAggregation.getBuckets().size());
 		return categoryAggregation.getBuckets();
 	}
+	
 
 	@Override
 	public Page<OrderAddress> findByCustomerId(String customerId, Pageable pageable) {
@@ -535,6 +545,18 @@ System.out.println("....................... impl ................"+storeId);
 
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.String)
+	 */
+	@Override
+	public Order findOrderByOrderId(String orderId) {
+		StringQuery stringQuery = new StringQuery(termQuery("orderId", orderId).toString());
+		return elasticsearchOperations.queryForObject(stringQuery, Order.class);
+	}
+
+	
+
 
 
 	
