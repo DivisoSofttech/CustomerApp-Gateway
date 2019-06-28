@@ -15,7 +15,7 @@ import java.util.Objects;
  * A OrderDeliveryInfo.
  */
 
-@Document(indexName = "deliveryinfo")
+@Document(indexName = "orderdeliveryinfo")
 public class OrderDeliveryInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
