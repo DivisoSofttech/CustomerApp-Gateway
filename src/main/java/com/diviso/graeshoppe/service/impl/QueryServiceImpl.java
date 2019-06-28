@@ -592,8 +592,13 @@ System.out.println("....................... impl ................"+name);
 	@Override
 	public OrderDeliveryInfo findDeliveryInfoById(Long id) {
 		log.info("..............id  impl ............."+id);
-		StringQuery stringQuery = new StringQuery(termQuery("id", id).toString());
-		return elasticsearchOperations.queryForObject(stringQuery, OrderDeliveryInfo.class);
+	
+
+		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
+		
+		return elasticsearchOperations.queryForObject(searchQuery, OrderDeliveryInfo.class);
+	
 	}
 
+	//.withIndices("orderaddress").withTypes("address").build()
 }
