@@ -422,15 +422,15 @@ public class QueryResource {
 
 		log.info("...........................order.getDeliveryInfo().getId().........................."+order.getDeliveryInfo().getId());
 		
-		OrderDeliveryInfo orderDeliveryInfo = queryService.findDeliveryInfoById(order.getDeliveryInfo().getId());
+		//OrderDeliveryInfo orderDeliveryInfo = queryService.findDeliveryInfoById(order.getDeliveryInfo().getId());
 
-		log.info("......................orderDeliveryInfo..................:    " + orderDeliveryInfo);
+		//log.info("......................orderDeliveryInfo..................:    " + orderDeliveryInfo);
 
-		OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
+		//OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
 
 		OrderMaster orderMaster = new OrderMaster();
 
-		orderMaster.setAddress(orderAddress);
+		//orderMaster.setAddress(orderAddress);
 
 		orderMaster.setOrder(order);
 
