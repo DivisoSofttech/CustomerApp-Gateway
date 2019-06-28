@@ -88,7 +88,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).build();
+				.withQuery(matchQuery("name", searchTerm).prefixLength(2)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 
@@ -542,7 +542,7 @@ System.out.println("....................... impl ................"+name);
 	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(matchQuery("name", searchTerm).prefixLength(2)).build();
+				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
