@@ -171,4 +171,10 @@ public interface QueryService {
 	 * @return
 	 */
 	public OrderDeliveryInfo findDeliveryInfoById(Long id);
+
+	/**
+	 * @param rating
+	 * @return
+	 */
+	public List<Entry> findStoreByRating();
 }

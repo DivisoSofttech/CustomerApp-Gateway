@@ -600,5 +600,29 @@ System.out.println("....................... impl ................"+name);
 	
 	}
 
-	//.withIndices("orderaddress").withTypes("address").build()
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.Double)
+	 */
+	@Override
+	public List<Entry> findStoreByRating() {
+		List<String> carList = new ArrayList<String>();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				  .withQuery(matchAllQuery())
+				  .withSearchType(QUERY_THEN_FETCH)
+				  .withIndices("store").withTypes("store")
+				  .addAggregation(AggregationBuilders.terms("ratings").field("totalRating"))
+				  .build();
+		log.info(searchQuery.toString()+"*********************************************************") ;
+		
+		
+	
+		AggregatedPage<Store> result = elasticsearchTemplate.queryForPage(searchQuery, Store.class);
+		TermsAggregation colourtAgg = result.getAggregation("ratings", TermsAggregation.class);
+		return colourtAgg.getBuckets();
+	}
+
+	
+	
+	
+	
 }
