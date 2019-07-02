@@ -606,7 +606,7 @@ System.out.println("....................... impl ................"+name);
 	@Override
 	public List<Store> findStoreByRating() {
 		
-			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5)).build();
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5)).withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
 			
 			return elasticsearchOperations.queryForList(searchQuery, Store.class);
 	}
