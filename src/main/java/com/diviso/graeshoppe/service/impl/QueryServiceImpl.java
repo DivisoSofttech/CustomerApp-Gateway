@@ -4,7 +4,7 @@ import static org.elasticsearch.action.search.SearchType.QUERY_THEN_FETCH;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -604,25 +604,11 @@ System.out.println("....................... impl ................"+name);
 	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.Double)
 	 */
 	@Override
-	public List<Entry> findStoreByRating() {
-		List<String> carList = new ArrayList<String>();
-		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				  .withQuery(matchAllQuery())
-				  .withSearchType(QUERY_THEN_FETCH)
-				  .withIndices("store").withTypes("store")
-				  .addAggregation(AggregationBuilders.terms("ratings").field("totalRating"))
-				  .build();
-		log.info(searchQuery.toString()+"*********************************************************") ;
+	public List<Store> findStoreByRating(Double rating) {
 		
-		
-	
-		AggregatedPage<Store> result = elasticsearchTemplate.queryForPage(searchQuery, Store.class);
-		TermsAggregation colourtAgg = result.getAggregation("ratings", TermsAggregation.class);
-		return colourtAgg.getBuckets();
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("rating").gte(1).lte(5)).build();
+			
+			return elasticsearchOperations.queryForList(searchQuery, Store.class);
 	}
-
-	
-	
-	
 	
 }

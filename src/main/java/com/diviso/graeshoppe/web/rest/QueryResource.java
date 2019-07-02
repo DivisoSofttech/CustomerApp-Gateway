@@ -440,9 +440,9 @@ public class QueryResource {
 
 	}
 
-	@GetMapping("/storeByRating")
-	public List<Entry> findStoreByRating(){
+	@GetMapping("/storeByRating/{rating}")
+	public List<Store> findStoreByRating(Double rating){
 		
-		return queryService.findStoreByRating();
+		return queryService.findStoreByRating(rating);
 	}
 }
