@@ -176,5 +176,5 @@ public interface QueryService {
 	 * @param rating
 	 * @return
 	 */
-	public List<Store> findStoreByRating(Double rating);
+	public List<Store> findStoreByRating();
 }

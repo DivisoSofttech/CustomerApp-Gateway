@@ -604,9 +604,9 @@ System.out.println("....................... impl ................"+name);
 	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.Double)
 	 */
 	@Override
-	public List<Store> findStoreByRating(Double rating) {
+	public List<Store> findStoreByRating() {
 		
-			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("rating").gte(1).lte(5)).build();
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5)).build();
 			
 			return elasticsearchOperations.queryForList(searchQuery, Store.class);
 	}
