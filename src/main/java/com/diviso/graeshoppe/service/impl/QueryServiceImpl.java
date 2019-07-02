@@ -617,7 +617,7 @@ System.out.println("....................... impl ................"+name);
 	@Override
 	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to) {
 	
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("sellPrice").gte(from).lte(to)).withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("sellPrice").gte(from).lte(to)).withSort(SortBuilders.fieldSort("sellPrice").order(SortOrder.DESC)).build();
 		
 	 return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 		
