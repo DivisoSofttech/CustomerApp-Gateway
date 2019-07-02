@@ -177,4 +177,10 @@ public interface QueryService {
 	 * @return
 	 */
 	public List<Store> findStoreByRating();
+
+	/**
+	 * @param from
+	 * @param to
+	 */
+	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to);
 }

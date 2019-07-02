@@ -610,5 +610,18 @@ System.out.println("....................... impl ................"+name);
 			
 			return elasticsearchOperations.queryForList(searchQuery, Store.class);
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAndSortProductByPrice(java.lang.Double, java.lang.Double)
+	 */
+	@Override
+	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to) {
+	
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("sellPrice").gte(from).lte(to)).withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
+		
+	 return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+		
+
+	}
 	
 }

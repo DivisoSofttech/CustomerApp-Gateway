@@ -445,4 +445,12 @@ public class QueryResource {
 		
 		return queryService.findStoreByRating();
 	}
+	
+	@GetMapping("/productByPrice/{from}/{to}")
+	public Page<StockCurrent> findAndSortProductByPrice(@PathVariable Double from,@PathVariable Double to ){
+		
+	return	queryService.findAndSortProductByPrice(from,to);
+	}
+	
+	
 }
