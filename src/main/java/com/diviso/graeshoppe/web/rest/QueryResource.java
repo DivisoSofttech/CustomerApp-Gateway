@@ -432,9 +432,9 @@ public class QueryResource {
 
 		//orderMaster.setAddress(orderAddress);
 
-		orderMaster.setOrder(order);
+	//	orderMaster.setOrder(order);
 
-		orderMaster.setOrderLines(orderLines);
+	//	orderMaster.setOrderLines(orderLines);
 
 		return ResponseEntity.ok().body(orderMaster);
 
