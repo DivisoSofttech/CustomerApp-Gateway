@@ -604,11 +604,11 @@ System.out.println("....................... impl ................"+name);
 	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.Double)
 	 */
 	@Override
-	public List<Store> findStoreByRating() {
+	public Page<Store> findStoreByRating() {
 		
 			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5)).withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
 			
-			return elasticsearchOperations.queryForList(searchQuery, Store.class);
+			return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
 	/* (non-Javadoc)
@@ -623,5 +623,18 @@ System.out.println("....................... impl ................"+name);
 		
 
 	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryInfoByStoreId(java.lang.String)
+	 */
+	@Override
+	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
+	}
+	
+	
+	
 	
 }

@@ -176,11 +176,17 @@ public interface QueryService {
 	 * @param rating
 	 * @return
 	 */
-	public List<Store> findStoreByRating();
+	public Page<Store> findStoreByRating();
 
 	/**
 	 * @param from
 	 * @param to
 	 */
 	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to);
+
+	/**
+	 * @param storeId
+	 * @return
+	 */
+	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId);
 }
