@@ -334,7 +334,7 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
 	}
 
-	// .........................................................................................
+	// ............................................................................................................................
 	/**
 	 * GET /findCategoryByStoreId/:userId .
 	 *
