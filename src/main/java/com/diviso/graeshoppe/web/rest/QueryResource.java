@@ -407,18 +407,19 @@ public class QueryResource {
 	public UserRating findRatingByStoreId(@PathVariable String storeId) {
 		return queryService.findRatingByStoreId(storeId);
 	}
-//..................test......................................
-	@GetMapping("/orderidtest/{orderId}")
+	
+    //..................test......................................
+	/*@GetMapping("/orderidtest/{orderId}")
 	public Page<Order> findOrderByOrderLine(@PathVariable String orderId){
 		return queryService.findOrderByOrderId(orderId);
-	}
+	}*/
 	
 	@GetMapping("/ratingByName/{name}")
 	public UserRating findRatingByCustomerName(@PathVariable String name) {
 		return queryService.findRatingByStoreId(name);
 	}
 
-/*	@GetMapping("/orderMaster/{orderId}")
+	@GetMapping("/orderMaster/{orderId}")
 	public ResponseEntity<OrderMaster> findOrderMasterByOrderId(@PathVariable String orderId) {
 
 		Order order = queryService.findOrderByOrderId(orderId);
@@ -480,7 +481,7 @@ public class QueryResource {
 
 		return ResponseEntity.ok().body(orderMaster);
 
-	}*/
+	}
 
 	@GetMapping("/storeByRating")
 	public Page<Store> findStoreByRating() {
