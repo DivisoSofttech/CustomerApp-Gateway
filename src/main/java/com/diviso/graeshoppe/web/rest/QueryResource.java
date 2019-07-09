@@ -220,8 +220,8 @@ public class QueryResource {
 	}
 
 	@GetMapping("/stores")
-	public ResponseEntity<List<Store>> findAllStores(Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findAllStores(pageable).getContent());
+	public ResponseEntity<Page<Store>> findAllStores(Pageable pageable) {
+		return ResponseEntity.ok().body(queryService.findAllStores(pageable));
 	}
 
 	/*
