@@ -439,6 +439,8 @@ public class QueryResource {
 
 		OrderMaster orderMaster = new OrderMaster();
 
+		orderMaster.setId(order.getId());
+		
 		orderMaster.setOrderId(order.getOrderId());
 
 		orderMaster.setCustomerId(order.getCustomerId());
@@ -449,6 +451,8 @@ public class QueryResource {
 
 		orderMaster.setGrandTotal(order.getGrandTotal());
 
+		
+		
 		orderMaster.setRef(order.getPayment().getRef());
 
 		orderMaster.setPaymentType(order.getPayment().getPaymentType());
@@ -460,6 +464,8 @@ public class QueryResource {
 		orderMaster.setPaymentTotal(order.getPayment().getTotal());
 
 		orderMaster.setStatus(order.getPayment().getStatus());
+		
+		
 
 		orderLines.forEach(orderLine -> {
 
@@ -472,6 +478,9 @@ public class QueryResource {
 			orderMaster.setTotal(orderLine.getTotal());
 
 		});
+		
+		
+		
 
 		// orderMaster.setAddress(orderAddress);
 

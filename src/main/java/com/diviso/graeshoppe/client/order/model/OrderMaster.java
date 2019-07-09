@@ -57,12 +57,12 @@ public class OrderMaster {
 //.................deliveryInfo............................
 	    
 
-
+/*
 	    private String deliveryType;
 
 	    private Instant expectedDelivery;
 
-	    private Double deliveryCharge;
+	    private Double deliveryCharge;*/
 	    
 	  //  private OrderAddress deliveryAddress;
 
@@ -187,29 +187,7 @@ public class OrderMaster {
 			this.grandTotal = grandTotal;
 		}
 
-		public String getDeliveryType() {
-			return deliveryType;
-		}
-
-		public void setDeliveryType(String deliveryType) {
-			this.deliveryType = deliveryType;
-		}
-
-		public Instant getExpectedDelivery() {
-			return expectedDelivery;
-		}
-
-		public void setExpectedDelivery(Instant expectedDelivery) {
-			this.expectedDelivery = expectedDelivery;
-		}
-
-		public Double getDeliveryCharge() {
-			return deliveryCharge;
-		}
-
-		public void setDeliveryCharge(Double deliveryCharge) {
-			this.deliveryCharge = deliveryCharge;
-		}
+		
 
 		public String getRef() {
 			return ref;
@@ -263,11 +241,11 @@ public class OrderMaster {
 		public String toString() {
 			return "OrderMaster [id=" + id + ", productId=" + productId + ", quantity=" + quantity + ", pricePerUnit="
 					+ pricePerUnit + ", total=" + total + ", orderId=" + orderId + ", customerId=" + customerId
-					+ ", storeId=" + storeId + ", date=" + date + ", grandTotal=" + grandTotal + ", deliveryType="
-					+ deliveryType + ", expectedDelivery=" + expectedDelivery + ", deliveryCharge=" + deliveryCharge
-					+ ", ref=" + ref + ", paymentType=" + paymentType + ", amount=" + amount + ", tax=" + tax
-					+ ", paymentTotal=" + paymentTotal + ", status=" + status + "]";
+					+ ", storeId=" + storeId + ", date=" + date + ", grandTotal=" + grandTotal + ", ref=" + ref
+					+ ", paymentType=" + paymentType + ", amount=" + amount + ", tax=" + tax + ", paymentTotal="
+					+ paymentTotal + ", status=" + status + "]";
 		}
+
 	
 	    
 	    
