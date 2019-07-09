@@ -420,41 +420,78 @@ public class QueryResource {
 
 		List<OrderLine> orderLines = queryService.findOrderLinesByOrderId(order.getId());
 
-		log.info("...........................order.getDeliveryInfo().getId().........................."+order.getDeliveryInfo().getId());
-		
-		//OrderDeliveryInfo orderDeliveryInfo = queryService.findDeliveryInfoById(order.getDeliveryInfo().getId());
+		log.info("...........................order.getDeliveryInfo().getId().........................."
+				+ order.getDeliveryInfo().getId());
 
-		//log.info("......................orderDeliveryInfo..................:    " + orderDeliveryInfo);
+		// OrderDeliveryInfo orderDeliveryInfo =
+		// queryService.findDeliveryInfoById(order.getDeliveryInfo().getId());
 
-		//OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
+		// log.info("......................orderDeliveryInfo..................:
+		// " + orderDeliveryInfo);
+
+		// OrderAddress orderAddress = orderDeliveryInfo.getDeliveryAddress();
 
 		OrderMaster orderMaster = new OrderMaster();
 
-		//orderMaster.setAddress(orderAddress);
+		orderMaster.setOrderId(order.getOrderId());
 
-	//	orderMaster.setOrder(order);
+		orderMaster.setCustomerId(order.getCustomerId());
 
-	//	orderMaster.setOrderLines(orderLines);
+		orderMaster.setStoreId(order.getStoreId());
+
+		orderMaster.setDate(order.getDate());
+
+		orderMaster.setGrandTotal(order.getGrandTotal());
+
+		orderMaster.setRef(order.getPayment().getRef());
+
+		orderMaster.setPaymentType(order.getPayment().getPaymentType());
+
+		orderMaster.setAmount(order.getPayment().getAmount());
+
+		orderMaster.setTax(order.getPayment().getTax());
+
+		orderMaster.setPaymentTotal(order.getPayment().getTotal());
+
+		orderMaster.setStatus(order.getPayment().getStatus());
+
+		orderLines.forEach(orderLine -> {
+
+			orderMaster.setProductId(orderLine.getProductId());
+
+			orderMaster.setQuantity(orderLine.getQuantity());
+
+			orderMaster.setPricePerUnit(orderLine.getPricePerUnit());
+
+			orderMaster.setTotal(orderLine.getTotal());
+
+		});
+
+		// orderMaster.setAddress(orderAddress);
+
+		// orderMaster.setOrder(order);
+
+		// orderMaster.setOrderLines(orderLines);
 
 		return ResponseEntity.ok().body(orderMaster);
 
 	}
 
 	@GetMapping("/storeByRating")
-	public Page<Store> findStoreByRating(){
-		
+	public Page<Store> findStoreByRating() {
+
 		return queryService.findStoreByRating();
 	}
-	
+
 	@GetMapping("/productByPrice/{from}/{to}")
-	public Page<StockCurrent> findAndSortProductByPrice(@PathVariable Double from,@PathVariable Double to ){
-		
-	return	queryService.findAndSortProductByPrice(from,to);
+	public Page<StockCurrent> findAndSortProductByPrice(@PathVariable Double from, @PathVariable Double to) {
+
+		return queryService.findAndSortProductByPrice(from, to);
 	}
-	
+
 	@GetMapping("/deliveryinfoByStoreId/{storeId}")
-	public Page<DeliveryInfo> findDeliveryInfoByStoreId(@PathVariable String storeId ){
-		return	queryService.findDeliveryInfoByStoreId(storeId);
+	public Page<DeliveryInfo> findDeliveryInfoByStoreId(@PathVariable String storeId) {
+		return queryService.findDeliveryInfoByStoreId(storeId);
 	}
-	
+
 }
