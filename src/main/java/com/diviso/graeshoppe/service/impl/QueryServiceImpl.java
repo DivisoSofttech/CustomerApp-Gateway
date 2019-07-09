@@ -552,9 +552,9 @@ System.out.println("....................... impl ................"+name);
 	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.String)
 	 */
 	@Override
-	public Order findOrderByOrderId(String orderId) {
+	public Page<Order> findOrderByOrderId(String orderId) {
 		StringQuery stringQuery = new StringQuery(matchQuery("orderId", orderId).toString());
-		return elasticsearchOperations.queryForObject(stringQuery, Order.class);
+		return elasticsearchOperations.queryForPage(stringQuery, Order.class);
 	}
 
 	/*

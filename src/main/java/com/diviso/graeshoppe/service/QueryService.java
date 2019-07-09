@@ -162,7 +162,7 @@ public interface QueryService {
 	 */
 	UserRating findRatingByName(String name);
 
-	Order findOrderByOrderId(String orderId);
+	Page<Order> findOrderByOrderId(String orderId);
 
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
 
