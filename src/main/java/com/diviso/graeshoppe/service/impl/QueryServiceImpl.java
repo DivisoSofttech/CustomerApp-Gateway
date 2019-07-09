@@ -553,7 +553,7 @@ System.out.println("....................... impl ................"+name);
 	 */
 	@Override
 	public Page<Order> findOrderByOrderId(String orderId) {
-		StringQuery stringQuery = new StringQuery(termQuery("orderId", orderId).toString());
+		StringQuery stringQuery = new StringQuery(termQuery("orderId.keyword", orderId).toString());
 		return elasticsearchOperations.queryForPage(stringQuery, Order.class);
 	}
 
