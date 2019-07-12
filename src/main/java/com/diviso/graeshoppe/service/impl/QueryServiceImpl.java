@@ -762,6 +762,8 @@ public class QueryServiceImpl implements QueryService {
 		
 		orderMaster.setName(customer.getName());
 		
+		orderMaster.setState("kerala");
+		
 		orderMaster.setRoadNameAreaOrStreet("kizhakkumpuram");
 		
 
