@@ -687,9 +687,9 @@ public class QueryServiceImpl implements QueryService {
 
 		List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
 
-		OrderDeliveryInfo deliveryInfo = findDeliveryInfoById(order.getDeliveryInfo().getId());
+	//	OrderDeliveryInfo deliveryInfo = findDeliveryInfoById(order.getDeliveryInfo().getId());
 		
-		log.debug("............deliveryInfo..............."+deliveryInfo);
+	//	log.debug("............deliveryInfo..............."+deliveryInfo);
 
 		OrderMaster orderMaster = new OrderMaster();
 
@@ -697,7 +697,7 @@ public class QueryServiceImpl implements QueryService {
 
 		orderMaster.setSoldBy(store.getName());
 
-		orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
+	//	orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
 
 		orderMaster.setOrderId(order.getOrderId());
 
@@ -710,7 +710,7 @@ public class QueryServiceImpl implements QueryService {
 		// ...........orderAddress and phone has to
 		// factored......................
 
-		orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
+	//	orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 
 		orderMaster.setGrandTotal(order.getGrandTotal());
 

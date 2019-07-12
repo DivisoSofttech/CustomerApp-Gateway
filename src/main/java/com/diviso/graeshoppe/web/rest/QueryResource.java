@@ -458,6 +458,8 @@ public class QueryResource {
 	}
 
 	 
+	
+	
 	 @GetMapping("/header/{searchTerm}")
 	 public  Page<Store> header(@PathVariable("searchTerm") String searchTerm,Pageable pageable){
 		 return queryService.headerSearch(searchTerm,pageable);
@@ -470,4 +472,6 @@ public class QueryResource {
 			return  queryService.findByNearestLocation(new Point(10.7918,76.4997 ),new Distance(2.00, Metrics.KILOMETERS) );
 		}
 		
+	 
+	 
 }
