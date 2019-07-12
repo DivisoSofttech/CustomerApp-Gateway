@@ -734,6 +734,8 @@ public class QueryServiceImpl implements QueryService {
 			log.debug(".......productline.........." + productLine);
 
 			productLines.add(productLine);
+			
+			orderMaster.setProductLine(productLines);
 
 		});
 
