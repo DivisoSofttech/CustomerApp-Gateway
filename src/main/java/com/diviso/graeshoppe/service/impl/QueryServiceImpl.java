@@ -699,6 +699,7 @@ public class QueryServiceImpl implements QueryService {
 
 	//	orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
 
+		
 		orderMaster.setOrderId(order.getOrderId());
 
 		orderMaster.setDocketDate(order.getDate());

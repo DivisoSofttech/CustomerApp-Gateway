@@ -66,6 +66,16 @@ public class OrderMaster {
 
     private String addressType;
     
+    private List<ProductLine> productLine;
+    
+
+	public List<ProductLine> getProductLine() {
+		return productLine;
+	}
+
+	public void setProductLine(List<ProductLine> productLine) {
+		this.productLine = productLine;
+	}
 
 	public String getSoldBy() {
 		return soldBy;
@@ -208,13 +218,15 @@ public class OrderMaster {
 	@Override
 	public String toString() {
 		return "OrderMaster [soldBy=" + soldBy + ", methodOfOrder=" + methodOfOrder + ", orderId=" + orderId
-				+ ", docketDate=" + docketDate + ", customerName=" + customerName + ", pincode=" + pincode
-				+ ", houseNoOrBuildingName=" + houseNoOrBuildingName + ", roadNameAreaOrStreet=" + roadNameAreaOrStreet
-				+ ", city=" + city + ", state=" + state + ", landmark=" + landmark + ", name=" + name + ", phone="
-				+ phone + ", alternatePhone=" + alternatePhone + ", addressType=" + addressType
-				+", deliveryCharge=" + deliveryCharge + ", grandTotal=" + grandTotal
+				+ ", docketDate=" + docketDate + ", customerName=" + customerName + ", deliveryCharge=" + deliveryCharge
+				+ ", grandTotal=" + grandTotal + ", pincode=" + pincode + ", houseNoOrBuildingName="
+				+ houseNoOrBuildingName + ", roadNameAreaOrStreet=" + roadNameAreaOrStreet + ", city=" + city
+				+ ", state=" + state + ", landmark=" + landmark + ", name=" + name + ", phone=" + phone
+				+ ", alternatePhone=" + alternatePhone + ", addressType=" + addressType + ", productLine=" + productLine
 				+ "]";
 	}
+
+	
     
     
     
