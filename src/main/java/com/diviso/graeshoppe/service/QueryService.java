@@ -6,6 +6,8 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Point;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
@@ -196,4 +198,21 @@ public interface QueryService {
 	 * @return
 	 */
 	Product findProductById(Long id);
+
+	/**
+	 * @param searchTerm
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Store> headerSearch(String searchTerm, Pageable pageable);
+
+	/**
+	 * @param point
+	 * @param distance
+	 * @return
+	 */
+	List<Store> findByNearestLocation(Point point, Distance distance);
+
+	
+
 }

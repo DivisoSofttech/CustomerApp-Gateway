@@ -21,6 +21,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
+import org.springframework.data.elasticsearch.core.query.Criteria;
+import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -44,6 +46,7 @@ import com.diviso.graeshoppe.client.product.model.Uom;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.domain.Result;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.Type;
@@ -54,10 +57,16 @@ import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.web.rest.QueryResource;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
+import com.github.vanroy.springdata.jest.mapper.JestResultsExtractor;
+import com.google.gson.JsonObject;
 
 import io.searchbox.client.JestClient;
+import io.searchbox.core.SearchResult;
 import io.searchbox.core.search.aggregation.TermsAggregation;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+
+import org.springframework.data.geo.Point;
+import org.springframework.data.geo.Distance;
 
 @Service
 public class QueryServiceImpl implements QueryService {
@@ -726,4 +735,55 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
+	
+	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
+		Set<Store> storeSet = new HashSet<Store>();
+		Set<Result> values = new HashSet<Result>();
+		
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", searchTerm)).build();
+
+		elasticsearchTemplate.query(searchQuery, new JestResultsExtractor<Set<Result>>() {
+
+			@Override
+			public Set<Result> extract(SearchResult response) {
+
+				for (SearchResult.Hit<JsonObject, Void> searchHit : response.getHits(JsonObject.class)) {
+					Result result = new Result();
+					
+					if(searchHit.index.equals("store")) {
+						result.setStoreNo(searchHit.source.get("regNo").getAsString());
+						System.out.println("************Store*****************"+result.getStoreNo());
+					}else {
+						result.setStoreNo(searchHit.source.get("iDPcode").getAsString());
+					}
+					
+				
+					values.add(result);
+
+				}
+				return values;
+			}
+		});
+
+		for (Result r : values) {
+			StringQuery stringQuery = new StringQuery(termQuery("regNo.keyword", r.getStoreNo()).toString());
+			storeSet.add(elasticsearchOperations.queryForObject(stringQuery, Store.class));
+		}
+        List<Store> storeList = new ArrayList<>();
+        storeList.addAll(storeSet);
+
+		return	new PageImpl( storeList);
+
+	}
+	
+	@Override
+	public  List<Store> findByNearestLocation(Point point, Distance distance) {
+
+		return elasticsearchTemplate.queryForList(getGeoQuery(point, distance), Store.class);
+	}
+	
+	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
+		return new CriteriaQuery(new Criteria("location").within(point, distance));
+	}
 }

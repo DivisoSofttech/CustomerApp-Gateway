@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.web.rest;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -11,6 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.data.geo.Distance;
+import org.springframework.data.geo.Metrics;
+import org.springframework.data.geo.Point;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -50,12 +56,18 @@ import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
+import com.diviso.graeshoppe.client.store.domain.Result;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.service.QueryService;
+import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
+import com.github.vanroy.springdata.jest.mapper.JestResultsExtractor;
+import com.google.gson.JsonObject;
 
+import io.searchbox.client.JestClient;
+import io.searchbox.core.SearchResult;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @RestController
@@ -91,6 +103,8 @@ public class QueryResource {
 	UserRatingResourceApi userRatingResourceApi;
 	@Autowired
 	ReviewResourceApi reviewResourceApi;
+	
+
 
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -443,4 +457,17 @@ public class QueryResource {
 		return queryService.findDeliveryInfoByStoreId(storeId);
 	}
 
+	 
+	 @GetMapping("/header/{searchTerm}")
+	 public  Page<Store> header(@PathVariable("searchTerm") String searchTerm,Pageable pageable){
+		 return queryService.headerSearch(searchTerm,pageable);
+	 }
+	
+	 //.................... cahenge argument by dealing with client team.......................
+	 @GetMapping("/location/findByNearestLocation")
+		public List<Store>  searchByNearestLocation(){
+			
+			return  queryService.findByNearestLocation(new Point(10.7918,76.4997 ),new Distance(2.00, Metrics.KILOMETERS) );
+		}
+		
 }
