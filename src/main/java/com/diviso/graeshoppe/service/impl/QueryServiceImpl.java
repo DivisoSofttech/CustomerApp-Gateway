@@ -698,6 +698,8 @@ public class QueryServiceImpl implements QueryService {
 
 		// orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
 
+		orderMaster.setMethodOfOrder("delivery");
+		
 		orderMaster.setOrderId(order.getOrderId());
 
 		orderMaster.setDocketDate(order.getDate());
@@ -711,6 +713,8 @@ public class QueryServiceImpl implements QueryService {
 
 		// orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 
+		orderMaster.setDeliveryCharge(145.6);
+		
 		orderMaster.setGrandTotal(order.getGrandTotal());
 
 		List<ProductLine> productLines = new ArrayList<ProductLine>();
@@ -738,6 +742,28 @@ public class QueryServiceImpl implements QueryService {
 			orderMaster.setProductLine(productLines);
 
 		});
+		
+		
+		//..................address dump ...............
+		
+		orderMaster.setCity("palakkad");
+		
+		orderMaster.setAddressType("residential");
+		
+		orderMaster.setHouseNoOrBuildingName("458");
+		
+		orderMaster.setAlternatePhone(9846997765L);
+		
+		orderMaster.setPhone(9846997764L);
+		
+		orderMaster.setPincode(78524L);
+		
+		orderMaster.setLandmark("near juma musjid");
+		
+		orderMaster.setName(customer.getName());
+		
+		orderMaster.setRoadNameAreaOrStreet("kizhakkumpuram");
+		
 
 		return orderMaster;
 
