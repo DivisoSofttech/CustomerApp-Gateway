@@ -34,6 +34,7 @@ import com.diviso.graeshoppe.client.order.model.OrderAddress;
 import com.diviso.graeshoppe.client.order.model.OrderDeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderMaster;
+import com.diviso.graeshoppe.client.order.model.ProductLine;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -134,7 +135,8 @@ public class QueryServiceImpl implements QueryService {
 	 * List<Result> values = new ArrayList<Result>(); ;
 	 * 
 	 * SearchQuery searchQuery = new NativeSearchQueryBuilder()
-	 * .withQuery(matchQuery("name", searchTerm).fuzziness(Fuzziness.TWO)).build();
+	 * .withQuery(matchQuery("name",
+	 * searchTerm).fuzziness(Fuzziness.TWO)).build();
 	 * 
 	 * elasticsearchTemplate.query(searchQuery, new
 	 * JestResultsExtractor<List<Result>>() {
@@ -144,7 +146,8 @@ public class QueryServiceImpl implements QueryService {
 	 * for (SearchResult.Hit<JsonObject, Void> searchHit :
 	 * response.getHits(JsonObject.class)) { Result result = new Result(); //
 	 * sampleEntity.setId(searchHit.source.get(JestResult.ES_METADATA_ID).
-	 * getAsString()); result.setName(searchHit.source.get("name").getAsString());
+	 * getAsString());
+	 * result.setName(searchHit.source.get("name").getAsString());
 	 * 
 	 * values.add(result);
 	 * 
@@ -213,7 +216,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRegNo(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByRegNo(java.lang.
 	 * String)
 	 */
 	@Override
@@ -223,14 +227,15 @@ public class QueryServiceImpl implements QueryService {
 		/*
 		 * (non-Javadoc)
 		 * 
-		 * @see com.diviso.graeshoppe.service.QueryService#findAllCategoriesByStoreId
+		 * @see
+		 * com.diviso.graeshoppe.service.QueryService#findAllCategoriesByStoreId
 		 * (java. lang.Long)
 		 */
 		/*
-		 * @Override public Page<Category> findAllCategoriesByStoreId(Long storeId) {
-		 * SearchQuery searchQuery = new
-		 * NativeSearchQueryBuilder().withQuery(termQuery("sale.id", storeId)) .build();
-		 * return elasticsearchOperations.queryForPage(searchQuery,
+		 * @Override public Page<Category> findAllCategoriesByStoreId(Long
+		 * storeId) { SearchQuery searchQuery = new
+		 * NativeSearchQueryBuilder().withQuery(termQuery("sale.id", storeId))
+		 * .build(); return elasticsearchOperations.queryForPage(searchQuery,
 		 * TicketLine.class).getContent(); }
 		 */
 
@@ -252,7 +257,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByStoreId(
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStockCurrentByStoreId(
 	 * java. lang.String)
 	 */
 	@Override
@@ -265,7 +271,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findUserRatingByRegNo(java.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findUserRatingByRegNo(java.
 	 * lang. String)
 	 */
 	@Override
@@ -325,16 +332,15 @@ public class QueryServiceImpl implements QueryService {
 		return rating;
 	}
 
-	
-	
 	@Override
 	public UserRating findRatingByName(String name) {
-System.out.println("....................... impl ................"+name);
+		System.out.println("....................... impl ................" + name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userName", name)).toString());
-		UserRating rating=elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
+		UserRating rating = elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
 		return rating;
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -354,7 +360,8 @@ System.out.println("....................... impl ................"+name);
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
 	 * lang. String)
 	 */
 	@Override
@@ -393,7 +400,6 @@ System.out.println("....................... impl ................"+name);
 				+ categoryAggregation.getBuckets().size());
 		return categoryAggregation.getBuckets();
 	}
-	
 
 	@Override
 	public Page<OrderAddress> findByCustomerId(String customerId, Pageable pageable) {
@@ -414,7 +420,8 @@ System.out.println("....................... impl ................"+name);
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
 	 * String)
 	 */
 	@Override
@@ -547,9 +554,12 @@ System.out.println("....................... impl ................"+name);
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
-
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
+	 * String)
 	 */
 	@Override
 	public Order findOrderByOrderId(String orderId) {
@@ -569,63 +579,88 @@ System.out.println("....................... impl ................"+name);
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.id", storeId)).build();
 
-
 		Page<DeliveryInfo> deliveryinfos = elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 
 		List<Type> types = new ArrayList<Type>();
-		
+
 		deliveryinfos.forEach(deliveryInfo -> {
 			types.add(deliveryInfo.getType());
 
 		});
-		
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+deliveryinfos.getContent());
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>"+types);
-		
+
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>" + deliveryinfos.getContent());
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>" + types);
+
 		return new PageImpl(types);
-	
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryInfoById(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findDeliveryInfoById(java.lang
+	 * .Long)
 	 */
 	@Override
 	public OrderDeliveryInfo findDeliveryInfoById(Long id) {
-		log.info("..............id  impl ............."+id);
-	
+		log.info("..............id  impl ............." + id);
 
 		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
-		
+
 		return elasticsearchOperations.queryForObject(searchQuery, OrderDeliveryInfo.class);
-	
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.Double)
+	@Override
+	public Product findProductById(Long id) {
+		log.info("..............id  impl ............." + id);
+
+		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
+
+		return elasticsearchOperations.queryForObject(searchQuery, Product.class);
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.
+	 * Double)
 	 */
 	@Override
 	public Page<Store> findStoreByRating() {
-		
-			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5)).withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
-			
-			return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("totalRating").gte(1).lte(5))
+				.withSort(SortBuilders.fieldSort("totalRating").order(SortOrder.DESC)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findAndSortProductByPrice(java.lang.Double, java.lang.Double)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findAndSortProductByPrice(java
+	 * .lang.Double, java.lang.Double)
 	 */
 	@Override
 	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to) {
-	
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("sellPrice").gte(from).lte(to)).withSort(SortBuilders.fieldSort("sellPrice").order(SortOrder.DESC)).build();
-		
-	 return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
-		
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("sellPrice").gte(from).lte(to))
+				.withSort(SortBuilders.fieldSort("sellPrice").order(SortOrder.DESC)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryInfoByStoreId(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findDeliveryInfoByStoreId(java
+	 * .lang.String)
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId) {
@@ -633,8 +668,62 @@ System.out.println("....................... impl ................"+name);
 
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 	}
+
 	
 	
-	
-	
+	public OrderMaster findOrderMasterByOrderId(String orderId) {
+
+		Order order = findOrderByOrderId(orderId);
+
+		List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
+
+		OrderDeliveryInfo deliveryInfo = findDeliveryInfoById(order.getDeliveryInfo().getId());
+
+		OrderMaster orderMaster = new OrderMaster();
+
+		Store store = findStoreByRegNo(order.getStoreId());
+
+		orderMaster.setSoldBy(store.getName());
+
+		orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
+
+		orderMaster.setOrderId(order.getOrderId());
+
+		orderMaster.setDocketDate(order.getDate());
+
+		Customer customer = findCustomerByReference(order.getCustomerId());
+
+		orderMaster.setCustomerName(customer.getName());
+
+		// ...........orderAddress and phone has to
+		// factored......................
+
+		orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
+
+		orderMaster.setGrandTotal(order.getGrandTotal());
+
+		List<ProductLine> productLines = new ArrayList<ProductLine>();
+
+		orderLines.forEach(orderline -> {
+
+			ProductLine productLine = new ProductLine();
+
+			productLine.setGrossAmount(orderline.getPricePerUnit());
+
+			productLine.setQuantity(orderline.getQuantity());
+
+			productLine.setTotal(orderline.getTotal());
+
+			Product product = findProductById(orderline.getProductId());
+
+			productLine.setProductDescription(product.getName());
+
+			productLines.add(productLine);
+
+		});
+
+		return orderMaster;
+
+	}
+
 }

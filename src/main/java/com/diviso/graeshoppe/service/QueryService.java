@@ -114,8 +114,8 @@ public interface QueryService {
 	public Page<Product> findAllProductByName(String name);
 
 	/*
-	 * public Page<Product> findAllProductByProductNameStoreId(String productName,
-	 * String storeId);
+	 * public Page<Product> findAllProductByProductNameStoreId(String
+	 * productName, String storeId);
 	 */
 	/**
 	 * @param pageable
@@ -155,7 +155,6 @@ public interface QueryService {
 
 	public UserRating findRatingByStoreId(String storeId);
 
-
 	/**
 	 * @param name
 	 * @return
@@ -189,4 +188,12 @@ public interface QueryService {
 	 * @return
 	 */
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId);
+
+	public OrderMaster findOrderMasterByOrderId(String orderId);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	Product findProductById(Long id);
 }

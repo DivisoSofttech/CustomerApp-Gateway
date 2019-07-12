@@ -30,224 +30,195 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Document(indexName = "ordermaster")
 public class OrderMaster {
 	
-//..................orderline......................
+	private String soldBy;
 	
-	   private Long id;
+	private String methodOfOrder;
+	
+	private String orderId;
+	
+	private Instant docketDate;
+	
+	private String customerName;
 
-	    private Long productId;
+    private Double deliveryCharge;
+    
+    private Double grandTotal;
+	
+	//.......................
 
-	    private Integer quantity;
+    private Long pincode;
 
-	    private Double pricePerUnit;
+    private String houseNoOrBuildingName;
 
-	    private Double total;
-	    
-//................order....................
-	    
-	    private String orderId;
+    private String roadNameAreaOrStreet;
 
-	    private String customerId;
+    private String city;
 
-	    private String storeId;
+    private String state;
 
-	    private Instant date;
+    private String landmark;
 
-	    private Double grandTotal;
-	    
-//.................deliveryInfo............................
-	    
+    private String name;
 
-/*
-	    private String deliveryType;
+    private Long phone;
 
-	    private Instant expectedDelivery;
+    private Long alternatePhone;
 
-	    private Double deliveryCharge;*/
-	    
-	  //  private OrderAddress deliveryAddress;
+    private String addressType;
+    
 
-//.....................deliveryAddress........................
-	    
-	    
-/*
-	    private String customerId;
+	public String getSoldBy() {
+		return soldBy;
+	}
 
-	    private Long pincode;
+	public void setSoldBy(String soldBy) {
+		this.soldBy = soldBy;
+	}
 
-	    private String houseNoOrBuildingName;
+	public String getMethodOfOrder() {
+		return methodOfOrder;
+	}
 
-	    private String roadNameAreaOrStreet;
+	public void setMethodOfOrder(String methodOfOrder) {
+		this.methodOfOrder = methodOfOrder;
+	}
 
-	    private String city;
+	public String getOrderId() {
+		return orderId;
+	}
 
-	    private String state;
+	public void setOrderId(String orderId) {
+		this.orderId = orderId;
+	}
 
-	    private String landmark;
+	public Instant getDocketDate() {
+		return docketDate;
+	}
 
-	    private String name;
+	public void setDocketDate(Instant docketDate) {
+		this.docketDate = docketDate;
+	}
 
-	    private Long phone;
+	public String getCustomerName() {
+		return customerName;
+	}
 
-	    private Long alternatePhone;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
 
-	    private String addressType;*/
-	    
-//....................payment..................................
-	    
+	public Long getPincode() {
+		return pincode;
+	}
 
-	    private String ref;
+	public void setPincode(Long pincode) {
+		this.pincode = pincode;
+	}
 
-	    private String paymentType;
+	public String getHouseNoOrBuildingName() {
+		return houseNoOrBuildingName;
+	}
 
-	    private Double amount;
+	public void setHouseNoOrBuildingName(String houseNoOrBuildingName) {
+		this.houseNoOrBuildingName = houseNoOrBuildingName;
+	}
 
-	    private Double tax;
+	public String getRoadNameAreaOrStreet() {
+		return roadNameAreaOrStreet;
+	}
 
-	    private Double paymentTotal;
+	public void setRoadNameAreaOrStreet(String roadNameAreaOrStreet) {
+		this.roadNameAreaOrStreet = roadNameAreaOrStreet;
+	}
 
-	    private String status;
+	public String getCity() {
+		return city;
+	}
 
-		public Long getId() {
-			return id;
-		}
+	public void setCity(String city) {
+		this.city = city;
+	}
 
-		public void setId(Long id) {
-			this.id = id;
-		}
+	public String getState() {
+		return state;
+	}
 
-		public Long getProductId() {
-			return productId;
-		}
+	public void setState(String state) {
+		this.state = state;
+	}
 
-		public void setProductId(Long productId) {
-			this.productId = productId;
-		}
+	public String getLandmark() {
+		return landmark;
+	}
 
-		public Integer getQuantity() {
-			return quantity;
-		}
+	public void setLandmark(String landmark) {
+		this.landmark = landmark;
+	}
 
-		public void setQuantity(Integer quantity) {
-			this.quantity = quantity;
-		}
+	public String getName() {
+		return name;
+	}
 
-		public Double getPricePerUnit() {
-			return pricePerUnit;
-		}
+	public void setName(String name) {
+		this.name = name;
+	}
 
-		public void setPricePerUnit(Double pricePerUnit) {
-			this.pricePerUnit = pricePerUnit;
-		}
+	public Long getPhone() {
+		return phone;
+	}
 
-		public Double getTotal() {
-			return total;
-		}
+	public void setPhone(Long phone) {
+		this.phone = phone;
+	}
 
-		public void setTotal(Double total) {
-			this.total = total;
-		}
+	public Long getAlternatePhone() {
+		return alternatePhone;
+	}
 
-		public String getOrderId() {
-			return orderId;
-		}
+	public void setAlternatePhone(Long alternatePhone) {
+		this.alternatePhone = alternatePhone;
+	}
 
-		public void setOrderId(String orderId) {
-			this.orderId = orderId;
-		}
+	public String getAddressType() {
+		return addressType;
+	}
 
-		public String getCustomerId() {
-			return customerId;
-		}
-
-		public void setCustomerId(String customerId) {
-			this.customerId = customerId;
-		}
-
-		public String getStoreId() {
-			return storeId;
-		}
-
-		public void setStoreId(String storeId) {
-			this.storeId = storeId;
-		}
-
-		public Instant getDate() {
-			return date;
-		}
-
-		public void setDate(Instant date) {
-			this.date = date;
-		}
-
-		public Double getGrandTotal() {
-			return grandTotal;
-		}
-
-		public void setGrandTotal(Double grandTotal) {
-			this.grandTotal = grandTotal;
-		}
-
-		
-
-		public String getRef() {
-			return ref;
-		}
-
-		public void setRef(String ref) {
-			this.ref = ref;
-		}
-
-		public String getPaymentType() {
-			return paymentType;
-		}
-
-		public void setPaymentType(String paymentType) {
-			this.paymentType = paymentType;
-		}
-
-		public Double getAmount() {
-			return amount;
-		}
-
-		public void setAmount(Double amount) {
-			this.amount = amount;
-		}
-
-		public Double getTax() {
-			return tax;
-		}
-
-		public void setTax(Double tax) {
-			this.tax = tax;
-		}
-
-		public Double getPaymentTotal() {
-			return paymentTotal;
-		}
-
-		public void setPaymentTotal(Double paymentTotal) {
-			this.paymentTotal = paymentTotal;
-		}
-
-		public String getStatus() {
-			return status;
-		}
-
-		public void setStatus(String status) {
-			this.status = status;
-		}
-
-		@Override
-		public String toString() {
-			return "OrderMaster [id=" + id + ", productId=" + productId + ", quantity=" + quantity + ", pricePerUnit="
-					+ pricePerUnit + ", total=" + total + ", orderId=" + orderId + ", customerId=" + customerId
-					+ ", storeId=" + storeId + ", date=" + date + ", grandTotal=" + grandTotal + ", ref=" + ref
-					+ ", paymentType=" + paymentType + ", amount=" + amount + ", tax=" + tax + ", paymentTotal="
-					+ paymentTotal + ", status=" + status + "]";
-		}
+	public void setAddressType(String addressType) {
+		this.addressType = addressType;
+	}
 
 	
-	    
-	    
-	
+
+	public Double getDeliveryCharge() {
+		return deliveryCharge;
+	}
+
+	public void setDeliveryCharge(Double deliveryCharge) {
+		this.deliveryCharge = deliveryCharge;
+	}
+
+	public Double getGrandTotal() {
+		return grandTotal;
+	}
+
+	public void setGrandTotal(Double grandTotal) {
+		this.grandTotal = grandTotal;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderMaster [soldBy=" + soldBy + ", methodOfOrder=" + methodOfOrder + ", orderId=" + orderId
+				+ ", docketDate=" + docketDate + ", customerName=" + customerName + ", pincode=" + pincode
+				+ ", houseNoOrBuildingName=" + houseNoOrBuildingName + ", roadNameAreaOrStreet=" + roadNameAreaOrStreet
+				+ ", city=" + city + ", state=" + state + ", landmark=" + landmark + ", name=" + name + ", phone="
+				+ phone + ", alternatePhone=" + alternatePhone + ", addressType=" + addressType
+				+", deliveryCharge=" + deliveryCharge + ", grandTotal=" + grandTotal
+				+ "]";
+	}
+    
+    
+    
+    
+    
+    
 }
