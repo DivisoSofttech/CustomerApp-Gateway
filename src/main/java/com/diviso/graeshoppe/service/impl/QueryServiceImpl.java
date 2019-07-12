@@ -679,17 +679,16 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 	}
 
-	
-	
 	public OrderMaster findOrderMasterByOrderId(String orderId) {
 
 		Order order = findOrderByOrderId(orderId);
 
 		List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
 
-	//	OrderDeliveryInfo deliveryInfo = findDeliveryInfoById(order.getDeliveryInfo().getId());
-		
-	//	log.debug("............deliveryInfo..............."+deliveryInfo);
+		// OrderDeliveryInfo deliveryInfo =
+		// findDeliveryInfoById(order.getDeliveryInfo().getId());
+
+		// log.debug("............deliveryInfo..............."+deliveryInfo);
 
 		OrderMaster orderMaster = new OrderMaster();
 
@@ -697,9 +696,8 @@ public class QueryServiceImpl implements QueryService {
 
 		orderMaster.setSoldBy(store.getName());
 
-	//	orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
+		// orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
 
-		
 		orderMaster.setOrderId(order.getOrderId());
 
 		orderMaster.setDocketDate(order.getDate());
@@ -711,7 +709,7 @@ public class QueryServiceImpl implements QueryService {
 		// ...........orderAddress and phone has to
 		// factored......................
 
-	//	orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
+		// orderMaster.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 
 		orderMaster.setGrandTotal(order.getGrandTotal());
 
@@ -720,7 +718,9 @@ public class QueryServiceImpl implements QueryService {
 		orderLines.forEach(orderline -> {
 
 			ProductLine productLine = new ProductLine();
-
+			
+			log.debug("...............orderline......" + orderline);
+			
 			productLine.setGrossAmount(orderline.getPricePerUnit());
 
 			productLine.setQuantity(orderline.getQuantity());
@@ -731,6 +731,8 @@ public class QueryServiceImpl implements QueryService {
 
 			productLine.setProductDescription(product.getName());
 
+			log.debug(".......productline.........." + productLine);
+
 			productLines.add(productLine);
 
 		});
@@ -739,11 +741,9 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
-	
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
 		Set<Store> storeSet = new HashSet<Store>();
 		Set<HeaderSearch> values = new HashSet<HeaderSearch>();
-		
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", searchTerm)).build();
 
@@ -754,15 +754,14 @@ public class QueryServiceImpl implements QueryService {
 
 				for (SearchResult.Hit<JsonObject, Void> searchHit : response.getHits(JsonObject.class)) {
 					HeaderSearch result = new HeaderSearch();
-					
-					if(searchHit.index.equals("store")) {
+
+					if (searchHit.index.equals("store")) {
 						result.setStoreNo(searchHit.source.get("regNo").getAsString());
-						System.out.println("************Store*****************"+result.getStoreNo());
-					}else {
+						System.out.println("************Store*****************" + result.getStoreNo());
+					} else {
 						result.setStoreNo(searchHit.source.get("iDPcode").getAsString());
 					}
-					
-				
+
 					values.add(result);
 
 				}
@@ -774,19 +773,19 @@ public class QueryServiceImpl implements QueryService {
 			StringQuery stringQuery = new StringQuery(termQuery("regNo.keyword", r.getStoreNo()).toString());
 			storeSet.add(elasticsearchOperations.queryForObject(stringQuery, Store.class));
 		}
-        List<Store> storeList = new ArrayList<>();
-        storeList.addAll(storeSet);
+		List<Store> storeList = new ArrayList<>();
+		storeList.addAll(storeSet);
 
-		return	new PageImpl( storeList);
+		return new PageImpl(storeList);
 
 	}
-	
+
 	@Override
-	public  List<Store> findByNearestLocation(Point point, Distance distance) {
+	public List<Store> findByNearestLocation(Point point, Distance distance) {
 
 		return elasticsearchTemplate.queryForList(getGeoQuery(point, distance), Store.class);
 	}
-	
+
 	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
 		return new CriteriaQuery(new Criteria("location").within(point, distance));
 	}
