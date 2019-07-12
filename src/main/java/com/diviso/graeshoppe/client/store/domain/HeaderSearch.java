@@ -20,7 +20,7 @@ package com.diviso.graeshoppe.client.store.domain;
  * @author MayaSanjeev
  * mayabytatech, maya.k.k@lxisoft.com
  */
-public class Result {
+public class HeaderSearch {
 
 
     private static final long serialVersionUID = 1L;

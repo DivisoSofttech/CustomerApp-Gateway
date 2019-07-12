@@ -46,7 +46,8 @@ import com.diviso.graeshoppe.client.product.model.Uom;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
-import com.diviso.graeshoppe.client.store.domain.Result;
+import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
+
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.Type;
@@ -687,6 +688,8 @@ public class QueryServiceImpl implements QueryService {
 		List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
 
 		OrderDeliveryInfo deliveryInfo = findDeliveryInfoById(order.getDeliveryInfo().getId());
+		
+		log.debug("............deliveryInfo..............."+deliveryInfo);
 
 		OrderMaster orderMaster = new OrderMaster();
 
@@ -738,18 +741,18 @@ public class QueryServiceImpl implements QueryService {
 	
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
 		Set<Store> storeSet = new HashSet<Store>();
-		Set<Result> values = new HashSet<Result>();
+		Set<HeaderSearch> values = new HashSet<HeaderSearch>();
 		
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", searchTerm)).build();
 
-		elasticsearchTemplate.query(searchQuery, new JestResultsExtractor<Set<Result>>() {
+		elasticsearchTemplate.query(searchQuery, new JestResultsExtractor<Set<HeaderSearch>>() {
 
 			@Override
-			public Set<Result> extract(SearchResult response) {
+			public Set<HeaderSearch> extract(SearchResult response) {
 
 				for (SearchResult.Hit<JsonObject, Void> searchHit : response.getHits(JsonObject.class)) {
-					Result result = new Result();
+					HeaderSearch result = new HeaderSearch();
 					
 					if(searchHit.index.equals("store")) {
 						result.setStoreNo(searchHit.source.get("regNo").getAsString());
@@ -766,7 +769,7 @@ public class QueryServiceImpl implements QueryService {
 			}
 		});
 
-		for (Result r : values) {
+		for (HeaderSearch r : values) {
 			StringQuery stringQuery = new StringQuery(termQuery("regNo.keyword", r.getStoreNo()).toString());
 			storeSet.add(elasticsearchOperations.queryForObject(stringQuery, Store.class));
 		}

@@ -56,7 +56,7 @@ import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
-import com.diviso.graeshoppe.client.store.domain.Result;
+
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.Type;
