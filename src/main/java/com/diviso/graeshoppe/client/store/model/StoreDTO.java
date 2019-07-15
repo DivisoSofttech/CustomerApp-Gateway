@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * StoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-15T14:57:07.355+05:30[Asia/Calcutta]")
 
 public class StoreDTO   {
   @JsonProperty("closingTime")
@@ -41,6 +41,15 @@ public class StoreDTO   {
   @JsonProperty("location")
   private String location = null;
 
+  @JsonProperty("locationName")
+  private String locationName = null;
+
+  @JsonProperty("maxDeliveryTime")
+  private OffsetDateTime maxDeliveryTime = null;
+
+  @JsonProperty("minAmount")
+  private Double minAmount = null;
+
   @JsonProperty("name")
   private String name = null;
 
@@ -52,6 +61,9 @@ public class StoreDTO   {
 
   @JsonProperty("regNo")
   private String regNo = null;
+
+  @JsonProperty("storeAddressId")
+  private Long storeAddressId = null;
 
   @JsonProperty("totalRating")
   private Double totalRating = null;
@@ -217,6 +229,67 @@ public class StoreDTO   {
     this.location = location;
   }
 
+  public StoreDTO locationName(String locationName) {
+    this.locationName = locationName;
+    return this;
+  }
+
+  /**
+   * Get locationName
+   * @return locationName
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getLocationName() {
+    return locationName;
+  }
+
+  public void setLocationName(String locationName) {
+    this.locationName = locationName;
+  }
+
+  public StoreDTO maxDeliveryTime(OffsetDateTime maxDeliveryTime) {
+    this.maxDeliveryTime = maxDeliveryTime;
+    return this;
+  }
+
+  /**
+   * Get maxDeliveryTime
+   * @return maxDeliveryTime
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getMaxDeliveryTime() {
+    return maxDeliveryTime;
+  }
+
+  public void setMaxDeliveryTime(OffsetDateTime maxDeliveryTime) {
+    this.maxDeliveryTime = maxDeliveryTime;
+  }
+
+  public StoreDTO minAmount(Double minAmount) {
+    this.minAmount = minAmount;
+    return this;
+  }
+
+  /**
+   * Get minAmount
+   * @return minAmount
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getMinAmount() {
+    return minAmount;
+  }
+
+  public void setMinAmount(Double minAmount) {
+    this.minAmount = minAmount;
+  }
+
   public StoreDTO name(String name) {
     this.name = name;
     return this;
@@ -298,6 +371,26 @@ public class StoreDTO   {
     this.regNo = regNo;
   }
 
+  public StoreDTO storeAddressId(Long storeAddressId) {
+    this.storeAddressId = storeAddressId;
+    return this;
+  }
+
+  /**
+   * Get storeAddressId
+   * @return storeAddressId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getStoreAddressId() {
+    return storeAddressId;
+  }
+
+  public void setStoreAddressId(Long storeAddressId) {
+    this.storeAddressId = storeAddressId;
+  }
+
   public StoreDTO totalRating(Double totalRating) {
     this.totalRating = totalRating;
     return this;
@@ -336,16 +429,20 @@ public class StoreDTO   {
         Objects.equals(this.imageContentType, storeDTO.imageContentType) &&
         Objects.equals(this.info, storeDTO.info) &&
         Objects.equals(this.location, storeDTO.location) &&
+        Objects.equals(this.locationName, storeDTO.locationName) &&
+        Objects.equals(this.maxDeliveryTime, storeDTO.maxDeliveryTime) &&
+        Objects.equals(this.minAmount, storeDTO.minAmount) &&
         Objects.equals(this.name, storeDTO.name) &&
         Objects.equals(this.openingTime, storeDTO.openingTime) &&
         Objects.equals(this.propreitorId, storeDTO.propreitorId) &&
         Objects.equals(this.regNo, storeDTO.regNo) &&
+        Objects.equals(this.storeAddressId, storeDTO.storeAddressId) &&
         Objects.equals(this.totalRating, storeDTO.totalRating);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, name, openingTime, propreitorId, regNo, totalRating);
+    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitorId, regNo, storeAddressId, totalRating);
   }
 
   @Override
@@ -361,10 +458,14 @@ public class StoreDTO   {
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
     sb.append("    info: ").append(toIndentedString(info)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
+    sb.append("    locationName: ").append(toIndentedString(locationName)).append("\n");
+    sb.append("    maxDeliveryTime: ").append(toIndentedString(maxDeliveryTime)).append("\n");
+    sb.append("    minAmount: ").append(toIndentedString(minAmount)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    openingTime: ").append(toIndentedString(openingTime)).append("\n");
     sb.append("    propreitorId: ").append(toIndentedString(propreitorId)).append("\n");
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
+    sb.append("    storeAddressId: ").append(toIndentedString(storeAddressId)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
     sb.append("}");
     return sb.toString();

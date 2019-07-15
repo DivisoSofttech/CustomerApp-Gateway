@@ -4,6 +4,7 @@ import java.util.Objects;
 import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.model.Propreitor;
 import com.diviso.graeshoppe.client.store.model.Review;
+import com.diviso.graeshoppe.client.store.model.StoreAddress;
 import com.diviso.graeshoppe.client.store.model.UserRating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -12,6 +13,8 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -20,8 +23,8 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-31T09:27:30.318+05:30[Asia/Calcutta]")
-
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-15T14:57:07.355+05:30[Asia/Calcutta]")
+@Document(indexName = "store")
 public class Store   {
   @JsonProperty("closingTime")
   private OffsetDateTime closingTime = null;
@@ -51,6 +54,15 @@ public class Store   {
   @JsonProperty("location")
   private String location = null;
 
+  @JsonProperty("locationName")
+  private String locationName = null;
+
+  @JsonProperty("maxDeliveryTime")
+  private OffsetDateTime maxDeliveryTime = null;
+
+  @JsonProperty("minAmount")
+  private Double minAmount = null;
+
   @JsonProperty("name")
   private String name = null;
 
@@ -66,6 +78,9 @@ public class Store   {
   @JsonProperty("reviews")
   @Valid
   private List<Review> reviews = null;
+
+  @JsonProperty("storeAddress")
+  private StoreAddress storeAddress = null;
 
   @JsonProperty("totalRating")
   private Double totalRating = null;
@@ -264,6 +279,67 @@ public class Store   {
     this.location = location;
   }
 
+  public Store locationName(String locationName) {
+    this.locationName = locationName;
+    return this;
+  }
+
+  /**
+   * Get locationName
+   * @return locationName
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getLocationName() {
+    return locationName;
+  }
+
+  public void setLocationName(String locationName) {
+    this.locationName = locationName;
+  }
+
+  public Store maxDeliveryTime(OffsetDateTime maxDeliveryTime) {
+    this.maxDeliveryTime = maxDeliveryTime;
+    return this;
+  }
+
+  /**
+   * Get maxDeliveryTime
+   * @return maxDeliveryTime
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getMaxDeliveryTime() {
+    return maxDeliveryTime;
+  }
+
+  public void setMaxDeliveryTime(OffsetDateTime maxDeliveryTime) {
+    this.maxDeliveryTime = maxDeliveryTime;
+  }
+
+  public Store minAmount(Double minAmount) {
+    this.minAmount = minAmount;
+    return this;
+  }
+
+  /**
+   * Get minAmount
+   * @return minAmount
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getMinAmount() {
+    return minAmount;
+  }
+
+  public void setMinAmount(Double minAmount) {
+    this.minAmount = minAmount;
+  }
+
   public Store name(String name) {
     this.name = name;
     return this;
@@ -375,6 +451,27 @@ public class Store   {
     this.reviews = reviews;
   }
 
+  public Store storeAddress(StoreAddress storeAddress) {
+    this.storeAddress = storeAddress;
+    return this;
+  }
+
+  /**
+   * Get storeAddress
+   * @return storeAddress
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public StoreAddress getStoreAddress() {
+    return storeAddress;
+  }
+
+  public void setStoreAddress(StoreAddress storeAddress) {
+    this.storeAddress = storeAddress;
+  }
+
   public Store totalRating(Double totalRating) {
     this.totalRating = totalRating;
     return this;
@@ -443,18 +540,22 @@ public class Store   {
         Objects.equals(this.imageContentType, store.imageContentType) &&
         Objects.equals(this.info, store.info) &&
         Objects.equals(this.location, store.location) &&
+        Objects.equals(this.locationName, store.locationName) &&
+        Objects.equals(this.maxDeliveryTime, store.maxDeliveryTime) &&
+        Objects.equals(this.minAmount, store.minAmount) &&
         Objects.equals(this.name, store.name) &&
         Objects.equals(this.openingTime, store.openingTime) &&
         Objects.equals(this.propreitor, store.propreitor) &&
         Objects.equals(this.regNo, store.regNo) &&
         Objects.equals(this.reviews, store.reviews) &&
+        Objects.equals(this.storeAddress, store.storeAddress) &&
         Objects.equals(this.totalRating, store.totalRating) &&
         Objects.equals(this.userRatings, store.userRatings);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, name, openingTime, propreitor, regNo, reviews, totalRating, userRatings);
+    return Objects.hash(closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, totalRating, userRatings);
   }
 
   @Override
@@ -471,11 +572,15 @@ public class Store   {
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
     sb.append("    info: ").append(toIndentedString(info)).append("\n");
     sb.append("    location: ").append(toIndentedString(location)).append("\n");
+    sb.append("    locationName: ").append(toIndentedString(locationName)).append("\n");
+    sb.append("    maxDeliveryTime: ").append(toIndentedString(maxDeliveryTime)).append("\n");
+    sb.append("    minAmount: ").append(toIndentedString(minAmount)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    openingTime: ").append(toIndentedString(openingTime)).append("\n");
     sb.append("    propreitor: ").append(toIndentedString(propreitor)).append("\n");
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
     sb.append("    reviews: ").append(toIndentedString(reviews)).append("\n");
+    sb.append("    storeAddress: ").append(toIndentedString(storeAddress)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
     sb.append("    userRatings: ").append(toIndentedString(userRatings)).append("\n");
     sb.append("}");

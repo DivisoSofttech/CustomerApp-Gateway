@@ -34,7 +34,7 @@
     "generator-jhipster-swagger-cli": {
         "apis": {
             "store": {
-                "spec": "http://34.73.191.107:8071/v2/api-docs"
+                "spec": "http://34.74.142.114:8071/v2/api-docs"
             }
         }
     }
