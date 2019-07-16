@@ -1,11 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
-import com.diviso.graeshoppe.client.store.model.Propreitor;
-import com.diviso.graeshoppe.client.store.model.Review;
-import com.diviso.graeshoppe.client.store.model.StoreAddress;
-import com.diviso.graeshoppe.client.store.model.UserRating;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -13,8 +9,6 @@ import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -23,9 +17,13 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-15T14:57:07.355+05:30[Asia/Calcutta]")
-@Document(indexName = "store")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-16T09:17:03.143+05:30[Asia/Calcutta]")
+
 public class Store   {
+  @JsonProperty("banners")
+  @Valid
+  private List<Banner> banners = null;
+
   @JsonProperty("closingTime")
   private OffsetDateTime closingTime = null;
 
@@ -88,6 +86,35 @@ public class Store   {
   @JsonProperty("userRatings")
   @Valid
   private List<UserRating> userRatings = null;
+
+  public Store banners(List<Banner> banners) {
+    this.banners = banners;
+    return this;
+  }
+
+  public Store addBannersItem(Banner bannersItem) {
+    if (this.banners == null) {
+      this.banners = new ArrayList<Banner>();
+    }
+    this.banners.add(bannersItem);
+    return this;
+  }
+
+  /**
+   * Get banners
+   * @return banners
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Banner> getBanners() {
+    return banners;
+  }
+
+  public void setBanners(List<Banner> banners) {
+    this.banners = banners;
+  }
 
   public Store closingTime(OffsetDateTime closingTime) {
     this.closingTime = closingTime;
@@ -531,7 +558,8 @@ public class Store   {
       return false;
     }
     Store store = (Store) o;
-    return Objects.equals(this.closingTime, store.closingTime) &&
+    return Objects.equals(this.banners, store.banners) &&
+        Objects.equals(this.closingTime, store.closingTime) &&
         Objects.equals(this.contactNo, store.contactNo) &&
         Objects.equals(this.deliveryInfos, store.deliveryInfos) &&
         Objects.equals(this.email, store.email) &&
@@ -555,7 +583,7 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, totalRating, userRatings);
+    return Objects.hash(banners, closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, totalRating, userRatings);
   }
 
   @Override
@@ -563,6 +591,7 @@ public class Store   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Store {\n");
     
+    sb.append("    banners: ").append(toIndentedString(banners)).append("\n");
     sb.append("    closingTime: ").append(toIndentedString(closingTime)).append("\n");
     sb.append("    contactNo: ").append(toIndentedString(contactNo)).append("\n");
     sb.append("    deliveryInfos: ").append(toIndentedString(deliveryInfos)).append("\n");

@@ -23,8 +23,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
 
@@ -32,85 +35,101 @@ import org.springframework.data.elasticsearch.annotations.Document;
  * TODO Provide a detailed description here 
  * @author MayaSanjeev
  * mayabytatech, maya.k.k@lxisoft.com
- */
-@Document(indexName = "banner")
-public class Banner implements Serializable {
+ */@Document(indexName = "banner")
+ public class Banner implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	    private static final long serialVersionUID = 1L;
+	    
+	    @Id
+	    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	    private Long id;
 
-    @Lob
-    @Column(name = "jhi_file")
-    private byte[] file;
+	    @Lob
+	    @Column(name = "jhi_file")
+	    private byte[] file;
 
-    @Column(name = "jhi_file_content_type")
-    private String fileContentType;
+	    @Column(name = "jhi_file_content_type")
+	    private String fileContentType;
 
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
-    }
+	    @ManyToOne
+	    @JsonIgnoreProperties("banners")
+	    private Store store;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+	    public Long getId() {
+	        return id;
+	    }
 
-    public byte[] getFile() {
-        return file;
-    }
+	    public void setId(Long id) {
+	        this.id = id;
+	    }
 
-    public Banner file(byte[] file) {
-        this.file = file;
-        return this;
-    }
+	    public byte[] getFile() {
+	        return file;
+	    }
 
-    public void setFile(byte[] file) {
-        this.file = file;
-    }
+	    public Banner file(byte[] file) {
+	        this.file = file;
+	        return this;
+	    }
 
-    public String getFileContentType() {
-        return fileContentType;
-    }
+	    public void setFile(byte[] file) {
+	        this.file = file;
+	    }
 
-    public Banner fileContentType(String fileContentType) {
-        this.fileContentType = fileContentType;
-        return this;
-    }
+	    public String getFileContentType() {
+	        return fileContentType;
+	    }
 
-    public void setFileContentType(String fileContentType) {
-        this.fileContentType = fileContentType;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+	    public Banner fileContentType(String fileContentType) {
+	        this.fileContentType = fileContentType;
+	        return this;
+	    }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Banner banner = (Banner) o;
-        if (banner.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), banner.getId());
-    }
+	    public void setFileContentType(String fileContentType) {
+	        this.fileContentType = fileContentType;
+	    }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
+	    public Store getStore() {
+	        return store;
+	    }
 
-    @Override
-    public String toString() {
-        return "Banner{" +
-            "id=" + getId() +
-            ", file='" + getFile() + "'" +
-            ", fileContentType='" + getFileContentType() + "'" +
-            "}";
-    }
-}
+	    public Banner store(Store store) {
+	        this.store = store;
+	        return this;
+	    }
+
+	    public void setStore(Store store) {
+	        this.store = store;
+	    }
+	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+
+	    @Override
+	    public boolean equals(Object o) {
+	        if (this == o) {
+	            return true;
+	        }
+	        if (o == null || getClass() != o.getClass()) {
+	            return false;
+	        }
+	        Banner banner = (Banner) o;
+	        if (banner.getId() == null || getId() == null) {
+	            return false;
+	        }
+	        return Objects.equals(getId(), banner.getId());
+	    }
+
+	    @Override
+	    public int hashCode() {
+	        return Objects.hashCode(getId());
+	    }
+
+	    @Override
+	    public String toString() {
+	        return "Banner{" +
+	            "id=" + getId() +
+	            ", file='" + getFile() + "'" +
+	            ", fileContentType='" + getFileContentType() + "'" +
+	            "}";
+	    }
+	}

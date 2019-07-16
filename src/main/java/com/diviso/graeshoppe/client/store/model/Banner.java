@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -10,12 +11,12 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * BannerDTO
+ * Banner
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-16T09:17:03.143+05:30[Asia/Calcutta]")
 
-public class BannerDTO   {
+public class Banner   {
   @JsonProperty("file")
   private byte[] file = null;
 
@@ -25,10 +26,10 @@ public class BannerDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("storeId")
-  private Long storeId = null;
+  @JsonProperty("store")
+  private Store store = null;
 
-  public BannerDTO file(byte[] file) {
+  public Banner file(byte[] file) {
     this.file = file;
     return this;
   }
@@ -48,7 +49,7 @@ public class BannerDTO   {
     this.file = file;
   }
 
-  public BannerDTO fileContentType(String fileContentType) {
+  public Banner fileContentType(String fileContentType) {
     this.fileContentType = fileContentType;
     return this;
   }
@@ -68,7 +69,7 @@ public class BannerDTO   {
     this.fileContentType = fileContentType;
   }
 
-  public BannerDTO id(Long id) {
+  public Banner id(Long id) {
     this.id = id;
     return this;
   }
@@ -88,24 +89,25 @@ public class BannerDTO   {
     this.id = id;
   }
 
-  public BannerDTO storeId(Long storeId) {
-    this.storeId = storeId;
+  public Banner store(Store store) {
+    this.store = store;
     return this;
   }
 
   /**
-   * Get storeId
-   * @return storeId
+   * Get store
+   * @return store
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getStoreId() {
-    return storeId;
+  public Store getStore() {
+    return store;
   }
 
-  public void setStoreId(Long storeId) {
-    this.storeId = storeId;
+  public void setStore(Store store) {
+    this.store = store;
   }
 
 
@@ -117,27 +119,27 @@ public class BannerDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    BannerDTO bannerDTO = (BannerDTO) o;
-    return Objects.equals(this.file, bannerDTO.file) &&
-        Objects.equals(this.fileContentType, bannerDTO.fileContentType) &&
-        Objects.equals(this.id, bannerDTO.id) &&
-        Objects.equals(this.storeId, bannerDTO.storeId);
+    Banner banner = (Banner) o;
+    return Objects.equals(this.file, banner.file) &&
+        Objects.equals(this.fileContentType, banner.fileContentType) &&
+        Objects.equals(this.id, banner.id) &&
+        Objects.equals(this.store, banner.store);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(file, fileContentType, id, storeId);
+    return Objects.hash(file, fileContentType, id, store);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class BannerDTO {\n");
+    sb.append("class Banner {\n");
     
     sb.append("    file: ").append(toIndentedString(file)).append("\n");
     sb.append("    fileContentType: ").append(toIndentedString(fileContentType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
+    sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("}");
     return sb.toString();
   }
