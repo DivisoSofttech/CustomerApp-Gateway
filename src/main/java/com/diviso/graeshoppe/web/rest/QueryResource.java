@@ -465,7 +465,7 @@ public class QueryResource {
 		 return queryService.headerSearch(searchTerm,pageable);
 	 }
 	
-	 //.................... cahenge argument by dealing with client team.......................
+	 //.................... change argument by dealing with client team.......................
 	 @GetMapping("/location/findByNearestLocation")
 		public List<Store>  searchByNearestLocation(){
 			

@@ -689,11 +689,13 @@ public class QueryServiceImpl implements QueryService {
 		// findDeliveryInfoById(order.getDeliveryInfo().getId());
 
 		// log.debug("............deliveryInfo..............."+deliveryInfo);
-
+		log.debug("...............orderlinesss......" + orderLines);
 		OrderMaster orderMaster = new OrderMaster();
 
 		Store store = findStoreByRegNo(order.getStoreId());
 
+		log.debug("...............store......" + store);
+		
 		orderMaster.setSoldBy(store.getName());
 
 		// orderMaster.setMethodOfOrder(deliveryInfo.getDeliveryType());
@@ -719,6 +721,7 @@ public class QueryServiceImpl implements QueryService {
 
 		List<ProductLine> productLines = new ArrayList<ProductLine>();
 
+		
 		orderLines.forEach(orderline -> {
 
 			ProductLine productLine = new ProductLine();
@@ -733,6 +736,9 @@ public class QueryServiceImpl implements QueryService {
 
 			Product product = findProductById(orderline.getProductId());
 
+			log.debug(".......product.........." + product);
+			
+			
 			productLine.setProductDescription(product.getName());
 
 			log.debug(".......productline.........." + productLine);
