@@ -466,10 +466,16 @@ public class QueryResource {
 	 }
 	
 	 //.................... change argument by dealing with client team.......................
-	 @GetMapping("/location/findByNearestLocation")
-		public List<Store>  searchByNearestLocation(){
+	 @GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
+		public List<Store>  searchByNearestLocation(@PathVariable String latLon,@PathVariable Double kiloMeter){
+		
+			String[] latLons =	latLon.split(",");
 			
-			return  queryService.findByNearestLocation(new Point(10.7918,76.4997 ),new Distance(2.00, Metrics.KILOMETERS) );
+			double lat = Double.parseDouble(latLons[0]);
+			
+			double lon = Double.parseDouble(latLons[1]);
+			
+			return  queryService.findByNearestLocation(new Point(lat,lon),new Distance(kiloMeter, Metrics.KILOMETERS) );
 		}
 		
 	 
