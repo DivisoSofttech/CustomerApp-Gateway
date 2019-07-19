@@ -339,6 +339,7 @@ public class CommandResource {
 
 				ResponseEntity<ReviewDTO> review = reviewResourceApi.createReviewUsingPOST(reviewDTO);
 
+				log.info("............check userrating................  "+userRatingDTO);
 				ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
 						.createUserRatingUsingPOST(userRatingDTO);
 				
