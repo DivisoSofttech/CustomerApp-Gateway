@@ -30,13 +30,14 @@ import org.springframework.data.elasticsearch.annotations.Document;
 @Document(indexName = "ordermaster")
 public class OrderMaster {
 	
+
 	private String soldBy;
 	
 	private String methodOfOrder;
 	
 	private String orderId;
 	
-	private Instant docketDate;
+	private Instant orderDate;
 	
 	private String customerName;
 
@@ -101,12 +102,13 @@ public class OrderMaster {
 		this.orderId = orderId;
 	}
 
-	public Instant getDocketDate() {
-		return docketDate;
+
+	public Instant getOrderDate() {
+		return orderDate;
 	}
 
-	public void setDocketDate(Instant docketDate) {
-		this.docketDate = docketDate;
+	public void setOrderDate(Instant orderDate) {
+		this.orderDate = orderDate;
 	}
 
 	public String getCustomerName() {
@@ -218,7 +220,7 @@ public class OrderMaster {
 	@Override
 	public String toString() {
 		return "OrderMaster [soldBy=" + soldBy + ", methodOfOrder=" + methodOfOrder + ", orderId=" + orderId
-				+ ", docketDate=" + docketDate + ", customerName=" + customerName + ", deliveryCharge=" + deliveryCharge
+				+ ", orderDate=" + orderDate + ", customerName=" + customerName + ", deliveryCharge=" + deliveryCharge
 				+ ", grandTotal=" + grandTotal + ", pincode=" + pincode + ", houseNoOrBuildingName="
 				+ houseNoOrBuildingName + ", roadNameAreaOrStreet=" + roadNameAreaOrStreet + ", city=" + city
 				+ ", state=" + state + ", landmark=" + landmark + ", name=" + name + ", phone=" + phone

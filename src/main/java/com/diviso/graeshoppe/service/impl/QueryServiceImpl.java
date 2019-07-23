@@ -704,7 +704,7 @@ public class QueryServiceImpl implements QueryService {
 		
 		orderMaster.setOrderId(order.getOrderId());
 
-		orderMaster.setDocketDate(order.getDate());
+		orderMaster.setOrderDate(order.getDate());
 
 		Customer customer = findCustomerByReference(order.getCustomerId());
 
@@ -758,7 +758,7 @@ public class QueryServiceImpl implements QueryService {
 		
 		orderMaster.setHouseNoOrBuildingName("458");
 		
-		orderMaster.setAlternatePhone(9846997765L);
+		orderMaster.setAlternatePhone(9846977765L);
 		
 		orderMaster.setPhone(9846997764L);
 		
