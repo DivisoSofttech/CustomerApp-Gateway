@@ -5,7 +5,7 @@
  */
 package com.diviso.graeshoppe.client.product.api;
 
-import com.diviso.graeshoppe.client.product.model.UomDTO;
+import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,14 +25,14 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 @Api(value = "UomResource", description = "the UomResource API")
 public interface UomResourceApi {
 
-    @ApiOperation(value = "createUom", nickname = "createUomUsingPOST", notes = "", response = UomDTO.class, tags={ "uom-resource", })
+    @ApiOperation(value = "createUOM", nickname = "createUOMUsingPOST", notes = "", response = UOMDTO.class, tags={ "uom-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = UomDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = UOMDTO.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -41,10 +41,10 @@ public interface UomResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<UomDTO> createUomUsingPOST(@ApiParam(value = "uomDTO" ,required=true )  @Valid @RequestBody UomDTO uomDTO);
+    ResponseEntity<UOMDTO> createUOMUsingPOST(@ApiParam(value = "uOMDTO" ,required=true )  @Valid @RequestBody UOMDTO UOMDTO);
 
 
-    @ApiOperation(value = "deleteUom", nickname = "deleteUomUsingDELETE", notes = "", tags={ "uom-resource", })
+    @ApiOperation(value = "deleteUOM", nickname = "deleteUOMUsingDELETE", notes = "", tags={ "uom-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 204, message = "No Content"),
@@ -52,48 +52,48 @@ public interface UomResourceApi {
         @ApiResponse(code = 403, message = "Forbidden") })
     @RequestMapping(value = "/api/uoms/{id}",
         method = RequestMethod.DELETE)
-    ResponseEntity<Void> deleteUomUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+    ResponseEntity<Void> deleteUOMUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "getAllUoms", nickname = "getAllUomsUsingGET", notes = "", response = UomDTO.class, responseContainer = "List", tags={ "uom-resource", })
+    @ApiOperation(value = "getAllUOMS", nickname = "getAllUOMSUsingGET", notes = "", response = UOMDTO.class, responseContainer = "List", tags={ "uom-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = UomDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "OK", response = UOMDTO.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/uoms",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<UomDTO>> getAllUomsUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<List<UOMDTO>> getAllUOMSUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "getUom", nickname = "getUomUsingGET", notes = "", response = UomDTO.class, tags={ "uom-resource", })
+    @ApiOperation(value = "getUOM", nickname = "getUOMUsingGET", notes = "", response = UOMDTO.class, tags={ "uom-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = UomDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = UOMDTO.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/uoms/{id}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<UomDTO> getUomUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+    ResponseEntity<UOMDTO> getUOMUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "searchUoms", nickname = "searchUomsUsingGET", notes = "", response = UomDTO.class, responseContainer = "List", tags={ "uom-resource", })
+    @ApiOperation(value = "searchUOMS", nickname = "searchUOMSUsingGET", notes = "", response = UOMDTO.class, responseContainer = "List", tags={ "uom-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = UomDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 200, message = "OK", response = UOMDTO.class, responseContainer = "List"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
     @RequestMapping(value = "/api/_search/uoms",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<UomDTO>> searchUomsUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<List<UOMDTO>> searchUOMSUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "updateUom", nickname = "updateUomUsingPUT", notes = "", response = UomDTO.class, tags={ "uom-resource", })
+    @ApiOperation(value = "updateUOM", nickname = "updateUOMUsingPUT", notes = "", response = UOMDTO.class, tags={ "uom-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = UomDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = UOMDTO.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -102,6 +102,6 @@ public interface UomResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.PUT)
-    ResponseEntity<UomDTO> updateUomUsingPUT(@ApiParam(value = "uomDTO" ,required=true )  @Valid @RequestBody UomDTO uomDTO);
+    ResponseEntity<UOMDTO> updateUOMUsingPUT(@ApiParam(value = "uOMDTO" ,required=true )  @Valid @RequestBody UOMDTO UOMDTO);
 
 }

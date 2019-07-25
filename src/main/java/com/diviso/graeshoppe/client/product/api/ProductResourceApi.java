@@ -27,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 @Api(value = "ProductResource", description = "the ProductResource API")
 public interface ProductResourceApi {
@@ -66,19 +66,7 @@ public interface ProductResourceApi {
     @RequestMapping(value = "/api/products",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<ProductDTO>> getAllProductsUsingGET(@ApiParam(value = "eagerload", defaultValue = "false") @Valid @RequestParam(value = "eagerload", required = false, defaultValue="false") Boolean eagerload,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
-
-
-    @ApiOperation(value = "getPdfAllProdutsWithPrice", nickname = "getPdfAllProdutsWithPriceUsingGET", notes = "", response = byte[].class, tags={ "product-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = byte[].class),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/pdf/produtsReport",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<byte[]> getPdfAllProdutsWithPriceUsingGET();
+    ResponseEntity<List<ProductDTO>> getAllProductsUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
     @ApiOperation(value = "getProduct", nickname = "getProductUsingGET", notes = "", response = ProductDTO.class, tags={ "product-resource", })
@@ -91,6 +79,18 @@ public interface ProductResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<ProductDTO> getProductUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "getProductsPriceAsPdf", nickname = "getProductsPriceAsPdfUsingGET", notes = "", response = byte[].class, tags={ "product-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = byte[].class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/pdf/products-report",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<byte[]> getProductsPriceAsPdfUsingGET();
 
 
     @ApiOperation(value = "listToDto", nickname = "listToDtoUsingPOST", notes = "", response = ProductDTO.class, responseContainer = "List", tags={ "product-resource", })

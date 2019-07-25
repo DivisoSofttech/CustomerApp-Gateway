@@ -1,7 +1,6 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.Tax;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
@@ -9,8 +8,6 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -19,21 +16,20 @@ import javax.validation.constraints.*;
  * TaxCategory
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
-@Document(indexName = "taxcategory")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
 public class TaxCategory   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("name")
   private String name = null;
-
-  @JsonProperty("products")
-  @Valid
-  private List<Product> products = null;
 
   @JsonProperty("taxes")
   @Valid
@@ -57,6 +53,26 @@ public class TaxCategory   {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public TaxCategory iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public TaxCategory id(Long id) {
@@ -88,8 +104,7 @@ public class TaxCategory   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -98,35 +113,6 @@ public class TaxCategory   {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public TaxCategory products(List<Product> products) {
-    this.products = products;
-    return this;
-  }
-
-  public TaxCategory addProductsItem(Product productsItem) {
-    if (this.products == null) {
-      this.products = new ArrayList<Product>();
-    }
-    this.products.add(productsItem);
-    return this;
-  }
-
-  /**
-   * Get products
-   * @return products
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Product> getProducts() {
-    return products;
-  }
-
-  public void setProducts(List<Product> products) {
-    this.products = products;
   }
 
   public TaxCategory taxes(List<Tax> taxes) {
@@ -169,15 +155,15 @@ public class TaxCategory   {
     }
     TaxCategory taxCategory = (TaxCategory) o;
     return Objects.equals(this.description, taxCategory.description) &&
+        Objects.equals(this.iDPcode, taxCategory.iDPcode) &&
         Objects.equals(this.id, taxCategory.id) &&
         Objects.equals(this.name, taxCategory.name) &&
-        Objects.equals(this.products, taxCategory.products) &&
         Objects.equals(this.taxes, taxCategory.taxes);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name, products, taxes);
+    return Objects.hash(description, iDPcode, id, name, taxes);
   }
 
   @Override
@@ -186,9 +172,9 @@ public class TaxCategory   {
     sb.append("class TaxCategory {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    products: ").append(toIndentedString(products)).append("\n");
     sb.append("    taxes: ").append(toIndentedString(taxes)).append("\n");
     sb.append("}");
     return sb.toString();

@@ -13,11 +13,11 @@ import javax.validation.constraints.*;
  * LabelDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class LabelDTO   {
-  @JsonProperty("description")
-  private String description = null;
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -25,24 +25,27 @@ public class LabelDTO   {
   @JsonProperty("name")
   private String name = null;
 
-  public LabelDTO description(String description) {
-    this.description = description;
+  @JsonProperty("productId")
+  private Long productId = null;
+
+  public LabelDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
     return this;
   }
 
   /**
-   * Get description
-   * @return description
+   * Get iDPcode
+   * @return iDPcode
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDescription() {
-    return description;
+  public String getIDPcode() {
+    return iDPcode;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public LabelDTO id(Long id) {
@@ -74,8 +77,7 @@ public class LabelDTO   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -84,6 +86,26 @@ public class LabelDTO   {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public LabelDTO productId(Long productId) {
+    this.productId = productId;
+    return this;
+  }
+
+  /**
+   * Get productId
+   * @return productId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getProductId() {
+    return productId;
+  }
+
+  public void setProductId(Long productId) {
+    this.productId = productId;
   }
 
 
@@ -96,14 +118,15 @@ public class LabelDTO   {
       return false;
     }
     LabelDTO labelDTO = (LabelDTO) o;
-    return Objects.equals(this.description, labelDTO.description) &&
+    return Objects.equals(this.iDPcode, labelDTO.iDPcode) &&
         Objects.equals(this.id, labelDTO.id) &&
-        Objects.equals(this.name, labelDTO.name);
+        Objects.equals(this.name, labelDTO.name) &&
+        Objects.equals(this.productId, labelDTO.productId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name);
+    return Objects.hash(iDPcode, id, name, productId);
   }
 
   @Override
@@ -111,9 +134,10 @@ public class LabelDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class LabelDTO {\n");
     
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

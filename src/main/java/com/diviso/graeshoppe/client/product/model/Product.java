@@ -1,22 +1,22 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.product.model.Barcode;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
+import com.diviso.graeshoppe.client.product.model.Brand;
 import com.diviso.graeshoppe.client.product.model.Category;
+import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Label;
-import com.diviso.graeshoppe.client.product.model.Note;
-import com.diviso.graeshoppe.client.product.model.Status;
-import com.diviso.graeshoppe.client.product.model.StockDiary;
-import com.diviso.graeshoppe.client.product.model.StockLine;
+import com.diviso.graeshoppe.client.product.model.Location;
+import com.diviso.graeshoppe.client.product.model.Manufacturer;
+import com.diviso.graeshoppe.client.product.model.Supplier;
 import com.diviso.graeshoppe.client.product.model.TaxCategory;
+import com.diviso.graeshoppe.client.product.model.UOM;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.elasticsearch.annotations.Document;
@@ -28,24 +28,32 @@ import javax.validation.constraints.*;
  * Product
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
-@Document(indexName="product")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
+@Document(indexName = "product")
 public class Product   {
-  @JsonProperty("barcode")
-  private Barcode barcode = null;
-
-  @JsonProperty("categories")
+  @JsonProperty("auxilaryLineItems")
   @Valid
-  private List<Category> categories = null;
+  private List<AuxilaryLineItem> auxilaryLineItems = null;
 
-  @JsonProperty("dateOfExpiry")
-  private LocalDate dateOfExpiry = null;
+  @JsonProperty("brand")
+  private Brand brand = null;
 
-  @JsonProperty("dateOfMfd")
-  private LocalDate dateOfMfd = null;
+  @JsonProperty("buyPrice")
+  private Double buyPrice = null;
 
-  @JsonProperty("description")
-  private String description = null;
+  @JsonProperty("category")
+  private Category category = null;
+
+  @JsonProperty("comboLineItems")
+  @Valid
+  private List<ComboLineItem> comboLineItems = null;
+
+  @JsonProperty("discount")
+  private Discount discount = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -56,169 +64,217 @@ public class Product   {
   @JsonProperty("imageContentType")
   private String imageContentType = null;
 
+  @JsonProperty("isActive")
+  private Boolean isActive = null;
+
+  @JsonProperty("isAuxilaryItem")
+  private Boolean isAuxilaryItem = null;
+
+  @JsonProperty("isServiceItem")
+  private Boolean isServiceItem = null;
+
   @JsonProperty("labels")
   @Valid
   private List<Label> labels = null;
 
-  @JsonProperty("maximumStockLevel")
-  private Double maximumStockLevel = null;
+  @JsonProperty("location")
+  private Location location = null;
 
-  @JsonProperty("mpn")
-  private String mpn = null;
+  @JsonProperty("manufacturer")
+  private Manufacturer manufacturer = null;
+
+  @JsonProperty("maxQuantityLevel")
+  private Double maxQuantityLevel = null;
+
+  @JsonProperty("minQuantityLevel")
+  private Double minQuantityLevel = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("notes")
-  @Valid
-  private List<Note> notes = null;
-
-  @JsonProperty("outOfStock")
-  private Boolean outOfStock = null;
-
-  @JsonProperty("reOrderLevel")
-  private Double reOrderLevel = null;
-
   @JsonProperty("reference")
   private String reference = null;
 
-  @JsonProperty("searchkey")
-  private String searchkey = null;
+  @JsonProperty("sellingPrice")
+  private Double sellingPrice = null;
+
+  @JsonProperty("showInCatalogue")
+  private Boolean showInCatalogue = null;
 
   @JsonProperty("sku")
   private String sku = null;
 
-  @JsonProperty("status")
-  private Status status = null;
+  @JsonProperty("storageCost")
+  private Double storageCost = null;
 
-  @JsonProperty("stockDiaries")
-  @Valid
-  private List<StockDiary> stockDiaries = null;
-
-  @JsonProperty("stockLines")
-  @Valid
-  private List<StockLine> stockLines = null;
+  @JsonProperty("supplier")
+  private Supplier supplier = null;
 
   @JsonProperty("taxCategory")
   private TaxCategory taxCategory = null;
 
-  // storeId
-  @JsonProperty("userId")
-  private String userId = null;
+  @JsonProperty("unit")
+  private UOM unit = null;
 
-  @JsonProperty("visible")
-  private Boolean visible = null;
-
-  public Product barcode(Barcode barcode) {
-    this.barcode = barcode;
+  public Product auxilaryLineItems(List<AuxilaryLineItem> auxilaryLineItems) {
+    this.auxilaryLineItems = auxilaryLineItems;
     return this;
   }
 
-  /**
-   * Get barcode
-   * @return barcode
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Barcode getBarcode() {
-    return barcode;
-  }
-
-  public void setBarcode(Barcode barcode) {
-    this.barcode = barcode;
-  }
-
-  public Product categories(List<Category> categories) {
-    this.categories = categories;
-    return this;
-  }
-
-  public Product addCategoriesItem(Category categoriesItem) {
-    if (this.categories == null) {
-      this.categories = new ArrayList<Category>();
+  public Product addAuxilaryLineItemsItem(AuxilaryLineItem auxilaryLineItemsItem) {
+    if (this.auxilaryLineItems == null) {
+      this.auxilaryLineItems = new ArrayList<AuxilaryLineItem>();
     }
-    this.categories.add(categoriesItem);
+    this.auxilaryLineItems.add(auxilaryLineItemsItem);
     return this;
   }
 
   /**
-   * Get categories
-   * @return categories
+   * Get auxilaryLineItems
+   * @return auxilaryLineItems
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public List<Category> getCategories() {
-    return categories;
+  public List<AuxilaryLineItem> getAuxilaryLineItems() {
+    return auxilaryLineItems;
   }
 
-  public void setCategories(List<Category> categories) {
-    this.categories = categories;
+  public void setAuxilaryLineItems(List<AuxilaryLineItem> auxilaryLineItems) {
+    this.auxilaryLineItems = auxilaryLineItems;
   }
 
-  public Product dateOfExpiry(LocalDate dateOfExpiry) {
-    this.dateOfExpiry = dateOfExpiry;
+  public Product brand(Brand brand) {
+    this.brand = brand;
     return this;
   }
 
   /**
-   * Get dateOfExpiry
-   * @return dateOfExpiry
+   * Get brand
+   * @return brand
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public LocalDate getDateOfExpiry() {
-    return dateOfExpiry;
+  public Brand getBrand() {
+    return brand;
   }
 
-  public void setDateOfExpiry(LocalDate dateOfExpiry) {
-    this.dateOfExpiry = dateOfExpiry;
+  public void setBrand(Brand brand) {
+    this.brand = brand;
   }
 
-  public Product dateOfMfd(LocalDate dateOfMfd) {
-    this.dateOfMfd = dateOfMfd;
+  public Product buyPrice(Double buyPrice) {
+    this.buyPrice = buyPrice;
     return this;
   }
 
   /**
-   * Get dateOfMfd
-   * @return dateOfMfd
+   * Get buyPrice
+   * @return buyPrice
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getBuyPrice() {
+    return buyPrice;
+  }
+
+  public void setBuyPrice(Double buyPrice) {
+    this.buyPrice = buyPrice;
+  }
+
+  public Product category(Category category) {
+    this.category = category;
+    return this;
+  }
+
+  /**
+   * Get category
+   * @return category
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public LocalDate getDateOfMfd() {
-    return dateOfMfd;
+  public Category getCategory() {
+    return category;
   }
 
-  public void setDateOfMfd(LocalDate dateOfMfd) {
-    this.dateOfMfd = dateOfMfd;
+  public void setCategory(Category category) {
+    this.category = category;
   }
 
-  public Product description(String description) {
-    this.description = description;
+  public Product comboLineItems(List<ComboLineItem> comboLineItems) {
+    this.comboLineItems = comboLineItems;
+    return this;
+  }
+
+  public Product addComboLineItemsItem(ComboLineItem comboLineItemsItem) {
+    if (this.comboLineItems == null) {
+      this.comboLineItems = new ArrayList<ComboLineItem>();
+    }
+    this.comboLineItems.add(comboLineItemsItem);
     return this;
   }
 
   /**
-   * Get description
-   * @return description
+   * Get comboLineItems
+   * @return comboLineItems
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<ComboLineItem> getComboLineItems() {
+    return comboLineItems;
+  }
+
+  public void setComboLineItems(List<ComboLineItem> comboLineItems) {
+    this.comboLineItems = comboLineItems;
+  }
+
+  public Product discount(Discount discount) {
+    this.discount = discount;
+    return this;
+  }
+
+  /**
+   * Get discount
+   * @return discount
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Discount getDiscount() {
+    return discount;
+  }
+
+  public void setDiscount(Discount discount) {
+    this.discount = discount;
+  }
+
+  public Product iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDescription() {
-    return description;
+  public String getIDPcode() {
+    return iDPcode;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public Product id(Long id) {
@@ -281,6 +337,66 @@ public class Product   {
     this.imageContentType = imageContentType;
   }
 
+  public Product isActive(Boolean isActive) {
+    this.isActive = isActive;
+    return this;
+  }
+
+  /**
+   * Get isActive
+   * @return isActive
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean isIsActive() {
+    return isActive;
+  }
+
+  public void setIsActive(Boolean isActive) {
+    this.isActive = isActive;
+  }
+
+  public Product isAuxilaryItem(Boolean isAuxilaryItem) {
+    this.isAuxilaryItem = isAuxilaryItem;
+    return this;
+  }
+
+  /**
+   * Get isAuxilaryItem
+   * @return isAuxilaryItem
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean isIsAuxilaryItem() {
+    return isAuxilaryItem;
+  }
+
+  public void setIsAuxilaryItem(Boolean isAuxilaryItem) {
+    this.isAuxilaryItem = isAuxilaryItem;
+  }
+
+  public Product isServiceItem(Boolean isServiceItem) {
+    this.isServiceItem = isServiceItem;
+    return this;
+  }
+
+  /**
+   * Get isServiceItem
+   * @return isServiceItem
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean isIsServiceItem() {
+    return isServiceItem;
+  }
+
+  public void setIsServiceItem(Boolean isServiceItem) {
+    this.isServiceItem = isServiceItem;
+  }
+
   public Product labels(List<Label> labels) {
     this.labels = labels;
     return this;
@@ -310,44 +426,86 @@ public class Product   {
     this.labels = labels;
   }
 
-  public Product maximumStockLevel(Double maximumStockLevel) {
-    this.maximumStockLevel = maximumStockLevel;
+  public Product location(Location location) {
+    this.location = location;
     return this;
   }
 
   /**
-   * Get maximumStockLevel
-   * @return maximumStockLevel
+   * Get location
+   * @return location
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Double getMaximumStockLevel() {
-    return maximumStockLevel;
+  public Location getLocation() {
+    return location;
   }
 
-  public void setMaximumStockLevel(Double maximumStockLevel) {
-    this.maximumStockLevel = maximumStockLevel;
+  public void setLocation(Location location) {
+    this.location = location;
   }
 
-  public Product mpn(String mpn) {
-    this.mpn = mpn;
+  public Product manufacturer(Manufacturer manufacturer) {
+    this.manufacturer = manufacturer;
     return this;
   }
 
   /**
-   * Get mpn
-   * @return mpn
+   * Get manufacturer
+   * @return manufacturer
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Manufacturer getManufacturer() {
+    return manufacturer;
+  }
+
+  public void setManufacturer(Manufacturer manufacturer) {
+    this.manufacturer = manufacturer;
+  }
+
+  public Product maxQuantityLevel(Double maxQuantityLevel) {
+    this.maxQuantityLevel = maxQuantityLevel;
+    return this;
+  }
+
+  /**
+   * Get maxQuantityLevel
+   * @return maxQuantityLevel
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getMpn() {
-    return mpn;
+  public Double getMaxQuantityLevel() {
+    return maxQuantityLevel;
   }
 
-  public void setMpn(String mpn) {
-    this.mpn = mpn;
+  public void setMaxQuantityLevel(Double maxQuantityLevel) {
+    this.maxQuantityLevel = maxQuantityLevel;
+  }
+
+  public Product minQuantityLevel(Double minQuantityLevel) {
+    this.minQuantityLevel = minQuantityLevel;
+    return this;
+  }
+
+  /**
+   * Get minQuantityLevel
+   * @return minQuantityLevel
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getMinQuantityLevel() {
+    return minQuantityLevel;
+  }
+
+  public void setMinQuantityLevel(Double minQuantityLevel) {
+    this.minQuantityLevel = minQuantityLevel;
   }
 
   public Product name(String name) {
@@ -359,8 +517,7 @@ public class Product   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -369,75 +526,6 @@ public class Product   {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public Product notes(List<Note> notes) {
-    this.notes = notes;
-    return this;
-  }
-
-  public Product addNotesItem(Note notesItem) {
-    if (this.notes == null) {
-      this.notes = new ArrayList<Note>();
-    }
-    this.notes.add(notesItem);
-    return this;
-  }
-
-  /**
-   * Get notes
-   * @return notes
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<Note> getNotes() {
-    return notes;
-  }
-
-  public void setNotes(List<Note> notes) {
-    this.notes = notes;
-  }
-
-  public Product outOfStock(Boolean outOfStock) {
-    this.outOfStock = outOfStock;
-    return this;
-  }
-
-  /**
-   * Get outOfStock
-   * @return outOfStock
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isOutOfStock() {
-    return outOfStock;
-  }
-
-  public void setOutOfStock(Boolean outOfStock) {
-    this.outOfStock = outOfStock;
-  }
-
-  public Product reOrderLevel(Double reOrderLevel) {
-    this.reOrderLevel = reOrderLevel;
-    return this;
-  }
-
-  /**
-   * Get reOrderLevel
-   * @return reOrderLevel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getReOrderLevel() {
-    return reOrderLevel;
-  }
-
-  public void setReOrderLevel(Double reOrderLevel) {
-    this.reOrderLevel = reOrderLevel;
   }
 
   public Product reference(String reference) {
@@ -449,8 +537,7 @@ public class Product   {
    * Get reference
    * @return reference
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getReference() {
@@ -461,25 +548,44 @@ public class Product   {
     this.reference = reference;
   }
 
-  public Product searchkey(String searchkey) {
-    this.searchkey = searchkey;
+  public Product sellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
     return this;
   }
 
   /**
-   * Get searchkey
-   * @return searchkey
+   * Get sellingPrice
+   * @return sellingPrice
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
-  public String getSearchkey() {
-    return searchkey;
+  public Double getSellingPrice() {
+    return sellingPrice;
   }
 
-  public void setSearchkey(String searchkey) {
-    this.searchkey = searchkey;
+  public void setSellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
+  }
+
+  public Product showInCatalogue(Boolean showInCatalogue) {
+    this.showInCatalogue = showInCatalogue;
+    return this;
+  }
+
+  /**
+   * Get showInCatalogue
+   * @return showInCatalogue
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean isShowInCatalogue() {
+    return showInCatalogue;
+  }
+
+  public void setShowInCatalogue(Boolean showInCatalogue) {
+    this.showInCatalogue = showInCatalogue;
   }
 
   public Product sku(String sku) {
@@ -502,83 +608,45 @@ public class Product   {
     this.sku = sku;
   }
 
-  public Product status(Status status) {
-    this.status = status;
+  public Product storageCost(Double storageCost) {
+    this.storageCost = storageCost;
     return this;
   }
 
   /**
-   * Get status
-   * @return status
+   * Get storageCost
+   * @return storageCost
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getStorageCost() {
+    return storageCost;
+  }
+
+  public void setStorageCost(Double storageCost) {
+    this.storageCost = storageCost;
+  }
+
+  public Product supplier(Supplier supplier) {
+    this.supplier = supplier;
+    return this;
+  }
+
+  /**
+   * Get supplier
+   * @return supplier
   **/
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public Status getStatus() {
-    return status;
+  public Supplier getSupplier() {
+    return supplier;
   }
 
-  public void setStatus(Status status) {
-    this.status = status;
-  }
-
-  public Product stockDiaries(List<StockDiary> stockDiaries) {
-    this.stockDiaries = stockDiaries;
-    return this;
-  }
-
-  public Product addStockDiariesItem(StockDiary stockDiariesItem) {
-    if (this.stockDiaries == null) {
-      this.stockDiaries = new ArrayList<StockDiary>();
-    }
-    this.stockDiaries.add(stockDiariesItem);
-    return this;
-  }
-
-  /**
-   * Get stockDiaries
-   * @return stockDiaries
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<StockDiary> getStockDiaries() {
-    return stockDiaries;
-  }
-
-  public void setStockDiaries(List<StockDiary> stockDiaries) {
-    this.stockDiaries = stockDiaries;
-  }
-
-  public Product stockLines(List<StockLine> stockLines) {
-    this.stockLines = stockLines;
-    return this;
-  }
-
-  public Product addStockLinesItem(StockLine stockLinesItem) {
-    if (this.stockLines == null) {
-      this.stockLines = new ArrayList<StockLine>();
-    }
-    this.stockLines.add(stockLinesItem);
-    return this;
-  }
-
-  /**
-   * Get stockLines
-   * @return stockLines
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<StockLine> getStockLines() {
-    return stockLines;
-  }
-
-  public void setStockLines(List<StockLine> stockLines) {
-    this.stockLines = stockLines;
+  public void setSupplier(Supplier supplier) {
+    this.supplier = supplier;
   }
 
   public Product taxCategory(TaxCategory taxCategory) {
@@ -602,44 +670,25 @@ public class Product   {
     this.taxCategory = taxCategory;
   }
 
-  public Product userId(String userId) {
-    this.userId = userId;
+  public Product unit(UOM unit) {
+    this.unit = unit;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get unit
+   * @return unit
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getUserId() {
-    return userId;
+  public UOM getUnit() {
+    return unit;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
-
-  public Product visible(Boolean visible) {
-    this.visible = visible;
-    return this;
-  }
-
-  /**
-   * Get visible
-   * @return visible
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isVisible() {
-    return visible;
-  }
-
-  public void setVisible(Boolean visible) {
-    this.visible = visible;
+  public void setUnit(UOM unit) {
+    this.unit = unit;
   }
 
 
@@ -652,35 +701,38 @@ public class Product   {
       return false;
     }
     Product product = (Product) o;
-    return Objects.equals(this.barcode, product.barcode) &&
-        Objects.equals(this.categories, product.categories) &&
-        Objects.equals(this.dateOfExpiry, product.dateOfExpiry) &&
-        Objects.equals(this.dateOfMfd, product.dateOfMfd) &&
-        Objects.equals(this.description, product.description) &&
+    return Objects.equals(this.auxilaryLineItems, product.auxilaryLineItems) &&
+        Objects.equals(this.brand, product.brand) &&
+        Objects.equals(this.buyPrice, product.buyPrice) &&
+        Objects.equals(this.category, product.category) &&
+        Objects.equals(this.comboLineItems, product.comboLineItems) &&
+        Objects.equals(this.discount, product.discount) &&
+        Objects.equals(this.iDPcode, product.iDPcode) &&
         Objects.equals(this.id, product.id) &&
         Objects.equals(this.image, product.image) &&
         Objects.equals(this.imageContentType, product.imageContentType) &&
+        Objects.equals(this.isActive, product.isActive) &&
+        Objects.equals(this.isAuxilaryItem, product.isAuxilaryItem) &&
+        Objects.equals(this.isServiceItem, product.isServiceItem) &&
         Objects.equals(this.labels, product.labels) &&
-        Objects.equals(this.maximumStockLevel, product.maximumStockLevel) &&
-        Objects.equals(this.mpn, product.mpn) &&
+        Objects.equals(this.location, product.location) &&
+        Objects.equals(this.manufacturer, product.manufacturer) &&
+        Objects.equals(this.maxQuantityLevel, product.maxQuantityLevel) &&
+        Objects.equals(this.minQuantityLevel, product.minQuantityLevel) &&
         Objects.equals(this.name, product.name) &&
-        Objects.equals(this.notes, product.notes) &&
-        Objects.equals(this.outOfStock, product.outOfStock) &&
-        Objects.equals(this.reOrderLevel, product.reOrderLevel) &&
         Objects.equals(this.reference, product.reference) &&
-        Objects.equals(this.searchkey, product.searchkey) &&
+        Objects.equals(this.sellingPrice, product.sellingPrice) &&
+        Objects.equals(this.showInCatalogue, product.showInCatalogue) &&
         Objects.equals(this.sku, product.sku) &&
-        Objects.equals(this.status, product.status) &&
-        Objects.equals(this.stockDiaries, product.stockDiaries) &&
-        Objects.equals(this.stockLines, product.stockLines) &&
+        Objects.equals(this.storageCost, product.storageCost) &&
+        Objects.equals(this.supplier, product.supplier) &&
         Objects.equals(this.taxCategory, product.taxCategory) &&
-        Objects.equals(this.userId, product.userId) &&
-        Objects.equals(this.visible, product.visible);
+        Objects.equals(this.unit, product.unit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(barcode, categories, dateOfExpiry, dateOfMfd, description, id, image, imageContentType, labels, maximumStockLevel, mpn, name, notes, outOfStock, reOrderLevel, reference, searchkey, sku, status, stockDiaries, stockLines, taxCategory, userId, visible);
+    return Objects.hash(auxilaryLineItems, brand, buyPrice, category, comboLineItems, discount, iDPcode, id, image, imageContentType, isActive, isAuxilaryItem, isServiceItem, labels, location, manufacturer, maxQuantityLevel, minQuantityLevel, name, reference, sellingPrice, showInCatalogue, sku, storageCost, supplier, taxCategory, unit);
   }
 
   @Override
@@ -688,30 +740,33 @@ public class Product   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Product {\n");
     
-    sb.append("    barcode: ").append(toIndentedString(barcode)).append("\n");
-    sb.append("    categories: ").append(toIndentedString(categories)).append("\n");
-    sb.append("    dateOfExpiry: ").append(toIndentedString(dateOfExpiry)).append("\n");
-    sb.append("    dateOfMfd: ").append(toIndentedString(dateOfMfd)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    auxilaryLineItems: ").append(toIndentedString(auxilaryLineItems)).append("\n");
+    sb.append("    brand: ").append(toIndentedString(brand)).append("\n");
+    sb.append("    buyPrice: ").append(toIndentedString(buyPrice)).append("\n");
+    sb.append("    category: ").append(toIndentedString(category)).append("\n");
+    sb.append("    comboLineItems: ").append(toIndentedString(comboLineItems)).append("\n");
+    sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
+    sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
+    sb.append("    isAuxilaryItem: ").append(toIndentedString(isAuxilaryItem)).append("\n");
+    sb.append("    isServiceItem: ").append(toIndentedString(isServiceItem)).append("\n");
     sb.append("    labels: ").append(toIndentedString(labels)).append("\n");
-    sb.append("    maximumStockLevel: ").append(toIndentedString(maximumStockLevel)).append("\n");
-    sb.append("    mpn: ").append(toIndentedString(mpn)).append("\n");
+    sb.append("    location: ").append(toIndentedString(location)).append("\n");
+    sb.append("    manufacturer: ").append(toIndentedString(manufacturer)).append("\n");
+    sb.append("    maxQuantityLevel: ").append(toIndentedString(maxQuantityLevel)).append("\n");
+    sb.append("    minQuantityLevel: ").append(toIndentedString(minQuantityLevel)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
-    sb.append("    outOfStock: ").append(toIndentedString(outOfStock)).append("\n");
-    sb.append("    reOrderLevel: ").append(toIndentedString(reOrderLevel)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    searchkey: ").append(toIndentedString(searchkey)).append("\n");
+    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
+    sb.append("    showInCatalogue: ").append(toIndentedString(showInCatalogue)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
-    sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    stockDiaries: ").append(toIndentedString(stockDiaries)).append("\n");
-    sb.append("    stockLines: ").append(toIndentedString(stockLines)).append("\n");
+    sb.append("    storageCost: ").append(toIndentedString(storageCost)).append("\n");
+    sb.append("    supplier: ").append(toIndentedString(supplier)).append("\n");
     sb.append("    taxCategory: ").append(toIndentedString(taxCategory)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-    sb.append("    visible: ").append(toIndentedString(visible)).append("\n");
+    sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
     sb.append("}");
     return sb.toString();
   }

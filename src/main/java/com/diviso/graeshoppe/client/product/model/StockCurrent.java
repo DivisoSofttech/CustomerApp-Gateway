@@ -1,11 +1,8 @@
 package com.diviso.graeshoppe.client.product.model;
 
-
-
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 
 /**
  * A StockCurrent.
@@ -19,17 +16,17 @@ public class StockCurrent implements Serializable {
     
     private Long id;
 
-    private Double units;
-    
-    public Double getSellPrice() {
-		return sellPrice;
-	}
 
-	public void setSellPrice(Double sellPrice) {
-		this.sellPrice = sellPrice;
-	}
+    private String iDPcode;
 
-	private Double sellPrice;
+  
+    private Double quantity;
+
+    private Double sellPrice;
+
+
+    private String notes;
+
 
     private Product product;
 
@@ -42,22 +39,56 @@ public class StockCurrent implements Serializable {
         this.id = id;
     }
 
-    public Double getUnits() {
-        return units;
+    public String getiDPcode() {
+        return iDPcode;
     }
 
-    public StockCurrent units(Double units) {
-        this.units = units;
+    public StockCurrent iDPcode(String iDPcode) {
+        this.iDPcode = iDPcode;
         return this;
     }
-    
-    public StockCurrent sellPrice(Double sellPrice) {
-		this.sellPrice = sellPrice;
-		return this;
-	}
 
-    public void setUnits(Double units) {
-        this.units = units;
+    public void setiDPcode(String iDPcode) {
+        this.iDPcode = iDPcode;
+    }
+
+    public Double getQuantity() {
+        return quantity;
+    }
+
+    public StockCurrent quantity(Double quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public void setQuantity(Double quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getSellPrice() {
+        return sellPrice;
+    }
+
+    public StockCurrent sellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
+        return this;
+    }
+
+    public void setSellPrice(Double sellPrice) {
+        this.sellPrice = sellPrice;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public StockCurrent notes(String notes) {
+        this.notes = notes;
+        return this;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
     }
 
     public Product getProduct() {
@@ -72,8 +103,6 @@ public class StockCurrent implements Serializable {
     public void setProduct(Product product) {
         this.product = product;
     }
-    
-
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
     @Override
@@ -100,7 +129,10 @@ public class StockCurrent implements Serializable {
     public String toString() {
         return "StockCurrent{" +
             "id=" + getId() +
-            ", units=" + getUnits() +
+            ", iDPcode='" + getiDPcode() + "'" +
+            ", quantity=" + getQuantity() +
+            ", sellPrice=" + getSellPrice() +
+            ", notes='" + getNotes() + "'" +
             "}";
     }
 }

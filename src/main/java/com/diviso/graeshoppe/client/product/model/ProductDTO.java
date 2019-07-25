@@ -1,42 +1,35 @@
 package com.diviso.graeshoppe.client.product.model;
 
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
-
-import org.springframework.validation.annotation.Validated;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
-
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * ProductDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class ProductDTO   {
-  @JsonProperty("barcodeId")
-  private Long barcodeId = null;
+  @JsonProperty("brandId")
+  private Long brandId = null;
 
-  @JsonProperty("categories")
-  @Valid
-  private List<CategoryDTO> categories = null;
+  @JsonProperty("buyPrice")
+  private Double buyPrice = null;
 
-  @JsonProperty("dateOfExpiry")
-  private LocalDate dateOfExpiry = null;
+  @JsonProperty("categoryId")
+  private Long categoryId = null;
 
-  @JsonProperty("dateOfMfd")
-  private LocalDate dateOfMfd = null;
+  @JsonProperty("discountId")
+  private Long discountId = null;
 
-  @JsonProperty("description")
-  private String description = null;
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -47,155 +40,152 @@ public class ProductDTO   {
   @JsonProperty("imageContentType")
   private String imageContentType = null;
 
-  @JsonProperty("labels")
-  @Valid
-  private List<LabelDTO> labels = null;
+  @JsonProperty("isActive")
+  private Boolean isActive = null;
 
-  @JsonProperty("maximumStockLevel")
-  private Double maximumStockLevel = null;
+  @JsonProperty("isAuxilaryItem")
+  private Boolean isAuxilaryItem = null;
 
-  @JsonProperty("mpn")
-  private String mpn = null;
+  @JsonProperty("isServiceItem")
+  private Boolean isServiceItem = null;
+
+  @JsonProperty("locationId")
+  private Long locationId = null;
+
+  @JsonProperty("manufacturerId")
+  private Long manufacturerId = null;
+
+  @JsonProperty("maxQuantityLevel")
+  private Double maxQuantityLevel = null;
+
+  @JsonProperty("minQuantityLevel")
+  private Double minQuantityLevel = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("outOfStock")
-  private Boolean outOfStock = null;
-
-  @JsonProperty("reOrderLevel")
-  private Double reOrderLevel = null;
-
   @JsonProperty("reference")
   private String reference = null;
 
-  @JsonProperty("searchkey")
-  private String searchkey = null;
+  @JsonProperty("sellingPrice")
+  private Double sellingPrice = null;
+
+  @JsonProperty("showInCatalogue")
+  private Boolean showInCatalogue = null;
 
   @JsonProperty("sku")
   private String sku = null;
 
-  @JsonProperty("statusId")
-  private Long statusId = null;
+  @JsonProperty("storageCost")
+  private Double storageCost = null;
+
+  @JsonProperty("supplierId")
+  private Long supplierId = null;
 
   @JsonProperty("taxCategoryId")
   private Long taxCategoryId = null;
 
-  @JsonProperty("userId")
-  private String userId = null;
+  @JsonProperty("unitId")
+  private Long unitId = null;
 
-  @JsonProperty("visible")
-  private Boolean visible = null;
-
-  public ProductDTO barcodeId(Long barcodeId) {
-    this.barcodeId = barcodeId;
+  public ProductDTO brandId(Long brandId) {
+    this.brandId = brandId;
     return this;
   }
 
   /**
-   * Get barcodeId
-   * @return barcodeId
+   * Get brandId
+   * @return brandId
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getBarcodeId() {
-    return barcodeId;
+  public Long getBrandId() {
+    return brandId;
   }
 
-  public void setBarcodeId(Long barcodeId) {
-    this.barcodeId = barcodeId;
+  public void setBrandId(Long brandId) {
+    this.brandId = brandId;
   }
 
-  public ProductDTO categories(List<CategoryDTO> categories) {
-    this.categories = categories;
-    return this;
-  }
-
-  public ProductDTO addCategoriesItem(CategoryDTO categoriesItem) {
-    if (this.categories == null) {
-      this.categories = new ArrayList<CategoryDTO>();
-    }
-    this.categories.add(categoriesItem);
+  public ProductDTO buyPrice(Double buyPrice) {
+    this.buyPrice = buyPrice;
     return this;
   }
 
   /**
-   * Get categories
-   * @return categories
+   * Get buyPrice
+   * @return buyPrice
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public List<CategoryDTO> getCategories() {
-    return categories;
+  public Double getBuyPrice() {
+    return buyPrice;
   }
 
-  public void setCategories(List<CategoryDTO> categories) {
-    this.categories = categories;
+  public void setBuyPrice(Double buyPrice) {
+    this.buyPrice = buyPrice;
   }
 
-  public ProductDTO dateOfExpiry(LocalDate dateOfExpiry) {
-    this.dateOfExpiry = dateOfExpiry;
+  public ProductDTO categoryId(Long categoryId) {
+    this.categoryId = categoryId;
     return this;
   }
 
   /**
-   * Get dateOfExpiry
-   * @return dateOfExpiry
+   * Get categoryId
+   * @return categoryId
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public LocalDate getDateOfExpiry() {
-    return dateOfExpiry;
+  public Long getCategoryId() {
+    return categoryId;
   }
 
-  public void setDateOfExpiry(LocalDate dateOfExpiry) {
-    this.dateOfExpiry = dateOfExpiry;
+  public void setCategoryId(Long categoryId) {
+    this.categoryId = categoryId;
   }
 
-  public ProductDTO dateOfMfd(LocalDate dateOfMfd) {
-    this.dateOfMfd = dateOfMfd;
+  public ProductDTO discountId(Long discountId) {
+    this.discountId = discountId;
     return this;
   }
 
   /**
-   * Get dateOfMfd
-   * @return dateOfMfd
+   * Get discountId
+   * @return discountId
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public LocalDate getDateOfMfd() {
-    return dateOfMfd;
+  public Long getDiscountId() {
+    return discountId;
   }
 
-  public void setDateOfMfd(LocalDate dateOfMfd) {
-    this.dateOfMfd = dateOfMfd;
+  public void setDiscountId(Long discountId) {
+    this.discountId = discountId;
   }
 
-  public ProductDTO description(String description) {
-    this.description = description;
+  public ProductDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
     return this;
   }
 
   /**
-   * Get description
-   * @return description
+   * Get iDPcode
+   * @return iDPcode
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDescription() {
-    return description;
+  public String getIDPcode() {
+    return iDPcode;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public ProductDTO id(Long id) {
@@ -258,73 +248,144 @@ public class ProductDTO   {
     this.imageContentType = imageContentType;
   }
 
-  public ProductDTO labels(List<LabelDTO> labels) {
-    this.labels = labels;
-    return this;
-  }
-
-  public ProductDTO addLabelsItem(LabelDTO labelsItem) {
-    if (this.labels == null) {
-      this.labels = new ArrayList<LabelDTO>();
-    }
-    this.labels.add(labelsItem);
+  public ProductDTO isActive(Boolean isActive) {
+    this.isActive = isActive;
     return this;
   }
 
   /**
-   * Get labels
-   * @return labels
+   * Get isActive
+   * @return isActive
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public List<LabelDTO> getLabels() {
-    return labels;
+  public Boolean isIsActive() {
+    return isActive;
   }
 
-  public void setLabels(List<LabelDTO> labels) {
-    this.labels = labels;
+  public void setIsActive(Boolean isActive) {
+    this.isActive = isActive;
   }
 
-  public ProductDTO maximumStockLevel(Double maximumStockLevel) {
-    this.maximumStockLevel = maximumStockLevel;
+  public ProductDTO isAuxilaryItem(Boolean isAuxilaryItem) {
+    this.isAuxilaryItem = isAuxilaryItem;
     return this;
   }
 
   /**
-   * Get maximumStockLevel
-   * @return maximumStockLevel
+   * Get isAuxilaryItem
+   * @return isAuxilaryItem
   **/
   @ApiModelProperty(value = "")
 
 
-  public Double getMaximumStockLevel() {
-    return maximumStockLevel;
+  public Boolean isIsAuxilaryItem() {
+    return isAuxilaryItem;
   }
 
-  public void setMaximumStockLevel(Double maximumStockLevel) {
-    this.maximumStockLevel = maximumStockLevel;
+  public void setIsAuxilaryItem(Boolean isAuxilaryItem) {
+    this.isAuxilaryItem = isAuxilaryItem;
   }
 
-  public ProductDTO mpn(String mpn) {
-    this.mpn = mpn;
+  public ProductDTO isServiceItem(Boolean isServiceItem) {
+    this.isServiceItem = isServiceItem;
     return this;
   }
 
   /**
-   * Get mpn
-   * @return mpn
+   * Get isServiceItem
+   * @return isServiceItem
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getMpn() {
-    return mpn;
+  public Boolean isIsServiceItem() {
+    return isServiceItem;
   }
 
-  public void setMpn(String mpn) {
-    this.mpn = mpn;
+  public void setIsServiceItem(Boolean isServiceItem) {
+    this.isServiceItem = isServiceItem;
+  }
+
+  public ProductDTO locationId(Long locationId) {
+    this.locationId = locationId;
+    return this;
+  }
+
+  /**
+   * Get locationId
+   * @return locationId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getLocationId() {
+    return locationId;
+  }
+
+  public void setLocationId(Long locationId) {
+    this.locationId = locationId;
+  }
+
+  public ProductDTO manufacturerId(Long manufacturerId) {
+    this.manufacturerId = manufacturerId;
+    return this;
+  }
+
+  /**
+   * Get manufacturerId
+   * @return manufacturerId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getManufacturerId() {
+    return manufacturerId;
+  }
+
+  public void setManufacturerId(Long manufacturerId) {
+    this.manufacturerId = manufacturerId;
+  }
+
+  public ProductDTO maxQuantityLevel(Double maxQuantityLevel) {
+    this.maxQuantityLevel = maxQuantityLevel;
+    return this;
+  }
+
+  /**
+   * Get maxQuantityLevel
+   * @return maxQuantityLevel
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getMaxQuantityLevel() {
+    return maxQuantityLevel;
+  }
+
+  public void setMaxQuantityLevel(Double maxQuantityLevel) {
+    this.maxQuantityLevel = maxQuantityLevel;
+  }
+
+  public ProductDTO minQuantityLevel(Double minQuantityLevel) {
+    this.minQuantityLevel = minQuantityLevel;
+    return this;
+  }
+
+  /**
+   * Get minQuantityLevel
+   * @return minQuantityLevel
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getMinQuantityLevel() {
+    return minQuantityLevel;
+  }
+
+  public void setMinQuantityLevel(Double minQuantityLevel) {
+    this.minQuantityLevel = minQuantityLevel;
   }
 
   public ProductDTO name(String name) {
@@ -336,8 +397,7 @@ public class ProductDTO   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -346,46 +406,6 @@ public class ProductDTO   {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public ProductDTO outOfStock(Boolean outOfStock) {
-    this.outOfStock = outOfStock;
-    return this;
-  }
-
-  /**
-   * Get outOfStock
-   * @return outOfStock
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isOutOfStock() {
-    return outOfStock;
-  }
-
-  public void setOutOfStock(Boolean outOfStock) {
-    this.outOfStock = outOfStock;
-  }
-
-  public ProductDTO reOrderLevel(Double reOrderLevel) {
-    this.reOrderLevel = reOrderLevel;
-    return this;
-  }
-
-  /**
-   * Get reOrderLevel
-   * @return reOrderLevel
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getReOrderLevel() {
-    return reOrderLevel;
-  }
-
-  public void setReOrderLevel(Double reOrderLevel) {
-    this.reOrderLevel = reOrderLevel;
   }
 
   public ProductDTO reference(String reference) {
@@ -397,8 +417,7 @@ public class ProductDTO   {
    * Get reference
    * @return reference
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getReference() {
@@ -409,25 +428,44 @@ public class ProductDTO   {
     this.reference = reference;
   }
 
-  public ProductDTO searchkey(String searchkey) {
-    this.searchkey = searchkey;
+  public ProductDTO sellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
     return this;
   }
 
   /**
-   * Get searchkey
-   * @return searchkey
+   * Get sellingPrice
+   * @return sellingPrice
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
-  public String getSearchkey() {
-    return searchkey;
+  public Double getSellingPrice() {
+    return sellingPrice;
   }
 
-  public void setSearchkey(String searchkey) {
-    this.searchkey = searchkey;
+  public void setSellingPrice(Double sellingPrice) {
+    this.sellingPrice = sellingPrice;
+  }
+
+  public ProductDTO showInCatalogue(Boolean showInCatalogue) {
+    this.showInCatalogue = showInCatalogue;
+    return this;
+  }
+
+  /**
+   * Get showInCatalogue
+   * @return showInCatalogue
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Boolean isShowInCatalogue() {
+    return showInCatalogue;
+  }
+
+  public void setShowInCatalogue(Boolean showInCatalogue) {
+    this.showInCatalogue = showInCatalogue;
   }
 
   public ProductDTO sku(String sku) {
@@ -450,24 +488,44 @@ public class ProductDTO   {
     this.sku = sku;
   }
 
-  public ProductDTO statusId(Long statusId) {
-    this.statusId = statusId;
+  public ProductDTO storageCost(Double storageCost) {
+    this.storageCost = storageCost;
     return this;
   }
 
   /**
-   * Get statusId
-   * @return statusId
+   * Get storageCost
+   * @return storageCost
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getStatusId() {
-    return statusId;
+  public Double getStorageCost() {
+    return storageCost;
   }
 
-  public void setStatusId(Long statusId) {
-    this.statusId = statusId;
+  public void setStorageCost(Double storageCost) {
+    this.storageCost = storageCost;
+  }
+
+  public ProductDTO supplierId(Long supplierId) {
+    this.supplierId = supplierId;
+    return this;
+  }
+
+  /**
+   * Get supplierId
+   * @return supplierId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getSupplierId() {
+    return supplierId;
+  }
+
+  public void setSupplierId(Long supplierId) {
+    this.supplierId = supplierId;
   }
 
   public ProductDTO taxCategoryId(Long taxCategoryId) {
@@ -490,44 +548,24 @@ public class ProductDTO   {
     this.taxCategoryId = taxCategoryId;
   }
 
-  public ProductDTO userId(String userId) {
-    this.userId = userId;
+  public ProductDTO unitId(Long unitId) {
+    this.unitId = unitId;
     return this;
   }
 
   /**
-   * Get userId
-   * @return userId
+   * Get unitId
+   * @return unitId
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getUserId() {
-    return userId;
+  public Long getUnitId() {
+    return unitId;
   }
 
-  public void setUserId(String userId) {
-    this.userId = userId;
-  }
-
-  public ProductDTO visible(Boolean visible) {
-    this.visible = visible;
-    return this;
-  }
-
-  /**
-   * Get visible
-   * @return visible
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isVisible() {
-    return visible;
-  }
-
-  public void setVisible(Boolean visible) {
-    this.visible = visible;
+  public void setUnitId(Long unitId) {
+    this.unitId = unitId;
   }
 
 
@@ -540,32 +578,35 @@ public class ProductDTO   {
       return false;
     }
     ProductDTO productDTO = (ProductDTO) o;
-    return Objects.equals(this.barcodeId, productDTO.barcodeId) &&
-        Objects.equals(this.categories, productDTO.categories) &&
-        Objects.equals(this.dateOfExpiry, productDTO.dateOfExpiry) &&
-        Objects.equals(this.dateOfMfd, productDTO.dateOfMfd) &&
-        Objects.equals(this.description, productDTO.description) &&
+    return Objects.equals(this.brandId, productDTO.brandId) &&
+        Objects.equals(this.buyPrice, productDTO.buyPrice) &&
+        Objects.equals(this.categoryId, productDTO.categoryId) &&
+        Objects.equals(this.discountId, productDTO.discountId) &&
+        Objects.equals(this.iDPcode, productDTO.iDPcode) &&
         Objects.equals(this.id, productDTO.id) &&
         Objects.equals(this.image, productDTO.image) &&
         Objects.equals(this.imageContentType, productDTO.imageContentType) &&
-        Objects.equals(this.labels, productDTO.labels) &&
-        Objects.equals(this.maximumStockLevel, productDTO.maximumStockLevel) &&
-        Objects.equals(this.mpn, productDTO.mpn) &&
+        Objects.equals(this.isActive, productDTO.isActive) &&
+        Objects.equals(this.isAuxilaryItem, productDTO.isAuxilaryItem) &&
+        Objects.equals(this.isServiceItem, productDTO.isServiceItem) &&
+        Objects.equals(this.locationId, productDTO.locationId) &&
+        Objects.equals(this.manufacturerId, productDTO.manufacturerId) &&
+        Objects.equals(this.maxQuantityLevel, productDTO.maxQuantityLevel) &&
+        Objects.equals(this.minQuantityLevel, productDTO.minQuantityLevel) &&
         Objects.equals(this.name, productDTO.name) &&
-        Objects.equals(this.outOfStock, productDTO.outOfStock) &&
-        Objects.equals(this.reOrderLevel, productDTO.reOrderLevel) &&
         Objects.equals(this.reference, productDTO.reference) &&
-        Objects.equals(this.searchkey, productDTO.searchkey) &&
+        Objects.equals(this.sellingPrice, productDTO.sellingPrice) &&
+        Objects.equals(this.showInCatalogue, productDTO.showInCatalogue) &&
         Objects.equals(this.sku, productDTO.sku) &&
-        Objects.equals(this.statusId, productDTO.statusId) &&
+        Objects.equals(this.storageCost, productDTO.storageCost) &&
+        Objects.equals(this.supplierId, productDTO.supplierId) &&
         Objects.equals(this.taxCategoryId, productDTO.taxCategoryId) &&
-        Objects.equals(this.userId, productDTO.userId) &&
-        Objects.equals(this.visible, productDTO.visible);
+        Objects.equals(this.unitId, productDTO.unitId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(barcodeId, categories, dateOfExpiry, dateOfMfd, description, id, image, imageContentType, labels, maximumStockLevel, mpn, name, outOfStock, reOrderLevel, reference, searchkey, sku, statusId, taxCategoryId, userId, visible);
+    return Objects.hash(brandId, buyPrice, categoryId, discountId, iDPcode, id, image, imageContentType, isActive, isAuxilaryItem, isServiceItem, locationId, manufacturerId, maxQuantityLevel, minQuantityLevel, name, reference, sellingPrice, showInCatalogue, sku, storageCost, supplierId, taxCategoryId, unitId);
   }
 
   @Override
@@ -573,27 +614,30 @@ public class ProductDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProductDTO {\n");
     
-    sb.append("    barcodeId: ").append(toIndentedString(barcodeId)).append("\n");
-    sb.append("    categories: ").append(toIndentedString(categories)).append("\n");
-    sb.append("    dateOfExpiry: ").append(toIndentedString(dateOfExpiry)).append("\n");
-    sb.append("    dateOfMfd: ").append(toIndentedString(dateOfMfd)).append("\n");
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    brandId: ").append(toIndentedString(brandId)).append("\n");
+    sb.append("    buyPrice: ").append(toIndentedString(buyPrice)).append("\n");
+    sb.append("    categoryId: ").append(toIndentedString(categoryId)).append("\n");
+    sb.append("    discountId: ").append(toIndentedString(discountId)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
-    sb.append("    labels: ").append(toIndentedString(labels)).append("\n");
-    sb.append("    maximumStockLevel: ").append(toIndentedString(maximumStockLevel)).append("\n");
-    sb.append("    mpn: ").append(toIndentedString(mpn)).append("\n");
+    sb.append("    isActive: ").append(toIndentedString(isActive)).append("\n");
+    sb.append("    isAuxilaryItem: ").append(toIndentedString(isAuxilaryItem)).append("\n");
+    sb.append("    isServiceItem: ").append(toIndentedString(isServiceItem)).append("\n");
+    sb.append("    locationId: ").append(toIndentedString(locationId)).append("\n");
+    sb.append("    manufacturerId: ").append(toIndentedString(manufacturerId)).append("\n");
+    sb.append("    maxQuantityLevel: ").append(toIndentedString(maxQuantityLevel)).append("\n");
+    sb.append("    minQuantityLevel: ").append(toIndentedString(minQuantityLevel)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    outOfStock: ").append(toIndentedString(outOfStock)).append("\n");
-    sb.append("    reOrderLevel: ").append(toIndentedString(reOrderLevel)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");
-    sb.append("    searchkey: ").append(toIndentedString(searchkey)).append("\n");
+    sb.append("    sellingPrice: ").append(toIndentedString(sellingPrice)).append("\n");
+    sb.append("    showInCatalogue: ").append(toIndentedString(showInCatalogue)).append("\n");
     sb.append("    sku: ").append(toIndentedString(sku)).append("\n");
-    sb.append("    statusId: ").append(toIndentedString(statusId)).append("\n");
+    sb.append("    storageCost: ").append(toIndentedString(storageCost)).append("\n");
+    sb.append("    supplierId: ").append(toIndentedString(supplierId)).append("\n");
     sb.append("    taxCategoryId: ").append(toIndentedString(taxCategoryId)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-    sb.append("    visible: ").append(toIndentedString(visible)).append("\n");
+    sb.append("    unitId: ").append(toIndentedString(unitId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

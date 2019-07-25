@@ -5,7 +5,9 @@
  */
 package com.diviso.graeshoppe.client.product.api;
 
+import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
+import java.util.List;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +27,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:29:25.285+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 @Api(value = "CategoryResource", description = "the CategoryResource API")
 public interface CategoryResourceApi {
@@ -77,6 +79,20 @@ public interface CategoryResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<CategoryDTO> getCategoryUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "ListToDTo", nickname = "listToDToUsingPOST", notes = "", response = CategoryDTO.class, responseContainer = "List", tags={ "category-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = CategoryDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/category/listToDTO",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<List<CategoryDTO>> listToDToUsingPOST(@ApiParam(value = "categoryList" ,required=true )  @Valid @RequestBody List<Category> category);
 
 
     @ApiOperation(value = "searchCategories", nickname = "searchCategoriesUsingGET", notes = "", response = CategoryDTO.class, responseContainer = "List", tags={ "category-resource", })

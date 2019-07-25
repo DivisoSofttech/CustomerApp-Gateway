@@ -40,9 +40,6 @@ import com.diviso.graeshoppe.client.order.model.ProductLine;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
-import com.diviso.graeshoppe.client.product.model.StockDiary;
-import com.diviso.graeshoppe.client.product.model.StockLine;
-import com.diviso.graeshoppe.client.product.model.Uom;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
@@ -109,8 +106,8 @@ public class QueryServiceImpl implements QueryService {
 	public Page<Product> findProductByCategoryId(Long categoryId, String userId, Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("categories.id", categoryId))
-						.must(QueryBuilders.matchQuery("userId", userId)))
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("category.id", categoryId))
+						.must(QueryBuilders.matchQuery("iDPcode", userId)))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 	}
@@ -134,11 +131,11 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
 
-	@Override
+	/*@Override
 	public Page<StockLine> findAllStockLines(Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockLine.class);
-	}
+	}*/
 
 	/*
 	 * public List<Result> findAll(String searchTerm, Pageable pageable) {
@@ -219,7 +216,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<Product> findAllProductsByStoreId(String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userId", storeId)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", storeId)).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 	}
 
@@ -273,7 +270,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<StockCurrent> findStockCurrentByStoreId(String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.userId", storeId))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", storeId))
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
@@ -313,7 +310,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Category> findCategoryByUserId(String userId, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("userId", userId))).build();
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("iDPcode", userId))).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
 	}
 
@@ -385,7 +382,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId) {
 		StringQuery stringQuery = new StringQuery(
-				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("product.userId", storeId))
+				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode", storeId))
 						.must(QueryBuilders.termQuery("product.name", productName)).toString());
 
 		return elasticsearchOperations.queryForPage(stringQuery, StockCurrent.class);
@@ -450,15 +447,15 @@ public class QueryServiceImpl implements QueryService {
 	public Set<Category> findCategoryByStoreId(String userId, Pageable pageable) {
 		Set<Category> categorySet = new HashSet<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("product", "categories.image");
+		sourceFilter.withExcludes("product", "category.image");
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userId", userId))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", userId))
 				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
 		List<Product> productList = elasticsearchOperations.queryForList(searchQuery, Product.class);
 
 		for (Product product : productList) {
 
-			categorySet.addAll(product.getCategories());
+			categorySet.add(product.getCategory());
 		}
 		return categorySet;
 	}
@@ -471,11 +468,11 @@ public class QueryServiceImpl implements QueryService {
 
 		List<Category> categoryList = new ArrayList<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("categories");
+		sourceFilter.withExcludes("category");
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword", userId))
-						.must(QueryBuilders.termQuery("categories.id", categoryId)))
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", userId))
+						.must(QueryBuilders.termQuery("category.id", categoryId)))
 				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
@@ -508,11 +505,11 @@ public class QueryServiceImpl implements QueryService {
 
 		List<StockCurrent> stockCurrentList = new ArrayList<>();
 		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("categories");
+		sourceFilter.withExcludes("category");
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userId.keyword", userId))
-						.must(QueryBuilders.termQuery("categories.id", categoryId)))
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", userId))
+						.must(QueryBuilders.termQuery("category.id", categoryId)))
 				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
 
 		List<Product> productList = elasticsearchOperations.queryForPage(searchQuery, Product.class).getContent();

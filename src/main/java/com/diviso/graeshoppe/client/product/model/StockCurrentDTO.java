@@ -13,20 +13,46 @@ import javax.validation.constraints.*;
  * StockCurrentDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class StockCurrentDTO   {
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
+
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("notes")
+  private String notes = null;
 
   @JsonProperty("productId")
   private Long productId = null;
 
+  @JsonProperty("quantity")
+  private Double quantity = null;
+
   @JsonProperty("sellPrice")
   private Double sellPrice = null;
 
-  @JsonProperty("units")
-  private Double units = null;
+  public StockCurrentDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+  }
 
   public StockCurrentDTO id(Long id) {
     this.id = id;
@@ -46,6 +72,26 @@ public class StockCurrentDTO   {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public StockCurrentDTO notes(String notes) {
+    this.notes = notes;
+    return this;
+  }
+
+  /**
+   * Get notes
+   * @return notes
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getNotes() {
+    return notes;
+  }
+
+  public void setNotes(String notes) {
+    this.notes = notes;
   }
 
   public StockCurrentDTO productId(Long productId) {
@@ -68,6 +114,26 @@ public class StockCurrentDTO   {
     this.productId = productId;
   }
 
+  public StockCurrentDTO quantity(Double quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  /**
+   * Get quantity
+   * @return quantity
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Double quantity) {
+    this.quantity = quantity;
+  }
+
   public StockCurrentDTO sellPrice(Double sellPrice) {
     this.sellPrice = sellPrice;
     return this;
@@ -88,26 +154,6 @@ public class StockCurrentDTO   {
     this.sellPrice = sellPrice;
   }
 
-  public StockCurrentDTO units(Double units) {
-    this.units = units;
-    return this;
-  }
-
-  /**
-   * Get units
-   * @return units
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getUnits() {
-    return units;
-  }
-
-  public void setUnits(Double units) {
-    this.units = units;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -118,15 +164,17 @@ public class StockCurrentDTO   {
       return false;
     }
     StockCurrentDTO stockCurrentDTO = (StockCurrentDTO) o;
-    return Objects.equals(this.id, stockCurrentDTO.id) &&
+    return Objects.equals(this.iDPcode, stockCurrentDTO.iDPcode) &&
+        Objects.equals(this.id, stockCurrentDTO.id) &&
+        Objects.equals(this.notes, stockCurrentDTO.notes) &&
         Objects.equals(this.productId, stockCurrentDTO.productId) &&
-        Objects.equals(this.sellPrice, stockCurrentDTO.sellPrice) &&
-        Objects.equals(this.units, stockCurrentDTO.units);
+        Objects.equals(this.quantity, stockCurrentDTO.quantity) &&
+        Objects.equals(this.sellPrice, stockCurrentDTO.sellPrice);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, productId, sellPrice, units);
+    return Objects.hash(iDPcode, id, notes, productId, quantity, sellPrice);
   }
 
   @Override
@@ -134,10 +182,12 @@ public class StockCurrentDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class StockCurrentDTO {\n");
     
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
     sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("    sellPrice: ").append(toIndentedString(sellPrice)).append("\n");
-    sb.append("    units: ").append(toIndentedString(units)).append("\n");
     sb.append("}");
     return sb.toString();
   }

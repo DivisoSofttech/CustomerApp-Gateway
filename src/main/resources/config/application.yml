@@ -217,7 +217,7 @@ order:
    url: 35.237.4.7:8088
    
 product: 
-   url: 34.74.142.114:8084
+   url: localhost:8083
    
 sale:
    url: 34.74.142.114:8086

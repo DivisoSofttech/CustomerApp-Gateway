@@ -1,40 +1,34 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.product.model.StockLine;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Uom
+ * UOM
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
-@Document(indexName = "uom")
-public class Uom   {
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
+public class UOM   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("name")
-  private String name = null;
+  @JsonProperty("unit")
+  private String unit = null;
 
-  @JsonProperty("stockLines")
-  @Valid
-  private List<StockLine> stockLines = null;
-
-  public Uom description(String description) {
+  public UOM description(String description) {
     this.description = description;
     return this;
   }
@@ -54,7 +48,27 @@ public class Uom   {
     this.description = description;
   }
 
-  public Uom id(Long id) {
+  public UOM iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+  }
+
+  public UOM id(Long id) {
     this.id = id;
     return this;
   }
@@ -74,54 +88,24 @@ public class Uom   {
     this.id = id;
   }
 
-  public Uom name(String name) {
-    this.name = name;
+  public UOM unit(String unit) {
+    this.unit = unit;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
-
-
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public Uom stockLines(List<StockLine> stockLines) {
-    this.stockLines = stockLines;
-    return this;
-  }
-
-  public Uom addStockLinesItem(StockLine stockLinesItem) {
-    if (this.stockLines == null) {
-      this.stockLines = new ArrayList<StockLine>();
-    }
-    this.stockLines.add(stockLinesItem);
-    return this;
-  }
-
-  /**
-   * Get stockLines
-   * @return stockLines
+   * Get unit
+   * @return unit
   **/
   @ApiModelProperty(value = "")
 
-  @Valid
 
-  public List<StockLine> getStockLines() {
-    return stockLines;
+  public String getUnit() {
+    return unit;
   }
 
-  public void setStockLines(List<StockLine> stockLines) {
-    this.stockLines = stockLines;
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 
 
@@ -133,27 +117,27 @@ public class Uom   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Uom uom = (Uom) o;
-    return Objects.equals(this.description, uom.description) &&
-        Objects.equals(this.id, uom.id) &&
-        Objects.equals(this.name, uom.name) &&
-        Objects.equals(this.stockLines, uom.stockLines);
+    UOM UOM = (UOM) o;
+    return Objects.equals(this.description, UOM.description) &&
+        Objects.equals(this.iDPcode, UOM.iDPcode) &&
+        Objects.equals(this.id, UOM.id) &&
+        Objects.equals(this.unit, UOM.unit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name, stockLines);
+    return Objects.hash(description, iDPcode, id, unit);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Uom {\n");
+    sb.append("class UOM {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    stockLines: ").append(toIndentedString(stockLines)).append("\n");
+    sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
     sb.append("}");
     return sb.toString();
   }

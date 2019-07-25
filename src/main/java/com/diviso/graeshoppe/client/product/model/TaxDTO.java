@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * TaxDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class TaxDTO   {
   @JsonProperty("description")
@@ -80,8 +80,7 @@ public class TaxDTO   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -101,8 +100,7 @@ public class TaxDTO   {
    * Get rate
    * @return rate
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public Double getRate() {

@@ -25,15 +25,11 @@ import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
-import com.diviso.graeshoppe.client.product.api.StockDiaryResourceApi;
-import com.diviso.graeshoppe.client.product.api.StockLineResourceApi;
 import com.diviso.graeshoppe.client.product.api.UomResourceApi;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
-import com.diviso.graeshoppe.client.product.model.StockDiaryDTO;
-import com.diviso.graeshoppe.client.product.model.StockLineDTO;
-import com.diviso.graeshoppe.client.product.model.UomDTO;
+import com.diviso.graeshoppe.client.product.model.UOMDTO;
 import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
 import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
@@ -60,8 +56,8 @@ public class CommandResource {
 
 	@Autowired
 	private CategoryResourceApi categoryResourceApi;
-	@Autowired
-	private StockLineResourceApi stockLineResourceApi;
+	/*@Autowired
+	private StockLineResourceApi stockLineResourceApi;*/
 	@Autowired
 	private ProductResourceApi productResourceApi;
 	@Autowired
@@ -72,9 +68,9 @@ public class CommandResource {
 	private SaleResourceApi saleResourceApi;
 	@Autowired
 	private StockCurrentResourceApi stockCurrentResourceApi;
-	@Autowired
+	/*@Autowired
 	private StockDiaryResourceApi stockDiaryResourceApi;
-
+*/
 	@Autowired
 	private StoreResourceApi storeResourceApi;
 
@@ -145,8 +141,8 @@ public class CommandResource {
 	}
 
 	@PostMapping("/unit-of-meassurement")
-	public ResponseEntity<UomDTO> createUOM(@RequestBody UomDTO uomDTO) {
-		return uomResourceApi.createUomUsingPOST(uomDTO);
+	public ResponseEntity<UOMDTO> createUOM(@RequestBody UOMDTO uomDTO) {
+		return uomResourceApi.createUOMUsingPOST(uomDTO);
 	}
 
 	@PostMapping("/productCategory")
@@ -205,16 +201,16 @@ public class CommandResource {
 	}
 
 	@PutMapping("/uoms")
-	public ResponseEntity<UomDTO> updateUOM(@RequestBody UomDTO uomDTO) {
-		return uomResourceApi.updateUomUsingPUT(uomDTO);
+	public ResponseEntity<UOMDTO> updateUOM(@RequestBody UOMDTO uomDTO) {
+		return uomResourceApi.updateUOMUsingPUT(uomDTO);
 	}
 
 	@DeleteMapping("/uoms/{id}")
 	public void deleteUOM(@PathVariable Long id) {
-		uomResourceApi.deleteUomUsingDELETE(id);
+		uomResourceApi.deleteUOMUsingDELETE(id);
 	}
 
-	@PostMapping("/stocklines")
+/*	@PostMapping("/stocklines")
 	public ResponseEntity<StockLineDTO> createStockLine(@RequestBody StockLineDTO stockLine) {
 		return this.stockLineResourceApi.createStockLineUsingPOST(stockLine);
 	}
@@ -237,7 +233,7 @@ public class CommandResource {
 	@PutMapping("/stock-diaries")
 	public ResponseEntity<StockDiaryDTO> updateStockDiary(@RequestBody StockDiaryDTO stockDiary) {
 		return this.stockDiaryResourceApi.updateStockDiaryUsingPUT(stockDiary);
-	}
+	}*/
 
 	@PostMapping("/stock-currents")
 	public ResponseEntity<StockCurrentDTO> createStockCurrent(@RequestBody StockCurrentDTO stockCurrent) {
@@ -249,10 +245,10 @@ public class CommandResource {
 		return this.stockCurrentResourceApi.updateStockCurrentUsingPUT(StockCurrent);
 	}
 
-	@PostMapping("/stock-of-product")
+/*	@PostMapping("/stock-of-product")
 	public ResponseEntity<StockDiaryDTO> createStockOfProduct(@RequestBody StockDiaryDTO stockDiaryDTO) {
 		return this.stockDiaryResourceApi.createStockOfProductUsingPOST(stockDiaryDTO);
-	}
+	}*/
 
 	@PostMapping("/stores")
 	public ResponseEntity<StoreDTO> createStore(@RequestBody StoreDTO storeDTO) {

@@ -13,11 +13,14 @@ import javax.validation.constraints.*;
  * CategoryDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class CategoryDTO   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -30,9 +33,6 @@ public class CategoryDTO   {
 
   @JsonProperty("name")
   private String name = null;
-
-  @JsonProperty("visible")
-  private Boolean visible = null;
 
   public CategoryDTO description(String description) {
     this.description = description;
@@ -52,6 +52,26 @@ public class CategoryDTO   {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public CategoryDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public CategoryDTO id(Long id) {
@@ -123,8 +143,7 @@ public class CategoryDTO   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -133,26 +152,6 @@ public class CategoryDTO   {
 
   public void setName(String name) {
     this.name = name;
-  }
-
-  public CategoryDTO visible(Boolean visible) {
-    this.visible = visible;
-    return this;
-  }
-
-  /**
-   * Get visible
-   * @return visible
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Boolean isVisible() {
-    return visible;
-  }
-
-  public void setVisible(Boolean visible) {
-    this.visible = visible;
   }
 
 
@@ -166,16 +165,16 @@ public class CategoryDTO   {
     }
     CategoryDTO categoryDTO = (CategoryDTO) o;
     return Objects.equals(this.description, categoryDTO.description) &&
+        Objects.equals(this.iDPcode, categoryDTO.iDPcode) &&
         Objects.equals(this.id, categoryDTO.id) &&
         Objects.equals(this.image, categoryDTO.image) &&
         Objects.equals(this.imageContentType, categoryDTO.imageContentType) &&
-        Objects.equals(this.name, categoryDTO.name) &&
-        Objects.equals(this.visible, categoryDTO.visible);
+        Objects.equals(this.name, categoryDTO.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, image, imageContentType, name, visible);
+    return Objects.hash(description, iDPcode, id, image, imageContentType, name);
   }
 
   @Override
@@ -184,11 +183,11 @@ public class CategoryDTO   {
     sb.append("class CategoryDTO {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    visible: ").append(toIndentedString(visible)).append("\n");
     sb.append("}");
     return sb.toString();
   }

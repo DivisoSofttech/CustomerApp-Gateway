@@ -13,11 +13,14 @@ import javax.validation.constraints.*;
  * TaxCategoryDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
 public class TaxCategoryDTO   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -43,6 +46,26 @@ public class TaxCategoryDTO   {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public TaxCategoryDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public TaxCategoryDTO id(Long id) {
@@ -74,8 +97,7 @@ public class TaxCategoryDTO   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -97,13 +119,14 @@ public class TaxCategoryDTO   {
     }
     TaxCategoryDTO taxCategoryDTO = (TaxCategoryDTO) o;
     return Objects.equals(this.description, taxCategoryDTO.description) &&
+        Objects.equals(this.iDPcode, taxCategoryDTO.iDPcode) &&
         Objects.equals(this.id, taxCategoryDTO.id) &&
         Objects.equals(this.name, taxCategoryDTO.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name);
+    return Objects.hash(description, iDPcode, id, name);
   }
 
   @Override
@@ -112,6 +135,7 @@ public class TaxCategoryDTO   {
     sb.append("class TaxCategoryDTO {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");

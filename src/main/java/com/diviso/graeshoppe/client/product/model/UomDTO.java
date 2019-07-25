@@ -10,22 +10,25 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UomDTO
+ * UOMDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
 
-public class UomDTO   {
+public class UOMDTO   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("name")
-  private String name = null;
+  @JsonProperty("unit")
+  private String unit = null;
 
-  public UomDTO description(String description) {
+  public UOMDTO description(String description) {
     this.description = description;
     return this;
   }
@@ -45,7 +48,27 @@ public class UomDTO   {
     this.description = description;
   }
 
-  public UomDTO id(Long id) {
+  public UOMDTO iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+  }
+
+  public UOMDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -65,25 +88,24 @@ public class UomDTO   {
     this.id = id;
   }
 
-  public UomDTO name(String name) {
-    this.name = name;
+  public UOMDTO unit(String unit) {
+    this.unit = unit;
     return this;
   }
 
   /**
-   * Get name
-   * @return name
+   * Get unit
+   * @return unit
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
-  public String getName() {
-    return name;
+  public String getUnit() {
+    return unit;
   }
 
-  public void setName(String name) {
-    this.name = name;
+  public void setUnit(String unit) {
+    this.unit = unit;
   }
 
 
@@ -95,25 +117,27 @@ public class UomDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UomDTO uomDTO = (UomDTO) o;
-    return Objects.equals(this.description, uomDTO.description) &&
-        Objects.equals(this.id, uomDTO.id) &&
-        Objects.equals(this.name, uomDTO.name);
+    UOMDTO UOMDTO = (UOMDTO) o;
+    return Objects.equals(this.description, UOMDTO.description) &&
+        Objects.equals(this.iDPcode, UOMDTO.iDPcode) &&
+        Objects.equals(this.id, UOMDTO.id) &&
+        Objects.equals(this.unit, UOMDTO.unit);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name);
+    return Objects.hash(description, iDPcode, id, unit);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UomDTO {\n");
+    sb.append("class UOMDTO {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    unit: ").append(toIndentedString(unit)).append("\n");
     sb.append("}");
     return sb.toString();
   }

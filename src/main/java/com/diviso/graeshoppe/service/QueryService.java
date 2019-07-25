@@ -14,8 +14,6 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
-import com.diviso.graeshoppe.client.product.model.StockDiary;
-import com.diviso.graeshoppe.client.product.model.StockLine;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
@@ -40,7 +38,7 @@ public interface QueryService {
 	 */
 	public Page<Product> findAllProduct(Pageable pageable);
 
-	public Page<StockLine> findAllStockLines(Pageable pageable);
+	//public Page<StockLine> findAllStockLines(Pageable pageable);
 
 	public Page<StockCurrent> findAllStockCurrents(Pageable pageable);
 

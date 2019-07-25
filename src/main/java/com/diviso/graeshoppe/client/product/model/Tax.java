@@ -2,15 +2,10 @@ package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
 import com.diviso.graeshoppe.client.product.model.TaxCategory;
-import com.diviso.graeshoppe.client.product.model.TaxType;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -19,8 +14,8 @@ import javax.validation.constraints.*;
  * Tax
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
-@Document(indexName = "tax")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
 public class Tax   {
   @JsonProperty("description")
   private String description = null;
@@ -36,10 +31,6 @@ public class Tax   {
 
   @JsonProperty("taxCategory")
   private TaxCategory taxCategory = null;
-
-  @JsonProperty("taxTypes")
-  @Valid
-  private List<TaxType> taxTypes = null;
 
   public Tax description(String description) {
     this.description = description;
@@ -90,8 +81,7 @@ public class Tax   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -111,8 +101,7 @@ public class Tax   {
    * Get rate
    * @return rate
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public Double getRate() {
@@ -144,35 +133,6 @@ public class Tax   {
     this.taxCategory = taxCategory;
   }
 
-  public Tax taxTypes(List<TaxType> taxTypes) {
-    this.taxTypes = taxTypes;
-    return this;
-  }
-
-  public Tax addTaxTypesItem(TaxType taxTypesItem) {
-    if (this.taxTypes == null) {
-      this.taxTypes = new ArrayList<TaxType>();
-    }
-    this.taxTypes.add(taxTypesItem);
-    return this;
-  }
-
-  /**
-   * Get taxTypes
-   * @return taxTypes
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public List<TaxType> getTaxTypes() {
-    return taxTypes;
-  }
-
-  public void setTaxTypes(List<TaxType> taxTypes) {
-    this.taxTypes = taxTypes;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -187,13 +147,12 @@ public class Tax   {
         Objects.equals(this.id, tax.id) &&
         Objects.equals(this.name, tax.name) &&
         Objects.equals(this.rate, tax.rate) &&
-        Objects.equals(this.taxCategory, tax.taxCategory) &&
-        Objects.equals(this.taxTypes, tax.taxTypes);
+        Objects.equals(this.taxCategory, tax.taxCategory);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name, rate, taxCategory, taxTypes);
+    return Objects.hash(description, id, name, rate, taxCategory);
   }
 
   @Override
@@ -206,7 +165,6 @@ public class Tax   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    rate: ").append(toIndentedString(rate)).append("\n");
     sb.append("    taxCategory: ").append(toIndentedString(taxCategory)).append("\n");
-    sb.append("    taxTypes: ").append(toIndentedString(taxTypes)).append("\n");
     sb.append("}");
     return sb.toString();
   }

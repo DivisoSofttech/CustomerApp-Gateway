@@ -1,12 +1,13 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.product.model.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import org.springframework.data.elasticsearch.annotations.Document;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,11 +16,14 @@ import javax.validation.constraints.*;
  * Category
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
-@Document(indexName = "category")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
 public class Category   {
   @JsonProperty("description")
   private String description = null;
+
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -33,8 +37,9 @@ public class Category   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("visible")
-  private Boolean visible = null;
+  @JsonProperty("products")
+  @Valid
+  private List<Product> products = null;
 
   public Category description(String description) {
     this.description = description;
@@ -54,6 +59,26 @@ public class Category   {
 
   public void setDescription(String description) {
     this.description = description;
+  }
+
+  public Category iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
+    return this;
+  }
+
+  /**
+   * Get iDPcode
+   * @return iDPcode
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getIDPcode() {
+    return iDPcode;
+  }
+
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public Category id(Long id) {
@@ -125,8 +150,7 @@ public class Category   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -137,24 +161,33 @@ public class Category   {
     this.name = name;
   }
 
-  public Category visible(Boolean visible) {
-    this.visible = visible;
+  public Category products(List<Product> products) {
+    this.products = products;
+    return this;
+  }
+
+  public Category addProductsItem(Product productsItem) {
+    if (this.products == null) {
+      this.products = new ArrayList<Product>();
+    }
+    this.products.add(productsItem);
     return this;
   }
 
   /**
-   * Get visible
-   * @return visible
+   * Get products
+   * @return products
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Boolean isVisible() {
-    return visible;
+  public List<Product> getProducts() {
+    return products;
   }
 
-  public void setVisible(Boolean visible) {
-    this.visible = visible;
+  public void setProducts(List<Product> products) {
+    this.products = products;
   }
 
 
@@ -168,16 +201,17 @@ public class Category   {
     }
     Category category = (Category) o;
     return Objects.equals(this.description, category.description) &&
+        Objects.equals(this.iDPcode, category.iDPcode) &&
         Objects.equals(this.id, category.id) &&
         Objects.equals(this.image, category.image) &&
         Objects.equals(this.imageContentType, category.imageContentType) &&
         Objects.equals(this.name, category.name) &&
-        Objects.equals(this.visible, category.visible);
+        Objects.equals(this.products, category.products);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, image, imageContentType, name, visible);
+    return Objects.hash(description, iDPcode, id, image, imageContentType, name, products);
   }
 
   @Override
@@ -186,11 +220,12 @@ public class Category   {
     sb.append("class Category {\n");
     
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    visible: ").append(toIndentedString(visible)).append("\n");
+    sb.append("    products: ").append(toIndentedString(products)).append("\n");
     sb.append("}");
     return sb.toString();
   }

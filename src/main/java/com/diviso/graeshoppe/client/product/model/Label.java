@@ -1,12 +1,11 @@
 package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.product.model.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -15,11 +14,11 @@ import javax.validation.constraints.*;
  * Label
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-17T14:38:38.757+05:30[Asia/Kolkata]")
-@Document(indexName = "label")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+
 public class Label   {
-  @JsonProperty("description")
-  private String description = null;
+  @JsonProperty("iDPcode")
+  private String iDPcode = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -27,24 +26,27 @@ public class Label   {
   @JsonProperty("name")
   private String name = null;
 
-  public Label description(String description) {
-    this.description = description;
+  @JsonProperty("product")
+  private Product product = null;
+
+  public Label iDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
     return this;
   }
 
   /**
-   * Get description
-   * @return description
+   * Get iDPcode
+   * @return iDPcode
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDescription() {
-    return description;
+  public String getIDPcode() {
+    return iDPcode;
   }
 
-  public void setDescription(String description) {
-    this.description = description;
+  public void setIDPcode(String iDPcode) {
+    this.iDPcode = iDPcode;
   }
 
   public Label id(Long id) {
@@ -76,8 +78,7 @@ public class Label   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
-  @NotNull
+  @ApiModelProperty(value = "")
 
 
   public String getName() {
@@ -86,6 +87,27 @@ public class Label   {
 
   public void setName(String name) {
     this.name = name;
+  }
+
+  public Label product(Product product) {
+    this.product = product;
+    return this;
+  }
+
+  /**
+   * Get product
+   * @return product
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Product getProduct() {
+    return product;
+  }
+
+  public void setProduct(Product product) {
+    this.product = product;
   }
 
 
@@ -98,14 +120,15 @@ public class Label   {
       return false;
     }
     Label label = (Label) o;
-    return Objects.equals(this.description, label.description) &&
+    return Objects.equals(this.iDPcode, label.iDPcode) &&
         Objects.equals(this.id, label.id) &&
-        Objects.equals(this.name, label.name);
+        Objects.equals(this.name, label.name) &&
+        Objects.equals(this.product, label.product);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, id, name);
+    return Objects.hash(iDPcode, id, name, product);
   }
 
   @Override
@@ -113,9 +136,10 @@ public class Label   {
     StringBuilder sb = new StringBuilder();
     sb.append("class Label {\n");
     
-    sb.append("    description: ").append(toIndentedString(description)).append("\n");
+    sb.append("    iDPcode: ").append(toIndentedString(iDPcode)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    product: ").append(toIndentedString(product)).append("\n");
     sb.append("}");
     return sb.toString();
   }
