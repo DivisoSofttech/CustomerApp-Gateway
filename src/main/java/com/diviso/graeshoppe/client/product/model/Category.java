@@ -20,6 +20,7 @@ import javax.validation.constraints.*;
 
 public class Category   {
   @JsonProperty("description")
+  
   private String description = null;
 
   @JsonProperty("iDPcode")
