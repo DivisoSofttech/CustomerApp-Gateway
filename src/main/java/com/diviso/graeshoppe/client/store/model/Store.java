@@ -1,7 +1,13 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-
+import com.diviso.graeshoppe.client.store.model.Banner;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.Propreitor;
+import com.diviso.graeshoppe.client.store.model.Review;
+import com.diviso.graeshoppe.client.store.model.StoreAddress;
+import com.diviso.graeshoppe.client.store.model.Type;
+import com.diviso.graeshoppe.client.store.model.UserRating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -17,7 +23,7 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-16T09:17:03.143+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
 
 public class Store   {
   @JsonProperty("banners")
@@ -82,6 +88,10 @@ public class Store   {
 
   @JsonProperty("totalRating")
   private Double totalRating = null;
+
+  @JsonProperty("types")
+  @Valid
+  private List<Type> types = null;
 
   @JsonProperty("userRatings")
   @Valid
@@ -519,6 +529,35 @@ public class Store   {
     this.totalRating = totalRating;
   }
 
+  public Store types(List<Type> types) {
+    this.types = types;
+    return this;
+  }
+
+  public Store addTypesItem(Type typesItem) {
+    if (this.types == null) {
+      this.types = new ArrayList<Type>();
+    }
+    this.types.add(typesItem);
+    return this;
+  }
+
+  /**
+   * Get types
+   * @return types
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Type> getTypes() {
+    return types;
+  }
+
+  public void setTypes(List<Type> types) {
+    this.types = types;
+  }
+
   public Store userRatings(List<UserRating> userRatings) {
     this.userRatings = userRatings;
     return this;
@@ -578,12 +617,13 @@ public class Store   {
         Objects.equals(this.reviews, store.reviews) &&
         Objects.equals(this.storeAddress, store.storeAddress) &&
         Objects.equals(this.totalRating, store.totalRating) &&
+        Objects.equals(this.types, store.types) &&
         Objects.equals(this.userRatings, store.userRatings);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(banners, closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, totalRating, userRatings);
+    return Objects.hash(banners, closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, totalRating, types, userRatings);
   }
 
   @Override
@@ -611,6 +651,7 @@ public class Store   {
     sb.append("    reviews: ").append(toIndentedString(reviews)).append("\n");
     sb.append("    storeAddress: ").append(toIndentedString(storeAddress)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
+    sb.append("    types: ").append(toIndentedString(types)).append("\n");
     sb.append("    userRatings: ").append(toIndentedString(userRatings)).append("\n");
     sb.append("}");
     return sb.toString();

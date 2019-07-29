@@ -19,7 +19,6 @@ import java.util.Objects;
 /**
  * A Store.
  */
-
 @Document(indexName = "store")
 public class Store implements Serializable {
 

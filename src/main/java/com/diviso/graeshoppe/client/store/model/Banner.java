@@ -1,7 +1,7 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-
+import com.diviso.graeshoppe.client.store.model.Store;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * Banner
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-16T09:17:03.143+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
 
 public class Banner   {
   @JsonProperty("file")

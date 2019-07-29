@@ -1,13 +1,15 @@
 package com.diviso.graeshoppe.client.store.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
 import java.util.Objects;
 
@@ -18,60 +20,74 @@ import java.util.Objects;
 @Document(indexName = "type")
 public class Type implements Serializable {
 
-	
-	    private Long id;
+	 
+   
+    private Long id;
 
-	    private String name;
+    private String name;
 
-	    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-	    public Long getId() {
-	        return id;
-	    }
+    private Store store;
+    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
+    public Long getId() {
+        return id;
+    }
 
-	    public void setId(Long id) {
-	        this.id = id;
-	    }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-	    public String getName() {
-	        return name;
-	    }
+    public String getName() {
+        return name;
+    }
 
-	    public Type name(String name) {
-	        this.name = name;
-	        return this;
-	    }
+    public Type name(String name) {
+        this.name = name;
+        return this;
+    }
 
-	    public void setName(String name) {
-	        this.name = name;
-	    }
-	    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	    @Override
-	    public boolean equals(Object o) {
-	        if (this == o) {
-	            return true;
-	        }
-	        if (o == null || getClass() != o.getClass()) {
-	            return false;
-	        }
-	        Type type = (Type) o;
-	        if (type.getId() == null || getId() == null) {
-	            return false;
-	        }
-	        return Objects.equals(getId(), type.getId());
-	    }
+    public Store getStore() {
+        return store;
+    }
 
-	    @Override
-	    public int hashCode() {
-	        return Objects.hashCode(getId());
-	    }
+    public Type store(Store store) {
+        this.store = store;
+        return this;
+    }
 
-	    @Override
-	    public String toString() {
-	        return "Type{" +
-	            "id=" + getId() +
-	            ", name='" + getName() + "'" +
-	            "}";
-	    }
-	}
+    public void setStore(Store store) {
+        this.store = store;
+    }
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        Type type = (Type) o;
+        if (type.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), type.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "Type{" +
+            "id=" + getId() +
+            ", name='" + getName() + "'" +
+            "}";
+    }
+}
