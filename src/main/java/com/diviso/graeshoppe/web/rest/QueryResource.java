@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.web.rest;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -474,5 +475,17 @@ public class QueryResource {
 		}
 		
 	 
-	 
+		@GetMapping("/storeByLocationName/{locationName}")
+		public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
+
+			return queryService.findStoreByLocationName(locationName);
+		}
+		
+		@GetMapping("/storeByDeliveryTime/{deliveryTime}")
+		public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
+
+			return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
+		}
+		
+		
 }

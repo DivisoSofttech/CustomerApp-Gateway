@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.service;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Set;
 
@@ -210,6 +211,10 @@ public interface QueryService {
 	 * @return
 	 */
 	List<Store> findByNearestLocation(Point point, Distance distance);
+
+	public Page<Store> findStoreByLocationName(String locationName);
+
+	public Page<Store> findAndSortStoreBydeliveryTime(Instant maxDeliveryTime, Pageable pageable);
 
 	
 
