@@ -1,7 +1,6 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.store.model.Store;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -14,7 +13,7 @@ import javax.validation.constraints.*;
  * Type
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
 
 public class Type   {
   @JsonProperty("id")
@@ -22,9 +21,6 @@ public class Type   {
 
   @JsonProperty("name")
   private String name = null;
-
-  @JsonProperty("store")
-  private Store store = null;
 
   public Type id(Long id) {
     this.id = id;
@@ -66,27 +62,6 @@ public class Type   {
     this.name = name;
   }
 
-  public Type store(Store store) {
-    this.store = store;
-    return this;
-  }
-
-  /**
-   * Get store
-   * @return store
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Store getStore() {
-    return store;
-  }
-
-  public void setStore(Store store) {
-    this.store = store;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -98,13 +73,12 @@ public class Type   {
     }
     Type type = (Type) o;
     return Objects.equals(this.id, type.id) &&
-        Objects.equals(this.name, type.name) &&
-        Objects.equals(this.store, type.store);
+        Objects.equals(this.name, type.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, store);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -114,7 +88,6 @@ public class Type   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -1,32 +1,29 @@
 package com.diviso.graeshoppe.client.store.domain;
 
 
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
-
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import java.io.Serializable;
 import java.util.Objects;
 
 /**
- * A Type.
+ * A StoreType.
  */
 
-@Document(indexName = "type")
-public class Type implements Serializable {
+@Document(indexName = "storetype")
+public class StoreType implements Serializable {
 
+    private static final long serialVersionUID = 1L;
     
- 
+   
     private Long id;
 
-   
     private String name;
+
+    private Store store;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -41,13 +38,26 @@ public class Type implements Serializable {
         return name;
     }
 
-    public Type name(String name) {
+    public StoreType name(String name) {
         this.name = name;
         return this;
     }
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Store getStore() {
+        return store;
+    }
+
+    public StoreType store(Store store) {
+        this.store = store;
+        return this;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -59,11 +69,11 @@ public class Type implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        Type type = (Type) o;
-        if (type.getId() == null || getId() == null) {
+        StoreType storeType = (StoreType) o;
+        if (storeType.getId() == null || getId() == null) {
             return false;
         }
-        return Objects.equals(getId(), type.getId());
+        return Objects.equals(getId(), storeType.getId());
     }
 
     @Override
@@ -73,7 +83,7 @@ public class Type implements Serializable {
 
     @Override
     public String toString() {
-        return "Type{" +
+        return "StoreType{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             "}";

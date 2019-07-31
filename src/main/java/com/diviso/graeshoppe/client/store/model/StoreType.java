@@ -10,19 +10,22 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * TypeDTO
+ * StoreType
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
 
-public class TypeDTO   {
+public class StoreType   {
   @JsonProperty("id")
   private Long id = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  public TypeDTO id(Long id) {
+  @JsonProperty("store")
+  private Store store = null;
+
+  public StoreType id(Long id) {
     this.id = id;
     return this;
   }
@@ -42,7 +45,7 @@ public class TypeDTO   {
     this.id = id;
   }
 
-  public TypeDTO name(String name) {
+  public StoreType name(String name) {
     this.name = name;
     return this;
   }
@@ -62,6 +65,27 @@ public class TypeDTO   {
     this.name = name;
   }
 
+  public StoreType store(Store store) {
+    this.store = store;
+    return this;
+  }
+
+  /**
+   * Get store
+   * @return store
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Store getStore() {
+    return store;
+  }
+
+  public void setStore(Store store) {
+    this.store = store;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +95,25 @@ public class TypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TypeDTO typeDTO = (TypeDTO) o;
-    return Objects.equals(this.id, typeDTO.id) &&
-        Objects.equals(this.name, typeDTO.name);
+    StoreType storeType = (StoreType) o;
+    return Objects.equals(this.id, storeType.id) &&
+        Objects.equals(this.name, storeType.name) &&
+        Objects.equals(this.store, storeType.store);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id, name, store);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TypeDTO {\n");
+    sb.append("class StoreType {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    store: ").append(toIndentedString(store)).append("\n");
     sb.append("}");
     return sb.toString();
   }

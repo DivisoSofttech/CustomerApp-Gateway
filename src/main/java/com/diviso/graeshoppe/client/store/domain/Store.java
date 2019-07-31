@@ -24,68 +24,59 @@ public class Store implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+   
     private Long id;
 
-    @Column(name = "reg_no")
+   
     private String regNo;
 
-    @Column(name = "name")
+  
     private String name;
 
     @Lob
-    @Column(name = "image")
     private byte[] image;
 
-    @Column(name = "image_content_type")
+ 
     private String imageContentType;
 
-    @Column(name = "total_rating")
     private Double totalRating;
 
-    @Column(name = "location")
+
     private String location;
 
-    @Column(name = "location_name")
+
     private String locationName;
 
-    @Column(name = "contact_no")
     private Long contactNo;
 
-    @Column(name = "opening_time")
     private Instant openingTime;
 
-    @Column(name = "email")
     private String email;
 
-    @Column(name = "closing_time")
     private Instant closingTime;
 
-    @Column(name = "info")
+
     private String info;
 
-    @Column(name = "min_amount")
     private Double minAmount;
 
-    @Column(name = "max_delivery_time")
+   
     private Instant maxDeliveryTime;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+   
     private Propreitor propreitor;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+   
     private StoreAddress storeAddress;
 
-    @OneToMany(mappedBy = "store")
+    private Set<StoreType> storeTypes = new HashSet<>();
+   
     private Set<Review> reviews = new HashSet<>();
-    @OneToMany(mappedBy = "store")
+   
     private Set<UserRating> userRatings = new HashSet<>();
-    @OneToMany(mappedBy = "store")
+   
     private Set<Banner> banners = new HashSet<>();
-    @OneToMany(mappedBy = "store")
+   
     private Set<DeliveryInfo> deliveryInfos = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -302,6 +293,31 @@ public class Store implements Serializable {
 
     public void setStoreAddress(StoreAddress storeAddress) {
         this.storeAddress = storeAddress;
+    }
+
+    public Set<StoreType> getStoreTypes() {
+        return storeTypes;
+    }
+
+    public Store storeTypes(Set<StoreType> storeTypes) {
+        this.storeTypes = storeTypes;
+        return this;
+    }
+
+    public Store addStoreType(StoreType storeType) {
+        this.storeTypes.add(storeType);
+        storeType.setStore(this);
+        return this;
+    }
+
+    public Store removeStoreType(StoreType storeType) {
+        this.storeTypes.remove(storeType);
+        storeType.setStore(null);
+        return this;
+    }
+
+    public void setStoreTypes(Set<StoreType> storeTypes) {
+        this.storeTypes = storeTypes;
     }
 
     public Set<Review> getReviews() {
