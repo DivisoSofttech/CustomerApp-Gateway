@@ -5,6 +5,8 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
+
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -821,5 +823,21 @@ public class QueryServiceImpl implements QueryService {
 
 	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
 		return new CriteriaQuery(new Criteria("location").within(point, distance));
+	}
+
+	@Override
+	public Page<Store> findStoreByLocationName(String locationName) {
+		
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(matchQuery("locationName", locationName).prefixLength(3)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
+	@Override
+	public Page<Store> findAndSortStoreBydeliveryTime(Instant maxDeliveryTime, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("maxDeliveryTime", maxDeliveryTime)).build();
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+				
 	}
 }
