@@ -212,7 +212,7 @@ public interface QueryService {
 	 * @param distance
 	 * @return
 	 */
-	public List<Store> findByNearestLocation(Point point, Distance distance);
+	public Page<Store> findByNearestLocation(Point point, Distance distance);
 
 	public Page<Store> findStoreByLocationName(String locationName);
 

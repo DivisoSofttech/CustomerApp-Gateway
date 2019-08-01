@@ -479,7 +479,7 @@ public class QueryResource {
 
 	
 	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
-	public List<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter) {
+	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter) {
 
 		String[] latLons = latLon.split(",");
 

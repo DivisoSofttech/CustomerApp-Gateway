@@ -314,11 +314,11 @@ public class QueryServiceImpl implements QueryService {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				
-				.withSearchType(QUERY_THEN_FETCH).withIndices("storetype").withTypes("storetype")
+				.withSearchType(QUERY_THEN_FETCH).withIndices("store").withTypes("store")
 				
-				.addAggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword")).build();
+				.addAggregation(AggregationBuilders.terms("totalstoretype").field("storeTypes.name.keyword")).build();
 
-		AggregatedPage<StoreType> result = elasticsearchTemplate.queryForPage(searchQuery, StoreType.class);
+		AggregatedPage<Store> result = elasticsearchTemplate.queryForPage(searchQuery, Store.class);
 		
 		TermsAggregation categoryAggregation = result.getAggregation("totalstoretype", TermsAggregation.class);
 		
@@ -841,9 +841,9 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Store> findByNearestLocation(Point point, Distance distance) {
+	public Page<Store> findByNearestLocation(Point point, Distance distance) {
 
-		return elasticsearchTemplate.queryForList(getGeoQuery(point, distance), Store.class);
+		return elasticsearchTemplate.queryForPage(getGeoQuery(point, distance), Store.class);
 	}
 
 	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
