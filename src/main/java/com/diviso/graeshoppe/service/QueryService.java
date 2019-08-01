@@ -216,9 +216,15 @@ public interface QueryService {
 
 	public Page<Store> findStoreByLocationName(String locationName);
 
-	public Page<Store> findAndSortStoreBydeliveryTime(Instant maxDeliveryTime, Pageable pageable);
+	public Page<Store> findAndSortStoreByMinAount( Pageable pageable);
 
 	public Page<Store> findStoreByType(String name, Pageable pageable);
+
+	/**
+	 * @param pageable
+	 * @return
+	 */
+	public List<Entry> findStoreTypeAndCount(Pageable pageable);
 
 	
 

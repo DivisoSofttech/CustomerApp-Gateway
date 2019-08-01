@@ -280,6 +280,12 @@ public class QueryResource {
 		return queryService.findCategoryAndCount(pageable);
 	}
 
+	@GetMapping("/findStoreTypeAndCount")
+	public List<Entry> findStoreAndCount(Pageable pageable) {
+		return queryService.findStoreTypeAndCount(pageable);
+	}
+
+	
 	@GetMapping("/rating/{storeId}/{name}")
 	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
 		return queryService.findRatingByStoreIdAndCustomerName(storeId, name);
@@ -474,8 +480,7 @@ public class QueryResource {
 	}
 
 
-	// .................... change argument by dealing with client
-	// team.......................
+	
 	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
 	public List<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter) {
 
@@ -494,12 +499,14 @@ public class QueryResource {
 		return queryService.findStoreByLocationName(locationName);
 	}
 
-	@GetMapping("/storeByDeliveryTime/{maxDeliveryTime}")
-	public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
+	@GetMapping("/sortstoreByMinAmount")
+	public Page<Store> findAndSortStoreBydeliveryTime( Pageable pageable) {
 
-		return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
+		return queryService.findAndSortStoreByMinAount(pageable);
 	}
 
+	//......sortstorebydeliverycharge................
+	
 	@GetMapping("/storesByStoreType/storeType}")
 	public Page<Store> findStoreByStoreType(@PathVariable String name, Pageable pageable) {
 
