@@ -20,6 +20,7 @@ import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.order.model.*;
@@ -27,6 +28,7 @@ import com.diviso.graeshoppe.client.order.model.*;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 public interface QueryService {
+	
 	public Page<Category> findAllCategories(Pageable pageable);
 
 	public Page<Product> findProductByCategoryId(Long categoryId, String userId, Pageable pageable);
@@ -132,7 +134,7 @@ public interface QueryService {
 	/**
 	 * @param deliveryType
 	 */
-	public Page<Store> findStoreByType(String deliveryType);
+	public Page<Store> findStoreByDeliveryType(String deliveryType);
 
 	public Set<Category> findCategoryByStoreId(String userId, Pageable pageable);
 
@@ -160,9 +162,9 @@ public interface QueryService {
 	 * @param name
 	 * @return
 	 */
-	UserRating findRatingByName(String name);
+	public UserRating findRatingByName(String name);
 
-	Order findOrderByOrderId(String orderId);
+	public Order findOrderByOrderId(String orderId);
 
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
 
@@ -196,7 +198,7 @@ public interface QueryService {
 	 * @param id
 	 * @return
 	 */
-	Product findProductById(Long id);
+	public Product findProductById(Long id);
 
 	/**
 	 * @param searchTerm
@@ -210,11 +212,13 @@ public interface QueryService {
 	 * @param distance
 	 * @return
 	 */
-	List<Store> findByNearestLocation(Point point, Distance distance);
+	public List<Store> findByNearestLocation(Point point, Distance distance);
 
 	public Page<Store> findStoreByLocationName(String locationName);
 
 	public Page<Store> findAndSortStoreBydeliveryTime(Instant maxDeliveryTime, Pageable pageable);
+
+	public Page<Store> findStoreByType(String name, Pageable pageable);
 
 	
 

@@ -49,6 +49,7 @@ import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
@@ -434,13 +435,36 @@ public class QueryServiceImpl implements QueryService {
 	 * String)
 	 */
 	@Override
-	public Page<Store> findStoreByType(String deliveryType) {
+	public Page<Store> findStoreByDeliveryType(String deliveryType) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(termQuery("deliveryInfos.type.name.keyword", deliveryType)).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * String)
+	 */
+	@Override
+	public Page<Store> findStoreByType(String name, Pageable pageable) {
+
+		Set<Store> storeSet = new HashSet<>();
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(termQuery("name", name)).build();
+		List<StoreType> storeTypeList = elasticsearchOperations.queryForList(searchQuery, StoreType.class);
+		for (StoreType storeType : storeTypeList) {
+			storeSet.add(storeType.getStore());
+		}
+		
+		return new PageImpl(new ArrayList<Store>(storeSet));
+	}
+	
+	
 	/*
 	 * to find category by storeId
 	 */
