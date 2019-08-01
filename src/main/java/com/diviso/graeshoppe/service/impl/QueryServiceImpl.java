@@ -314,11 +314,11 @@ public class QueryServiceImpl implements QueryService {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				
-				.withSearchType(QUERY_THEN_FETCH).withIndices("store").withTypes("store")
+				.withSearchType(QUERY_THEN_FETCH).withIndices("storetype").withTypes("storetype")
 				
-				.addAggregation(AggregationBuilders.terms("totalstoretype").field("storeTypes.name.keyword")).build();
+				.addAggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword")).build();
 
-		AggregatedPage<Store> result = elasticsearchTemplate.queryForPage(searchQuery, Store.class);
+		AggregatedPage<StoreType> result = elasticsearchTemplate.queryForPage(searchQuery, StoreType.class);
 		
 		TermsAggregation categoryAggregation = result.getAggregation("totalstoretype", TermsAggregation.class);
 		
@@ -483,20 +483,12 @@ public class QueryServiceImpl implements QueryService {
 	 */
 
 	@Override
-	public Set<Category> findCategoryByStoreId(String userId, Pageable pageable) {
-		Set<Category> categorySet = new HashSet<>();
-		FetchSourceFilterBuilder sourceFilter = new FetchSourceFilterBuilder();
-		sourceFilter.withExcludes("product", "category.image");
-
+	public Page<Category> findCategoryByStoreId(String userId, Pageable pageable) {
+	
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", userId))
-				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
-		List<Product> productList = elasticsearchOperations.queryForList(searchQuery, Product.class);
-
-		for (Product product : productList) {
-
-			categorySet.add(product.getCategory());
-		}
-		return categorySet;
+				.build();
+		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
+	
 	}
 
 	/*

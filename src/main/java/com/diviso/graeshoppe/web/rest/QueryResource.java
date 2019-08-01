@@ -165,11 +165,8 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findAllCateogories")
-	public ResponseEntity<List<CategoryDTO>> findAllCategories(@RequestParam(required = false) Integer page,
-			@RequestParam(required = false) Integer size,
-			@RequestParam(value = "sort", required = false) ArrayList<String> sort) {
-		return categoryResourceApi.getAllCategoriesUsingGET(page, size, sort);
-
+	public ResponseEntity<Page<Category>> findAllCategories(@PathVariable String storeId,Pageable pageable){
+	return ResponseEntity.ok().body(queryService.findCategoryByStoreId(storeId,pageable));
 	}
 
 	@GetMapping("/findAllCategoriesWithOutImage")
@@ -374,7 +371,7 @@ public class QueryResource {
 	 *         with status 404 (Not Found)
 	 */
 
-	@GetMapping("/findCategoryByStoreId/{userId}")
+/*	@GetMapping("/findCategoryByStoreId/{userId}")
 	public ResponseEntity<Page<Category>> findCategoryByStoreId(@PathVariable("userId") String userId,
 			Pageable pageable) {
 		log.debug("REST request to findCategoryByStoreId : {}", userId);
@@ -382,7 +379,7 @@ public class QueryResource {
 		List<Category> categoryList = new ArrayList<>();
 		categoryList.addAll(queryService.findCategoryByStoreId(userId, pageable));
 		return ResponseEntity.ok().body(new PageImpl(categoryList));
-	}
+	}*/
 
 	/**
 	 * GET /findProductByStoreIdAndCategoryName/:userId,categoryName.

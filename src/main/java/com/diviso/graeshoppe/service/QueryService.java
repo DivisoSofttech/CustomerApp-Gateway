@@ -136,7 +136,7 @@ public interface QueryService {
 	 */
 	public Page<Store> findStoreByDeliveryType(String deliveryType);
 
-	public Set<Category> findCategoryByStoreId(String userId, Pageable pageable);
+	public Page<Category> findCategoryByStoreId(String userId, Pageable pageable);
 
 	public Page<Product> findProductByStoreIdAndCategoryName(String userId, Long categoryId, Pageable pageable);
 
