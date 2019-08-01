@@ -42,6 +42,7 @@ public class Store implements Serializable {
     private Double totalRating;
 
 
+    @GeoPointField
     private String location;
 
 
