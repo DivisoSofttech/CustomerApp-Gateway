@@ -473,6 +473,7 @@ public class QueryResource {
 		return queryService.headerSearch(searchTerm, pageable);
 	}
 
+
 	// .................... change argument by dealing with client
 	// team.......................
 	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
@@ -493,7 +494,7 @@ public class QueryResource {
 		return queryService.findStoreByLocationName(locationName);
 	}
 
-	@GetMapping("/storeByDeliveryTime/{deliveryTime}")
+	@GetMapping("/storeByDeliveryTime/{maxDeliveryTime}")
 	public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
 
 		return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
@@ -521,5 +522,6 @@ public class QueryResource {
 		return storeTypeResourceApi.getAllStoreTypesUsingGET(page, size, sort);
 	}
 	
+
 
 }
