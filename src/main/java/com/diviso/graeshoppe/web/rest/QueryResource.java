@@ -481,7 +481,7 @@ public class QueryResource {
 			return queryService.findStoreByLocationName(locationName);
 		}
 		
-		@GetMapping("/storeByDeliveryTime/{deliveryTime}")
+		@GetMapping("/storeByDeliveryTime/{maxDeliveryTime}")
 		public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
 
 			return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
