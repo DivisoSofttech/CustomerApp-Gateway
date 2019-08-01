@@ -434,13 +434,30 @@ public class QueryServiceImpl implements QueryService {
 	 * String)
 	 */
 	@Override
-	public Page<Store> findStoreByType(String deliveryType) {
+	public Page<Store> findStoreByDeliveryType(String deliveryType) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(termQuery("deliveryInfos.type.name.keyword", deliveryType)).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * String)
+	 */
+	@Override
+	public Page<Store> findStoreByType(String type) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(termQuery("storeType.name", type)).build();
+		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+	}
+
+	
+	
 	/*
 	 * to find category by storeId
 	 */

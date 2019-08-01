@@ -44,19 +44,22 @@ import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
 import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
 import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
+
+import com.diviso.graeshoppe.client.store.api.BannerResourceApi;
+import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
+import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.sale.model.SaleDTO;
 import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
-import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
-import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
-
+import com.diviso.graeshoppe.client.store.domain.Banner;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
+import com.diviso.graeshoppe.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.service.QueryService;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.mapper.JestResultsExtractor;
@@ -99,6 +102,9 @@ public class QueryResource {
 	UserRatingResourceApi userRatingResourceApi;
 	@Autowired
 	ReviewResourceApi reviewResourceApi;
+	
+	@Autowired
+	BannerResourceApi BannerResourceApi;
 	
 
 
@@ -339,10 +345,13 @@ public class QueryResource {
 	}
 
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
-	public ResponseEntity<List<Store>> findStoresByType(@PathVariable String deliveryType) {
+	public ResponseEntity<List<Store>> findStoresByDeliveryType(@PathVariable String deliveryType) {
 		log.info("..............." + deliveryType);
-		return ResponseEntity.ok().body(queryService.findStoreByType(deliveryType).getContent());
+		return ResponseEntity.ok().body(queryService.findStoreByDeliveryType(deliveryType).getContent());
 	}
+	
+
+	
 
 	// ............................................................................................................................
 	/**
@@ -487,5 +496,21 @@ public class QueryResource {
 			return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
 		}
 		
+		@GetMapping("/storesByStoreType/storeType}")
+		public ResponseEntity<List<Store>> findStoreByStoreType(@PathVariable String type) {
+			log.info("..............." + type);
+			return ResponseEntity.ok().body(queryService.findStoreByType(type).getContent());
+		}
+		
+		
+		
+		@GetMapping("/stores/banners")
+		public ResponseEntity<List<BannerDTO>> findStoreBanners(@RequestParam(required = false) Integer page,
+				@RequestParam(required = false) Integer size,
+				@RequestParam(value = "sort", required = false) ArrayList<String> sort){
+			return BannerResourceApi.getAllBannersUsingGET(page, size, sort);
+		
+		
+		}
 		
 }
