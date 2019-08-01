@@ -47,6 +47,7 @@ import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
 
 import com.diviso.graeshoppe.client.store.api.BannerResourceApi;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
+import com.diviso.graeshoppe.client.store.api.StoreTypeResourceApi;
 import com.diviso.graeshoppe.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.client.sale.domain.Sale;
 import com.diviso.graeshoppe.client.sale.domain.TicketLine;
@@ -57,9 +58,11 @@ import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Banner;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.BannerDTO;
+import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.service.QueryService;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.mapper.JestResultsExtractor;
@@ -105,6 +108,10 @@ public class QueryResource {
 
 	@Autowired
 	BannerResourceApi BannerResourceApi;
+	
+	
+	@Autowired
+	private StoreTypeResourceApi storeTypeResourceApi;
 
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -505,5 +512,14 @@ public class QueryResource {
 		return BannerResourceApi.getAllBannersUsingGET(page, size, sort);
 
 	}
+	
+	@GetMapping("/stores/storeTypes")
+	public ResponseEntity<List<StoreTypeDTO>> getAllStoreTypes(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size,
+			@RequestParam(value = "sort", required = false) ArrayList<String> sort) {
+
+		return storeTypeResourceApi.getAllStoreTypesUsingGET(page, size, sort);
+	}
+	
 
 }
