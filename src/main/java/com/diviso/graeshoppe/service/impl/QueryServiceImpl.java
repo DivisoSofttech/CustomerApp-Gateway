@@ -314,11 +314,11 @@ public class QueryServiceImpl implements QueryService {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				
-				.withSearchType(QUERY_THEN_FETCH).withIndices("store").withTypes("store")
+				.withSearchType(QUERY_THEN_FETCH).withIndices("storetype").withTypes("storetype")
 				
-				.addAggregation(AggregationBuilders.terms("totalstoretype").field("storeTypes.name.keyword")).build();
+				.addAggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword")).build();
 
-		AggregatedPage<Store> result = elasticsearchTemplate.queryForPage(searchQuery, Store.class);
+		AggregatedPage<StoreType> result = elasticsearchTemplate.queryForPage(searchQuery, StoreType.class);
 		
 		TermsAggregation categoryAggregation = result.getAggregation("totalstoretype", TermsAggregation.class);
 		
