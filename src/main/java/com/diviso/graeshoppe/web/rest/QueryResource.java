@@ -77,9 +77,9 @@ public class QueryResource {
 	@Autowired
 	QueryService queryService;
 
-	/*@Autowired
-	UomResourceApi uomResourceApi;
-*/
+	/*
+	 * @Autowired UomResourceApi uomResourceApi;
+	 */
 	@Autowired
 	CategoryResourceApi categoryResourceApi;
 
@@ -95,18 +95,16 @@ public class QueryResource {
 	@Autowired
 	private StockCurrentResourceApi stockCurrentResourceApi;
 
-	/*@Autowired
-	private StockDiaryResourceApi stockDiaryResourceApi;
-*/
+	/*
+	 * @Autowired private StockDiaryResourceApi stockDiaryResourceApi;
+	 */
 	@Autowired
 	UserRatingResourceApi userRatingResourceApi;
 	@Autowired
 	ReviewResourceApi reviewResourceApi;
-	
+
 	@Autowired
 	BannerResourceApi BannerResourceApi;
-	
-
 
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -188,10 +186,12 @@ public class QueryResource {
 		return this.productResourceApi.getProductUsingGET(id);
 	}
 
-	/*@GetMapping("/stocklines")
-	public ResponseEntity<List<StockLine>> findAllStockLines(Pageable pageable) {
-		return ResponseEntity.ok().body(this.queryService.findAllStockLines(pageable).getContent());
-	}*/
+	/*
+	 * @GetMapping("/stocklines") public ResponseEntity<List<StockLine>>
+	 * findAllStockLines(Pageable pageable) { return
+	 * ResponseEntity.ok().body(this.queryService.findAllStockLines(pageable).
+	 * getContent()); }
+	 */
 
 	@GetMapping("/stock-currents")
 	public ResponseEntity<Page<StockCurrent>> getAllStockCurrents(Pageable pageable) {
@@ -203,23 +203,25 @@ public class QueryResource {
 		return this.stockCurrentResourceApi.getStockCurrentUsingGET(id);
 	}
 
-	/*@GetMapping("/stock-diaries/{id}")
-	public ResponseEntity<StockDiaryDTO> findOneStockDiary(@PathVariable Long id) {
-		return this.stockDiaryResourceApi.getStockDiaryUsingGET(id);
-	}*/
+	/*
+	 * @GetMapping("/stock-diaries/{id}") public ResponseEntity<StockDiaryDTO>
+	 * findOneStockDiary(@PathVariable Long id) { return
+	 * this.stockDiaryResourceApi.getStockDiaryUsingGET(id); }
+	 */
 
 	@GetMapping("/stock-current/{searchTerm}")
 	public ResponseEntity<List<StockCurrentDTO>> searchStockCurrents(@PathVariable String searchTerm, Integer page,
 			Integer size, ArrayList<String> sort) {
 		return this.stockCurrentResourceApi.searchStockCurrentsUsingGET(searchTerm, page, size, sort);
 	}
-/*
-	@GetMapping("/stock-diary/{searchTerm}")
-	public ResponseEntity<List<StockDiaryDTO>> searchStockDiaries(@PathVariable String searchTerm, Integer page,
-			Integer size, ArrayList<String> sort) {
-		return this.stockDiaryResourceApi.searchStockDiariesUsingGET(searchTerm, page, size, sort);
-	}
-*/
+
+	/*
+	 * @GetMapping("/stock-diary/{searchTerm}") public
+	 * ResponseEntity<List<StockDiaryDTO>> searchStockDiaries(@PathVariable String
+	 * searchTerm, Integer page, Integer size, ArrayList<String> sort) { return
+	 * this.stockDiaryResourceApi.searchStockDiariesUsingGET(searchTerm, page, size,
+	 * sort); }
+	 */
 	@GetMapping("/reviews")
 	public ResponseEntity<Page<Review>> findAllReviews(Pageable pageable) {
 		return ResponseEntity.ok().body(queryService.findAllReviews(pageable));
@@ -349,17 +351,14 @@ public class QueryResource {
 		log.info("..............." + deliveryType);
 		return ResponseEntity.ok().body(queryService.findStoreByDeliveryType(deliveryType).getContent());
 	}
-	
-
-	
 
 	// ............................................................................................................................
 	/**
 	 * GET /findCategoryByStoreId/:userId .
 	 *
 	 * @param userId
-	 * @return the ResponseEntity with status 200 (OK) and with body the
-	 *         Category or with status 404 (Not Found)
+	 * @return the ResponseEntity with status 200 (OK) and with body the Category or
+	 *         with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findCategoryByStoreId/{userId}")
@@ -375,10 +374,9 @@ public class QueryResource {
 	/**
 	 * GET /findProductByStoreIdAndCategoryName/:userId,categoryName.
 	 *
-	 * @param userId
-	 *            , categoryName.
-	 * @return the ResponseEntity with status 200 (OK) and with body the Product
-	 *         or with status 404 (Not Found)
+	 * @param userId , categoryName.
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
+	 *         with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
@@ -392,8 +390,8 @@ public class QueryResource {
 	 * GET /findStoreByTypeName/:typeName.
 	 *
 	 * @param typeName
-	 * @return the ResponseEntity with status 200 (OK) and with body the Product
-	 *         or with status 404 (Not Found)
+	 * @return the ResponseEntity with status 200 (OK) and with body the Product or
+	 *         with status 404 (Not Found)
 	 */
 
 	@GetMapping("/findStoreByTypeName/{name}")
@@ -426,13 +424,14 @@ public class QueryResource {
 	public UserRating findRatingByStoreId(@PathVariable String storeId) {
 		return queryService.findRatingByStoreId(storeId);
 	}
-	
-    //..................test......................................
-	/*@GetMapping("/orderidtest/{orderId}")
-	public Page<Order> findOrderByOrderLine(@PathVariable String orderId){
-		return queryService.findOrderByOrderId(orderId);
-	}*/
-	
+
+	// ..................test......................................
+	/*
+	 * @GetMapping("/orderidtest/{orderId}") public Page<Order>
+	 * findOrderByOrderLine(@PathVariable String orderId){ return
+	 * queryService.findOrderByOrderId(orderId); }
+	 */
+
 	@GetMapping("/ratingByName/{name}")
 	public UserRating findRatingByCustomerName(@PathVariable String name) {
 		return queryService.findRatingByStoreId(name);
@@ -462,55 +461,49 @@ public class QueryResource {
 		return queryService.findDeliveryInfoByStoreId(storeId);
 	}
 
-	 
-	
-	
-	 @GetMapping("/header/{searchTerm}")
-	 public  Page<Store> header(@PathVariable("searchTerm") String searchTerm,Pageable pageable){
-		 return queryService.headerSearch(searchTerm,pageable);
-	 }
-	
-	 //.................... change argument by dealing with client team.......................
-	 @GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
-		public List<Store>  searchByNearestLocation(@PathVariable String latLon,@PathVariable Double kiloMeter){
-		
-			String[] latLons =	latLon.split(",");
-			
-			double lat = Double.parseDouble(latLons[0]);
-			
-			double lon = Double.parseDouble(latLons[1]);
-			
-			return  queryService.findByNearestLocation(new Point(lat,lon),new Distance(kiloMeter, Metrics.KILOMETERS) );
-		}
-		
-	 
-		@GetMapping("/storeByLocationName/{locationName}")
-		public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
+	@GetMapping("/header/{searchTerm}")
+	public Page<Store> header(@PathVariable("searchTerm") String searchTerm, Pageable pageable) {
+		return queryService.headerSearch(searchTerm, pageable);
+	}
 
-			return queryService.findStoreByLocationName(locationName);
-		}
-		
-		@GetMapping("/storeByDeliveryTime/{deliveryTime}")
-		public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
+	// .................... change argument by dealing with client
+	// team.......................
+	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
+	public List<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter) {
 
-			return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
-		}
-		
-		@GetMapping("/storesByStoreType/storeType}")
-		public ResponseEntity<List<Store>> findStoreByStoreType(@PathVariable String type) {
-			log.info("..............." + type);
-			return ResponseEntity.ok().body(queryService.findStoreByType(type).getContent());
-		}
-		
-		
-		
-		@GetMapping("/stores/banners")
-		public ResponseEntity<List<BannerDTO>> findStoreBanners(@RequestParam(required = false) Integer page,
-				@RequestParam(required = false) Integer size,
-				@RequestParam(value = "sort", required = false) ArrayList<String> sort){
-			return BannerResourceApi.getAllBannersUsingGET(page, size, sort);
-		
-		
-		}
-		
+		String[] latLons = latLon.split(",");
+
+		double lat = Double.parseDouble(latLons[0]);
+
+		double lon = Double.parseDouble(latLons[1]);
+
+		return queryService.findByNearestLocation(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS));
+	}
+
+	@GetMapping("/storeByLocationName/{locationName}")
+	public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
+
+		return queryService.findStoreByLocationName(locationName);
+	}
+
+	@GetMapping("/storeByDeliveryTime/{deliveryTime}")
+	public Page<Store> findAndSortStoreBydeliveryTime(@PathVariable Instant maxDeliveryTime, Pageable pageable) {
+
+		return queryService.findAndSortStoreBydeliveryTime(maxDeliveryTime, pageable);
+	}
+
+	@GetMapping("/storesByStoreType/storeType}")
+	public Page<Store> findStoreByStoreType(@PathVariable String name, Pageable pageable) {
+
+		return queryService.findStoreByType(name, pageable);
+	}
+
+	@GetMapping("/stores/banners")
+	public ResponseEntity<List<BannerDTO>> findStoreBanners(@RequestParam(required = false) Integer page,
+			@RequestParam(required = false) Integer size,
+			@RequestParam(value = "sort", required = false) ArrayList<String> sort) {
+		return BannerResourceApi.getAllBannersUsingGET(page, size, sort);
+
+	}
+
 }

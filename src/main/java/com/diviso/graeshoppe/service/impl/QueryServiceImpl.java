@@ -49,6 +49,7 @@ import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
@@ -449,13 +450,19 @@ public class QueryServiceImpl implements QueryService {
 	 * String)
 	 */
 	@Override
-	public Page<Store> findStoreByType(String type) {
+	public Page<Store> findStoreByType(String name, Pageable pageable) {
+
+		Set<Store> storeSet = new HashSet<>();
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(termQuery("storeType.name", type)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
+				.withQuery(termQuery("name", name)).build();
+		List<StoreType> storeTypeList = elasticsearchOperations.queryForList(searchQuery, StoreType.class);
+		for (StoreType storeType : storeTypeList) {
+			storeSet.add(storeType.getStore());
+		}
+		
+		return new PageImpl(new ArrayList<Store>(storeSet));
 	}
-
 	
 	
 	/*

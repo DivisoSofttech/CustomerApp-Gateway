@@ -20,6 +20,7 @@ import com.diviso.graeshoppe.client.sale.domain.TicketLine;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.order.model.*;
@@ -217,7 +218,7 @@ public interface QueryService {
 
 	public Page<Store> findAndSortStoreBydeliveryTime(Instant maxDeliveryTime, Pageable pageable);
 
-	public Page<Store> findStoreByType(String type);
+	public Page<Store> findStoreByType(String name, Pageable pageable);
 
 	
 
