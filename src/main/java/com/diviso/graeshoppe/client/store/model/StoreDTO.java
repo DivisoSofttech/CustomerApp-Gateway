@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.client.store.model;
+package com.bytatech.ayoos.client.store.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * StoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-02T11:19:44.906+05:30[Asia/Calcutta]")
 
 public class StoreDTO   {
   @JsonProperty("closingTime")
@@ -64,6 +64,9 @@ public class StoreDTO   {
 
   @JsonProperty("storeAddressId")
   private Long storeAddressId = null;
+
+  @JsonProperty("storeSettingsId")
+  private Long storeSettingsId = null;
 
   @JsonProperty("totalRating")
   private Double totalRating = null;
@@ -391,6 +394,26 @@ public class StoreDTO   {
     this.storeAddressId = storeAddressId;
   }
 
+  public StoreDTO storeSettingsId(Long storeSettingsId) {
+    this.storeSettingsId = storeSettingsId;
+    return this;
+  }
+
+  /**
+   * Get storeSettingsId
+   * @return storeSettingsId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getStoreSettingsId() {
+    return storeSettingsId;
+  }
+
+  public void setStoreSettingsId(Long storeSettingsId) {
+    this.storeSettingsId = storeSettingsId;
+  }
+
   public StoreDTO totalRating(Double totalRating) {
     this.totalRating = totalRating;
     return this;
@@ -437,12 +460,13 @@ public class StoreDTO   {
         Objects.equals(this.propreitorId, storeDTO.propreitorId) &&
         Objects.equals(this.regNo, storeDTO.regNo) &&
         Objects.equals(this.storeAddressId, storeDTO.storeAddressId) &&
+        Objects.equals(this.storeSettingsId, storeDTO.storeSettingsId) &&
         Objects.equals(this.totalRating, storeDTO.totalRating);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitorId, regNo, storeAddressId, totalRating);
+    return Objects.hash(closingTime, contactNo, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitorId, regNo, storeAddressId, storeSettingsId, totalRating);
   }
 
   @Override
@@ -466,6 +490,7 @@ public class StoreDTO   {
     sb.append("    propreitorId: ").append(toIndentedString(propreitorId)).append("\n");
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
     sb.append("    storeAddressId: ").append(toIndentedString(storeAddressId)).append("\n");
+    sb.append("    storeSettingsId: ").append(toIndentedString(storeSettingsId)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
     sb.append("}");
     return sb.toString();

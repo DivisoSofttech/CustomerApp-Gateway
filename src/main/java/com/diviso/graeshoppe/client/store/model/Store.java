@@ -1,6 +1,14 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
+import com.bytatech.ayoos.client.store.model.Banner;
+import com.bytatech.ayoos.client.store.model.DeliveryInfo;
+import com.bytatech.ayoos.client.store.model.Propreitor;
+import com.bytatech.ayoos.client.store.model.Review;
+import com.bytatech.ayoos.client.store.model.StoreAddress;
+import com.bytatech.ayoos.client.store.model.StoreSettings;
+import com.bytatech.ayoos.client.store.model.StoreType;
+import com.bytatech.ayoos.client.store.model.UserRating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -16,7 +24,7 @@ import javax.validation.constraints.*;
  * Store
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-30T16:33:54.740+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-02T11:19:44.906+05:30[Asia/Calcutta]")
 
 public class Store   {
   @JsonProperty("banners")
@@ -78,6 +86,9 @@ public class Store   {
 
   @JsonProperty("storeAddress")
   private StoreAddress storeAddress = null;
+
+  @JsonProperty("storeSettings")
+  private StoreSettings storeSettings = null;
 
   @JsonProperty("storeTypes")
   @Valid
@@ -502,6 +513,27 @@ public class Store   {
     this.storeAddress = storeAddress;
   }
 
+  public Store storeSettings(StoreSettings storeSettings) {
+    this.storeSettings = storeSettings;
+    return this;
+  }
+
+  /**
+   * Get storeSettings
+   * @return storeSettings
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public StoreSettings getStoreSettings() {
+    return storeSettings;
+  }
+
+  public void setStoreSettings(StoreSettings storeSettings) {
+    this.storeSettings = storeSettings;
+  }
+
   public Store storeTypes(List<StoreType> storeTypes) {
     this.storeTypes = storeTypes;
     return this;
@@ -609,6 +641,7 @@ public class Store   {
         Objects.equals(this.regNo, store.regNo) &&
         Objects.equals(this.reviews, store.reviews) &&
         Objects.equals(this.storeAddress, store.storeAddress) &&
+        Objects.equals(this.storeSettings, store.storeSettings) &&
         Objects.equals(this.storeTypes, store.storeTypes) &&
         Objects.equals(this.totalRating, store.totalRating) &&
         Objects.equals(this.userRatings, store.userRatings);
@@ -616,7 +649,7 @@ public class Store   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(banners, closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, storeTypes, totalRating, userRatings);
+    return Objects.hash(banners, closingTime, contactNo, deliveryInfos, email, id, image, imageContentType, info, location, locationName, maxDeliveryTime, minAmount, name, openingTime, propreitor, regNo, reviews, storeAddress, storeSettings, storeTypes, totalRating, userRatings);
   }
 
   @Override
@@ -643,6 +676,7 @@ public class Store   {
     sb.append("    regNo: ").append(toIndentedString(regNo)).append("\n");
     sb.append("    reviews: ").append(toIndentedString(reviews)).append("\n");
     sb.append("    storeAddress: ").append(toIndentedString(storeAddress)).append("\n");
+    sb.append("    storeSettings: ").append(toIndentedString(storeSettings)).append("\n");
     sb.append("    storeTypes: ").append(toIndentedString(storeTypes)).append("\n");
     sb.append("    totalRating: ").append(toIndentedString(totalRating)).append("\n");
     sb.append("    userRatings: ").append(toIndentedString(userRatings)).append("\n");
