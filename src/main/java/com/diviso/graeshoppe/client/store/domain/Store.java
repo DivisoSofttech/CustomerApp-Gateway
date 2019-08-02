@@ -2,7 +2,7 @@ package com.diviso.graeshoppe.client.store.domain;
 
 
 
-import com.diviso.graeshoppe.domain.Store;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
