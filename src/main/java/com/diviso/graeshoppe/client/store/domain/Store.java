@@ -1,6 +1,8 @@
 package com.diviso.graeshoppe.client.store.domain;
 
 
+
+import com.diviso.graeshoppe.domain.Store;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -25,7 +27,8 @@ public class Store implements Serializable {
     private static final long serialVersionUID = 1L;
     
    
-    private Long id;
+
+	private Long id;
 
    
     private String regNo;
@@ -69,7 +72,7 @@ public class Store implements Serializable {
 
    
     private StoreAddress storeAddress;
-
+    private StoreSettings storeSettings;
     private Set<StoreType> storeTypes = new HashSet<>();
    
     private Set<Review> reviews = new HashSet<>();
