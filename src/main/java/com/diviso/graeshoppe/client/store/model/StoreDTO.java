@@ -1,4 +1,4 @@
-package com.bytatech.ayoos.client.store.model;
+package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;

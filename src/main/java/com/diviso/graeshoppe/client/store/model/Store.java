@@ -1,14 +1,6 @@
 package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
-import com.bytatech.ayoos.client.store.model.Banner;
-import com.bytatech.ayoos.client.store.model.DeliveryInfo;
-import com.bytatech.ayoos.client.store.model.Propreitor;
-import com.bytatech.ayoos.client.store.model.Review;
-import com.bytatech.ayoos.client.store.model.StoreAddress;
-import com.bytatech.ayoos.client.store.model.StoreSettings;
-import com.bytatech.ayoos.client.store.model.StoreType;
-import com.bytatech.ayoos.client.store.model.UserRating;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
