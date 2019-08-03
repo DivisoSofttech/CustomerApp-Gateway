@@ -44,6 +44,7 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.BannerDTO;
@@ -368,7 +369,13 @@ public class QueryResource {
 
 		return queryService.findStoreByType(name, pageable);
 	}
-
+	
+	@GetMapping("/store-type/{storeId}")
+	public Page<StoreType> findStoreTypeByStoreId(@PathVariable String storeId, Pageable pageable){
+		return queryService.findStoreTypeByStoreId(storeId, pageable);
+	}
+	
+	
 	@GetMapping("/stores/banners")
 	public ResponseEntity<List<BannerDTO>> findStoreBanners(@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size,
@@ -385,4 +392,5 @@ public class QueryResource {
 		return storeTypeResourceApi.getAllStoreTypesUsingGET(page, size, sort);
 	}
 
+	
 }

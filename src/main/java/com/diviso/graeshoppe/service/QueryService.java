@@ -19,6 +19,7 @@ import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 
@@ -117,5 +118,12 @@ public interface QueryService {
 	public Page<Store> findStoreByType(String name, Pageable pageable);
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable);
+
+	/**
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
+	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable);
 
 }

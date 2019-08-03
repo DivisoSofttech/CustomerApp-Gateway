@@ -725,4 +725,15 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreTypeByStoreId(java.lang.String, org.springframework.data.domain.Pageable)
+	 */
+	@Override
+	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable) {
+		
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, StoreType.class);
+	}
+
 }
