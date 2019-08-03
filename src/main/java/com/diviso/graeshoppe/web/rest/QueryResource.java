@@ -346,6 +346,8 @@ public class QueryResource {
 
 		double lon = Double.parseDouble(latLons[1]);
 
+		log.info("........lat........................  "+lat+"................lon.........   "+lon);
+		
 		return queryService.findByNearestLocation(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS));
 	}
 
