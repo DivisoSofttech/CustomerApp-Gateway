@@ -364,10 +364,10 @@ public class QueryResource {
 		return queryService.findAndSortStoreByMinAount(pageable);
 	}
 
-	@GetMapping("/storesByStoreType/storeType}")
-	public Page<Store> findStoreByStoreType(@PathVariable String name, Pageable pageable) {
+	@GetMapping("/storesByStoreType/{storeType}")
+	public Page<Store> findStoreByStoreType(@PathVariable String storeType, Pageable pageable) {
 
-		return queryService.findStoreByType(name, pageable);
+		return queryService.findStoreByType(storeType, pageable);
 	}
 	
 	@GetMapping("/store-type/{storeId}")
