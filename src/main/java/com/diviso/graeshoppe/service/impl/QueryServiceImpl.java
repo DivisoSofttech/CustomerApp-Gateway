@@ -120,7 +120,8 @@ public class QueryServiceImpl implements QueryService {
 	 * List<Result> values = new ArrayList<Result>(); ;
 	 * 
 	 * SearchQuery searchQuery = new NativeSearchQueryBuilder()
-	 * .withQuery(matchQuery("name", searchTerm).fuzziness(Fuzziness.TWO)).build();
+	 * .withQuery(matchQuery("name",
+	 * searchTerm).fuzziness(Fuzziness.TWO)).build();
 	 * 
 	 * elasticsearchTemplate.query(searchQuery, new
 	 * JestResultsExtractor<List<Result>>() {
@@ -130,7 +131,8 @@ public class QueryServiceImpl implements QueryService {
 	 * for (SearchResult.Hit<JsonObject, Void> searchHit :
 	 * response.getHits(JsonObject.class)) { Result result = new Result(); //
 	 * sampleEntity.setId(searchHit.source.get(JestResult.ES_METADATA_ID).
-	 * getAsString()); result.setName(searchHit.source.get("name").getAsString());
+	 * getAsString());
+	 * result.setName(searchHit.source.get("name").getAsString());
 	 * 
 	 * values.add(result);
 	 * 
@@ -150,7 +152,6 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}
-
 
 	@Override
 	public Page<Store> findAllStores(Pageable pageable) {
@@ -173,12 +174,17 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
+	public List<Product> findAllProducts() {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		return elasticsearchOperations.queryForList(searchQuery, Product.class);
+	}
+
+	@Override
 	public Store findStoreByRegNo(String regNo) {
 		StringQuery stringQuery = new StringQuery(termQuery("regNo", regNo).toString());
 		return elasticsearchOperations.queryForObject(stringQuery, Store.class);
 
 	}
-
 
 	@Override
 	public Page<Review> findReviewByStoreId(String userName) {
@@ -191,7 +197,6 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 	}
-
 
 	@Override
 	public Page<UserRating> findUserRatingByRegNo(String regNo) {
@@ -276,7 +281,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
 	 * lang. String)
 	 */
 	@Override
@@ -311,7 +317,7 @@ public class QueryServiceImpl implements QueryService {
 
 		AggregatedPage<UserRating> result = elasticsearchTemplate.queryForPage(searchQuery, UserRating.class);
 		TermsAggregation categoryAggregation = result.getAggregation("ratings", TermsAggregation.class);
-			return categoryAggregation.getBuckets();
+		return categoryAggregation.getBuckets();
 	}
 
 	@Override
@@ -333,7 +339,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
 	 * String)
 	 */
 	@Override
@@ -347,7 +354,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
 	 * String)
 	 */
 	@Override
@@ -480,7 +488,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
 	 * String)
 	 */
 	@Override
@@ -543,7 +552,8 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.
 	 * Double)
 	 */
 	@Override
@@ -627,13 +637,11 @@ public class QueryServiceImpl implements QueryService {
 			Product product = findProductById(orderline.getProductId());
 			productLine.setProductDescription(product.getName());
 
-
 			productLines.add(productLine);
 
 			orderMaster.setProductLine(productLines);
 
 		});
-
 
 		orderMaster.setCity("palakkad");
 
@@ -725,15 +733,45 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findStoreTypeByStoreId(java.lang.String, org.springframework.data.domain.Pageable)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStoreTypeByStoreId(java.
+	 * lang.String, org.springframework.data.domain.Pageable)
 	 */
 	@Override
 	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable) {
-		
+
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, StoreType.class);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findProductsByCategoryName(
+	 * java.lang.String)
+	 */
+	@Override
+	public Page<Product> findProductsByCategoryName(String name) {
+
+		List<Product> products = findAllProducts();
+
+		List<Product> categoryNameBasedProduct = new ArrayList<Product>();
+
+		products.forEach(p -> {
+
+			if (p.getCategory().getName().equals(name)) {
+
+				categoryNameBasedProduct.add(p);
+			}
+
+		});
+
+		return new PageImpl(categoryNameBasedProduct);
 	}
 
 }

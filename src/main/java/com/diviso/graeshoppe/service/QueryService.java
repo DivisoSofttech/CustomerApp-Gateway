@@ -126,4 +126,15 @@ public interface QueryService {
 	 */
 	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable);
 
+	/**
+	 * @param name
+	 * @return
+	 */
+	public Page<Product> findProductsByCategoryName(String name);
+
+	/**
+	 * @return
+	 */
+	List<Product> findAllProducts();
+
 }
