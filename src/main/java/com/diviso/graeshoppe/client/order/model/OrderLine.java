@@ -9,6 +9,8 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -27,13 +29,17 @@ public class OrderLine implements Serializable {
 
     private Integer quantity;
 
+
     private Double pricePerUnit;
+
 
     private Double total;
 
 
     private Order order;
 
+
+    private Set<AuxilaryOrderLine> requiedAuxilaries = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -106,6 +112,31 @@ public class OrderLine implements Serializable {
 
     public void setOrder(Order order) {
         this.order = order;
+    }
+
+    public Set<AuxilaryOrderLine> getRequiedAuxilaries() {
+        return requiedAuxilaries;
+    }
+
+    public OrderLine requiedAuxilaries(Set<AuxilaryOrderLine> auxilaryOrderLines) {
+        this.requiedAuxilaries = auxilaryOrderLines;
+        return this;
+    }
+
+    public OrderLine addRequiedAuxilaries(AuxilaryOrderLine auxilaryOrderLine) {
+        this.requiedAuxilaries.add(auxilaryOrderLine);
+        auxilaryOrderLine.setOrderLine(this);
+        return this;
+    }
+
+    public OrderLine removeRequiedAuxilaries(AuxilaryOrderLine auxilaryOrderLine) {
+        this.requiedAuxilaries.remove(auxilaryOrderLine);
+        auxilaryOrderLine.setOrderLine(null);
+        return this;
+    }
+
+    public void setRequiedAuxilaries(Set<AuxilaryOrderLine> auxilaryOrderLines) {
+        this.requiedAuxilaries = auxilaryOrderLines;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

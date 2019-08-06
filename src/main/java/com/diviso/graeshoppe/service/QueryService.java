@@ -8,11 +8,9 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
+import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderAddress;
-import com.diviso.graeshoppe.client.order.model.OrderDeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
-import com.diviso.graeshoppe.client.order.model.OrderMaster;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -69,7 +67,7 @@ public interface QueryService {
 
 	public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId);
 
-	public Page<OrderAddress> findByCustomerId(String customerId, Pageable pageable);
+	public Page<Address> findByCustomerId(String customerId, Pageable pageable);
 
 	public Order findById(Long id);
 
@@ -95,7 +93,7 @@ public interface QueryService {
 
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
 
-	public OrderDeliveryInfo findDeliveryInfoById(Long id);
+	public DeliveryInfo findDeliveryInfoById(Long id);
 
 	public Page<Store> findStoreByRating();
 
@@ -103,7 +101,7 @@ public interface QueryService {
 
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId);
 
-	public OrderMaster findOrderMasterByOrderId(String orderId);
+	//public OrderMaster findOrderMasterByOrderId(String orderId);
 
 	public Product findProductById(Long id);
 

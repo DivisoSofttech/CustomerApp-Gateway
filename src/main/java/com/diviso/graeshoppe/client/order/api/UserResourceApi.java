@@ -5,8 +5,6 @@
  */
 package com.diviso.graeshoppe.client.order.api;
 
-import com.diviso.graeshoppe.client.order.model.User;
-import com.diviso.graeshoppe.client.order.model.UserDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diviso.graeshoppe.client.order.model.UserDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
 @Api(value = "UserResource", description = "the UserResource API")
 public interface UserResourceApi {

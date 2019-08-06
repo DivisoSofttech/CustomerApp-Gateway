@@ -26,7 +26,7 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderMaster;
+
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
@@ -312,12 +312,12 @@ public class QueryResource {
 		return queryService.findRatingByStoreId(name);
 	}
 
-	@GetMapping("/orderMaster/{orderId}")
+	/*@GetMapping("/orderMaster/{orderId}")
 	public OrderMaster findOrderMasterByOrderId(@PathVariable String orderId) {
 
 		return queryService.findOrderMasterByOrderId(orderId);
 
-	}
+	}*/
 
 	@GetMapping("/storeByRating")
 	public Page<Store> findStoreByRating() {

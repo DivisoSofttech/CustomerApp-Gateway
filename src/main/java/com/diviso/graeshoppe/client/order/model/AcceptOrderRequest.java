@@ -10,65 +10,65 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CommandResource
+ * AcceptOrderRequest
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
-public class CommandResource   {
-  @JsonProperty("nextTaskId")
-  private String nextTaskId = null;
+public class AcceptOrderRequest   {
+  @JsonProperty("decision")
+  private String decision = null;
 
-  @JsonProperty("nextTaskName")
-  private String nextTaskName = null;
+  @JsonProperty("deliveryTime")
+  private String deliveryTime = null;
 
   @JsonProperty("orderId")
   private String orderId = null;
 
-  @JsonProperty("selfId")
-  private Long selfId = null;
+  @JsonProperty("taskId")
+  private String taskId = null;
 
-  public CommandResource nextTaskId(String nextTaskId) {
-    this.nextTaskId = nextTaskId;
+  public AcceptOrderRequest decision(String decision) {
+    this.decision = decision;
     return this;
   }
 
   /**
-   * Get nextTaskId
-   * @return nextTaskId
+   * Get decision
+   * @return decision
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getNextTaskId() {
-    return nextTaskId;
+  public String getDecision() {
+    return decision;
   }
 
-  public void setNextTaskId(String nextTaskId) {
-    this.nextTaskId = nextTaskId;
+  public void setDecision(String decision) {
+    this.decision = decision;
   }
 
-  public CommandResource nextTaskName(String nextTaskName) {
-    this.nextTaskName = nextTaskName;
+  public AcceptOrderRequest deliveryTime(String deliveryTime) {
+    this.deliveryTime = deliveryTime;
     return this;
   }
 
   /**
-   * Get nextTaskName
-   * @return nextTaskName
+   * Get deliveryTime
+   * @return deliveryTime
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getNextTaskName() {
-    return nextTaskName;
+  public String getDeliveryTime() {
+    return deliveryTime;
   }
 
-  public void setNextTaskName(String nextTaskName) {
-    this.nextTaskName = nextTaskName;
+  public void setDeliveryTime(String deliveryTime) {
+    this.deliveryTime = deliveryTime;
   }
 
-  public CommandResource orderId(String orderId) {
+  public AcceptOrderRequest orderId(String orderId) {
     this.orderId = orderId;
     return this;
   }
@@ -88,24 +88,24 @@ public class CommandResource   {
     this.orderId = orderId;
   }
 
-  public CommandResource selfId(Long selfId) {
-    this.selfId = selfId;
+  public AcceptOrderRequest taskId(String taskId) {
+    this.taskId = taskId;
     return this;
   }
 
   /**
-   * Get selfId
-   * @return selfId
+   * Get taskId
+   * @return taskId
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getSelfId() {
-    return selfId;
+  public String getTaskId() {
+    return taskId;
   }
 
-  public void setSelfId(Long selfId) {
-    this.selfId = selfId;
+  public void setTaskId(String taskId) {
+    this.taskId = taskId;
   }
 
 
@@ -117,27 +117,27 @@ public class CommandResource   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CommandResource commandResource = (CommandResource) o;
-    return Objects.equals(this.nextTaskId, commandResource.nextTaskId) &&
-        Objects.equals(this.nextTaskName, commandResource.nextTaskName) &&
-        Objects.equals(this.orderId, commandResource.orderId) &&
-        Objects.equals(this.selfId, commandResource.selfId);
+    AcceptOrderRequest acceptOrderRequest = (AcceptOrderRequest) o;
+    return Objects.equals(this.decision, acceptOrderRequest.decision) &&
+        Objects.equals(this.deliveryTime, acceptOrderRequest.deliveryTime) &&
+        Objects.equals(this.orderId, acceptOrderRequest.orderId) &&
+        Objects.equals(this.taskId, acceptOrderRequest.taskId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nextTaskId, nextTaskName, orderId, selfId);
+    return Objects.hash(decision, deliveryTime, orderId, taskId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CommandResource {\n");
+    sb.append("class AcceptOrderRequest {\n");
     
-    sb.append("    nextTaskId: ").append(toIndentedString(nextTaskId)).append("\n");
-    sb.append("    nextTaskName: ").append(toIndentedString(nextTaskName)).append("\n");
+    sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
+    sb.append("    deliveryTime: ").append(toIndentedString(deliveryTime)).append("\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    selfId: ").append(toIndentedString(selfId)).append("\n");
+    sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

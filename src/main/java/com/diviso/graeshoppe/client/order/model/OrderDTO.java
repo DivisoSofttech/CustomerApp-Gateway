@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.Instant;
 import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
@@ -16,17 +14,20 @@ import javax.validation.constraints.*;
  * OrderDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
 public class OrderDTO   {
   @JsonProperty("customerId")
   private String customerId = null;
 
   @JsonProperty("date")
-  private Instant date = null;
+  private OffsetDateTime date = null;
 
   @JsonProperty("deliveryInfoId")
   private Long deliveryInfoId = null;
+
+  @JsonProperty("email")
+  private String email = null;
 
   @JsonProperty("grandTotal")
   private Double grandTotal = null;
@@ -34,11 +35,17 @@ public class OrderDTO   {
   @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("notes")
+  private String notes = null;
+
   @JsonProperty("orderId")
   private String orderId = null;
 
-  @JsonProperty("paymentId")
-  private Long paymentId = null;
+  @JsonProperty("paymentRef")
+  private String paymentRef = null;
+
+  @JsonProperty("statusId")
+  private Long statusId = null;
 
   @JsonProperty("storeId")
   private String storeId = null;
@@ -63,7 +70,7 @@ public class OrderDTO   {
     this.customerId = customerId;
   }
 
-  public OrderDTO date(Instant date) {
+  public OrderDTO date(OffsetDateTime date) {
     this.date = date;
     return this;
   }
@@ -76,11 +83,11 @@ public class OrderDTO   {
 
   @Valid
 
-  public Instant getDate() {
+  public OffsetDateTime getDate() {
     return date;
   }
 
-  public void setDate(Instant date) {
+  public void setDate(OffsetDateTime date) {
     this.date = date;
   }
 
@@ -102,6 +109,26 @@ public class OrderDTO   {
 
   public void setDeliveryInfoId(Long deliveryInfoId) {
     this.deliveryInfoId = deliveryInfoId;
+  }
+
+  public OrderDTO email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
   }
 
   public OrderDTO grandTotal(Double grandTotal) {
@@ -144,6 +171,26 @@ public class OrderDTO   {
     this.id = id;
   }
 
+  public OrderDTO notes(String notes) {
+    this.notes = notes;
+    return this;
+  }
+
+  /**
+   * Get notes
+   * @return notes
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getNotes() {
+    return notes;
+  }
+
+  public void setNotes(String notes) {
+    this.notes = notes;
+  }
+
   public OrderDTO orderId(String orderId) {
     this.orderId = orderId;
     return this;
@@ -164,24 +211,44 @@ public class OrderDTO   {
     this.orderId = orderId;
   }
 
-  public OrderDTO paymentId(Long paymentId) {
-    this.paymentId = paymentId;
+  public OrderDTO paymentRef(String paymentRef) {
+    this.paymentRef = paymentRef;
     return this;
   }
 
   /**
-   * Get paymentId
-   * @return paymentId
+   * Get paymentRef
+   * @return paymentRef
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getPaymentId() {
-    return paymentId;
+  public String getPaymentRef() {
+    return paymentRef;
   }
 
-  public void setPaymentId(Long paymentId) {
-    this.paymentId = paymentId;
+  public void setPaymentRef(String paymentRef) {
+    this.paymentRef = paymentRef;
+  }
+
+  public OrderDTO statusId(Long statusId) {
+    this.statusId = statusId;
+    return this;
+  }
+
+  /**
+   * Get statusId
+   * @return statusId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getStatusId() {
+    return statusId;
+  }
+
+  public void setStatusId(Long statusId) {
+    this.statusId = statusId;
   }
 
   public OrderDTO storeId(String storeId) {
@@ -217,16 +284,19 @@ public class OrderDTO   {
     return Objects.equals(this.customerId, orderDTO.customerId) &&
         Objects.equals(this.date, orderDTO.date) &&
         Objects.equals(this.deliveryInfoId, orderDTO.deliveryInfoId) &&
+        Objects.equals(this.email, orderDTO.email) &&
         Objects.equals(this.grandTotal, orderDTO.grandTotal) &&
         Objects.equals(this.id, orderDTO.id) &&
+        Objects.equals(this.notes, orderDTO.notes) &&
         Objects.equals(this.orderId, orderDTO.orderId) &&
-        Objects.equals(this.paymentId, orderDTO.paymentId) &&
+        Objects.equals(this.paymentRef, orderDTO.paymentRef) &&
+        Objects.equals(this.statusId, orderDTO.statusId) &&
         Objects.equals(this.storeId, orderDTO.storeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, date, deliveryInfoId, grandTotal, id, orderId, paymentId, storeId);
+    return Objects.hash(customerId, date, deliveryInfoId, email, grandTotal, id, notes, orderId, paymentRef, statusId, storeId);
   }
 
   @Override
@@ -237,10 +307,13 @@ public class OrderDTO   {
     sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    grandTotal: ").append(toIndentedString(grandTotal)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    paymentId: ").append(toIndentedString(paymentId)).append("\n");
+    sb.append("    paymentRef: ").append(toIndentedString(paymentRef)).append("\n");
+    sb.append("    statusId: ").append(toIndentedString(statusId)).append("\n");
     sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
     sb.append("}");
     return sb.toString();

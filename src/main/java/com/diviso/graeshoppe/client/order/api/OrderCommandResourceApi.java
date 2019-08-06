@@ -5,8 +5,6 @@
  */
 package com.diviso.graeshoppe.client.order.api;
 
-import com.diviso.graeshoppe.client.order.model.CommandResource;
-import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -21,19 +19,36 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diviso.graeshoppe.client.order.model.CommandResource;
+import com.diviso.graeshoppe.client.order.model.OrderDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
 @Api(value = "OrderCommandResource", description = "the OrderCommandResource API")
 public interface OrderCommandResourceApi {
 
-    @ApiOperation(value = "createOrder", nickname = "createOrderUsingPOST", notes = "", response = OrderDTO.class, tags={ "order-command-resource", })
+    @ApiOperation(value = "acceptOrder", nickname = "acceptOrderUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = OrderDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/acceptOrder",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<CommandResource> acceptOrderUsingPOST(@ApiParam(value = "acceptOrderRequest" ,required=true )  @Valid @RequestBody AcceptOrderRequest acceptOrderRequest);
+
+
+    @ApiOperation(value = "createOrder", nickname = "createOrderUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -42,7 +57,7 @@ public interface OrderCommandResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<OrderDTO> createOrderUsingPOST(@ApiParam(value = "orderDTO" ,required=true )  @Valid @RequestBody OrderDTO orderDTO);
+    ResponseEntity<CommandResource> createOrderUsingPOST(@ApiParam(value = "orderDTO" ,required=true )  @Valid @RequestBody OrderDTO orderDTO);
 
 
     @ApiOperation(value = "deleteOrder", nickname = "deleteOrderUsingDELETE", notes = "", tags={ "order-command-resource", })
@@ -80,22 +95,48 @@ public interface OrderCommandResourceApi {
     ResponseEntity<OrderDTO> getOrderUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "initiateOrder", nickname = "initiateOrderUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
+    @ApiOperation(value = "processPayment", nickname = "processPaymentUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/orders/initiateOrder/{orderId}",
+    @RequestMapping(value = "/api/processPayment",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<CommandResource> processPaymentUsingPOST(@ApiParam(value = "processPaymentRequest" ,required=true )  @Valid @RequestBody ProcessPaymentRequest processPaymentRequest);
+
+
+    @ApiOperation(value = "searchOrders", nickname = "searchOrdersUsingGET", notes = "", response = OrderDTO.class, responseContainer = "List", tags={ "order-command-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = OrderDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/_search/orders",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<List<OrderDTO>> searchOrdersUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+
+
+    @ApiOperation(value = "sendNotification", nickname = "sendNotificationUsingPOST", notes = "", response = NotificationDTO.class, tags={ "order-command-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = NotificationDTO.class),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/sendNotification/{orderId}",
         produces = "*/*", 
         method = RequestMethod.POST)
-    ResponseEntity<CommandResource> initiateOrderUsingPOST(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId);
+    ResponseEntity<NotificationDTO> sendNotificationUsingPOST(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId);
 
 
-    @ApiOperation(value = "updateOrder", nickname = "updateOrderUsingPUT", notes = "", response = OrderDTO.class, tags={ "order-command-resource", })
+    @ApiOperation(value = "updateOrder", nickname = "updateOrderUsingPUT", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = OrderDTO.class),
+        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
         @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
@@ -104,6 +145,6 @@ public interface OrderCommandResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.PUT)
-    ResponseEntity<OrderDTO> updateOrderUsingPUT(@ApiParam(value = "orderDTO" ,required=true )  @Valid @RequestBody OrderDTO orderDTO);
+    ResponseEntity<CommandResource> updateOrderUsingPUT(@ApiParam(value = "orderDTO" ,required=true )  @Valid @RequestBody OrderDTO orderDTO);
 
 }

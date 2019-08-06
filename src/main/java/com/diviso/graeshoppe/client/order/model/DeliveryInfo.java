@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.order.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -12,24 +13,26 @@ import java.time.Instant;
 import java.util.Objects;
 
 /**
- * A OrderDeliveryInfo.
+ * A DeliveryInfo.
  */
-
 @Document(indexName = "orderdeliveryinfo",type="orderdeliveryinfo")
-public class OrderDeliveryInfo implements Serializable {
+public class DeliveryInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
- 
+  
     private Long id;
 
+   
     private String deliveryType;
+
 
     private Instant expectedDelivery;
 
     private Double deliveryCharge;
 
-    private OrderAddress deliveryAddress;
+
+    private Address deliveryAddress;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -44,7 +47,7 @@ public class OrderDeliveryInfo implements Serializable {
         return deliveryType;
     }
 
-    public OrderDeliveryInfo deliveryType(String deliveryType) {
+    public DeliveryInfo deliveryType(String deliveryType) {
         this.deliveryType = deliveryType;
         return this;
     }
@@ -57,7 +60,7 @@ public class OrderDeliveryInfo implements Serializable {
         return expectedDelivery;
     }
 
-    public OrderDeliveryInfo expectedDelivery(Instant expectedDelivery) {
+    public DeliveryInfo expectedDelivery(Instant expectedDelivery) {
         this.expectedDelivery = expectedDelivery;
         return this;
     }
@@ -70,7 +73,7 @@ public class OrderDeliveryInfo implements Serializable {
         return deliveryCharge;
     }
 
-    public OrderDeliveryInfo deliveryCharge(Double deliveryCharge) {
+    public DeliveryInfo deliveryCharge(Double deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
         return this;
     }
@@ -79,16 +82,16 @@ public class OrderDeliveryInfo implements Serializable {
         this.deliveryCharge = deliveryCharge;
     }
 
-    public OrderAddress getDeliveryAddress() {
+    public Address getDeliveryAddress() {
         return deliveryAddress;
     }
 
-    public OrderDeliveryInfo deliveryAddress(OrderAddress address) {
+    public DeliveryInfo deliveryAddress(Address address) {
         this.deliveryAddress = address;
         return this;
     }
 
-    public void setDeliveryAddress(OrderAddress address) {
+    public void setDeliveryAddress(Address address) {
         this.deliveryAddress = address;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
@@ -101,7 +104,7 @@ public class OrderDeliveryInfo implements Serializable {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        OrderDeliveryInfo deliveryInfo = (OrderDeliveryInfo) o;
+        DeliveryInfo deliveryInfo = (DeliveryInfo) o;
         if (deliveryInfo.getId() == null || getId() == null) {
             return false;
         }
@@ -115,7 +118,7 @@ public class OrderDeliveryInfo implements Serializable {
 
     @Override
     public String toString() {
-        return "OrderDeliveryInfo{" +
+        return "DeliveryInfo{" +
             "id=" + getId() +
             ", deliveryType='" + getDeliveryType() + "'" +
             ", expectedDelivery='" + getExpectedDelivery() + "'" +

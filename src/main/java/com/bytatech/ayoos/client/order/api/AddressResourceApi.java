@@ -3,10 +3,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package com.diviso.graeshoppe.client.order.api;
-
-import com.diviso.graeshoppe.client.order.model.AddressDTO;
-import com.diviso.graeshoppe.client.order.model.OrderAddressDTO;
+package com.bytatech.ayoos.client.order.api;
 
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -22,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.bytatech.ayoos.client.order.model.AddressDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
 @Api(value = "AddressResource", description = "the AddressResource API")
 public interface AddressResourceApi {
@@ -43,7 +42,7 @@ public interface AddressResourceApi {
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<OrderAddressDTO> createAddressUsingPOST(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody OrderAddressDTO addressDTO);
+    ResponseEntity<AddressDTO> createAddressUsingPOST(@ApiParam(value = "addressDTO" ,required=true )  @Valid @RequestBody AddressDTO addressDTO);
 
 
     @ApiOperation(value = "deleteAddress", nickname = "deleteAddressUsingDELETE", notes = "", tags={ "address-resource", })
@@ -67,18 +66,6 @@ public interface AddressResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<AddressDTO> getAddressUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
-
-
-    @ApiOperation(value = "getAllAddressesByCustomerId", nickname = "getAllAddressesByCustomerIdUsingGET", notes = "", response = AddressDTO.class, responseContainer = "List", tags={ "address-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AddressDTO.class, responseContainer = "List"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/addresses/findByCustomerId/{customerId}",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<List<AddressDTO>> getAllAddressesByCustomerIdUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
     @ApiOperation(value = "getAllAddresses", nickname = "getAllAddressesUsingGET", notes = "", response = AddressDTO.class, responseContainer = "List", tags={ "address-resource", })

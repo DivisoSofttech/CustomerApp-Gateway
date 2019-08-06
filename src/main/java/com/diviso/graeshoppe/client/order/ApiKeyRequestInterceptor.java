@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.client.order;
+package com.bytatech.ayoos.client.order;
 
 import feign.RequestInterceptor;
 import feign.RequestTemplate;

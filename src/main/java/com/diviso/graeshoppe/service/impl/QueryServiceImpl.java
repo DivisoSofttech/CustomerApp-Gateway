@@ -33,12 +33,9 @@ import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
+import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderAddress;
-import com.diviso.graeshoppe.client.order.model.OrderDeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
-import com.diviso.graeshoppe.client.order.model.OrderMaster;
-import com.diviso.graeshoppe.client.order.model.ProductLine;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -321,11 +318,11 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<OrderAddress> findByCustomerId(String customerId, Pageable pageable) {
+	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
 				.withIndices("orderaddress").withTypes("address").build();
-		return elasticsearchOperations.queryForPage(searchQuery, OrderAddress.class);
+		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
 	}
 
 	@Override
@@ -531,11 +528,11 @@ public class QueryServiceImpl implements QueryService {
 	 * .Long)
 	 */
 	@Override
-	public OrderDeliveryInfo findDeliveryInfoById(Long id) {
+	public DeliveryInfo findDeliveryInfoById(Long id) {
 
 		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
 
-		return elasticsearchOperations.queryForObject(searchQuery, OrderDeliveryInfo.class);
+		return elasticsearchOperations.queryForObject(searchQuery, DeliveryInfo.class);
 
 	}
 
@@ -596,7 +593,7 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 	}
 
-	public OrderMaster findOrderMasterByOrderId(String orderId) {
+	/*public OrderMaster findOrderMasterByOrderId(String orderId) {
 
 		Order order = findOrderByOrderId(orderId);
 
@@ -665,7 +662,7 @@ public class QueryServiceImpl implements QueryService {
 
 		return orderMaster;
 
-	}
+	}*/
 
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
 		Set<Store> storeSet = new HashSet<Store>();

@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * DeliveryInfoDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-25T13:22:30.978+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
 
 public class DeliveryInfoDTO   {
   @JsonProperty("deliveryAddressId")
