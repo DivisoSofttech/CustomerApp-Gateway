@@ -26,7 +26,7 @@ public class StoreSettings   {
   private Double orderAcceptType = null;
 
   @JsonProperty("serviceCharge")
-  private Double serviceCharge = null;
+  private String serviceCharge = null;
 
   public StoreSettings deliveryCharge(Double deliveryCharge) {
     this.deliveryCharge = deliveryCharge;
@@ -88,7 +88,7 @@ public class StoreSettings   {
     this.orderAcceptType = orderAcceptType;
   }
 
-  public StoreSettings serviceCharge(Double serviceCharge) {
+  public StoreSettings serviceCharge(String serviceCharge) {
     this.serviceCharge = serviceCharge;
     return this;
   }
@@ -100,11 +100,11 @@ public class StoreSettings   {
   @ApiModelProperty(value = "")
 
 
-  public Double getServiceCharge() {
+  public String getServiceCharge() {
     return serviceCharge;
   }
 
-  public void setServiceCharge(Double serviceCharge) {
+  public void setServiceCharge(String serviceCharge) {
     this.serviceCharge = serviceCharge;
   }
 

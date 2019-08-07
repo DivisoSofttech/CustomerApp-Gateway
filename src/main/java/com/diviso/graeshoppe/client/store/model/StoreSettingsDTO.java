@@ -1,156 +1,81 @@
 package com.diviso.graeshoppe.client.store.model;
-
+import java.io.Serializable;
 import java.util.Objects;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
- * StoreSettingsDTO
+ * A DTO for the StoreSettings entity.
  */
-@Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-02T11:19:44.906+05:30[Asia/Calcutta]")
+public class StoreSettingsDTO implements Serializable {
 
-public class StoreSettingsDTO   {
-  @JsonProperty("deliveryCharge")
-  private Double deliveryCharge = null;
+    private Long id;
 
-  @JsonProperty("id")
-  private Long id = null;
+    private Double deliveryCharge;
 
-  @JsonProperty("orderAcceptType")
-  private Double orderAcceptType = null;
+    private Double serviceCharge;
 
-  @JsonProperty("serviceCharge")
-  private Double serviceCharge = null;
-
-  public StoreSettingsDTO deliveryCharge(Double deliveryCharge) {
-    this.deliveryCharge = deliveryCharge;
-    return this;
-  }
-
-  /**
-   * Get deliveryCharge
-   * @return deliveryCharge
-  **/
-  @ApiModelProperty(value = "")
+    private String orderAcceptType;
 
 
-  public Double getDeliveryCharge() {
-    return deliveryCharge;
-  }
-
-  public void setDeliveryCharge(Double deliveryCharge) {
-    this.deliveryCharge = deliveryCharge;
-  }
-
-  public StoreSettingsDTO id(Long id) {
-    this.id = id;
-    return this;
-  }
-
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public StoreSettingsDTO orderAcceptType(Double orderAcceptType) {
-    this.orderAcceptType = orderAcceptType;
-    return this;
-  }
-
-  /**
-   * Get orderAcceptType
-   * @return orderAcceptType
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getOrderAcceptType() {
-    return orderAcceptType;
-  }
-
-  public void setOrderAcceptType(Double orderAcceptType) {
-    this.orderAcceptType = orderAcceptType;
-  }
-
-  public StoreSettingsDTO serviceCharge(Double serviceCharge) {
-    this.serviceCharge = serviceCharge;
-    return this;
-  }
-
-  /**
-   * Get serviceCharge
-   * @return serviceCharge
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Double getServiceCharge() {
-    return serviceCharge;
-  }
-
-  public void setServiceCharge(Double serviceCharge) {
-    this.serviceCharge = serviceCharge;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
+    public Long getId() {
+        return id;
     }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
+
+    public void setId(Long id) {
+        this.id = id;
     }
-    StoreSettingsDTO storeSettingsDTO = (StoreSettingsDTO) o;
-    return Objects.equals(this.deliveryCharge, storeSettingsDTO.deliveryCharge) &&
-        Objects.equals(this.id, storeSettingsDTO.id) &&
-        Objects.equals(this.orderAcceptType, storeSettingsDTO.orderAcceptType) &&
-        Objects.equals(this.serviceCharge, storeSettingsDTO.serviceCharge);
-  }
 
-  @Override
-  public int hashCode() {
-    return Objects.hash(deliveryCharge, id, orderAcceptType, serviceCharge);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class StoreSettingsDTO {\n");
-    
-    sb.append("    deliveryCharge: ").append(toIndentedString(deliveryCharge)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    orderAcceptType: ").append(toIndentedString(orderAcceptType)).append("\n");
-    sb.append("    serviceCharge: ").append(toIndentedString(serviceCharge)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
+    public Double getDeliveryCharge() {
+        return deliveryCharge;
     }
-    return o.toString().replace("\n", "\n    ");
-  }
+
+    public void setDeliveryCharge(Double deliveryCharge) {
+        this.deliveryCharge = deliveryCharge;
+    }
+
+    public Double getServiceCharge() {
+        return serviceCharge;
+    }
+
+    public void setServiceCharge(Double serviceCharge) {
+        this.serviceCharge = serviceCharge;
+    }
+
+    public String getOrderAcceptType() {
+        return orderAcceptType;
+    }
+
+    public void setOrderAcceptType(String orderAcceptType) {
+        this.orderAcceptType = orderAcceptType;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+
+        StoreSettingsDTO storeSettingsDTO = (StoreSettingsDTO) o;
+        if (storeSettingsDTO.getId() == null || getId() == null) {
+            return false;
+        }
+        return Objects.equals(getId(), storeSettingsDTO.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(getId());
+    }
+
+    @Override
+    public String toString() {
+        return "StoreSettingsDTO{" +
+            "id=" + getId() +
+            ", deliveryCharge=" + getDeliveryCharge() +
+            ", serviceCharge=" + getServiceCharge() +
+            ", orderAcceptType='" + getOrderAcceptType() + "'" +
+            "}";
+    }
 }
-
