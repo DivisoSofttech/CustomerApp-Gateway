@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +27,9 @@ import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
+import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
+import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
+import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
@@ -52,6 +57,7 @@ import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.service.QueryService;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/query")
@@ -90,6 +96,12 @@ public class QueryResource {
 
 	@Autowired
 	private StoreTypeResourceApi storeTypeResourceApi;
+
+	@Autowired
+	private OrderCommandResourceApi orderCommandResourceApi;
+
+	@Autowired
+	private OrderQueryResourceApi orderQueryResourceApi;
 
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
@@ -199,9 +211,10 @@ public class QueryResource {
 		return queryService.findCategoryAndCount(pageable);
 	}
 
-	public Page<Product> findProductsByCategoryName(@PathVariable String name){
+	public Page<Product> findProductsByCategoryName(@PathVariable String name) {
 		return queryService.findProductsByCategoryName(name);
 	}
+
 	@GetMapping("/findStoreTypeAndCount")
 	public List<Entry> findStoreAndCount(Pageable pageable) {
 		return queryService.findStoreTypeAndCount(pageable);
@@ -312,12 +325,14 @@ public class QueryResource {
 		return queryService.findRatingByStoreId(name);
 	}
 
-	/*@GetMapping("/orderMaster/{orderId}")
-	public OrderMaster findOrderMasterByOrderId(@PathVariable String orderId) {
-
-		return queryService.findOrderMasterByOrderId(orderId);
-
-	}*/
+	/*
+	 * @GetMapping("/orderMaster/{orderId}") public OrderMaster
+	 * findOrderMasterByOrderId(@PathVariable String orderId) {
+	 * 
+	 * return queryService.findOrderMasterByOrderId(orderId);
+	 * 
+	 * }
+	 */
 
 	@GetMapping("/storeByRating")
 	public Page<Store> findStoreByRating() {
@@ -350,8 +365,8 @@ public class QueryResource {
 
 		double lon = Double.parseDouble(latLons[1]);
 
-		log.info("........lat........................  "+lat+"................lon.........   "+lon);
-		
+		log.info("........lat........................  " + lat + "................lon.........   " + lon);
+
 		return queryService.findByNearestLocation(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS));
 	}
 
@@ -372,13 +387,12 @@ public class QueryResource {
 
 		return queryService.findStoreByType(storeType, pageable);
 	}
-	
+
 	@GetMapping("/store-type/{storeId}")
-	public Page<StoreType> findStoreTypeByStoreId(@PathVariable String storeId, Pageable pageable){
+	public Page<StoreType> findStoreTypeByStoreId(@PathVariable String storeId, Pageable pageable) {
 		return queryService.findStoreTypeByStoreId(storeId, pageable);
 	}
-	
-	
+
 	@GetMapping("/stores/banners")
 	public ResponseEntity<List<BannerDTO>> findStoreBanners(@RequestParam(required = false) Integer page,
 			@RequestParam(required = false) Integer size,
@@ -395,5 +409,10 @@ public class QueryResource {
 		return storeTypeResourceApi.getAllStoreTypesUsingGET(page, size, sort);
 	}
 
-	
+	@GetMapping("/tasks")
+	public ResponseEntity<List<OpenTask>> getTasks( @RequestParam String assignee, @RequestParam String assigneeLike,@RequestParam String candidateGroup,@RequestParam  String candidateGroups, @RequestParam String candidateUser, @RequestParam String createdAfter, @RequestParam String createdBefore, @RequestParam String createdOn, @RequestParam String name, @RequestParam String nameLike)
+    {
+		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
+		
+    }
 }

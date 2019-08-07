@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diviso.graeshoppe.client.order.model.User;
 import com.diviso.graeshoppe.client.order.model.UserDTO;
 
 import javax.validation.Valid;

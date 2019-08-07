@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.bytatech.ayoos.client.order.model.AddressDTO;
+import com.diviso.graeshoppe.client.order.model.AddressDTO;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;

@@ -77,8 +77,8 @@ spring:
                    logs: target/elasticsearch/log
                    data: target/elasticsearch/data
         jest:
-           password: GcxvkbRjEWJ0o8pZOlX93edO
            username: elastic
+           password: GcxvkbRjEWJ0o8pZOlX93edO
            readTimeout: 10000
            uri: https://26f23d0d6b5342ae9958c8641de01c9b.asia-northeast1.gcp.cloud.es.io:9243/
     liquibase:
