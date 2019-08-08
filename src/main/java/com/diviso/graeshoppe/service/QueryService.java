@@ -135,4 +135,11 @@ public interface QueryService {
 	 */
 	List<Product> findAllProducts();
 
+	/**
+	 * @param point
+	 * @param distance
+	 * @return
+	 */
+	public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable);
+
 }

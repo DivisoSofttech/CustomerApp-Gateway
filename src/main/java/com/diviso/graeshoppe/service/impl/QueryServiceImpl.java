@@ -46,6 +46,7 @@ import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
+import com.diviso.graeshoppe.repository.StoreSearchRepository;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
 import com.diviso.graeshoppe.service.QueryService;
@@ -61,6 +62,9 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @Service
 public class QueryServiceImpl implements QueryService {
+	@Autowired
+	private StoreSearchRepository storeSearchrepository;
+	
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
 
@@ -769,6 +773,15 @@ public class QueryServiceImpl implements QueryService {
 		});
 
 		return new PageImpl(categoryNameBasedProduct);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findByLocationNear(org.springframework.data.geo.Point, org.springframework.data.geo.Distance)
+	 */
+	@Override
+	public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable) {
+	
+		return storeSearchrepository.findByLocationNear(point,distance,pageable);
 	}
 
 }

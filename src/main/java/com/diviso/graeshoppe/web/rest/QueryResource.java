@@ -357,7 +357,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
-	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter) {
+	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable ) {
 
 		String[] latLons = latLon.split(",");
 
@@ -367,7 +367,7 @@ public class QueryResource {
 
 		log.info("........lat........................  " + lat + "................lon.........   " + lon);
 
-		return queryService.findByNearestLocation(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS));
+		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
 	}
 
 	@GetMapping("/storeByLocationName/{locationName}")
