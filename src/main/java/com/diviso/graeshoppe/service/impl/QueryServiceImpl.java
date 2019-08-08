@@ -46,7 +46,6 @@ import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
-import com.diviso.graeshoppe.repository.search.StoreSearchRepository;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
 import com.diviso.graeshoppe.service.QueryService;
