@@ -5,7 +5,7 @@
  */
 package com.diviso.graeshoppe.client.product.api;
 
-import com.diviso.graeshoppe.client.product.model.ComboLineItemDTO;
+import java.util.List;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.ComboLineItemDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-08T17:07:15.999+05:30[Asia/Calcutta]")
 
 @Api(value = "ComboLineItemResource", description = "the ComboLineItemResource API")
 public interface ComboLineItemResourceApi {
@@ -77,6 +80,20 @@ public interface ComboLineItemResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<ComboLineItemDTO> getComboLineItemUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "listToDto", nickname = "listToDtoUsingPOST1", notes = "", response = ComboLineItemDTO.class, responseContainer = "List", tags={ "combo-line-item-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = ComboLineItemDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/combo-line-items/toDto",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<List<ComboLineItemDTO>> listToDtoUsingPOST1(@ApiParam(value = "comboLineItem" ,required=true )  @Valid @RequestBody List<ComboLineItem> comboLineItem);
 
 
     @ApiOperation(value = "searchComboLineItems", nickname = "searchComboLineItemsUsingGET", notes = "", response = ComboLineItemDTO.class, responseContainer = "List", tags={ "combo-line-item-resource", })

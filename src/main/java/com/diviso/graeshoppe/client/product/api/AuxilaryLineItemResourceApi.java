@@ -5,7 +5,7 @@
  */
 package com.diviso.graeshoppe.client.product.api;
 
-import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
+import java.util.List;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -20,12 +20,15 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-08T17:07:15.999+05:30[Asia/Calcutta]")
 
 @Api(value = "AuxilaryLineItemResource", description = "the AuxilaryLineItemResource API")
 public interface AuxilaryLineItemResourceApi {
@@ -77,6 +80,20 @@ public interface AuxilaryLineItemResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<AuxilaryLineItemDTO> getAuxilaryLineItemUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "listToDto", nickname = "listToDtoUsingPOST", notes = "", response = AuxilaryLineItemDTO.class, responseContainer = "List", tags={ "auxilary-line-item-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = AuxilaryLineItemDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/auxilary-line-items/toDto",
+        produces = "*/*", 
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<List<AuxilaryLineItemDTO>> listToDtoUsingPOST(@ApiParam(value = "auxilaryLineItems" ,required=true )  @Valid @RequestBody List<AuxilaryLineItem> auxilaryLineItem);
 
 
     @ApiOperation(value = "searchAuxilaryLineItems", nickname = "searchAuxilaryLineItemsUsingGET", notes = "", response = AuxilaryLineItemDTO.class, responseContainer = "List", tags={ "auxilary-line-item-resource", })
