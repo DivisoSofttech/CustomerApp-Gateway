@@ -282,11 +282,11 @@ public class QueryResource {
 		return ResponseEntity.ok().body(queryService.findStoreByDeliveryType(deliveryType).getContent());
 	}
 
-	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryId}")
-	public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable("userId") String userId,
-			@PathVariable("categoryId") Long categoryId, Pageable pageable) {
-		log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId, categoryId);
-		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId, categoryId, pageable));
+	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
+	public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable String userId,
+			@PathVariable String categoryName, Pageable pageable) {
+		log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId, categoryName);
+		return ResponseEntity.ok().body(queryService.findProductByStoreIdAndCategoryName(userId, categoryName, pageable));
 	}
 
 	@GetMapping("/findStoreByTypeName/{name}")

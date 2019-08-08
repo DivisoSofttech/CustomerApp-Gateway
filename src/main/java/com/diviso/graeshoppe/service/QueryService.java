@@ -73,7 +73,7 @@ public interface QueryService {
 
 	public Page<Store> findStoreByDeliveryType(String deliveryType);
 
-	public Page<Product> findProductByStoreIdAndCategoryName(String userId, Long categoryId, Pageable pageable);
+	public Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable);
 
 	public Page<Store> findStoreByTypeName(String name, Pageable pageable);
 
