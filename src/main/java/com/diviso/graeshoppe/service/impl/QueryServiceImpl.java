@@ -63,8 +63,8 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 @Service
 public class QueryServiceImpl implements QueryService {
 	
-	@Autowired
-	private StoreSearchRepository storeSearchrepository;
+	//@Autowired
+	//private StoreSearchRepository storeSearchrepository;
 	
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
