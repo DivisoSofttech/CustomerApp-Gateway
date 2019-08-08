@@ -37,6 +37,6 @@ public interface StoreSearchRepository extends ElasticsearchRepository<Store, Lo
 	 * @param distance
 	 * @param pageable
 	 */
-	Page<Store> findByLocationNear(@Param("location") Point point, @Param("distance") Distance distance, Pageable pageable);
+//	Page<Store> findByLocationNear(@Param("location") Point point, @Param("distance") Distance distance, Pageable pageable);
 
 }

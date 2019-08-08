@@ -140,6 +140,6 @@ public interface QueryService {
 	 * @param distance
 	 * @return
 	 */
-	public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable);
+	//public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable);
 
 }

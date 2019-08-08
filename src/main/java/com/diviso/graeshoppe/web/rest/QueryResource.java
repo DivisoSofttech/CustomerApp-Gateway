@@ -367,7 +367,8 @@ public class QueryResource {
 
 		log.info("........lat........................  " + lat + "................lon.........   " + lon);
 
-		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
+	//return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
+		return null;
 	}
 
 	@GetMapping("/storeByLocationName/{locationName}")

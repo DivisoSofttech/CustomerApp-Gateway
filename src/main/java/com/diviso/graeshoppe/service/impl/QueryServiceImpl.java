@@ -779,10 +779,10 @@ public class QueryServiceImpl implements QueryService {
 	/* (non-Javadoc)
 	 * @see com.diviso.graeshoppe.service.QueryService#findByLocationNear(org.springframework.data.geo.Point, org.springframework.data.geo.Distance)
 	 */
-	@Override
+	/*@Override
 	public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable) {
 	
 		return storeSearchrepository.findByLocationNear(point,distance,pageable);
-	}
+	}*/
 
 }
