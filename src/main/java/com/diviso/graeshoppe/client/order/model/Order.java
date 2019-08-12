@@ -45,7 +45,6 @@ public class Order implements Serializable {
 
   
     private String notes;
-
    
     private String email;
 

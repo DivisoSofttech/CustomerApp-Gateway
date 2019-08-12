@@ -33,7 +33,6 @@ public class DeliveryInfo implements Serializable {
 
 
     private Address deliveryAddress;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
