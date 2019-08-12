@@ -3,7 +3,7 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-package com.bytatech.ayoos.client.order.api;
+package com.diviso.graeshoppe.client.order.api;
 
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
