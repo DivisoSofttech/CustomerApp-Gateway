@@ -102,7 +102,7 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
-
+	
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
@@ -356,21 +356,6 @@ public class QueryResource {
 		return queryService.headerSearch(searchTerm, pageable);
 	}
 
-	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
-	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable ) {
-
-		String[] latLons = latLon.split(",");
-
-		double lat = Double.parseDouble(latLons[0]);
-
-		double lon = Double.parseDouble(latLons[1]);
-
-		log.info("........lat........................  " + lat + "................lon.........   " + lon);
-
-	//return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
-		return null;
-	}
-
 	@GetMapping("/storeByLocationName/{locationName}")
 	public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
 
@@ -416,4 +401,19 @@ public class QueryResource {
 		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
 		
     }
+	
+	
+	@GetMapping("/findByNearestLocation/{latLon}/{kiloMeter}")
+	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable) {
+
+		String[] latLons = latLon.split(",");
+
+		double lat = Double.parseDouble(latLons[0]);
+
+		double lon = Double.parseDouble(latLons[1]);
+
+		log.info("........lat........................  "+lat+"................lon.........   "+lon);
+		
+		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
+	}
 }
