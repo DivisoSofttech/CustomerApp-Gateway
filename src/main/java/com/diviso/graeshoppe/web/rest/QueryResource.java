@@ -416,4 +416,11 @@ public class QueryResource {
 		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
 		
     }
+	
+	/*
+	@GetMapping("/deliveryCount/{storeId}")
+	public List<Entry> getDeliveryCountBystoreId(@PathVariable String storeId, Pageable pageable){
+		
+		return queryService.findAllDeliveryCountByStoreId(storeId, pageable);
+	}*/
 }

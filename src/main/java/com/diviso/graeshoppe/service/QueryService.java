@@ -136,6 +136,13 @@ public interface QueryService {
 	List<Product> findAllProducts();
 
 	/**
+	 * @param storeId
+	 * @param pageable
+	 * @return
+	 */
+//	List<Entry> findAllDeliveryCountByStoreId(String storeId, Pageable pageable);
+
+	/**
 	 * @param point
 	 * @param distance
 	 * @return
