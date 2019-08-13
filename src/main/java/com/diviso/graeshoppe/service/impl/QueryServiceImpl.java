@@ -47,6 +47,7 @@ import com.diviso.graeshoppe.client.store.domain.Store;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
+import com.diviso.graeshoppe.repository.search.StoreSearchRepository;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
 import com.diviso.graeshoppe.service.QueryService;
@@ -80,6 +81,11 @@ public class QueryServiceImpl implements QueryService {
 	@Autowired
 	ElasticsearchOperations elasticsearchOperations;
 
+	
+
+	@Autowired
+	private StoreSearchRepository storeSearchRepository;
+	
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -712,9 +718,9 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<Store> findByNearestLocation(Point point, Distance distance) {
-
-		return elasticsearchTemplate.queryForPage(getGeoQuery(point, distance), Store.class);
+	public Page<Store> findByLocationNear(Point point, Distance distance, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return storeSearchRepository.findByLocationNear(point,distance,pageable);
 	}
 
 	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
