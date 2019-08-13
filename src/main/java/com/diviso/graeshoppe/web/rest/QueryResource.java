@@ -411,18 +411,18 @@ public class QueryResource {
 	}*/
 
 	
-	@GetMapping("/findByNearestLocation/{latLon}/{kiloMeter}")
-	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable) {
+	@GetMapping("/findByNearestLocation")
+	public Page<Store> searchByNearestLocation(/*@PathVariable String latLon, @PathVariable Double kiloMeter,*/Pageable pageable) {
 
-		String[] latLons = latLon.split(",");
+	/*	String[] latLons = latLon.split(",");
 
 		double lat = Double.parseDouble(latLons[0]);
 
 		double lon = Double.parseDouble(latLons[1]);
 
-		log.info("........lat........................  "+lat+"................lon.........   "+lon);
+		log.info("........lat........................  "+lat+"................lon.........   "+lon);*/
 		
-		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
+		return queryService.findByLocationNear(new Point(10.7654155,76.4840479), new Distance(2, Metrics.KILOMETERS),pageable);
 	}
 
 }
