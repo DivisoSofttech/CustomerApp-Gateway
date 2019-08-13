@@ -44,6 +44,8 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -833,5 +835,20 @@ public class QueryServiceImpl implements QueryService {
 	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
 	 * }
 	 */
+	
+	public StoreSettings getStoreSettings(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreSettings();
+	}
+	
+	public StoreAddress getStoreAddress(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreAddress();
+	}
+	
 
 }

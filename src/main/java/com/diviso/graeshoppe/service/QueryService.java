@@ -17,6 +17,8 @@ import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -149,4 +151,8 @@ public interface QueryService {
 	 */
 	//public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable);
 
+	
+	public StoreSettings getStoreSettings(String IDPCode);
+
+	public StoreAddress getStoreAddress(String iDPCode);
 }

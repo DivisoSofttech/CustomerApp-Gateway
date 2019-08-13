@@ -49,6 +49,8 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -425,4 +427,20 @@ public class QueryResource {
 		return queryService.findByLocationNear(new Point(10.7654155,76.4840479), new Distance(2, Metrics.KILOMETERS),pageable);
 	}
 
+	@GetMapping("/storeSettings")
+	public StoreSettings getStoreSettings(String IDPCode) {
+		
+		return queryService.getStoreSettings(IDPCode);
+		
+	}
+	
+	@GetMapping("/storeAddress")
+	public StoreAddress getStoreAddress(String IDPCode) {
+		
+		return queryService.getStoreAddress(IDPCode);
+		
+	}
+	
+	
+	
 }
