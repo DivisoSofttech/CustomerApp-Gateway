@@ -42,6 +42,7 @@ import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
+import com.diviso.graeshoppe.client.report.api.ReportResourceApi;
 import com.diviso.graeshoppe.client.store.api.BannerResourceApi;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreTypeResourceApi;
@@ -58,6 +59,7 @@ import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.service.dto.PdfDTO;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 import io.swagger.annotations.ApiParam;
@@ -89,13 +91,16 @@ public class QueryResource {
 	 * @Autowired private StockDiaryResourceApi stockDiaryResourceApi;
 	 */
 	@Autowired
-	UserRatingResourceApi userRatingResourceApi;
+	private UserRatingResourceApi userRatingResourceApi;
 
 	@Autowired
-	ReviewResourceApi reviewResourceApi;
+	private ReviewResourceApi reviewResourceApi;
 
 	@Autowired
-	BannerResourceApi BannerResourceApi;
+	private BannerResourceApi BannerResourceApi;
+	
+	@Autowired
+	private ReportResourceApi reportResourceApi;
 
 	@Autowired
 	private StoreTypeResourceApi storeTypeResourceApi;
@@ -456,6 +461,22 @@ public class QueryResource {
 	}
 	
 	
+	@GetMapping("/getOrderDocket/{orderMasterId}")
+	public ResponseEntity<PdfDTO> getOrderDocket(@PathVariable Long orderMasterId)
+    {
+		PdfDTO pdf = new PdfDTO();
+		pdf.setPdf(this.reportResourceApi.getReportAsPdfUsingGET(orderMasterId).getBody());
+		pdf.setContentType("application/pdf");
+		return ResponseEntity.ok().body(pdf);
+    }
 	
+	@GetMapping("/exportDocket/{orderMasterId}")
+	public ResponseEntity<byte[]> exportOrderDocket(@PathVariable Long orderMasterId)
+    {
+		return reportResourceApi.getReportAsPdfUsingGET(orderMasterId);
+	
+    }
+	
+
 
 }
