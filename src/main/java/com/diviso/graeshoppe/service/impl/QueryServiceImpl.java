@@ -871,7 +871,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public StockCurrent findStockCurrentByCategoryName(String categoryName) {
-		StringQuery stringQuery = new StringQuery(termQuery("product.category.name", categoryName).toString());
+		StringQuery stringQuery = new StringQuery(termQuery("product.category.name.keyword", categoryName).toString());
 		return elasticsearchOperations.queryForObject(stringQuery, StockCurrent.class);
 		
 	}
