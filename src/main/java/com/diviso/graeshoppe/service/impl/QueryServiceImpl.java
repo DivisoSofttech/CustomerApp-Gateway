@@ -33,6 +33,7 @@ import org.springframework.data.elasticsearch.core.query.StringQuery;
 import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Address;
@@ -45,9 +46,12 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
+import com.diviso.graeshoppe.repository.search.StoreSearchRepository;
 /*import com.diviso.graeshoppe.client.product.domain.Product;
 import com.diviso.graeshoppe.domain.Result;*/
 import com.diviso.graeshoppe.service.QueryService;
@@ -58,15 +62,16 @@ import com.google.gson.JsonObject;
 
 import io.searchbox.client.JestClient;
 import io.searchbox.core.SearchResult;
+import io.searchbox.core.search.aggregation.MetricAggregation;
 import io.searchbox.core.search.aggregation.TermsAggregation;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @Service
 public class QueryServiceImpl implements QueryService {
-	
-	//@Autowired
-	//private StoreSearchRepository storeSearchrepository;
-	
+
+	// @Autowired
+	// private StoreSearchRepository storeSearchrepository;
+
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
 
@@ -80,6 +85,11 @@ public class QueryServiceImpl implements QueryService {
 	@Autowired
 	ElasticsearchOperations elasticsearchOperations;
 
+	
+
+	@Autowired
+	private StoreSearchRepository storeSearchRepository;
+	
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -599,76 +609,78 @@ public class QueryServiceImpl implements QueryService {
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 	}
 
-	/*public OrderMaster findOrderMasterByOrderId(String orderId) {
-
-		Order order = findOrderByOrderId(orderId);
-
-		List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
-
-		OrderMaster orderMaster = new OrderMaster();
-
-		Store store = findStoreByRegNo(order.getStoreId());
-
-		orderMaster.setSoldBy(store.getName());
-
-		orderMaster.setMethodOfOrder("delivery");
-
-		orderMaster.setOrderId(order.getOrderId());
-
-		orderMaster.setOrderDate(order.getDate());
-
-		Customer customer = findCustomerByReference(order.getCustomerId());
-
-		orderMaster.setCustomerName(customer.getName());
-
-		orderMaster.setDeliveryCharge(145.6);
-
-		orderMaster.setGrandTotal(order.getGrandTotal());
-
-		List<ProductLine> productLines = new ArrayList<ProductLine>();
-
-		orderLines.forEach(orderline -> {
-
-			ProductLine productLine = new ProductLine();
-
-			productLine.setGrossAmount(orderline.getPricePerUnit());
-
-			productLine.setQuantity(orderline.getQuantity());
-
-			productLine.setTotal(orderline.getTotal());
-
-			Product product = findProductById(orderline.getProductId());
-			productLine.setProductDescription(product.getName());
-
-			productLines.add(productLine);
-
-			orderMaster.setProductLine(productLines);
-
-		});
-
-		orderMaster.setCity("palakkad");
-
-		orderMaster.setAddressType("residential");
-
-		orderMaster.setHouseNoOrBuildingName("458");
-
-		orderMaster.setAlternatePhone(9846977765L);
-
-		orderMaster.setPhone(9846997764L);
-
-		orderMaster.setPincode(78524L);
-
-		orderMaster.setLandmark("near juma musjid");
-
-		orderMaster.setName(customer.getName());
-
-		orderMaster.setState("kerala");
-
-		orderMaster.setRoadNameAreaOrStreet("kizhakkumpuram");
-
-		return orderMaster;
-
-	}*/
+	/*
+	 * public OrderMaster findOrderMasterByOrderId(String orderId) {
+	 * 
+	 * Order order = findOrderByOrderId(orderId);
+	 * 
+	 * List<OrderLine> orderLines = findOrderLinesByOrderId(order.getId());
+	 * 
+	 * OrderMaster orderMaster = new OrderMaster();
+	 * 
+	 * Store store = findStoreByRegNo(order.getStoreId());
+	 * 
+	 * orderMaster.setSoldBy(store.getName());
+	 * 
+	 * orderMaster.setMethodOfOrder("delivery");
+	 * 
+	 * orderMaster.setOrderId(order.getOrderId());
+	 * 
+	 * orderMaster.setOrderDate(order.getDate());
+	 * 
+	 * Customer customer = findCustomerByReference(order.getCustomerId());
+	 * 
+	 * orderMaster.setCustomerName(customer.getName());
+	 * 
+	 * orderMaster.setDeliveryCharge(145.6);
+	 * 
+	 * orderMaster.setGrandTotal(order.getGrandTotal());
+	 * 
+	 * List<ProductLine> productLines = new ArrayList<ProductLine>();
+	 * 
+	 * orderLines.forEach(orderline -> {
+	 * 
+	 * ProductLine productLine = new ProductLine();
+	 * 
+	 * productLine.setGrossAmount(orderline.getPricePerUnit());
+	 * 
+	 * productLine.setQuantity(orderline.getQuantity());
+	 * 
+	 * productLine.setTotal(orderline.getTotal());
+	 * 
+	 * Product product = findProductById(orderline.getProductId());
+	 * productLine.setProductDescription(product.getName());
+	 * 
+	 * productLines.add(productLine);
+	 * 
+	 * orderMaster.setProductLine(productLines);
+	 * 
+	 * });
+	 * 
+	 * orderMaster.setCity("palakkad");
+	 * 
+	 * orderMaster.setAddressType("residential");
+	 * 
+	 * orderMaster.setHouseNoOrBuildingName("458");
+	 * 
+	 * orderMaster.setAlternatePhone(9846977765L);
+	 * 
+	 * orderMaster.setPhone(9846997764L);
+	 * 
+	 * orderMaster.setPincode(78524L);
+	 * 
+	 * orderMaster.setLandmark("near juma musjid");
+	 * 
+	 * orderMaster.setName(customer.getName());
+	 * 
+	 * orderMaster.setState("kerala");
+	 * 
+	 * orderMaster.setRoadNameAreaOrStreet("kizhakkumpuram");
+	 * 
+	 * return orderMaster;
+	 * 
+	 * }
+	 */
 
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
 		Set<Store> storeSet = new HashSet<Store>();
@@ -710,9 +722,9 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<Store> findByNearestLocation(Point point, Distance distance) {
-
-		return elasticsearchTemplate.queryForPage(getGeoQuery(point, distance), Store.class);
+	public Page<Store> findByLocationNear(Point point, Distance distance, Pageable pageable) {
+		// TODO Auto-generated method stub
+		return storeSearchRepository.findByLocationNear(point,distance,pageable);
 	}
 
 	private CriteriaQuery getGeoQuery(Point point, Distance distance) {
@@ -776,14 +788,69 @@ public class QueryServiceImpl implements QueryService {
 
 		return new PageImpl(categoryNameBasedProduct);
 	}
+/*
+	@Override
+	public List<Entry> findAllDeliveryCountByStoreId(String storeId, Pageable pageable) {
+		List<String> carList = new ArrayList<String>();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
+				.withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
+				.addAggregation(AggregationBuilders.terms("storeId").field("storeId.keyword")
+						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order
+								.aggregation("deliveryInfo.deliveryType", true))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("grandTotal"))
+						.subAggregation(AggregationBuilders.terms("make").field("make.keyword")))
+				.build();
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findByLocationNear(org.springframework.data.geo.Point, org.springframework.data.geo.Distance)
-	 */
-	/*@Override
-	public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable) {
-	
-		return storeSearchrepository.findByLocationNear(point,distance,pageable);
+		MetricAggregation result = elasticsearchTemplate.query(searchQuery,
+				new JestResultsExtractor<MetricAggregation>() {
+					@Override
+					public MetricAggregation extract(SearchResult response) {
+						return response.getAggregations();
+					}
+				});
+
+		TermsAggregation colourtAgg = result.getTermsAggregation("storeId");
+
+		colourtAgg.getBuckets().forEach(bucket -> {
+
+			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
+			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
+					bucket.getCount(), averagePrice));
+			System.out.println("SSSSSSSSSSSSSSSSSS"
+					+ bucket.getAggregation("make", TermsAggregation.class).getBuckets().get(1).getKeyAsString());
+			System.out.println(
+					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make", TermsAggregation.class).getBuckets().size());
+		});
+		return colourtAgg.getBuckets();
+
 	}*/
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see com.diviso.graeshoppe.service.QueryService#findByLocationNear(org.
+	 * springframework.data.geo.Point, org.springframework.data.geo.Distance)
+	 */
+	/*
+	 * @Override public Page<Store> findByLocationNear(Point point, Distance
+	 * distance,Pageable pageable) {
+	 * 
+	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
+	 * }
+	 */
+	
+	public StoreSettings getStoreSettings(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreSettings();
+	}
+	
+	public StoreAddress getStoreAddress(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreAddress();
+	}
+	
 
 }

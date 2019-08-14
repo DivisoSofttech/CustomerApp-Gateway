@@ -49,6 +49,8 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -102,7 +104,7 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
-
+	
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
@@ -356,21 +358,6 @@ public class QueryResource {
 		return queryService.headerSearch(searchTerm, pageable);
 	}
 
-	@GetMapping("/location/findByNearestLocation/{latLon}/{kiloMeter}")
-	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable ) {
-
-		String[] latLons = latLon.split(",");
-
-		double lat = Double.parseDouble(latLons[0]);
-
-		double lon = Double.parseDouble(latLons[1]);
-
-		log.info("........lat........................  " + lat + "................lon.........   " + lon);
-
-	//return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
-		return null;
-	}
-
 	@GetMapping("/storeByLocationName/{locationName}")
 	public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
 
@@ -416,4 +403,44 @@ public class QueryResource {
 		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
 		
     }
+	
+
+	/*
+	@GetMapping("/deliveryCount/{storeId}")
+	public List<Entry> getDeliveryCountBystoreId(@PathVariable String storeId, Pageable pageable){
+		
+		return queryService.findAllDeliveryCountByStoreId(storeId, pageable);
+	}*/
+
+	
+	@GetMapping("/findByNearestLocation")
+	public Page<Store> searchByNearestLocation(/*@PathVariable String latLon, @PathVariable Double kiloMeter,*/Pageable pageable) {
+
+	/*	String[] latLons = latLon.split(",");
+
+		double lat = Double.parseDouble(latLons[0]);
+
+		double lon = Double.parseDouble(latLons[1]);
+
+		log.info("........lat........................  "+lat+"................lon.........   "+lon);*/
+		
+		return queryService.findByLocationNear(new Point(10.7654155,76.4840479), new Distance(2, Metrics.KILOMETERS),pageable);
+	}
+
+	@GetMapping("/storeSettings")
+	public StoreSettings getStoreSettings(String IDPCode) {
+		
+		return queryService.getStoreSettings(IDPCode);
+		
+	}
+	
+	@GetMapping("/storeAddress")
+	public StoreAddress getStoreAddress(String IDPCode) {
+		
+		return queryService.getStoreAddress(IDPCode);
+		
+	}
+	
+	
+	
 }
