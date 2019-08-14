@@ -146,7 +146,7 @@ public interface QueryService {
 	/**
 	 * @param categoryName
 	 */
-	public StockCurrent findStockCurrentByCategoryName(String categoryName);
+	public Page<StockCurrent> findStockCurrentByCategoryName(String categoryName);
 
 	/**
 	 * @param storeId

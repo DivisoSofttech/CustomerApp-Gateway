@@ -870,9 +870,9 @@ public class QueryServiceImpl implements QueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByCategoryName(java.lang.String)
 	 */
 	@Override
-	public StockCurrent findStockCurrentByCategoryName(String categoryName) {
-		StringQuery stringQuery = new StringQuery(termQuery("product.category.name", categoryName).toString());
-		return elasticsearchOperations.queryForObject(stringQuery, StockCurrent.class);
+	public Page<StockCurrent> findStockCurrentByCategoryName(String categoryName) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.category.name.keyword", categoryName)).build();
+		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 		
 	}
 

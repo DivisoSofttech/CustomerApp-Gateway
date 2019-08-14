@@ -435,21 +435,21 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/stock-current-by-categoryname/{categoryName}")
-	public ResponseEntity<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
-		return ResponseEntity.ok().body(queryService.findStockCurrentByCategoryName(categoryName));
+	public Page<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
+		return queryService.findStockCurrentByCategoryName(categoryName);
 		
 	}
 	
 
-	@GetMapping("/storeSettings")
-	public StoreSettings getStoreSettings(String IDPCode) {
+	@GetMapping("/storeSettings/{IDPCode}")
+	public StoreSettings getStoreSettings(@PathVariable String IDPCode) {
 		
 		return queryService.getStoreSettings(IDPCode);
 		
 	}
 	
-	@GetMapping("/storeAddress")
-	public StoreAddress getStoreAddress(String IDPCode) {
+	@GetMapping("/storeAddress/{IDPCode}")
+	public StoreAddress getStoreAddress(@PathVariable String IDPCode) {
 		
 		return queryService.getStoreAddress(IDPCode);
 		
