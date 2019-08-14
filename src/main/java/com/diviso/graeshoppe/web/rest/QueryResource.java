@@ -435,8 +435,8 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/stock-current-by-categoryname/{categoryName}")
-	public ResponseEntity<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
-		return ResponseEntity.ok().body(queryService.findStockCurrentByCategoryName(categoryName));
+	public Page<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
+		return queryService.findStockCurrentByCategoryName(categoryName);
 		
 	}
 	
