@@ -92,12 +92,13 @@ public class OrderCommandResource {
 		OrderDTO orderResult = orderCommandResourceApi.getOrderUsingGET(orderId).getBody();
 		orderResult.setDeliveryInfoId(deliveryId);
 		ResponseEntity<CommandResource> result= deliveryInfoResult;
-		if(result.getBody().getNextTaskName()=="Accept Order") {
+		if(result.getBody().getNextTaskName().equals("Accept Order")) {
 			orderResult.setStatusId(3l);
-		}else if(result.getBody().getNextTaskName()=="Process Payment"){
+		}else if(result.getBody().getNextTaskName().equals("Process Payment")){
 			orderResult.setStatusId(4l);
 
 		}
+		System.out.println("The updated order is "+orderResult.getStatusId());
 		updateOrder(orderResult);
 		return result;
 

@@ -337,7 +337,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
 		log.info("Customer Id is "+customerId);
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("city", customerId))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
 				.withIndices("orderaddress").withTypes("orderaddress").build();
 		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
 	}
