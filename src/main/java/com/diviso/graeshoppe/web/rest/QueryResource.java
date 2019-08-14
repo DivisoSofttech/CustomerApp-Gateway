@@ -441,15 +441,15 @@ public class QueryResource {
 	}
 	
 
-	@GetMapping("/storeSettings")
-	public StoreSettings getStoreSettings(String IDPCode) {
+	@GetMapping("/storeSettings/{IDPCode}")
+	public StoreSettings getStoreSettings(@PathVariable String IDPCode) {
 		
 		return queryService.getStoreSettings(IDPCode);
 		
 	}
 	
-	@GetMapping("/storeAddress")
-	public StoreAddress getStoreAddress(String IDPCode) {
+	@GetMapping("/storeAddress/{IDPCode}")
+	public StoreAddress getStoreAddress(@PathVariable String IDPCode) {
 		
 		return queryService.getStoreAddress(IDPCode);
 		
