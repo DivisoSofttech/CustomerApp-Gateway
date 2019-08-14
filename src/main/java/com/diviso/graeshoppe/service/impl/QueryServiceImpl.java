@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.text.DefaultEditorKit.CutAction;
+
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -323,9 +325,9 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
-
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
-				.withIndices("orderaddress").withTypes("address").build();
+		log.info("Customer Id is "+customerId);
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("city", customerId))
+				.withIndices("orderaddress").withTypes("orderaddress").build();
 		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
 	}
 

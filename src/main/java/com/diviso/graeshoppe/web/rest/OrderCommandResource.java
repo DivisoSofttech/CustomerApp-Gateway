@@ -53,7 +53,7 @@ public class OrderCommandResource {
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setDate(Instant.now());
-		ResponseEntity<com.diviso.graeshoppe.client.order.model.CommandResource> orderDTOResponse = createOrder(orderDTO);
+		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
@@ -64,7 +64,6 @@ public class OrderCommandResource {
 			createOrderLine(orderLineDTO);
 		});
 
-
 		return orderDTOResponse;
 	}
 
@@ -74,7 +73,7 @@ public class OrderCommandResource {
 	}
 
 	@PostMapping("/orders/addresses")
-	public ResponseEntity<AddressDTO> createAddress(AddressDTO addressDTO) {
+	public ResponseEntity<AddressDTO> createAddress(@RequestBody AddressDTO addressDTO) {
 		ResponseEntity<AddressDTO> result = addressResourceApi.createAddressUsingPOST(addressDTO);
 		return result;
 	}
@@ -92,8 +91,15 @@ public class OrderCommandResource {
 		long deliveryId = deliveryInfoResult.getBody().getSelfId();
 		OrderDTO orderResult = orderCommandResourceApi.getOrderUsingGET(orderId).getBody();
 		orderResult.setDeliveryInfoId(deliveryId);
+		ResponseEntity<CommandResource> result= deliveryInfoResult;
+		if(result.getBody().getNextTaskName()=="Accept Order") {
+			orderResult.setStatusId(3l);
+		}else if(result.getBody().getNextTaskName()=="Process Payment"){
+			orderResult.setStatusId(4l);
+
+		}
 		updateOrder(orderResult);
-		return deliveryInfoResult;
+		return result;
 
 	}
 	
