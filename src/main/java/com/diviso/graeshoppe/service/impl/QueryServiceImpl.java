@@ -11,6 +11,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import javax.swing.text.DefaultEditorKit.CutAction;
+
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -45,6 +47,8 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -332,9 +336,9 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
-
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
-				.withIndices("orderaddress").withTypes("address").build();
+		log.info("Customer Id is "+customerId);
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("city", customerId))
+				.withIndices("orderaddress").withTypes("orderaddress").build();
 		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
 	}
 
@@ -834,6 +838,21 @@ public class QueryServiceImpl implements QueryService {
 	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
 	 * }
 	 */
+	
+	public StoreSettings getStoreSettings(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreSettings();
+	}
+	
+	public StoreAddress getStoreAddress(String IDPCode){
+		
+		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
+		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		return store.getStoreAddress();
+	}
+	
 
 	/* (non-Javadoc)
 	 * @see com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(java.lang.Long)

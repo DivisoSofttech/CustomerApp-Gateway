@@ -50,6 +50,8 @@ import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.RatingReview;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;
+import com.diviso.graeshoppe.client.store.domain.StoreAddress;
+import com.diviso.graeshoppe.client.store.domain.StoreSettings;
 import com.diviso.graeshoppe.client.store.domain.StoreType;
 import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
@@ -426,6 +428,7 @@ public class QueryResource {
 		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
 	}
 
+
 	@GetMapping("/auxilaries-productId/{productId}")
 	public Page<AuxilaryLineItem> findAuxilariesByProductId(@PathVariable Long productId){
 		return queryService.findAllAuxilariesByProductId(productId);
@@ -437,4 +440,22 @@ public class QueryResource {
 		
 	}
 	
+
+	@GetMapping("/storeSettings")
+	public StoreSettings getStoreSettings(String IDPCode) {
+		
+		return queryService.getStoreSettings(IDPCode);
+		
+	}
+	
+	@GetMapping("/storeAddress")
+	public StoreAddress getStoreAddress(String IDPCode) {
+		
+		return queryService.getStoreAddress(IDPCode);
+		
+	}
+	
+	
+	
+
 }
