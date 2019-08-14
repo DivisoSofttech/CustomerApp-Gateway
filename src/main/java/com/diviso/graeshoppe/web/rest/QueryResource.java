@@ -35,6 +35,7 @@ import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.Product;
@@ -411,18 +412,29 @@ public class QueryResource {
 	}*/
 
 	
-	@GetMapping("/findByNearestLocation")
-	public Page<Store> searchByNearestLocation(/*@PathVariable String latLon, @PathVariable Double kiloMeter,*/Pageable pageable) {
+	@GetMapping("/findByNearestLocation/{latLon}/{kiloMeter}")
+	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable) {
 
-	/*	String[] latLons = latLon.split(",");
+		String[] latLons = latLon.split(",");
 
 		double lat = Double.parseDouble(latLons[0]);
 
 		double lon = Double.parseDouble(latLons[1]);
 
-		log.info("........lat........................  "+lat+"................lon.........   "+lon);*/
+		log.info("........lat........................  "+lat+"................lon.........   "+lon);
 		
-		return queryService.findByLocationNear(new Point(10.7654155,76.4840479), new Distance(2, Metrics.KILOMETERS),pageable);
+		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
 	}
 
+	@GetMapping("/auxilaries-productId/{productId}")
+	public Page<AuxilaryLineItem> findAuxilariesByProductId(@PathVariable Long productId){
+		return queryService.findAllAuxilariesByProductId(productId);
+	}
+	
+	@GetMapping("/stock-current-by-categoryname/{categoryName}")
+	public ResponseEntity<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
+		return ResponseEntity.ok().body(queryService.findStockCurrentByCategoryName(categoryName));
+		
+	}
+	
 }

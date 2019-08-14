@@ -37,6 +37,7 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -833,5 +834,27 @@ public class QueryServiceImpl implements QueryService {
 	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
 	 * }
 	 */
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(java.lang.Long)
+	 */
+	@Override
+	public Page<AuxilaryLineItem> findAllAuxilariesByProductId(Long productId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.id", productId)).build();
+
+		return  elasticsearchOperations.queryForPage(searchQuery, AuxilaryLineItem.class);
+		
+		
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByCategoryName(java.lang.String)
+	 */
+	@Override
+	public StockCurrent findStockCurrentByCategoryName(String categoryName) {
+		StringQuery stringQuery = new StringQuery(termQuery("product.category.name", categoryName).toString());
+		return elasticsearchOperations.queryForObject(stringQuery, StockCurrent.class);
+		
+	}
 
 }

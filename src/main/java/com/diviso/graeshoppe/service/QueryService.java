@@ -11,6 +11,7 @@ import com.diviso.graeshoppe.client.customer.domain.Customer;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -134,6 +135,16 @@ public interface QueryService {
 	 * @return
 	 */
 	List<Product> findAllProducts();
+
+	/**
+	 * @param productId
+	 */
+	public Page<AuxilaryLineItem> findAllAuxilariesByProductId(Long productId);
+
+	/**
+	 * @param categoryName
+	 */
+	public StockCurrent findStockCurrentByCategoryName(String categoryName);
 
 	/**
 	 * @param storeId
