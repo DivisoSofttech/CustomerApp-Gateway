@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-12T12:34:53.739015+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T15:41:55.844377+05:30[Asia/Kolkata]")
 
 @Api(value = "PaypalQueryResource", description = "the PaypalQueryResource API")
 public interface PaypalQueryResourceApi {
@@ -43,7 +43,7 @@ public interface PaypalQueryResourceApi {
     ResponseEntity<PaymentHistory> getAllPaymentsFromGatewayUsingGET();
 
 
-    @ApiOperation(value = "getPayment", nickname = "getPaymentUsingGET", notes = "", response = PaymentDetails.class, tags={ "paypal-query-resource", })
+    @ApiOperation(value = "getPayment", nickname = "getPaymentUsingGET1", notes = "", response = PaymentDetails.class, tags={ "paypal-query-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = PaymentDetails.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
@@ -52,6 +52,6 @@ public interface PaypalQueryResourceApi {
     @RequestMapping(value = "/api/payments/paypal/{payment_id}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<PaymentDetails> getPaymentUsingGET(@ApiParam(value = "payment_id",required=true) @PathVariable("payment_id") String paymentId);
+    ResponseEntity<PaymentDetails> getPaymentUsingGET1(@ApiParam(value = "payment_id",required=true) @PathVariable("payment_id") String paymentId);
 
 }

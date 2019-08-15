@@ -404,7 +404,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/tasks")
-	public ResponseEntity<List<OpenTask>> getTasks( @RequestParam String assignee, @RequestParam String assigneeLike,@RequestParam String candidateGroup,@RequestParam  String candidateGroups, @RequestParam String candidateUser, @RequestParam String createdAfter, @RequestParam String createdBefore, @RequestParam String createdOn, @RequestParam String name, @RequestParam String nameLike)
+	public ResponseEntity<List<OpenTask>> getTasks( @RequestParam(required = false) String assignee, @RequestParam(required = false) String assigneeLike,@RequestParam(required = false) String candidateGroup,@RequestParam(required = false)  String candidateGroups, @RequestParam(required = false) String candidateUser, @RequestParam(required = false) String createdAfter, @RequestParam(required = false) String createdBefore, @RequestParam(required = false) String createdOn, @RequestParam(required = false) String name, @RequestParam(required = false) String nameLike)
     {
 		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
 		
