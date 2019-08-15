@@ -9,9 +9,13 @@ import org.springframework.data.repository.query.Param;
 
 import com.diviso.graeshoppe.client.store.domain.Store;
 
-public interface StoreSearchRepository extends ElasticsearchRepository<Store, Long> {
-
-	
-	Page<Store> findByLocationNear(@Param("location") Point point, @Param("distance") Distance distance, Pageable pageable);
-	
-}
+/*
+ * public interface StoreSearchRepository extends ElasticsearchRepository<Store,
+ * Long> {
+ * 
+ * 
+ * Page<Store> findByLocationNear(@Param("location") Point
+ * point, @Param("distance") Distance distance, Pageable pageable);
+ * 
+ * }
+ */

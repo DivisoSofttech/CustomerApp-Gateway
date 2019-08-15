@@ -110,8 +110,10 @@ public interface QueryService {
 
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable);
 
-	Page<Store> findByLocationNear(Point point, Distance distance, Pageable pageable);
-
+	/*
+	 * Page<Store> findByLocationNear(Point point, Distance distance, Pageable
+	 * pageable);
+	 */
 	public Page<Store> findStoreByLocationName(String locationName);
 
 	public Page<Store> findAndSortStoreByMinAount(Pageable pageable);
