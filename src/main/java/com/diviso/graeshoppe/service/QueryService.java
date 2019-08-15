@@ -148,7 +148,7 @@ public interface QueryService {
 	/**
 	 * @param categoryName
 	 */
-	public Page<StockCurrent> findStockCurrentByCategoryName(String categoryName);
+	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(String categoryName,String storeId);
 
 	/**
 	 * @param storeId
@@ -168,4 +168,18 @@ public interface QueryService {
 	public StoreSettings getStoreSettings(String IDPCode);
 
 	public StoreAddress getStoreAddress(String iDPCode);
+
+	/**
+	 * @param iDPcode
+	 * @param pageable
+	 * @return
+	 */
+	//public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable);
+
+	/**
+	 * @param categoryName
+	 * @param storeId
+	 * @return
+	 */
+
 }

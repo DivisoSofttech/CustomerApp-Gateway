@@ -86,11 +86,10 @@ public class QueryServiceImpl implements QueryService {
 	@Autowired
 	ElasticsearchOperations elasticsearchOperations;
 
-	
 	/*
 	 * @Autowired private StoreSearchRepository storeSearchRepository;
 	 */
-	
+
 	@Override
 	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -209,7 +208,19 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<StockCurrent> findStockCurrentByStoreId(String iDPcode) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+
+		Page<StockCurrent> stockCurrentPage = elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+
+		List<StockCurrent> notAuxStockCurrentProducts = new ArrayList<StockCurrent>();
+
+		stockCurrentPage.forEach(s -> {
+
+			if (s.getProduct().isIsAuxilaryItem() == false) {
+				notAuxStockCurrentProducts.add(s);
+			}
+		});
+
+		return new PageImpl(notAuxStockCurrentProducts);
 	}
 
 	@Override
@@ -336,7 +347,7 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
-		log.info("Customer Id is "+customerId);
+		log.info("Customer Id is " + customerId);
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
 				.withIndices("orderaddress").withTypes("orderaddress").build();
 		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
@@ -453,10 +464,14 @@ public class QueryServiceImpl implements QueryService {
 		List<Product> productList = elasticsearchOperations.queryForPage(searchQuery, Product.class).getContent();
 
 		for (Product product : productList) {
+			if ((product.isIsAuxilaryItem() == false)) {
 
-			StringQuery query = new StringQuery(termQuery("product.id", product.getId()).toString());
-			stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
-			System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
+				StringQuery query = new StringQuery(termQuery("product.id", product.getId()).toString());
+
+				stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
+
+				System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
+			}
 		}
 
 		return stockCurrentList;
@@ -789,42 +804,42 @@ public class QueryServiceImpl implements QueryService {
 
 		return new PageImpl(categoryNameBasedProduct);
 	}
-/*
-	@Override
-	public List<Entry> findAllDeliveryCountByStoreId(String storeId, Pageable pageable) {
-		List<String> carList = new ArrayList<String>();
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-				.withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
-				.addAggregation(AggregationBuilders.terms("storeId").field("storeId.keyword")
-						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order
-								.aggregation("deliveryInfo.deliveryType", true))
-						.subAggregation(AggregationBuilders.avg("avgPrice").field("grandTotal"))
-						.subAggregation(AggregationBuilders.terms("make").field("make.keyword")))
-				.build();
-
-		MetricAggregation result = elasticsearchTemplate.query(searchQuery,
-				new JestResultsExtractor<MetricAggregation>() {
-					@Override
-					public MetricAggregation extract(SearchResult response) {
-						return response.getAggregations();
-					}
-				});
-
-		TermsAggregation colourtAgg = result.getTermsAggregation("storeId");
-
-		colourtAgg.getBuckets().forEach(bucket -> {
-
-			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
-			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
-					bucket.getCount(), averagePrice));
-			System.out.println("SSSSSSSSSSSSSSSSSS"
-					+ bucket.getAggregation("make", TermsAggregation.class).getBuckets().get(1).getKeyAsString());
-			System.out.println(
-					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make", TermsAggregation.class).getBuckets().size());
-		});
-		return colourtAgg.getBuckets();
-
-	}*/
+	/*
+	 * @Override public List<Entry> findAllDeliveryCountByStoreId(String
+	 * storeId, Pageable pageable) { List<String> carList = new
+	 * ArrayList<String>(); SearchQuery searchQuery = new
+	 * NativeSearchQueryBuilder().withQuery(matchAllQuery())
+	 * .withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
+	 * .addAggregation(AggregationBuilders.terms("storeId").field(
+	 * "storeId.keyword")
+	 * .order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order
+	 * .aggregation("deliveryInfo.deliveryType", true))
+	 * .subAggregation(AggregationBuilders.avg("avgPrice").field("grandTotal"))
+	 * .subAggregation(AggregationBuilders.terms("make").field("make.keyword")))
+	 * .build();
+	 * 
+	 * MetricAggregation result = elasticsearchTemplate.query(searchQuery, new
+	 * JestResultsExtractor<MetricAggregation>() {
+	 * 
+	 * @Override public MetricAggregation extract(SearchResult response) {
+	 * return response.getAggregations(); } });
+	 * 
+	 * TermsAggregation colourtAgg = result.getTermsAggregation("storeId");
+	 * 
+	 * colourtAgg.getBuckets().forEach(bucket -> {
+	 * 
+	 * double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
+	 * System.out.println(String.
+	 * format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
+	 * bucket.getCount(), averagePrice));
+	 * System.out.println("SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make",
+	 * TermsAggregation.class).getBuckets().get(1).getKeyAsString());
+	 * System.out.println( "SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make",
+	 * TermsAggregation.class).getBuckets().size()); }); return
+	 * colourtAgg.getBuckets();
+	 * 
+	 * }
+	 */
 	/*
 	 * (non-Javadoc)
 	 * 
@@ -838,42 +853,78 @@ public class QueryServiceImpl implements QueryService {
 	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
 	 * }
 	 */
-	
-	public StoreSettings getStoreSettings(String IDPCode){
-		
+
+	public StoreSettings getStoreSettings(String IDPCode) {
+
 		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
-		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		Store store = elasticsearchOperations.queryForObject(searchQuery, Store.class);
 		return store.getStoreSettings();
 	}
-	
-	public StoreAddress getStoreAddress(String IDPCode){
-		
+
+	public StoreAddress getStoreAddress(String IDPCode) {
+
 		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
-		Store store= elasticsearchOperations.queryForObject(searchQuery, Store.class);
+		Store store = elasticsearchOperations.queryForObject(searchQuery, Store.class);
 		return store.getStoreAddress();
 	}
-	
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(java.lang.Long)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(
+	 * java.lang.Long)
 	 */
 	@Override
 	public Page<AuxilaryLineItem> findAllAuxilariesByProductId(Long productId) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.id", productId)).build();
 
-		return  elasticsearchOperations.queryForPage(searchQuery, AuxilaryLineItem.class);
-		
-		
+		return elasticsearchOperations.queryForPage(searchQuery, AuxilaryLineItem.class);
+
 	}
 
-	/* (non-Javadoc)
-	 * @see com.diviso.graeshoppe.service.QueryService#findStockCurrentByCategoryName(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findStockCurrentByCategoryName
+	 * (java.lang.String)
 	 */
 	@Override
-	public Page<StockCurrent> findStockCurrentByCategoryName(String categoryName) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.category.name.keyword", categoryName)).build();
+	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(String categoryName, String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
+				QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.name.keyword", categoryName))
+						.must(QueryBuilders.matchQuery("product.iDPcode", storeId)))
+				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
-		
+
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
+	 * lang.String, org.springframework.data.domain.Pageable)
+	 */
+	/*@Override
+	public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
+
+		List<Product> products = elasticsearchOperations.queryForList(searchQuery, Product.class);
+
+		List<Product> notAuxProducts = new ArrayList<Product>();
+
+		products.forEach(p -> {
+
+			if ((p.isIsAuxilaryItem() == false)) {
+
+				notAuxProducts.add(p);
+			}
+
+		});
+
+		return new PageImpl(notAuxProducts);
+	}
+*/
 }

@@ -303,7 +303,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
-	public List<StockCurrent> findProductByStoreIdAndCategoryId(@PathVariable("userId") String userId,
+	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(@PathVariable("userId") String userId,
 			@PathVariable("categoryId") Long categoryId, Pageable pageable) {
 		log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId, categoryId);
 		return queryService.findStockCurrentByStoreIdAndCategoryId(userId, categoryId, pageable);
@@ -442,9 +442,9 @@ public class QueryResource {
 		return queryService.findAllAuxilariesByProductId(productId);
 	}
 	
-	@GetMapping("/stock-current-by-categoryname/{categoryName}")
-	public Page<StockCurrent> findStockCurrentByCategoryName(@PathVariable String categoryName){
-		return queryService.findStockCurrentByCategoryName(categoryName);
+	@GetMapping("/stock-current-by-categoryname/{categoryName}/{storeId}")
+	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(@PathVariable String categoryName,@PathVariable String storeId){
+		return queryService.findStockCurrentByCategoryNameAndStoreId(categoryName,storeId);
 		
 	}
 	
@@ -480,6 +480,10 @@ public class QueryResource {
 	
     }
 	
-
-
+	/*@GetMapping("/not-aux-product/{iDPcode}")
+    public Page<Product> findNotAuxilaryProducts(@PathVariable String iDPcode,
+			Pageable pageable){
+		return queryService.findNotAuxilaryProducts(iDPcode,pageable);
+    }
+*/
 }
