@@ -211,21 +211,25 @@ jhipster:
 application:
 
 customer:
-   url: 34.74.142.114:8088
+   url: dev.ci1.divisosofttech.com:8088
    
 order:
-   url: 35.239.128.233:8088
+   url: dev.ci2.divisosofttech.com:8088
    
 product: 
-   url: 34.74.142.114:8084
+   url: dev.ci1.divisosofttech.com:8084
    
 sale:
-   url: 34.74.142.114:8086
+   url: dev.ci1.divisosofttech.com:8086
    
 store:
-   url: 34.74.142.114:8071
+   url: dev.ci1.divisosofttech.com:8071
    
 report:
-   url: 35.239.128.233:8077
+   url: dev.ci2.divisosofttech.com:8077
+   
+payment:
+   url: dev.ci2.divisosofttech.com:9090
+   
 
    
