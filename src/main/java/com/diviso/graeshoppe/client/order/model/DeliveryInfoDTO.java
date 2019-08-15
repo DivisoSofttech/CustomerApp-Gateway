@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.time.Instant;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,7 +13,7 @@ import javax.validation.constraints.*;
  * DeliveryInfoDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
 
 public class DeliveryInfoDTO   {
   @JsonProperty("deliveryAddressId")
@@ -23,11 +22,11 @@ public class DeliveryInfoDTO   {
   @JsonProperty("deliveryCharge")
   private Double deliveryCharge = null;
 
+  @JsonProperty("deliveryNotes")
+  private String deliveryNotes = null;
+
   @JsonProperty("deliveryType")
   private String deliveryType = null;
-
-  @JsonProperty("expectedDelivery")
-  private Instant expectedDelivery = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -72,6 +71,26 @@ public class DeliveryInfoDTO   {
     this.deliveryCharge = deliveryCharge;
   }
 
+  public DeliveryInfoDTO deliveryNotes(String deliveryNotes) {
+    this.deliveryNotes = deliveryNotes;
+    return this;
+  }
+
+  /**
+   * Get deliveryNotes
+   * @return deliveryNotes
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getDeliveryNotes() {
+    return deliveryNotes;
+  }
+
+  public void setDeliveryNotes(String deliveryNotes) {
+    this.deliveryNotes = deliveryNotes;
+  }
+
   public DeliveryInfoDTO deliveryType(String deliveryType) {
     this.deliveryType = deliveryType;
     return this;
@@ -90,27 +109,6 @@ public class DeliveryInfoDTO   {
 
   public void setDeliveryType(String deliveryType) {
     this.deliveryType = deliveryType;
-  }
-
-  public DeliveryInfoDTO expectedDelivery(Instant expectedDelivery) {
-    this.expectedDelivery = expectedDelivery;
-    return this;
-  }
-
-  /**
-   * Get expectedDelivery
-   * @return expectedDelivery
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Instant getExpectedDelivery() {
-    return expectedDelivery;
-  }
-
-  public void setExpectedDelivery(Instant expectedDelivery) {
-    this.expectedDelivery = expectedDelivery;
   }
 
   public DeliveryInfoDTO id(Long id) {
@@ -145,14 +143,14 @@ public class DeliveryInfoDTO   {
     DeliveryInfoDTO deliveryInfoDTO = (DeliveryInfoDTO) o;
     return Objects.equals(this.deliveryAddressId, deliveryInfoDTO.deliveryAddressId) &&
         Objects.equals(this.deliveryCharge, deliveryInfoDTO.deliveryCharge) &&
+        Objects.equals(this.deliveryNotes, deliveryInfoDTO.deliveryNotes) &&
         Objects.equals(this.deliveryType, deliveryInfoDTO.deliveryType) &&
-        Objects.equals(this.expectedDelivery, deliveryInfoDTO.expectedDelivery) &&
         Objects.equals(this.id, deliveryInfoDTO.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deliveryAddressId, deliveryCharge, deliveryType, expectedDelivery, id);
+    return Objects.hash(deliveryAddressId, deliveryCharge, deliveryNotes, deliveryType, id);
   }
 
   @Override
@@ -162,8 +160,8 @@ public class DeliveryInfoDTO   {
     
     sb.append("    deliveryAddressId: ").append(toIndentedString(deliveryAddressId)).append("\n");
     sb.append("    deliveryCharge: ").append(toIndentedString(deliveryCharge)).append("\n");
+    sb.append("    deliveryNotes: ").append(toIndentedString(deliveryNotes)).append("\n");
     sb.append("    deliveryType: ").append(toIndentedString(deliveryType)).append("\n");
-    sb.append("    expectedDelivery: ").append(toIndentedString(expectedDelivery)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();

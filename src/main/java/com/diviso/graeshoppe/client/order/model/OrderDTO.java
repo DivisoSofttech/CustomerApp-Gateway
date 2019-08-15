@@ -5,9 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.Instant;
-import java.time.Instant;
+import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -16,14 +14,17 @@ import javax.validation.constraints.*;
  * OrderDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
 
 public class OrderDTO   {
+  @JsonProperty("approvalDetailsId")
+  private Long approvalDetailsId = null;
+
   @JsonProperty("customerId")
   private String customerId = null;
 
   @JsonProperty("date")
-  private Instant date = null;
+  private OffsetDateTime date = null;
 
   @JsonProperty("deliveryInfoId")
   private Long deliveryInfoId = null;
@@ -37,9 +38,6 @@ public class OrderDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("notes")
-  private String notes = null;
-
   @JsonProperty("orderId")
   private String orderId = null;
 
@@ -51,6 +49,26 @@ public class OrderDTO   {
 
   @JsonProperty("storeId")
   private String storeId = null;
+
+  public OrderDTO approvalDetailsId(Long approvalDetailsId) {
+    this.approvalDetailsId = approvalDetailsId;
+    return this;
+  }
+
+  /**
+   * Get approvalDetailsId
+   * @return approvalDetailsId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getApprovalDetailsId() {
+    return approvalDetailsId;
+  }
+
+  public void setApprovalDetailsId(Long approvalDetailsId) {
+    this.approvalDetailsId = approvalDetailsId;
+  }
 
   public OrderDTO customerId(String customerId) {
     this.customerId = customerId;
@@ -72,7 +90,7 @@ public class OrderDTO   {
     this.customerId = customerId;
   }
 
-  public OrderDTO date(Instant date) {
+  public OrderDTO date(OffsetDateTime date) {
     this.date = date;
     return this;
   }
@@ -85,11 +103,11 @@ public class OrderDTO   {
 
   @Valid
 
-  public Instant getDate() {
+  public OffsetDateTime getDate() {
     return date;
   }
 
-  public void setDate(Instant date) {
+  public void setDate(OffsetDateTime date) {
     this.date = date;
   }
 
@@ -171,26 +189,6 @@ public class OrderDTO   {
 
   public void setId(Long id) {
     this.id = id;
-  }
-
-  public OrderDTO notes(String notes) {
-    this.notes = notes;
-    return this;
-  }
-
-  /**
-   * Get notes
-   * @return notes
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getNotes() {
-    return notes;
-  }
-
-  public void setNotes(String notes) {
-    this.notes = notes;
   }
 
   public OrderDTO orderId(String orderId) {
@@ -283,13 +281,13 @@ public class OrderDTO   {
       return false;
     }
     OrderDTO orderDTO = (OrderDTO) o;
-    return Objects.equals(this.customerId, orderDTO.customerId) &&
+    return Objects.equals(this.approvalDetailsId, orderDTO.approvalDetailsId) &&
+        Objects.equals(this.customerId, orderDTO.customerId) &&
         Objects.equals(this.date, orderDTO.date) &&
         Objects.equals(this.deliveryInfoId, orderDTO.deliveryInfoId) &&
         Objects.equals(this.email, orderDTO.email) &&
         Objects.equals(this.grandTotal, orderDTO.grandTotal) &&
         Objects.equals(this.id, orderDTO.id) &&
-        Objects.equals(this.notes, orderDTO.notes) &&
         Objects.equals(this.orderId, orderDTO.orderId) &&
         Objects.equals(this.paymentRef, orderDTO.paymentRef) &&
         Objects.equals(this.statusId, orderDTO.statusId) &&
@@ -298,7 +296,7 @@ public class OrderDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, date, deliveryInfoId, email, grandTotal, id, notes, orderId, paymentRef, statusId, storeId);
+    return Objects.hash(approvalDetailsId, customerId, date, deliveryInfoId, email, grandTotal, id, orderId, paymentRef, statusId, storeId);
   }
 
   @Override
@@ -306,13 +304,13 @@ public class OrderDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class OrderDTO {\n");
     
+    sb.append("    approvalDetailsId: ").append(toIndentedString(approvalDetailsId)).append("\n");
     sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    date: ").append(toIndentedString(date)).append("\n");
     sb.append("    deliveryInfoId: ").append(toIndentedString(deliveryInfoId)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    grandTotal: ").append(toIndentedString(grandTotal)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
     sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("    paymentRef: ").append(toIndentedString(paymentRef)).append("\n");
     sb.append("    statusId: ").append(toIndentedString(statusId)).append("\n");

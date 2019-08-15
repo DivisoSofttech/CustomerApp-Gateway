@@ -10,39 +10,85 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * StatusDTO
+ * Entry
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
 
-public class StatusDTO   {
-  @JsonProperty("id")
-  private Long id = null;
+public class Entry   {
+  @JsonProperty("count")
+  private Long count = null;
+
+  @JsonProperty("key")
+  private String key = null;
+
+  @JsonProperty("keyAsString")
+  private String keyAsString = null;
 
   @JsonProperty("name")
   private String name = null;
 
-  public StatusDTO id(Long id) {
-    this.id = id;
+  public Entry count(Long count) {
+    this.count = count;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get count
+   * @return count
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getId() {
-    return id;
+  public Long getCount() {
+    return count;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setCount(Long count) {
+    this.count = count;
   }
 
-  public StatusDTO name(String name) {
+  public Entry key(String key) {
+    this.key = key;
+    return this;
+  }
+
+  /**
+   * Get key
+   * @return key
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getKey() {
+    return key;
+  }
+
+  public void setKey(String key) {
+    this.key = key;
+  }
+
+  public Entry keyAsString(String keyAsString) {
+    this.keyAsString = keyAsString;
+    return this;
+  }
+
+  /**
+   * Get keyAsString
+   * @return keyAsString
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getKeyAsString() {
+    return keyAsString;
+  }
+
+  public void setKeyAsString(String keyAsString) {
+    this.keyAsString = keyAsString;
+  }
+
+  public Entry name(String name) {
     this.name = name;
     return this;
   }
@@ -71,22 +117,26 @@ public class StatusDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    StatusDTO statusDTO = (StatusDTO) o;
-    return Objects.equals(this.id, statusDTO.id) &&
-        Objects.equals(this.name, statusDTO.name);
+    Entry entry = (Entry) o;
+    return Objects.equals(this.count, entry.count) &&
+        Objects.equals(this.key, entry.key) &&
+        Objects.equals(this.keyAsString, entry.keyAsString) &&
+        Objects.equals(this.name, entry.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(count, key, keyAsString, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class StatusDTO {\n");
+    sb.append("class Entry {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    key: ").append(toIndentedString(key)).append("\n");
+    sb.append("    keyAsString: ").append(toIndentedString(keyAsString)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();

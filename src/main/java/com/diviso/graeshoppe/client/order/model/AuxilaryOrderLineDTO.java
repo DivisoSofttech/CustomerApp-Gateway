@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * AuxilaryOrderLineDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-06T14:01:39.473+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
 
 public class AuxilaryOrderLineDTO   {
   @JsonProperty("id")
@@ -21,6 +21,18 @@ public class AuxilaryOrderLineDTO   {
 
   @JsonProperty("orderLineId")
   private Long orderLineId = null;
+
+  @JsonProperty("pricePerUnit")
+  private Double pricePerUnit = null;
+
+  @JsonProperty("productId")
+  private Long productId = null;
+
+  @JsonProperty("quantity")
+  private Integer quantity = null;
+
+  @JsonProperty("total")
+  private Double total = null;
 
   public AuxilaryOrderLineDTO id(Long id) {
     this.id = id;
@@ -62,6 +74,86 @@ public class AuxilaryOrderLineDTO   {
     this.orderLineId = orderLineId;
   }
 
+  public AuxilaryOrderLineDTO pricePerUnit(Double pricePerUnit) {
+    this.pricePerUnit = pricePerUnit;
+    return this;
+  }
+
+  /**
+   * Get pricePerUnit
+   * @return pricePerUnit
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getPricePerUnit() {
+    return pricePerUnit;
+  }
+
+  public void setPricePerUnit(Double pricePerUnit) {
+    this.pricePerUnit = pricePerUnit;
+  }
+
+  public AuxilaryOrderLineDTO productId(Long productId) {
+    this.productId = productId;
+    return this;
+  }
+
+  /**
+   * Get productId
+   * @return productId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getProductId() {
+    return productId;
+  }
+
+  public void setProductId(Long productId) {
+    this.productId = productId;
+  }
+
+  public AuxilaryOrderLineDTO quantity(Integer quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  /**
+   * Get quantity
+   * @return quantity
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
+  }
+
+  public AuxilaryOrderLineDTO total(Double total) {
+    this.total = total;
+    return this;
+  }
+
+  /**
+   * Get total
+   * @return total
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getTotal() {
+    return total;
+  }
+
+  public void setTotal(Double total) {
+    this.total = total;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -73,12 +165,16 @@ public class AuxilaryOrderLineDTO   {
     }
     AuxilaryOrderLineDTO auxilaryOrderLineDTO = (AuxilaryOrderLineDTO) o;
     return Objects.equals(this.id, auxilaryOrderLineDTO.id) &&
-        Objects.equals(this.orderLineId, auxilaryOrderLineDTO.orderLineId);
+        Objects.equals(this.orderLineId, auxilaryOrderLineDTO.orderLineId) &&
+        Objects.equals(this.pricePerUnit, auxilaryOrderLineDTO.pricePerUnit) &&
+        Objects.equals(this.productId, auxilaryOrderLineDTO.productId) &&
+        Objects.equals(this.quantity, auxilaryOrderLineDTO.quantity) &&
+        Objects.equals(this.total, auxilaryOrderLineDTO.total);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, orderLineId);
+    return Objects.hash(id, orderLineId, pricePerUnit, productId, quantity, total);
   }
 
   @Override
@@ -88,6 +184,10 @@ public class AuxilaryOrderLineDTO   {
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    orderLineId: ").append(toIndentedString(orderLineId)).append("\n");
+    sb.append("    pricePerUnit: ").append(toIndentedString(pricePerUnit)).append("\n");
+    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
+    sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("}");
     return sb.toString();
   }

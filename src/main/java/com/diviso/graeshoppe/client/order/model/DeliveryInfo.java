@@ -9,30 +9,28 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
 /**
  * A DeliveryInfo.
  */
-@Document(indexName = "orderdeliveryinfo",type="orderdeliveryinfo")
+
+@Document(indexName = "deliveryinfo")
 public class DeliveryInfo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-  
     private Long id;
 
-   
     private String deliveryType;
-
-
-    private Instant expectedDelivery;
 
     private Double deliveryCharge;
 
+    private String deliveryNotes;
+
 
     private Address deliveryAddress;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -55,19 +53,6 @@ public class DeliveryInfo implements Serializable {
         this.deliveryType = deliveryType;
     }
 
-    public Instant getExpectedDelivery() {
-        return expectedDelivery;
-    }
-
-    public DeliveryInfo expectedDelivery(Instant expectedDelivery) {
-        this.expectedDelivery = expectedDelivery;
-        return this;
-    }
-
-    public void setExpectedDelivery(Instant expectedDelivery) {
-        this.expectedDelivery = expectedDelivery;
-    }
-
     public Double getDeliveryCharge() {
         return deliveryCharge;
     }
@@ -79,6 +64,19 @@ public class DeliveryInfo implements Serializable {
 
     public void setDeliveryCharge(Double deliveryCharge) {
         this.deliveryCharge = deliveryCharge;
+    }
+
+    public String getDeliveryNotes() {
+        return deliveryNotes;
+    }
+
+    public DeliveryInfo deliveryNotes(String deliveryNotes) {
+        this.deliveryNotes = deliveryNotes;
+        return this;
+    }
+
+    public void setDeliveryNotes(String deliveryNotes) {
+        this.deliveryNotes = deliveryNotes;
     }
 
     public Address getDeliveryAddress() {
@@ -120,8 +118,8 @@ public class DeliveryInfo implements Serializable {
         return "DeliveryInfo{" +
             "id=" + getId() +
             ", deliveryType='" + getDeliveryType() + "'" +
-            ", expectedDelivery='" + getExpectedDelivery() + "'" +
             ", deliveryCharge=" + getDeliveryCharge() +
+            ", deliveryNotes='" + getDeliveryNotes() + "'" +
             "}";
     }
 }

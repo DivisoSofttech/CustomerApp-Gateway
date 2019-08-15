@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.order.model;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,7 +18,6 @@ import java.util.Objects;
 /**
  * A Order.
  */
-
 @Document(indexName = "order")
 public class Order implements Serializable {
 
@@ -26,34 +26,31 @@ public class Order implements Serializable {
    
     private Long id;
 
- 
     private String orderId;
 
-  
     private String customerId;
 
- 
     private String storeId;
 
     private Instant date;
 
-   
     private Double grandTotal;
 
-   
     private String paymentRef;
 
-  
-    private String notes;
-   
     private String email;
 
-   
+ 
     private DeliveryInfo deliveryInfo;
 
-  
+
+    private ApprovalDetails approvalDetails;
+
+
     private Set<OrderLine> orderLines = new HashSet<>();
-   
+
+    private Set<Offer> appliedOffers = new HashSet<>();
+
     private Status status;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
@@ -143,19 +140,6 @@ public class Order implements Serializable {
         this.paymentRef = paymentRef;
     }
 
-    public String getNotes() {
-        return notes;
-    }
-
-    public Order notes(String notes) {
-        this.notes = notes;
-        return this;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -182,6 +166,19 @@ public class Order implements Serializable {
         this.deliveryInfo = deliveryInfo;
     }
 
+    public ApprovalDetails getApprovalDetails() {
+        return approvalDetails;
+    }
+
+    public Order approvalDetails(ApprovalDetails approvalDetails) {
+        this.approvalDetails = approvalDetails;
+        return this;
+    }
+
+    public void setApprovalDetails(ApprovalDetails approvalDetails) {
+        this.approvalDetails = approvalDetails;
+    }
+
     public Set<OrderLine> getOrderLines() {
         return orderLines;
     }
@@ -205,6 +202,31 @@ public class Order implements Serializable {
 
     public void setOrderLines(Set<OrderLine> orderLines) {
         this.orderLines = orderLines;
+    }
+
+    public Set<Offer> getAppliedOffers() {
+        return appliedOffers;
+    }
+
+    public Order appliedOffers(Set<Offer> offers) {
+        this.appliedOffers = offers;
+        return this;
+    }
+
+    public Order addAppliedOffers(Offer offer) {
+        this.appliedOffers.add(offer);
+        offer.setOrder(this);
+        return this;
+    }
+
+    public Order removeAppliedOffers(Offer offer) {
+        this.appliedOffers.remove(offer);
+        offer.setOrder(null);
+        return this;
+    }
+
+    public void setAppliedOffers(Set<Offer> offers) {
+        this.appliedOffers = offers;
     }
 
     public Status getStatus() {
@@ -251,7 +273,6 @@ public class Order implements Serializable {
             ", date='" + getDate() + "'" +
             ", grandTotal=" + getGrandTotal() +
             ", paymentRef='" + getPaymentRef() + "'" +
-            ", notes='" + getNotes() + "'" +
             ", email='" + getEmail() + "'" +
             "}";
     }

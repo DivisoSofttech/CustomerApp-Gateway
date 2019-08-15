@@ -10,16 +10,22 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UniqueOrderIDDTO
+ * OfferDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
 
-public class UniqueOrderIDDTO   {
+public class OfferDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  public UniqueOrderIDDTO id(Long id) {
+  @JsonProperty("offerRef")
+  private String offerRef = null;
+
+  @JsonProperty("orderId")
+  private Long orderId = null;
+
+  public OfferDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -39,6 +45,46 @@ public class UniqueOrderIDDTO   {
     this.id = id;
   }
 
+  public OfferDTO offerRef(String offerRef) {
+    this.offerRef = offerRef;
+    return this;
+  }
+
+  /**
+   * Get offerRef
+   * @return offerRef
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getOfferRef() {
+    return offerRef;
+  }
+
+  public void setOfferRef(String offerRef) {
+    this.offerRef = offerRef;
+  }
+
+  public OfferDTO orderId(Long orderId) {
+    this.orderId = orderId;
+    return this;
+  }
+
+  /**
+   * Get orderId
+   * @return orderId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(Long orderId) {
+    this.orderId = orderId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -48,21 +94,25 @@ public class UniqueOrderIDDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UniqueOrderIDDTO uniqueOrderIDDTO = (UniqueOrderIDDTO) o;
-    return Objects.equals(this.id, uniqueOrderIDDTO.id);
+    OfferDTO offerDTO = (OfferDTO) o;
+    return Objects.equals(this.id, offerDTO.id) &&
+        Objects.equals(this.offerRef, offerDTO.offerRef) &&
+        Objects.equals(this.orderId, offerDTO.orderId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(id, offerRef, orderId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UniqueOrderIDDTO {\n");
+    sb.append("class OfferDTO {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    offerRef: ").append(toIndentedString(offerRef)).append("\n");
+    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

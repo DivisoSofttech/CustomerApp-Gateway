@@ -14,13 +14,23 @@ import java.util.Objects;
 /**
  * A AuxilaryOrderLine.
  */
+
 @Document(indexName = "auxilaryorderline")
 public class AuxilaryOrderLine implements Serializable {
 
     private static final long serialVersionUID = 1L;
     
-   
+    
     private Long id;
+
+    private Long productId;
+
+	    private Integer quantity;
+
+    private Double pricePerUnit;
+
+    private Double total;
+
 
     private OrderLine orderLine;
 
@@ -31,6 +41,58 @@ public class AuxilaryOrderLine implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getProductId() {
+        return productId;
+    }
+
+    public AuxilaryOrderLine productId(Long productId) {
+        this.productId = productId;
+        return this;
+    }
+
+    public void setProductId(Long productId) {
+        this.productId = productId;
+    }
+
+    public Integer getQuantity() {
+        return quantity;
+    }
+
+    public AuxilaryOrderLine quantity(Integer quantity) {
+        this.quantity = quantity;
+        return this;
+    }
+
+    public void setQuantity(Integer quantity) {
+        this.quantity = quantity;
+    }
+
+    public Double getPricePerUnit() {
+        return pricePerUnit;
+    }
+
+    public AuxilaryOrderLine pricePerUnit(Double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+        return this;
+    }
+
+    public void setPricePerUnit(Double pricePerUnit) {
+        this.pricePerUnit = pricePerUnit;
+    }
+
+    public Double getTotal() {
+        return total;
+    }
+
+    public AuxilaryOrderLine total(Double total) {
+        this.total = total;
+        return this;
+    }
+
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
     public OrderLine getOrderLine() {
@@ -71,6 +133,10 @@ public class AuxilaryOrderLine implements Serializable {
     public String toString() {
         return "AuxilaryOrderLine{" +
             "id=" + getId() +
+            ", productId=" + getProductId() +
+            ", quantity=" + getQuantity() +
+            ", pricePerUnit=" + getPricePerUnit() +
+            ", total=" + getTotal() +
             "}";
     }
 }
