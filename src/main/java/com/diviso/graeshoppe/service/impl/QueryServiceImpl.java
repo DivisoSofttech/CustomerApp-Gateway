@@ -465,11 +465,11 @@ public class QueryServiceImpl implements QueryService {
 
 		for (Product product : productList) {
 			if ((product.isIsAuxilaryItem() == false)) {
-				
+
 				StringQuery query = new StringQuery(termQuery("product.id", product.getId()).toString());
-				
+
 				stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
-				
+
 				System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
 			}
 		}
@@ -891,9 +891,11 @@ public class QueryServiceImpl implements QueryService {
 	 * (java.lang.String)
 	 */
 	@Override
-	public Page<StockCurrent> findStockCurrentByCategoryName(String categoryName) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(termQuery("product.category.name.keyword", categoryName)).build();
+	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(String categoryName, String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
+				QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.category.name.keyword", categoryName))
+						.must(QueryBuilders.matchQuery("product.iDPcode", storeId)))
+				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 
 	}
@@ -905,7 +907,7 @@ public class QueryServiceImpl implements QueryService {
 	 * com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
 	 * lang.String, org.springframework.data.domain.Pageable)
 	 */
-	@Override
+	/*@Override
 	public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
 
@@ -924,5 +926,5 @@ public class QueryServiceImpl implements QueryService {
 
 		return new PageImpl(notAuxProducts);
 	}
-
+*/
 }
