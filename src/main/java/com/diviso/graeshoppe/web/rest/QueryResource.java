@@ -419,20 +419,23 @@ public class QueryResource {
 	}*/
 
 	
-	@GetMapping("/findByNearestLocation/{latLon}/{kiloMeter}")
-	public Page<Store> searchByNearestLocation(@PathVariable String latLon, @PathVariable Double kiloMeter,Pageable pageable) {
-
-		String[] latLons = latLon.split(",");
-
-		double lat = Double.parseDouble(latLons[0]);
-
-		double lon = Double.parseDouble(latLons[1]);
-
-		log.info("........lat........................  "+lat+"................lon.........   "+lon);
-		
-		return queryService.findByLocationNear(new Point(lat, lon), new Distance(kiloMeter, Metrics.KILOMETERS),pageable);
-	}
-
+	/*
+	 * @GetMapping("/findByNearestLocation/{latLon}/{kiloMeter}") public Page<Store>
+	 * searchByNearestLocation(@PathVariable String latLon, @PathVariable Double
+	 * kiloMeter,Pageable pageable) {
+	 * 
+	 * String[] latLons = latLon.split(",");
+	 * 
+	 * double lat = Double.parseDouble(latLons[0]);
+	 * 
+	 * double lon = Double.parseDouble(latLons[1]);
+	 * 
+	 * log.info("........lat........................  "
+	 * +lat+"................lon.........   "+lon);
+	 * 
+	 * return queryService.findByLocationNear(new Point(lat, lon), new
+	 * Distance(kiloMeter, Metrics.KILOMETERS),pageable); }
+	 */
 
 	@GetMapping("/auxilaries-productId/{productId}")
 	public Page<AuxilaryLineItem> findAuxilariesByProductId(@PathVariable Long productId){
