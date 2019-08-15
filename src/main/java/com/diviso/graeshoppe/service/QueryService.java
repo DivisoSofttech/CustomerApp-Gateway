@@ -168,4 +168,11 @@ public interface QueryService {
 	public StoreSettings getStoreSettings(String IDPCode);
 
 	public StoreAddress getStoreAddress(String iDPCode);
+
+	/**
+	 * @param iDPcode
+	 * @param pageable
+	 * @return
+	 */
+	public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable);
 }
