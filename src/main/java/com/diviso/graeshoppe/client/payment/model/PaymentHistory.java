@@ -16,7 +16,7 @@ import javax.validation.constraints.*;
  * PaymentHistory
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-12T12:34:53.739015+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T15:41:55.844377+05:30[Asia/Kolkata]")
 
 public class PaymentHistory   {
   @JsonProperty("count")

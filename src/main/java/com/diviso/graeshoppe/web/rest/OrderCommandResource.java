@@ -23,7 +23,6 @@ import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
-import com.diviso.graeshoppe.client.order.model.ProcessPaymentRequest;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.client.order.model.AcceptOrderRequest;
@@ -61,6 +60,8 @@ public class OrderCommandResource {
 		orderDTO.setCustomerId(order.getCustomerId());
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setEmail(order.getEmail());
+		orderDTO.setStatusId(2l);
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
@@ -107,8 +108,8 @@ public class OrderCommandResource {
 		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
 		deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
+		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
 		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO);
-		// updateDeliveryInfo(deliveryInfoResult.getBody());
 		long deliveryId = deliveryInfoResult.getBody().getSelfId();
 		OrderDTO orderResult = orderCommandResourceApi.getOrderUsingGET(orderId).getBody();
 		orderResult.setDeliveryInfoId(deliveryId);
@@ -125,34 +126,23 @@ public class OrderCommandResource {
 
 	}
 
-	@PostMapping("/acceptOrder/{taskId}")
-	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
-		return approvalDetailsApi.createApprovalDetailsUsingPOST(taskId, approvalDetailsDTO);
+	@PostMapping("/acceptOrder/{taskId}/{orderId}")
+	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@PathVariable String orderId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
+		ResponseEntity<CommandResource> resource= approvalDetailsApi.createApprovalDetailsUsingPOST(taskId, approvalDetailsDTO);
+		Order order=queryService.findOrderByOrderId(orderId);
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setId(order.getId());
+		orderDTO.setOrderId(order.getOrderId());
+		orderDTO.setCustomerId(order.getCustomerId());
+		orderDTO.setStoreId(order.getStoreId());
+		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setEmail(order.getEmail());
+		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
+		orderDTO.setApprovalDetailsId(resource.getBody().getSelfId());
+		orderDTO.setStatusId(4l);
+		updateOrder(orderDTO);
+		return resource;
 	}
-
-//	@PostMapping("/process-payment")
-//	public ResponseEntity<CommandResource> getProcessPayment(@RequestBody ProcessPaymentRequest processPaymentRequest) {
-//		return orderCommandResourceApi.processPaymentUsingPOST(processPaymentRequest);
-//	}
-
-	/*
-	 * @PostMapping("/orders/makePayment/{taskId}/{orderId}") public
-	 * ResponseEntity<CommandResource> createPayment(@RequestBody OrderPaymentDTO
-	 * paymentDTO,
-	 * 
-	 * @PathVariable String taskId, @PathVariable Long orderId) {
-	 * ResponseEntity<PaymentDTO> payment =
-	 * paymentCommandResourceApi.createPaymentUsingPOST(paymentDTO); OrderDTO
-	 * orderResult = orderCommandResourceApi.getOrderUsingGET(orderId).getBody();
-	 * orderResult.setPaymentId(payment.getBody().getId());
-	 * updateOrder(orderResult); return
-	 * paymentCommandResourceApi.makePaymentUsingPOST(paymentDTO.getStatus(),
-	 * taskId);
-	 * 
-	 * }
-	 */
-
-	/////////////////////////////////////////////////////////////////////////////
 
 	public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) {
 
@@ -173,8 +163,7 @@ public class OrderCommandResource {
 		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 	}
 
-	@PutMapping("/updateOrder")
-	public ResponseEntity<OrderDTO> updateOrder(@RequestBody OrderDTO orderDTO) {
+	public ResponseEntity<OrderDTO> updateOrder(OrderDTO orderDTO) {
 		return orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 	}
 
