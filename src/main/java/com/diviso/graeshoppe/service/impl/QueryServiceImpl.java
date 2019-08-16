@@ -255,7 +255,7 @@ public class QueryServiceImpl implements QueryService {
 						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
 				.build();
 
-		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
+		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
 
 		TermsAggregation orderAgg = result.getAggregation("category", TermsAggregation.class);
 
