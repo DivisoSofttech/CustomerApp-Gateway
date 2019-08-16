@@ -246,31 +246,32 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public List<Entry> findCategoryAndCountByStoreId(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())    
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
-				.addAggregation(AggregationBuilders.terms("category").field("category.name.keyword")
+				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
 								true))
-						.subAggregation(AggregationBuilders.avg("avgPrice").field("storageCost"))
-						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
+						.subAggregation(AggregationBuilders.terms("store").field("storeId.keyword")))
 				.build();
 
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
 
-		TermsAggregation orderAgg = result.getAggregation("category", TermsAggregation.class);
+		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
 
 		orderAgg.getBuckets().forEach(bucket -> {
-
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
 			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
 					bucket.getCount(), averagePrice));
 			System.out.println("SSSSSSSSSSSSSSSSSS"
 					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
+			i++;
 			System.out.println(
 					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
 		return orderAgg.getBuckets();
+
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
