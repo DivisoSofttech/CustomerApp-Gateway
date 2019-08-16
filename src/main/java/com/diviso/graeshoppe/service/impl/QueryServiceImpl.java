@@ -252,7 +252,7 @@ public class QueryServiceImpl implements QueryService {
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
 								true))
 						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
-						.subAggregation(AggregationBuilders.terms("store").field("storeId.keyword")))
+						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
 				.build();
 
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
