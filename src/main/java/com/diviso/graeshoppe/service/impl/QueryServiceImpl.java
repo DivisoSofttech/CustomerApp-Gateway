@@ -244,6 +244,35 @@ public class QueryServiceImpl implements QueryService {
 
 	}
 
+	@Override
+	public List<Entry> findCategoryAndCountByStoreId(Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())    
+				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
+				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
+						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
+								true))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("buyPrice"))
+						.subAggregation(AggregationBuilders.terms("store").field("storeId.keyword")))
+				.build();
+
+		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
+
+		TermsAggregation orderAgg = result.getAggregation("product", TermsAggregation.class);
+
+		orderAgg.getBuckets().forEach(bucket -> {
+
+			int i = 0;
+			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
+			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
+					bucket.getCount(), averagePrice));
+			System.out.println("SSSSSSSSSSSSSSSSSS"
+					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
+			System.out.println(
+					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
+		});
+		return orderAgg.getBuckets();
+	}
+
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
@@ -907,24 +936,25 @@ public class QueryServiceImpl implements QueryService {
 	 * com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
 	 * lang.String, org.springframework.data.domain.Pageable)
 	 */
-	/*@Override
-	public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
-
-		List<Product> products = elasticsearchOperations.queryForList(searchQuery, Product.class);
-
-		List<Product> notAuxProducts = new ArrayList<Product>();
-
-		products.forEach(p -> {
-
-			if ((p.isIsAuxilaryItem() == false)) {
-
-				notAuxProducts.add(p);
-			}
-
-		});
-
-		return new PageImpl(notAuxProducts);
-	}
-*/
+	/*
+	 * @Override public Page<Product> findNotAuxilaryProducts(String iDPcode,
+	 * Pageable pageable) { SearchQuery searchQuery = new
+	 * NativeSearchQueryBuilder().withQuery(termQuery("iDPcode",
+	 * iDPcode)).build();
+	 * 
+	 * List<Product> products =
+	 * elasticsearchOperations.queryForList(searchQuery, Product.class);
+	 * 
+	 * List<Product> notAuxProducts = new ArrayList<Product>();
+	 * 
+	 * products.forEach(p -> {
+	 * 
+	 * if ((p.isIsAuxilaryItem() == false)) {
+	 * 
+	 * notAuxProducts.add(p); }
+	 * 
+	 * });
+	 * 
+	 * return new PageImpl(notAuxProducts); }
+	 */
 }
