@@ -245,7 +245,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCountByStoreId(Pageable pageable) {
+	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
 				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
@@ -259,19 +259,30 @@ public class QueryServiceImpl implements QueryService {
 
 		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
 
+		List<Entry> storeBasedEntry = new ArrayList<Entry>();
+
 		orderAgg.getBuckets().forEach(bucket -> {
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
+
 			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
 					bucket.getCount(), averagePrice));
+
 			System.out.println("SSSSSSSSSSSSSSSSSS"
 					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
+
+			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
+					.getKeyAsString();
+			if (storeName.equals(storeId)) {
+				Entry storeEntry = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i);
+				storeBasedEntry.add(storeEntry);
+			}
 			i++;
 			System.out.println(
 					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
-		return orderAgg.getBuckets();
-
+		//return orderAgg.getBuckets();
+		return storeBasedEntry;
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {

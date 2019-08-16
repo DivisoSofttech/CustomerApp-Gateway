@@ -170,10 +170,11 @@ public interface QueryService {
 	public StoreAddress getStoreAddress(String iDPCode);
 
 	/**
+	 * @param storeId 
 	 * @param pageable
 	 * @return
 	 */
-	public List<Entry> findCategoryAndCountByStoreId(Pageable pageable);
+	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
 
 	/**
 	 * @param iDPcode
