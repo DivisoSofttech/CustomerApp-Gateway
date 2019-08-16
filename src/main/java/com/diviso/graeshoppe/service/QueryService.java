@@ -174,7 +174,7 @@ public interface QueryService {
 	 * @param pageable
 	 * @return
 	 */
-	public List<Entry> findCategoryAndCountByStoreId(String storeId,String customerId, Pageable pageable);
+	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
 
 	/**
 	 * @param iDPcode

@@ -249,7 +249,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, String customerId,Pageable pageable) {
+	public List<Entry> findCategoryAndCountByStoreId(String storeId,Pageable pageable) {
 		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				
@@ -292,7 +292,7 @@ public class QueryServiceImpl implements QueryService {
 			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
 					.getKeyAsString();
 			
-			if ((bucket.getKey().equals(customerId))&&(storeName.equals(storeId))) {
+			if (storeName.equals(storeId)) {
 				
 				Entry storeEntry = bucket;
 				
