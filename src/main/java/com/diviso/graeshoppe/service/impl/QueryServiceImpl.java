@@ -248,7 +248,7 @@ public class QueryServiceImpl implements QueryService {
 	public List<Entry> findCategoryAndCountByStoreId(Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())    
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
-				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
+				.addAggregation(AggregationBuilders.terms("category").field("category.name.keyword")
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
 								true))
 						.subAggregation(AggregationBuilders.avg("avgPrice").field("buyPrice"))
@@ -257,7 +257,7 @@ public class QueryServiceImpl implements QueryService {
 
 		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
 
-		TermsAggregation orderAgg = result.getAggregation("product", TermsAggregation.class);
+		TermsAggregation orderAgg = result.getAggregation("category", TermsAggregation.class);
 
 		orderAgg.getBuckets().forEach(bucket -> {
 
