@@ -292,7 +292,7 @@ public class QueryServiceImpl implements QueryService {
 			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
 					.getKeyAsString();
 			
-			if (storeName.equals(storeId)) {
+			if ((bucket.getKey().equals(customerId))&&(storeName.equals(storeId))) {
 				
 				Entry storeEntry = bucket;
 				
