@@ -271,14 +271,14 @@ public class QueryServiceImpl implements QueryService {
 
 		List<Entry> storeBasedEntry = new ArrayList<Entry>();
 
-		List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
+		/*List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
 		.filter(bucket->  bucket.getAggregation("store", TermsAggregation.class).getBuckets()
 				.stream()
 				.filter(subbucket-> subbucket.getKey().equals(storeId)).findFirst().isPresent()
 				).collect(Collectors.toList());
+		*/
 		
-		
-/*		orderAgg.getBuckets().forEach(bucket -> {
+		orderAgg.getBuckets().forEach(bucket -> {
 			
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
@@ -303,7 +303,7 @@ public class QueryServiceImpl implements QueryService {
 					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
 		// return orderAgg.getBuckets();
-*/		return listentry;
+	return storeBasedEntry;
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
