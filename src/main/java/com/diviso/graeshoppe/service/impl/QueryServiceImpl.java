@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.swing.text.DefaultEditorKit.CutAction;
 
@@ -236,22 +237,31 @@ public class QueryServiceImpl implements QueryService {
 				.withSearchType(QUERY_THEN_FETCH)
 
 				.withIndices("product").withTypes("product")
+				
 				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")).build();
 
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
+		
 		TermsAggregation categoryAggregation = result.getAggregation("totalcategories", TermsAggregation.class);
+		
 		return categoryAggregation.getBuckets();
 
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
+	public List<Entry> findCategoryAndCountByStoreId(String storeId, String customerId,Pageable pageable) {
+		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
+				
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
+				
 				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
+						
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
+								
 								true))
 						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
+						
 						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
 				.build();
 
@@ -261,7 +271,15 @@ public class QueryServiceImpl implements QueryService {
 
 		List<Entry> storeBasedEntry = new ArrayList<Entry>();
 
-		orderAgg.getBuckets().forEach(bucket -> {
+		List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
+		.filter(bucket->  bucket.getAggregation("store", TermsAggregation.class).getBuckets()
+				.stream()
+				.filter(subbucket-> subbucket.getKey().equals(storeId)).findFirst().isPresent()
+				).collect(Collectors.toList());
+		
+		
+/*		orderAgg.getBuckets().forEach(bucket -> {
+			
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
 
@@ -273,16 +291,19 @@ public class QueryServiceImpl implements QueryService {
 
 			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
 					.getKeyAsString();
+			
 			if (storeName.equals(storeId)) {
+				
 				Entry storeEntry = bucket;
+				
 				storeBasedEntry.add(storeEntry);
 			}
 			i++;
 			System.out.println(
 					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
-		//return orderAgg.getBuckets();
-		return storeBasedEntry;
+		// return orderAgg.getBuckets();
+*/		return listentry;
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
