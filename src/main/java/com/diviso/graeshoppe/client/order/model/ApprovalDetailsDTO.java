@@ -22,6 +22,12 @@ public class ApprovalDetailsDTO   {
 
   @JsonProperty("decision")
   private String decision = null;
+  @JsonProperty("customerId")
+
+  private String customerId;
+  @JsonProperty("orderId")
+
+  private String orderId;
 
   @JsonProperty("expectedDelivery")
   private OffsetDateTime expectedDelivery = null;

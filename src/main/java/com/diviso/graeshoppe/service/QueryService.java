@@ -169,6 +169,8 @@ public interface QueryService {
 
 	public StoreAddress getStoreAddress(String iDPCode);
 
+	Long findOrderCountByCustomerId(String customerId, Pageable pageable);
+
 	/**
 	 * @param iDPcode
 	 * @param pageable
