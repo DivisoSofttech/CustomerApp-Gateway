@@ -251,7 +251,7 @@ public class QueryServiceImpl implements QueryService {
 				.addAggregation(AggregationBuilders.terms("category").field("category.name.keyword")
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
 								true))
-						.subAggregation(AggregationBuilders.avg("avgPrice").field("buyPrice"))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("storageCost"))
 						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
 				.build();
 
