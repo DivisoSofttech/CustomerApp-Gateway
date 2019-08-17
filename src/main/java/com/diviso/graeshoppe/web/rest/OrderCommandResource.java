@@ -22,6 +22,7 @@ import com.diviso.graeshoppe.client.order.api.AddressResourceApi;
 import com.diviso.graeshoppe.client.order.api.ApprovalDetailsResourceApi;
 import com.diviso.graeshoppe.client.order.api.AuxilaryOrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
+import com.diviso.graeshoppe.client.order.api.OfferResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
@@ -55,6 +56,9 @@ public class OrderCommandResource {
 	private AuxilaryOrderLineResourceApi auxilaryOrderLineApi;
 	@Autowired
 	private DeliveryInfoResourceApi deliveryInfoCommandApi;
+	
+	@Autowired
+	private OfferResourceApi offerResourceApi;
 	@Autowired
 	private QueryService queryService;
 
@@ -95,6 +99,7 @@ public class OrderCommandResource {
 			OfferDTO offerDTO=new OfferDTO();
 			offerDTO.setOfferRef(offer.getOfferRef());
 			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
+			createOfferLine(offerDTO);
 		});
 
 		return orderDTOResponse;
@@ -102,6 +107,10 @@ public class OrderCommandResource {
 
 	public ResponseEntity<AuxilaryOrderLineDTO> createAuxilaryLineItem(AuxilaryOrderLineDTO auxilaryOrderLineDTO) {
 		return auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
+	}
+	
+	public ResponseEntity<OfferDTO> createOfferLine(OfferDTO offerDTO) {
+		return offerResourceApi.createOfferUsingPOST(offerDTO);
 	}
 
 	@GetMapping("/orders/addresses/{customerId}")
