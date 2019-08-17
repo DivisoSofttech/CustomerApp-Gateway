@@ -72,7 +72,7 @@ public class OrderCommandResource {
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
-		orderDTO.setStatusId(2l);
+		orderDTO.setStatusId(1l);
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
@@ -110,6 +110,7 @@ public class OrderCommandResource {
 	}
 	
 	public ResponseEntity<OfferDTO> createOfferLine(OfferDTO offerDTO) {
+		LOG.info("OfferDTO in create Offerline is "+offerDTO);
 		return offerResourceApi.createOfferUsingPOST(offerDTO);
 	}
 
@@ -138,9 +139,9 @@ public class OrderCommandResource {
 		orderResult.setDeliveryInfoId(deliveryId);
 		ResponseEntity<CommandResource> result = deliveryInfoResult;
 		if (result.getBody().getNextTaskName().equals("Accept Order")) {
-			orderResult.setStatusId(3l);
+			orderResult.setStatusId(2l);
 		} else if (result.getBody().getNextTaskName().equals("Process Payment")) {
-			orderResult.setStatusId(4l);
+			orderResult.setStatusId(3l);
 
 		}
 		System.out.println("The updated order is " + orderResult.getStatusId());
@@ -149,10 +150,10 @@ public class OrderCommandResource {
 
 	}
 
-	@PostMapping("/acceptOrder/{taskId}/{orderId}")
-	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@PathVariable String orderId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
+	@PostMapping("/acceptOrder/{taskId}")
+	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
 		ResponseEntity<CommandResource> resource= approvalDetailsApi.createApprovalDetailsUsingPOST(taskId, approvalDetailsDTO);
-		Order order=queryService.findOrderByOrderId(orderId);
+		Order order=queryService.findOrderByOrderId(approvalDetailsDTO.getOrderId());
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setId(order.getId());
 		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
@@ -163,7 +164,7 @@ public class OrderCommandResource {
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
 		orderDTO.setApprovalDetailsId(resource.getBody().getSelfId());
-		orderDTO.setStatusId(4l);
+		orderDTO.setStatusId(3l);
 		updateOrder(orderDTO);
 		return resource;
 	}
