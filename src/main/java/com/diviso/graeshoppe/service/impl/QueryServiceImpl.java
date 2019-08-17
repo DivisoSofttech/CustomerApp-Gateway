@@ -981,7 +981,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Order> findOrderByStatusName(String statusName) {
 	
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("status.name.keyword", statusName)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("status.name.keyword", statusName)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
