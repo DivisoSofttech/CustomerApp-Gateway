@@ -875,8 +875,7 @@ public class QueryServiceImpl implements QueryService {
 
 		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
 		TermsAggregation categoryAggregation = result.getAggregation("customerorder", TermsAggregation.class);
-		count = categoryAggregation.getBuckets().stream().filter(entry -> entry.getKey().equals(customerId)).findFirst()
-				.get().getCount();
+		count =	categoryAggregation.getBuckets().stream().filter(entry -> entry.getKey().equals(customerId)).findFirst().get().getCount();
 
 		return count;
 
