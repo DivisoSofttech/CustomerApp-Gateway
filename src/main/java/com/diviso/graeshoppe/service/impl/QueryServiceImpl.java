@@ -864,7 +864,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Long findOrderCountByCustomerId(String customerId, Pageable pageable) {
+	public Long findOrderCountByCustomerId(String customerId) {
 		Long count = 0l;
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				.withSearchType(QUERY_THEN_FETCH)

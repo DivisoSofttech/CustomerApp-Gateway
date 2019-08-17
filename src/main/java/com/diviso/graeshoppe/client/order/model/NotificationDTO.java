@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * NotificationDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-17T09:48:32.789772+05:30[Asia/Kolkata]")
 
 public class NotificationDTO   {
   @JsonProperty("date")
@@ -31,6 +31,12 @@ public class NotificationDTO   {
 
   @JsonProperty("message")
   private String message = null;
+
+  @JsonProperty("receiverId")
+  private String receiverId = null;
+
+  @JsonProperty("status")
+  private String status = null;
 
   @JsonProperty("targetId")
   private String targetId = null;
@@ -142,6 +148,46 @@ public class NotificationDTO   {
     this.message = message;
   }
 
+  public NotificationDTO receiverId(String receiverId) {
+    this.receiverId = receiverId;
+    return this;
+  }
+
+  /**
+   * Get receiverId
+   * @return receiverId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getReceiverId() {
+    return receiverId;
+  }
+
+  public void setReceiverId(String receiverId) {
+    this.receiverId = receiverId;
+  }
+
+  public NotificationDTO status(String status) {
+    this.status = status;
+    return this;
+  }
+
+  /**
+   * Get status
+   * @return status
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getStatus() {
+    return status;
+  }
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
   public NotificationDTO targetId(String targetId) {
     this.targetId = targetId;
     return this;
@@ -217,6 +263,8 @@ public class NotificationDTO   {
         Objects.equals(this.image, notificationDTO.image) &&
         Objects.equals(this.imageContentType, notificationDTO.imageContentType) &&
         Objects.equals(this.message, notificationDTO.message) &&
+        Objects.equals(this.receiverId, notificationDTO.receiverId) &&
+        Objects.equals(this.status, notificationDTO.status) &&
         Objects.equals(this.targetId, notificationDTO.targetId) &&
         Objects.equals(this.title, notificationDTO.title) &&
         Objects.equals(this.type, notificationDTO.type);
@@ -224,7 +272,7 @@ public class NotificationDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(date, id, image, imageContentType, message, targetId, title, type);
+    return Objects.hash(date, id, image, imageContentType, message, receiverId, status, targetId, title, type);
   }
 
   @Override
@@ -237,6 +285,8 @@ public class NotificationDTO   {
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
     sb.append("    message: ").append(toIndentedString(message)).append("\n");
+    sb.append("    receiverId: ").append(toIndentedString(receiverId)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
     sb.append("    title: ").append(toIndentedString(title)).append("\n");
     sb.append("    type: ").append(toIndentedString(type)).append("\n");
