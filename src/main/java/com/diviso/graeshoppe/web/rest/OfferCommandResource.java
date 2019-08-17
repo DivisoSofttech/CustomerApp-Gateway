@@ -1,5 +1,7 @@
 package com.diviso.graeshoppe.web.rest;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.offer.api.AggregateCommandResourceApi;
 import com.diviso.graeshoppe.client.offer.model.OrderModel;
+import com.diviso.graeshoppe.client.order.api.ReportQueryResourceApi;
 import com.diviso.graeshoppe.service.QueryService;
 
 @RestController
@@ -22,10 +25,13 @@ public class OfferCommandResource {
 	@Autowired
 	private QueryService queryService;
 	
+	@Autowired
+	private ReportQueryResourceApi reportQueryResource;
+	
 	@PostMapping("/claimOffer/{customerId}")
 	public ResponseEntity<OrderModel> checkOfferEligibility(@RequestBody OrderModel orderModel,@PathVariable String customerId) {
-		Long count=queryService.findOrderCountByCustomerId(customerId);
-		orderModel.setOrderNumber(count+1);
+		ResponseEntity<Long> count=reportQueryResource.findOrderCountByCustomerIdUsingGET(customerId, 1, 1, new ArrayList<>());
+		orderModel.setOrderNumber(count.getBody()+1);
 		orderModel.setPromoCode("SUPER20");
 		
 		ResponseEntity<OrderModel> result=aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
