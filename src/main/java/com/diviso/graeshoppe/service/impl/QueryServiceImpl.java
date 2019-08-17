@@ -990,7 +990,7 @@ public class QueryServiceImpl implements QueryService {
 	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryinfobydatebetween(java.time.Instant, java.time.Instant)
 	 */
 	@Override
-	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Long from, Long to) {
+	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("id").gte(from).lte(to))
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).build();
 

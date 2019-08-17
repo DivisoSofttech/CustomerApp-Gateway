@@ -494,7 +494,7 @@ public class QueryResource {
 	}
 	//..........test............
 	@GetMapping("/deliveryinfo/{from}/{to}")
-	public Page<DeliveryInfo> findDeliveryInfoByFromDateTo(@PathVariable Long from,@PathVariable Long to){
+	public Page<DeliveryInfo> findDeliveryInfoByFromDateTo(@PathVariable Instant from,@PathVariable Instant to){
 		return queryService.findDeliveryinfobydatebetween(from,to);
 	}
 	
