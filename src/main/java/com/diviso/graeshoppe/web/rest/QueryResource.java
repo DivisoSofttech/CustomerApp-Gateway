@@ -492,10 +492,10 @@ public class QueryResource {
 	public Page<Order> findOrderByStatusName(@PathVariable String statusName,Pageable pageable){
 		return queryService.findOrderByStatusName(statusName);
 	}
-	//..........test............
-	@GetMapping("/deliveryinfo/{from}/{to}")
-	public Page<DeliveryInfo> findDeliveryInfoByFromDateTo(@PathVariable Instant from,@PathVariable Instant to){
-		return queryService.findDeliveryinfobydatebetween(from,to);
+
+	@GetMapping("/order/{from}/{to}/{storeId}")
+	public Page<Order> findOrderByDatebetweenAndStoreId(@PathVariable Instant from,@PathVariable Instant to,@PathVariable String storeId){
+		return queryService.findOrderByDatebetweenAndStoreId(from,to,storeId);
 	}
 	
 	/*@GetMapping("/not-aux-product/{iDPcode}")

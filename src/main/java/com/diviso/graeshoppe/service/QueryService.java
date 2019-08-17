@@ -189,7 +189,7 @@ public interface QueryService {
 	 * @param to
 	 * @return
 	 */
-	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to);
+	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId);
 
 	
 
