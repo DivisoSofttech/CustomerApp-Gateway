@@ -72,7 +72,7 @@ public class OrderCommandResource {
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
-		orderDTO.setStatusId(2l);
+		orderDTO.setStatusId(1l);
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
@@ -139,9 +139,9 @@ public class OrderCommandResource {
 		orderResult.setDeliveryInfoId(deliveryId);
 		ResponseEntity<CommandResource> result = deliveryInfoResult;
 		if (result.getBody().getNextTaskName().equals("Accept Order")) {
-			orderResult.setStatusId(3l);
+			orderResult.setStatusId(2l);
 		} else if (result.getBody().getNextTaskName().equals("Process Payment")) {
-			orderResult.setStatusId(4l);
+			orderResult.setStatusId(3l);
 
 		}
 		System.out.println("The updated order is " + orderResult.getStatusId());
