@@ -164,7 +164,7 @@ public class OrderCommandResource {
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
 		orderDTO.setApprovalDetailsId(resource.getBody().getSelfId());
-		orderDTO.setStatusId(4l);
+		orderDTO.setStatusId(3l);
 		updateOrder(orderDTO);
 		return resource;
 	}
