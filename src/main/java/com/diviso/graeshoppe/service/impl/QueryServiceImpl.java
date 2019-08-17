@@ -139,8 +139,7 @@ public class QueryServiceImpl implements QueryService {
 	 * List<Result> values = new ArrayList<Result>(); ;
 	 * 
 	 * SearchQuery searchQuery = new NativeSearchQueryBuilder()
-	 * .withQuery(matchQuery("name",
-	 * searchTerm).fuzziness(Fuzziness.TWO)).build();
+	 * .withQuery(matchQuery("name", searchTerm).fuzziness(Fuzziness.TWO)).build();
 	 * 
 	 * elasticsearchTemplate.query(searchQuery, new
 	 * JestResultsExtractor<List<Result>>() {
@@ -150,8 +149,7 @@ public class QueryServiceImpl implements QueryService {
 	 * for (SearchResult.Hit<JsonObject, Void> searchHit :
 	 * response.getHits(JsonObject.class)) { Result result = new Result(); //
 	 * sampleEntity.setId(searchHit.source.get(JestResult.ES_METADATA_ID).
-	 * getAsString());
-	 * result.setName(searchHit.source.get("name").getAsString());
+	 * getAsString()); result.setName(searchHit.source.get("name").getAsString());
 	 * 
 	 * values.add(result);
 	 * 
@@ -373,8 +371,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllProductByName(java.
 	 * lang. String)
 	 */
 	@Override
@@ -431,8 +428,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
 	 * String)
 	 */
 	@Override
@@ -446,8 +442,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByType(java.lang.
 	 * String)
 	 */
 	@Override
@@ -584,8 +579,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
+	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByOrderId(java.lang.
 	 * String)
 	 */
 	@Override
@@ -648,8 +642,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreByRating(java.lang.
 	 * Double)
 	 */
 	@Override
@@ -834,8 +827,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findStoreTypeByStoreId(java.
+	 * @see com.diviso.graeshoppe.service.QueryService#findStoreTypeByStoreId(java.
 	 * lang.String, org.springframework.data.domain.Pageable)
 	 */
 	@Override
@@ -849,8 +841,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findProductsByCategoryName(
+	 * @see com.diviso.graeshoppe.service.QueryService#findProductsByCategoryName(
 	 * java.lang.String)
 	 */
 	@Override
@@ -871,10 +862,28 @@ public class QueryServiceImpl implements QueryService {
 
 		return new PageImpl(categoryNameBasedProduct);
 	}
+
+	@Override
+	public Long findOrderCountByCustomerId(String customerId, Pageable pageable) {
+		Long count = 0l;
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
+				.withSearchType(QUERY_THEN_FETCH)
+
+				.withIndices("order").withTypes("order")
+				.addAggregation(AggregationBuilders.terms("customerorder").field("customerId.keyword")).build();
+
+		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
+		TermsAggregation categoryAggregation = result.getAggregation("customerorder", TermsAggregation.class);
+		count = categoryAggregation.getBuckets().stream().filter(entry -> entry.getKey().equals(customerId)).findFirst()
+				.get().getCount();
+
+		return count;
+
+	}
 	/*
-	 * @Override public List<Entry> findAllDeliveryCountByStoreId(String
-	 * storeId, Pageable pageable) { List<String> carList = new
-	 * ArrayList<String>(); SearchQuery searchQuery = new
+	 * @Override public List<Entry> findAllDeliveryCountByStoreId(String storeId,
+	 * Pageable pageable) { List<String> carList = new ArrayList<String>();
+	 * SearchQuery searchQuery = new
 	 * NativeSearchQueryBuilder().withQuery(matchAllQuery())
 	 * .withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
 	 * .addAggregation(AggregationBuilders.terms("storeId").field(
@@ -888,8 +897,8 @@ public class QueryServiceImpl implements QueryService {
 	 * MetricAggregation result = elasticsearchTemplate.query(searchQuery, new
 	 * JestResultsExtractor<MetricAggregation>() {
 	 * 
-	 * @Override public MetricAggregation extract(SearchResult response) {
-	 * return response.getAggregations(); } });
+	 * @Override public MetricAggregation extract(SearchResult response) { return
+	 * response.getAggregations(); } });
 	 * 
 	 * TermsAggregation colourtAgg = result.getTermsAggregation("storeId");
 	 * 
@@ -898,8 +907,8 @@ public class QueryServiceImpl implements QueryService {
 	 * double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
 	 * System.out.println(String.
 	 * format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
-	 * bucket.getCount(), averagePrice));
-	 * System.out.println("SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make",
+	 * bucket.getCount(), averagePrice)); System.out.println("SSSSSSSSSSSSSSSSSS" +
+	 * bucket.getAggregation("make",
 	 * TermsAggregation.class).getBuckets().get(1).getKeyAsString());
 	 * System.out.println( "SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("make",
 	 * TermsAggregation.class).getBuckets().size()); }); return
@@ -917,8 +926,7 @@ public class QueryServiceImpl implements QueryService {
 	 * @Override public Page<Store> findByLocationNear(Point point, Distance
 	 * distance,Pageable pageable) {
 	 * 
-	 * return storeSearchrepository.findByLocationNear(point,distance,pageable);
-	 * }
+	 * return storeSearchrepository.findByLocationNear(point,distance,pageable); }
 	 */
 
 	public StoreSettings getStoreSettings(String IDPCode) {
@@ -938,8 +946,7 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(
+	 * @see com.diviso.graeshoppe.service.QueryService#findAllAuxilariesByProductId(
 	 * java.lang.Long)
 	 */
 	@Override
@@ -970,18 +977,19 @@ public class QueryServiceImpl implements QueryService {
 	/*
 	 * (non-Javadoc)
 	 * 
-	 * @see
-	 * com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
+	 * @see com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
 	 * lang.String, org.springframework.data.domain.Pageable)
 	 */
 	/*
 	 * @Override public Page<Product> findNotAuxilaryProducts(String iDPcode,
 	 * Pageable pageable) { SearchQuery searchQuery = new
+
 	 * NativeSearchQueryBuilder().withQuery(termQuery("iDPcode",
 	 * iDPcode)).build();
 	 * 
 	 * List<Product> products =
 	 * elasticsearchOperations.queryForList(searchQuery, Product.class);
+
 	 * 
 	 * List<Product> notAuxProducts = new ArrayList<Product>();
 	 * 

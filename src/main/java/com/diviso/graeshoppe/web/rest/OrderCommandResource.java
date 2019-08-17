@@ -1,6 +1,8 @@
 package com.diviso.graeshoppe.web.rest;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,6 +35,7 @@ import com.diviso.graeshoppe.client.order.model.ApprovalDetailsDTO;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLineDTO;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
+import com.diviso.graeshoppe.client.order.model.OfferDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
 
 @RestController
@@ -81,6 +84,12 @@ public class OrderCommandResource {
 				createAuxilaryLineItem(auxilaryOrderLineDTO);
 			});
 
+		});
+		
+		order.getAppliedOffers().forEach(offer ->{
+			OfferDTO offerDTO=new OfferDTO();
+			offerDTO.setOfferRef(offer.getOfferRef());
+			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 		});
 
 		return orderDTOResponse;
@@ -132,6 +141,7 @@ public class OrderCommandResource {
 		Order order=queryService.findOrderByOrderId(orderId);
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setId(order.getId());
+		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
 		orderDTO.setOrderId(order.getOrderId());
 		orderDTO.setCustomerId(order.getCustomerId());
 		orderDTO.setStoreId(order.getStoreId());
