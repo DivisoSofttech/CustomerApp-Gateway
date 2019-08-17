@@ -75,7 +75,6 @@ public class PaymentCommandResource {
 	@PostMapping("/processPayment")
 	public ResponseEntity<CommandResource> processPayment(@RequestBody ProcessPaymentRequest processPaymentRequest) {
 		
-		
 		return paymentResourceApi.processPaymentUsingPOST(processPaymentRequest);
 	}
 	

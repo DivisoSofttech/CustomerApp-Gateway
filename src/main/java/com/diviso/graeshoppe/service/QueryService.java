@@ -170,7 +170,7 @@ public interface QueryService {
 
 	public StoreAddress getStoreAddress(String iDPCode);
 
-	Long findOrderCountByCustomerId(String customerId, Pageable pageable);
+	Long findOrderCountByCustomerId(String customerId );
 
 	/**
 	 * @param storeId 

@@ -14,26 +14,26 @@ import javax.validation.constraints.*;
  * ApprovalDetailsDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-17T09:48:32.789772+05:30[Asia/Kolkata]")
 
 public class ApprovalDetailsDTO   {
   @JsonProperty("acceptedAt")
   private OffsetDateTime acceptedAt = null;
 
+  @JsonProperty("customerId")
+  private String customerId = null;
+
   @JsonProperty("decision")
   private String decision = null;
-  @JsonProperty("customerId")
-
-  private String customerId;
-  @JsonProperty("orderId")
-
-  private String orderId;
 
   @JsonProperty("expectedDelivery")
   private OffsetDateTime expectedDelivery = null;
 
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("orderId")
+  private String orderId = null;
 
   public ApprovalDetailsDTO acceptedAt(OffsetDateTime acceptedAt) {
     this.acceptedAt = acceptedAt;
@@ -54,6 +54,26 @@ public class ApprovalDetailsDTO   {
 
   public void setAcceptedAt(OffsetDateTime acceptedAt) {
     this.acceptedAt = acceptedAt;
+  }
+
+  public ApprovalDetailsDTO customerId(String customerId) {
+    this.customerId = customerId;
+    return this;
+  }
+
+  /**
+   * Get customerId
+   * @return customerId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getCustomerId() {
+    return customerId;
+  }
+
+  public void setCustomerId(String customerId) {
+    this.customerId = customerId;
   }
 
   public ApprovalDetailsDTO decision(String decision) {
@@ -117,6 +137,26 @@ public class ApprovalDetailsDTO   {
     this.id = id;
   }
 
+  public ApprovalDetailsDTO orderId(String orderId) {
+    this.orderId = orderId;
+    return this;
+  }
+
+  /**
+   * Get orderId
+   * @return orderId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getOrderId() {
+    return orderId;
+  }
+
+  public void setOrderId(String orderId) {
+    this.orderId = orderId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -128,14 +168,16 @@ public class ApprovalDetailsDTO   {
     }
     ApprovalDetailsDTO approvalDetailsDTO = (ApprovalDetailsDTO) o;
     return Objects.equals(this.acceptedAt, approvalDetailsDTO.acceptedAt) &&
+        Objects.equals(this.customerId, approvalDetailsDTO.customerId) &&
         Objects.equals(this.decision, approvalDetailsDTO.decision) &&
         Objects.equals(this.expectedDelivery, approvalDetailsDTO.expectedDelivery) &&
-        Objects.equals(this.id, approvalDetailsDTO.id);
+        Objects.equals(this.id, approvalDetailsDTO.id) &&
+        Objects.equals(this.orderId, approvalDetailsDTO.orderId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(acceptedAt, decision, expectedDelivery, id);
+    return Objects.hash(acceptedAt, customerId, decision, expectedDelivery, id, orderId);
   }
 
   @Override
@@ -144,9 +186,11 @@ public class ApprovalDetailsDTO   {
     sb.append("class ApprovalDetailsDTO {\n");
     
     sb.append("    acceptedAt: ").append(toIndentedString(acceptedAt)).append("\n");
+    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
     sb.append("    expectedDelivery: ").append(toIndentedString(expectedDelivery)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

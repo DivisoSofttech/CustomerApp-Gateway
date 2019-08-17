@@ -1,6 +1,6 @@
 package com.diviso.graeshoppe.client.order;
 
-
+import com.diviso.graeshoppe.client.ExcludeFromComponentScan;
 import feign.auth.BasicAuthRequestInterceptor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
@@ -15,8 +15,6 @@ import org.springframework.security.oauth2.client.token.grant.client.ClientCrede
 import org.springframework.security.oauth2.client.token.grant.code.AuthorizationCodeResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.implicit.ImplicitResourceDetails;
 import org.springframework.security.oauth2.client.token.grant.password.ResourceOwnerPasswordResourceDetails;
-
-import com.diviso.graeshoppe.client.ExcludeFromComponentScan;
 
 @Configuration
 @ExcludeFromComponentScan

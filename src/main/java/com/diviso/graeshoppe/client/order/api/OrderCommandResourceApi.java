@@ -5,9 +5,7 @@
  */
 package com.diviso.graeshoppe.client.order.api;
 
-import com.diviso.graeshoppe.client.order.model.AcceptOrderRequest;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
-import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -28,24 +26,10 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-17T09:48:32.789772+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderCommandResource", description = "the OrderCommandResource API")
 public interface OrderCommandResourceApi {
-
-    @ApiOperation(value = "acceptOrder", nickname = "acceptOrderUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CommandResource.class),
-        @ApiResponse(code = 201, message = "Created"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/acceptOrder",
-        produces = "*/*", 
-        consumes = "application/json",
-        method = RequestMethod.POST)
-    ResponseEntity<CommandResource> acceptOrderUsingPOST(@ApiParam(value = "acceptOrderRequest" ,required=true )  @Valid @RequestBody AcceptOrderRequest acceptOrderRequest);
-
 
     @ApiOperation(value = "createOrder", nickname = "createOrderUsingPOST", notes = "", response = CommandResource.class, tags={ "order-command-resource", })
     @ApiResponses(value = { 
@@ -106,19 +90,6 @@ public interface OrderCommandResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<List<OrderDTO>> searchOrdersUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
-
-
-    @ApiOperation(value = "sendNotification", nickname = "sendNotificationUsingPOST", notes = "", response = NotificationDTO.class, tags={ "order-command-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = NotificationDTO.class),
-        @ApiResponse(code = 201, message = "Created"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/sendNotification/{orderId}",
-        produces = "*/*", 
-        method = RequestMethod.POST)
-    ResponseEntity<NotificationDTO> sendNotificationUsingPOST(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId);
 
 
     @ApiOperation(value = "send", nickname = "sendUsingGET", notes = "", tags={ "order-command-resource", })
