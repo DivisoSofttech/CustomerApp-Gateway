@@ -36,7 +36,7 @@ public interface QueryService {
 
 	public Page<StockCurrent> findStockCurrentByProductId(Long productId, Pageable pageable);
 
-	public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pageable);
+	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable);
 
 	public Page<Review> findAllReviews(Pageable pageable);
 
@@ -175,6 +175,8 @@ public interface QueryService {
 	 * @return
 	 */
 	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
+
+	
 
 	/**
 	 * @param iDPcode

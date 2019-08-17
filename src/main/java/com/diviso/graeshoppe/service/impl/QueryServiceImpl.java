@@ -124,9 +124,14 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("product.name", name)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+	public Page<StockCurrent> findStockCurrentByProductName(String name,String storeId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.name", name))
+						.must(QueryBuilders.matchQuery("product.iDPcode", storeId)))
+				.build();
+		
+		return new PageImpl( elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class).stream()
+				.filter(stockcurrent->(stockcurrent.getProduct().isIsAuxilaryItem()==false)).collect(Collectors.toList()));
 	}
 
 	/*
