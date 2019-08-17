@@ -6,6 +6,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -972,6 +973,28 @@ public class QueryServiceImpl implements QueryService {
 				.build();
 		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
 
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findOrderByStatusName(java.lang.String)
+	 */
+	@Override
+	public Page<Order> findOrderByStatusName(String statusName) {
+	
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("status.name", statusName)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
+	}
+
+	/* (non-Javadoc)
+	 * @see com.diviso.graeshoppe.service.QueryService#findDeliveryinfobydatebetween(java.time.Instant, java.time.Instant)
+	 */
+	@Override
+	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("startingTime").gte(from).lte(to))
+				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 	}
 
 	/*

@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.service;
 
+import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -177,6 +178,18 @@ public interface QueryService {
 	 * @return
 	 */
 	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
+
+	/**
+	 * @param statusName
+	 */
+	public Page<Order> findOrderByStatusName(String statusName);
+
+	/**
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to);
 
 	
 

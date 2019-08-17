@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.web.rest;
 
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -486,6 +487,16 @@ public class QueryResource {
 		return reportResourceApi.getReportAsPdfUsingGET(orderMasterId);
 	
     }
+	
+	@GetMapping("/orderStatus/{statusName}")
+	public Page<Order> findOrderByStatusName(@PathVariable String statusName,Pageable pageable){
+		return queryService.findOrderByStatusName(statusName);
+	}
+	//..........test............
+	@GetMapping("/deliveryinfo/{from}/{to}")
+	public Page<DeliveryInfo> findDeliveryInfoByFromDateTo(@PathVariable Instant from,@PathVariable Instant to){
+		return queryService.findDeliveryinfobydatebetween(from,to);
+	}
 	
 	/*@GetMapping("/not-aux-product/{iDPcode}")
     public Page<Product> findNotAuxilaryProducts(@PathVariable String iDPcode,
