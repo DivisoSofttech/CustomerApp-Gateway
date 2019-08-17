@@ -261,10 +261,10 @@ public class QueryServiceImpl implements QueryService {
 				
 				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
 						
-						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
+						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("store",
 								
 								true))
-						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
+						//.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
 						
 						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
 				.build();
@@ -991,7 +991,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("id").gte(from).lte(to))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("startingTime").gte(from).lte(to))
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
