@@ -127,9 +127,9 @@ public class QueryResource {
 		return queryService.findStockCurrentByProductId(productId, pageable);
 	}
 
-	@GetMapping("/findStockCurrentByProductName/{name}")
-	public Page<StockCurrent> findStockCurrentByProductName(@PathVariable String name, Pageable pageable) {
-		return queryService.findStockCurrentByProductName(name, pageable);
+	@GetMapping("/findStockCurrentByProductNameStoreId/{name}/{storeId}")
+	public Page<StockCurrent> findStockCurrentByProductNameAndStoreId(@PathVariable String name,@PathVariable String storeId, Pageable pageable) {
+		return queryService.findStockCurrentByProductName(name,storeId, pageable);
 	}
 
 	@GetMapping("/findProductBySearchTerm/{searchTerm}")
@@ -219,10 +219,10 @@ public class QueryResource {
 		return queryService.findCategoryAndCount(pageable);
 	}
 
-	@GetMapping("/findCategoryAndCountBystoreId/{storeId}/{customerId}")
-	public List<Entry> findCategoryAndCountBystoreId(@PathVariable String storeId,@PathVariable String customerId,Pageable pageable) {
+	@GetMapping("/findCategoryAndCountBystoreId/{storeId}")
+	public List<Entry> findCategoryAndCountBystoreId(@PathVariable String storeId,Pageable pageable) {
 		
-		return queryService.findCategoryAndCountByStoreId(storeId,customerId,pageable);
+		return queryService.findCategoryAndCountByStoreId(storeId,pageable);
 	}
 
 	

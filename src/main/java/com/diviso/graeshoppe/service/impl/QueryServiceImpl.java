@@ -124,9 +124,14 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<StockCurrent> findStockCurrentByProductName(String name, Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("product.name", name)).build();
-		return elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class);
+	public Page<StockCurrent> findStockCurrentByProductName(String name,String storeId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("product.name", name))
+						.must(QueryBuilders.matchQuery("product.iDPcode", storeId)))
+				.build();
+		
+		return new PageImpl( elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class).stream()
+				.filter(stockcurrent->(stockcurrent.getProduct().isIsAuxilaryItem()==false)).collect(Collectors.toList()));
 	}
 
 	/*
@@ -247,7 +252,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, String customerId,Pageable pageable) {
+	public List<Entry> findCategoryAndCountByStoreId(String storeId,Pageable pageable) {
 		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				
@@ -269,14 +274,14 @@ public class QueryServiceImpl implements QueryService {
 
 		List<Entry> storeBasedEntry = new ArrayList<Entry>();
 
-		List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
+		/*List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
 		.filter(bucket->  bucket.getAggregation("store", TermsAggregation.class).getBuckets()
 				.stream()
 				.filter(subbucket-> subbucket.getKey().equals(storeId)).findFirst().isPresent()
 				).collect(Collectors.toList());
+		*/
 		
-		
-/*		orderAgg.getBuckets().forEach(bucket -> {
+		orderAgg.getBuckets().forEach(bucket -> {
 			
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
@@ -301,7 +306,7 @@ public class QueryServiceImpl implements QueryService {
 					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
 		// return orderAgg.getBuckets();
-*/		return listentry;
+	return storeBasedEntry;
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
