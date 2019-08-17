@@ -4,6 +4,8 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,6 +43,8 @@ import com.diviso.graeshoppe.client.order.model.Order;
 @RestController
 @RequestMapping("/api/command")
 public class OrderCommandResource {
+	
+	private static final Logger LOG=LoggerFactory.getLogger(OrderCommandResource.class);
 	@Autowired
 	private OrderCommandResourceApi orderCommandResourceApi;
 	@Autowired
@@ -85,6 +89,7 @@ public class OrderCommandResource {
 			});
 
 		});
+		LOG.info("Applied Offers are "+order.getAppliedOffers());
 		
 		order.getAppliedOffers().forEach(offer ->{
 			OfferDTO offerDTO=new OfferDTO();
