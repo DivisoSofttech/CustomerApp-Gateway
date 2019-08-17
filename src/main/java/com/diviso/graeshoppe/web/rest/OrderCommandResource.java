@@ -110,6 +110,7 @@ public class OrderCommandResource {
 	}
 	
 	public ResponseEntity<OfferDTO> createOfferLine(OfferDTO offerDTO) {
+		LOG.info("OfferDTO in create Offerline is "+offerDTO);
 		return offerResourceApi.createOfferUsingPOST(offerDTO);
 	}
 
@@ -149,10 +150,10 @@ public class OrderCommandResource {
 
 	}
 
-	@PostMapping("/acceptOrder/{taskId}/{orderId}")
-	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@PathVariable String orderId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
+	@PostMapping("/acceptOrder/{taskId}")
+	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
 		ResponseEntity<CommandResource> resource= approvalDetailsApi.createApprovalDetailsUsingPOST(taskId, approvalDetailsDTO);
-		Order order=queryService.findOrderByOrderId(orderId);
+		Order order=queryService.findOrderByOrderId(approvalDetailsDTO.getOrderId());
 		OrderDTO orderDTO = new OrderDTO();
 		orderDTO.setId(order.getId());
 		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
