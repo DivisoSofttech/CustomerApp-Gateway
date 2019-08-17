@@ -991,7 +991,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryinfobydatebetween(Instant from, Instant to) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("id").gte(from).lte(to))
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(rangeQuery("startingTime").gte(from).lte(to))
 				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
