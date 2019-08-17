@@ -131,7 +131,7 @@ public class QueryServiceImpl implements QueryService {
 				.build();
 		
 		return new PageImpl( elasticsearchOperations.queryForPage(searchQuery, StockCurrent.class).stream()
-				.filter(stockcurrent->(stockcurrent.getProduct().isIsAuxilaryItem()==false)).collect(Collectors.toList()));
+				.filter(stockcurrent->stockcurrent.getProduct().isIsAuxilaryItem()==false).collect(Collectors.toList()));
 	}
 
 	/*
