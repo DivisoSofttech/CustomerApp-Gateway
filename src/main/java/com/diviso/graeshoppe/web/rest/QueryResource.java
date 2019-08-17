@@ -219,6 +219,13 @@ public class QueryResource {
 		return queryService.findCategoryAndCount(pageable);
 	}
 
+	@GetMapping("/findCategoryAndCountBystoreId/{storeId}/{customerId}")
+	public List<Entry> findCategoryAndCountBystoreId(@PathVariable String storeId,@PathVariable String customerId,Pageable pageable) {
+		
+		return queryService.findCategoryAndCountByStoreId(storeId,customerId,pageable);
+	}
+
+	
 	public Page<Product> findProductsByCategoryName(@PathVariable String name) {
 		return queryService.findProductsByCategoryName(name);
 	}

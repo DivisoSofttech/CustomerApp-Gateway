@@ -172,6 +172,13 @@ public interface QueryService {
 	Long findOrderCountByCustomerId(String customerId, Pageable pageable);
 
 	/**
+	 * @param storeId 
+	 * @param pageable
+	 * @return
+	 */
+	public List<Entry> findCategoryAndCountByStoreId(String storeId,String customerId, Pageable pageable);
+
+	/**
 	 * @param iDPcode
 	 * @param pageable
 	 * @return
