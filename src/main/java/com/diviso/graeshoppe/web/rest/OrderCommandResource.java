@@ -22,6 +22,7 @@ import com.diviso.graeshoppe.client.order.api.AddressResourceApi;
 import com.diviso.graeshoppe.client.order.api.ApprovalDetailsResourceApi;
 import com.diviso.graeshoppe.client.order.api.AuxilaryOrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
+import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OfferResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
@@ -38,6 +39,7 @@ import com.diviso.graeshoppe.client.order.model.ApprovalDetailsDTO;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLineDTO;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
+import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.client.order.model.OfferDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
 
@@ -56,6 +58,9 @@ public class OrderCommandResource {
 	private AuxilaryOrderLineResourceApi auxilaryOrderLineApi;
 	@Autowired
 	private DeliveryInfoResourceApi deliveryInfoCommandApi;
+	
+	@Autowired
+	private NotificationResourceApi notificationResourceApi;
 	
 	@Autowired
 	private OfferResourceApi offerResourceApi;
@@ -192,4 +197,9 @@ public class OrderCommandResource {
 		return orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 	}
 
+	@PutMapping("/notifications")
+	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notificationDTO) {
+		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
+	}
+	
 }

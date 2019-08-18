@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * Entry
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T11:27:57.484310+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-17T15:32:44.878860+05:30[Asia/Kolkata]")
 
 public class Entry   {
   @JsonProperty("count")

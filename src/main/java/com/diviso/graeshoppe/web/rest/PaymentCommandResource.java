@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.payment.model.ProcessPaymentRequest;
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
+import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.payment.api.PaymentResourceApi;
@@ -39,7 +41,8 @@ public class PaymentCommandResource {
 	
 	@Autowired
 	private OrderCommandResourceApi orderCommadnREsourceApi;
-	
+	@Autowired
+	private NotificationResourceApi notificationResourceApi;
 	@Autowired
 	private QueryService queryService;
 	
@@ -69,6 +72,15 @@ public class PaymentCommandResource {
 		orderDTO.setPaymentRef(dto.getBody().getId()+"");
 		orderDTO.setStatusId(4l);
 		orderCommadnREsourceApi.updateOrderUsingPUT(orderDTO);
+		NotificationDTO notificationDTO = new NotificationDTO();
+		notificationDTO.setDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
+		notificationDTO.setMessage("Congrats a new order is confirmed");
+		notificationDTO.setTitle("Order Confirmed");
+		notificationDTO.setTargetId(order.getOrderId());
+		notificationDTO.setType("PaymenProcessed");
+		notificationDTO.setStatus("unread");
+		notificationDTO.setReceiverId(order.getStoreId());
+		ResponseEntity<NotificationDTO> result = notificationResourceApi.createNotificationUsingPOST(notificationDTO);
 		return dto;
 	}
 	
