@@ -498,6 +498,10 @@ public class QueryResource {
 		return queryService.findOrderByDatebetweenAndStoreId(from,to,storeId);
 	}
 	
+	@GetMapping("/order/{from}/{to}/{storeId}")
+	public Page<Order> findOrderByDatebetween(@PathVariable Instant from,@PathVariable Instant to){
+		return queryService.findOrderByDatebetween(from,to);
+	}
 	/*@GetMapping("/not-aux-product/{iDPcode}")
     public Page<Product> findNotAuxilaryProducts(@PathVariable String iDPcode,
 			Pageable pageable){

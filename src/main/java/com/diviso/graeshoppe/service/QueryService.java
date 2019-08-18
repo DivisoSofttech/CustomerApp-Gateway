@@ -191,6 +191,13 @@ public interface QueryService {
 	 */
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId);
 
+	/**
+	 * @param from
+	 * @param to
+	 * @return
+	 */
+	Page<Order> findOrderByDatebetween(Instant from, Instant to);
+
 	
 
 	/**

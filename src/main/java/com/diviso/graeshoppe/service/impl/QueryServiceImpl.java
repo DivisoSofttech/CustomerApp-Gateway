@@ -1001,6 +1001,15 @@ public class QueryServiceImpl implements QueryService {
 	return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
 
+	
+	@Override
+	public Page<Order> findOrderByDatebetween(Instant from, Instant to) {
+		//.........
+	SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
+				(rangeQuery("startingTime").gte(from).lte(to))).build();
+	
+	return elasticsearchOperations.queryForPage(searchQuery, Order.class);
+	}
 	/*
 	 * (non-Javadoc)
 	 * 
