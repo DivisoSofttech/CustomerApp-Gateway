@@ -875,7 +875,8 @@ public class QueryServiceImpl implements QueryService {
 
 		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
 		TermsAggregation categoryAggregation = result.getAggregation("customerorder", TermsAggregation.class);
-		count =	categoryAggregation.getBuckets().stream().filter(entry -> entry.getKey().equals(customerId)).findFirst().get().getCount();
+		count = categoryAggregation.getBuckets().stream().filter(entry -> entry.getKey().equals(customerId)).findFirst()
+				.get().getCount();
 
 		return count;
 
@@ -990,8 +991,8 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(rangeQuery("startingTime").gte(from).lte(to))
-				.must(termQuery("storeId", storeId))).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery()
+				.must(termQuery("storeId", storeId)).must(rangeQuery("startingTime").gte(from).lte(to))).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
