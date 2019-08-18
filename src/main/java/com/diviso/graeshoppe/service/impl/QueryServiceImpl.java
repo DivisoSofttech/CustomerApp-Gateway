@@ -991,6 +991,7 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId) {
+		//.........
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery()
 				.must(termQuery("storeId", storeId)).must(rangeQuery("startingTime").gte(from).lte(to))).build();
 
