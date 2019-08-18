@@ -996,8 +996,9 @@ public class QueryServiceImpl implements QueryService {
 		//.........
 	SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
 				(rangeQuery("startingTime").gte(from).lte(to))).build();
-	List<Order>	orderList = elasticsearchOperations.queryForPage(searchQuery, Order.class).stream().filter(order->order.getStoreId().equals(storeId)).collect(Collectors.toList());
-		return new PageImpl(orderList);
+	//List<Order>	orderList = elasticsearchOperations.queryForPage(searchQuery, Order.class).stream().filter(order->order.getStoreId().equals(storeId)).collect(Collectors.toList());
+		//return new PageImpl(orderList);
+	return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
 
 	/*
