@@ -15,7 +15,6 @@ import java.util.stream.Collectors;
 
 import javax.swing.text.DefaultEditorKit.CutAction;
 
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -30,7 +29,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.Criteria;
 import org.springframework.data.elasticsearch.core.query.CriteriaQuery;
 import org.springframework.data.elasticsearch.core.query.FetchSourceFilterBuilder;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
@@ -994,22 +992,12 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId) {
 		//.........
-	SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
-				(rangeQuery("startingTime").gte(from).lte(to))).build();
-	//List<Order>	orderList = elasticsearchOperations.queryForPage(searchQuery, Order.class).stream().filter(order->order.getStoreId().equals(storeId)).collect(Collectors.toList());
-		//return new PageImpl(orderList);
-	return elasticsearchOperations.queryForPage(searchQuery, Order.class);
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery()
+				.must(termQuery("storeId", storeId)).must(rangeQuery("date").gte(from).lte(to))).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
 
-	
-	@Override
-	public Page<Order> findOrderByDatebetween(Instant from, Instant to) {
-		//.........
-	SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(
-				(rangeQuery("startingTime").gte(from).lte(to))).build();
-	
-	return elasticsearchOperations.queryForPage(searchQuery, Order.class);
-	}
 	/*
 	 * (non-Javadoc)
 	 * 
