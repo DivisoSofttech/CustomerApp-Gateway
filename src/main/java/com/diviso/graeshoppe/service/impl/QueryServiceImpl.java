@@ -991,8 +991,8 @@ public class QueryServiceImpl implements QueryService {
 	 */
 	@Override
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(rangeQuery("startingTime").gte(from).lte(to)).must(termQuery("storeId", storeId)))
-				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(QueryBuilders.boolQuery().must(rangeQuery("startingTime").gte(from).lte(to))
+				.must(termQuery("storeId", storeId))).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
