@@ -41,9 +41,9 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         //String[] allowedOrigins = Optional.ofNullable(jHipsterProperties.getCors().getAllowedOrigins()).map(origins -> origins.toArray(new String[0])).orElse(new String[0]);
         registry.addEndpoint("/order-notifications")
             .setHandshakeHandler(defaultHandshakeHandler())
-            .setAllowedOrigins("*","http://localhost:8100/*");
-            //.withSockJS();
-            //.setInterceptors(httpSessionHandshakeInterceptor());
+            .setAllowedOrigins("*","http://localhost:8100/*")
+            .withSockJS()
+            .setInterceptors(httpSessionHandshakeInterceptor());
     }
 
     @Bean
