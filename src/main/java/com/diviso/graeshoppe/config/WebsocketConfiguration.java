@@ -73,7 +73,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         return new DefaultHandshakeHandler() {
             @Override
             protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-              System.out.println("AUthorization header is %%%%%%%%%%%%%%%%%%%%%%%%%%%%5" +request.getHeaders().get("mytok"));
+              System.out.println("AUthorization header is %%%%%%%%%%%%%%%%%%%%%%%%%%%%5" +request.getURI());
             	Principal principal = request.getPrincipal();
                // System.out.println("The user is ********************************** "+principal.getName());
                 if (principal == null) {
