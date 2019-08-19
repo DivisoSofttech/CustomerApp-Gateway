@@ -39,7 +39,7 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
     @Override
     public void registerStompEndpoints(StompEndpointRegistry registry) {
         //String[] allowedOrigins = Optional.ofNullable(jHipsterProperties.getCors().getAllowedOrigins()).map(origins -> origins.toArray(new String[0])).orElse(new String[0]);
-        registry.addEndpoint("/socket.io")
+        registry.addEndpoint("/order-notifications")
             .setHandshakeHandler(defaultHandshakeHandler())
             .setAllowedOrigins("*","http://localhost:8100/*");
             //.withSockJS();
@@ -73,7 +73,8 @@ public class WebsocketConfiguration implements WebSocketMessageBrokerConfigurer 
         return new DefaultHandshakeHandler() {
             @Override
             protected Principal determineUser(ServerHttpRequest request, WebSocketHandler wsHandler, Map<String, Object> attributes) {
-                Principal principal = request.getPrincipal();
+              System.out.println("AUthorization header is %%%%%%%%%%%%%%%%%%%%%%%%%%%%5" +request.getHeaders().get("Authorization"));
+            	Principal principal = request.getPrincipal();
                // System.out.println("The user is ********************************** "+principal.getName());
                 if (principal == null) {
                     Collection<SimpleGrantedAuthority> authorities = new ArrayList<>();
