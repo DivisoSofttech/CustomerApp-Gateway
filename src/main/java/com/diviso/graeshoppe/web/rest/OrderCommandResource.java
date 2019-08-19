@@ -1,5 +1,6 @@
 package com.diviso.graeshoppe.web.rest;
 
+import java.security.Principal;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -70,6 +72,15 @@ public class OrderCommandResource {
 	@Autowired
 	private AddressResourceApi addressResourceApi;
 
+	@Autowired
+	private SimpMessagingTemplate messagingTemplate;
+
+	@GetMapping("/sendMessage")
+	public String send(Principal principal) {
+		messagingTemplate.convertAndSendToUser("test", "/queue/notification",
+				"Message from " + principal.getName());
+		return "done";
+	}
 	@PostMapping("/order/initiateOrder")
 	public ResponseEntity<CommandResource> initiateOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
