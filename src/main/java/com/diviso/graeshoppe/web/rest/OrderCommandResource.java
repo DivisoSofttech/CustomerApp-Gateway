@@ -166,24 +166,7 @@ public class OrderCommandResource {
 
 	}
 
-	@PostMapping("/acceptOrder/{taskId}")
-	public ResponseEntity<CommandResource> acceptOrder(@PathVariable String taskId,@RequestBody ApprovalDetailsDTO approvalDetailsDTO) {
-		ResponseEntity<CommandResource> resource= approvalDetailsApi.createApprovalDetailsUsingPOST(taskId, approvalDetailsDTO);
-		Order order=queryService.findOrderByOrderId(approvalDetailsDTO.getOrderId());
-		OrderDTO orderDTO = new OrderDTO();
-		orderDTO.setId(order.getId());
-		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
-		orderDTO.setOrderId(order.getOrderId());
-		orderDTO.setCustomerId(order.getCustomerId());
-		orderDTO.setStoreId(order.getStoreId());
-		orderDTO.setGrandTotal(order.getGrandTotal());
-		orderDTO.setEmail(order.getEmail());
-		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
-		orderDTO.setApprovalDetailsId(resource.getBody().getSelfId());
-		orderDTO.setStatusId(3l);
-		updateOrder(orderDTO);
-		return resource;
-	}
+
 
 	public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) {
 

@@ -54,8 +54,8 @@ public class PaymentCommandResource {
 		return razorpayCommandResourceApi.createOrderUsingPOST(orderRequest);
 	}
 	
-	@PostMapping("/payments")
-	public ResponseEntity<PaymentDTO> createPayment(@RequestBody PaymentDTO paymentDTO) {
+	@PostMapping("/processPayment/{status}/{taskId}")
+	public ResponseEntity<PaymentDTO> processPayment(@RequestBody PaymentDTO paymentDTO,@PathVariable String status,@PathVariable String taskId) {
 		paymentDTO.setDateAndTime(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<PaymentDTO> dto=paymentResourceApi.createPaymentUsingPOST(paymentDTO);
 		Order order=queryService.findOrderByOrderId(paymentDTO.getTargetId());
@@ -81,11 +81,14 @@ public class PaymentCommandResource {
 		notificationDTO.setStatus("unread");
 		notificationDTO.setReceiverId(order.getStoreId());
 		ResponseEntity<NotificationDTO> result = notificationResourceApi.createNotificationUsingPOST(notificationDTO);
+		ProcessPaymentRequest processPaymentRequest=new ProcessPaymentRequest();
+		processPaymentRequest.setPaymentStatus(status);
+		processPaymentRequest.setTaskId(taskId);
+		processPaymentRequest(processPaymentRequest);
 		return dto;
 	}
 	
-	@PostMapping("/processPayment")
-	public ResponseEntity<CommandResource> processPayment(@RequestBody ProcessPaymentRequest processPaymentRequest) {
+	public ResponseEntity<CommandResource> processPaymentRequest(@RequestBody ProcessPaymentRequest processPaymentRequest) {
 		
 		return paymentResourceApi.processPaymentUsingPOST(processPaymentRequest);
 	}

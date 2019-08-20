@@ -23,14 +23,11 @@ public class OfferCommandResource {
 	private AggregateCommandResourceApi aggregateCommandResourceApi;
 	
 	@Autowired
-	private QueryService queryService;
-	
-	@Autowired
 	private ReportQueryResourceApi reportQueryResource;
 	
 	@PostMapping("/claimOffer/{customerId}")
 	public ResponseEntity<OrderModel> checkOfferEligibility(@RequestBody OrderModel orderModel,@PathVariable String customerId) {
-		ResponseEntity<Long> count=reportQueryResource.findOrderCountByCustomerIdUsingGET(customerId, 1, 1, new ArrayList<>());
+		ResponseEntity<Long> count=reportQueryResource.findOrderCountByCustomerIdAndStatusNameUsingGET("delivered", customerId,1, 1, new ArrayList<>());
 		orderModel.setOrderNumber(count.getBody()+1);
 		orderModel.setPromoCode("SUPER20");
 		

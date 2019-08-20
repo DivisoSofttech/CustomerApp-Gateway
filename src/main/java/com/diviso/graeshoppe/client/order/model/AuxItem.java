@@ -10,79 +10,79 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * OpenTask
+ * AuxItem
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-20T12:09:18.063864+05:30[Asia/Kolkata]")
 
-public class OpenTask   {
-  @JsonProperty("orderId")
-  private String orderId = null;
+public class AuxItem   {
+  @JsonProperty("auxItem")
+  private String auxItem = null;
 
-  @JsonProperty("taskId")
-  private String taskId = null;
+  @JsonProperty("quantity")
+  private Integer quantity = null;
 
-  @JsonProperty("taskName")
-  private String taskName = null;
+  @JsonProperty("total")
+  private Double total = null;
 
-  public OpenTask orderId(String orderId) {
-    this.orderId = orderId;
+  public AuxItem auxItem(String auxItem) {
+    this.auxItem = auxItem;
     return this;
   }
 
   /**
-   * Get orderId
-   * @return orderId
+   * Get auxItem
+   * @return auxItem
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getOrderId() {
-    return orderId;
+  public String getAuxItem() {
+    return auxItem;
   }
 
-  public void setOrderId(String orderId) {
-    this.orderId = orderId;
+  public void setAuxItem(String auxItem) {
+    this.auxItem = auxItem;
   }
 
-  public OpenTask taskId(String taskId) {
-    this.taskId = taskId;
+  public AuxItem quantity(Integer quantity) {
+    this.quantity = quantity;
     return this;
   }
 
   /**
-   * Get taskId
-   * @return taskId
+   * Get quantity
+   * @return quantity
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getTaskId() {
-    return taskId;
+  public Integer getQuantity() {
+    return quantity;
   }
 
-  public void setTaskId(String taskId) {
-    this.taskId = taskId;
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
   }
 
-  public OpenTask taskName(String taskName) {
-    this.taskName = taskName;
+  public AuxItem total(Double total) {
+    this.total = total;
     return this;
   }
 
   /**
-   * Get taskName
-   * @return taskName
+   * Get total
+   * @return total
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getTaskName() {
-    return taskName;
+  public Double getTotal() {
+    return total;
   }
 
-  public void setTaskName(String taskName) {
-    this.taskName = taskName;
+  public void setTotal(Double total) {
+    this.total = total;
   }
 
 
@@ -94,25 +94,25 @@ public class OpenTask   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    OpenTask openTask = (OpenTask) o;
-    return Objects.equals(this.orderId, openTask.orderId) &&
-        Objects.equals(this.taskId, openTask.taskId) &&
-        Objects.equals(this.taskName, openTask.taskName);
+    AuxItem auxItem = (AuxItem) o;
+    return Objects.equals(this.auxItem, auxItem.auxItem) &&
+        Objects.equals(this.quantity, auxItem.quantity) &&
+        Objects.equals(this.total, auxItem.total);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(orderId, taskId, taskName);
+    return Objects.hash(auxItem, quantity, total);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OpenTask {\n");
+    sb.append("class AuxItem {\n");
     
-    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    taskId: ").append(toIndentedString(taskId)).append("\n");
-    sb.append("    taskName: ").append(toIndentedString(taskName)).append("\n");
+    sb.append("    auxItem: ").append(toIndentedString(auxItem)).append("\n");
+    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
+    sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("}");
     return sb.toString();
   }

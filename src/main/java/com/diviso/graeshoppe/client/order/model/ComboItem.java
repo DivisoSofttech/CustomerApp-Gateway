@@ -10,33 +10,56 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * UniqueOrderIDDTO
+ * ComboItem
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-20T12:09:18.063864+05:30[Asia/Kolkata]")
 
-public class UniqueOrderIDDTO   {
-  @JsonProperty("id")
-  private Long id = null;
+public class ComboItem   {
+  @JsonProperty("comboItem")
+  private String comboItem = null;
 
-  public UniqueOrderIDDTO id(Long id) {
-    this.id = id;
+  @JsonProperty("quantity")
+  private Double quantity = null;
+
+  public ComboItem comboItem(String comboItem) {
+    this.comboItem = comboItem;
     return this;
   }
 
   /**
-   * Get id
-   * @return id
+   * Get comboItem
+   * @return comboItem
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getId() {
-    return id;
+  public String getComboItem() {
+    return comboItem;
   }
 
-  public void setId(Long id) {
-    this.id = id;
+  public void setComboItem(String comboItem) {
+    this.comboItem = comboItem;
+  }
+
+  public ComboItem quantity(Double quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  /**
+   * Get quantity
+   * @return quantity
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Double quantity) {
+    this.quantity = quantity;
   }
 
 
@@ -48,21 +71,23 @@ public class UniqueOrderIDDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    UniqueOrderIDDTO uniqueOrderIDDTO = (UniqueOrderIDDTO) o;
-    return Objects.equals(this.id, uniqueOrderIDDTO.id);
+    ComboItem comboItem = (ComboItem) o;
+    return Objects.equals(this.comboItem, comboItem.comboItem) &&
+        Objects.equals(this.quantity, comboItem.quantity);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(comboItem, quantity);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class UniqueOrderIDDTO {\n");
+    sb.append("class ComboItem {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    comboItem: ").append(toIndentedString(comboItem)).append("\n");
+    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
     sb.append("}");
     return sb.toString();
   }
