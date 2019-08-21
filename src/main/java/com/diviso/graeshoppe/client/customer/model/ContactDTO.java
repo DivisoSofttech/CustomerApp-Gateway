@@ -13,9 +13,12 @@ import javax.validation.constraints.*;
  * ContactDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-18T09:47:04.029+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-21T05:50:28.109+05:30[Asia/Kolkata]")
 
 public class ContactDTO   {
+  @JsonProperty("email")
+  private String email = null;
+
   @JsonProperty("id")
   private Long id = null;
 
@@ -24,6 +27,26 @@ public class ContactDTO   {
 
   @JsonProperty("telephone")
   private String telephone = null;
+
+  public ContactDTO email(String email) {
+    this.email = email;
+    return this;
+  }
+
+  /**
+   * Get email
+   * @return email
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
   public ContactDTO id(Long id) {
     this.id = id;
@@ -95,14 +118,15 @@ public class ContactDTO   {
       return false;
     }
     ContactDTO contactDTO = (ContactDTO) o;
-    return Objects.equals(this.id, contactDTO.id) &&
+    return Objects.equals(this.email, contactDTO.email) &&
+        Objects.equals(this.id, contactDTO.id) &&
         Objects.equals(this.mobileNumber, contactDTO.mobileNumber) &&
         Objects.equals(this.telephone, contactDTO.telephone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, mobileNumber, telephone);
+    return Objects.hash(email, id, mobileNumber, telephone);
   }
 
   @Override
@@ -110,6 +134,7 @@ public class ContactDTO   {
     StringBuilder sb = new StringBuilder();
     sb.append("class ContactDTO {\n");
     
+    sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    mobileNumber: ").append(toIndentedString(mobileNumber)).append("\n");
     sb.append("    telephone: ").append(toIndentedString(telephone)).append("\n");
