@@ -36,10 +36,10 @@ public interface ReportQueryResourceApi {
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/order-from-customer-status/{customerId}/{statusName}",
+    @RequestMapping(value = "/api/order-from-customer-status/{statusName}/{customerId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<Long> findOrderCountByCustomerIdAndStatusNameUsingGET(@ApiParam(value = "statusName",required=true) @PathVariable("statusName") String statusName,@ApiParam(value = "customerId") @Valid @RequestParam(value = "customerId", required = false) String customerId,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
+    ResponseEntity<Long> findOrderCountByCustomerIdAndStatusNameUsingGET(@ApiParam(value = "statusName",required=true) @PathVariable("statusName") String statusName,@ApiParam(value = "customerId") @PathVariable(value = "customerId") String customerId,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
     @ApiOperation(value = "findOrderCountByCustomerIdAndStoreId", nickname = "findOrderCountByCustomerIdAndStoreIdUsingGET", notes = "", response = Long.class, tags={ "report-query-resource", })
