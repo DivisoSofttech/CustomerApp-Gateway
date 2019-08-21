@@ -27,6 +27,22 @@ public class Contact implements Serializable {
 
    
     private String telephone;
+    
+	private String email;
+	
+	  public Contact email(String email) {
+    this.email = email;
+    return this;
+  }
+
+
+  public String getEmail() {
+    return email;
+  }
+
+  public void setEmail(String email) {
+    this.email = email;
+  }
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -64,20 +80,20 @@ public class Contact implements Serializable {
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        Contact contact = (Contact) o;
-        if (contact.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), contact.getId());
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
     }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    Contact contact = (Contact) o;
+    return Objects.equals(this.email, contact.email) &&
+        Objects.equals(this.id, contact.id) &&
+        Objects.equals(this.mobileNumber, contact.mobileNumber) &&
+        Objects.equals(this.telephone, contact.telephone);
+  }
 
     @Override
     public int hashCode() {

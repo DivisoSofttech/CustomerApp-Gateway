@@ -5,28 +5,25 @@ public class CustomerAggregator {
 	private String name;
 	private String mobileNumber;
 	private String reference;
+	private String email;
 	
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
-		return String.format("CustomerAggregator [name=%s, mobileNumber=%s]", name, mobileNumber);
+		return "CustomerAggregator [name=" + name + ", mobileNumber=" + mobileNumber + ", reference=" + reference
+				+ ", email=" + email + "]";
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#hashCode()
-	 */
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
+		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + ((mobileNumber == null) ? 0 : mobileNumber.hashCode());
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((reference == null) ? 0 : reference.hashCode());
 		return result;
 	}
-	/* (non-Javadoc)
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 */
+
+		
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -36,6 +33,11 @@ public class CustomerAggregator {
 		if (getClass() != obj.getClass())
 			return false;
 		CustomerAggregator other = (CustomerAggregator) obj;
+		if (email == null) {
+			if (other.email != null)
+				return false;
+		} else if (!email.equals(other.email))
+			return false;
 		if (mobileNumber == null) {
 			if (other.mobileNumber != null)
 				return false;
@@ -45,6 +47,11 @@ public class CustomerAggregator {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (reference == null) {
+			if (other.reference != null)
+				return false;
+		} else if (!reference.equals(other.reference))
 			return false;
 		return true;
 	}
@@ -83,6 +90,12 @@ public class CustomerAggregator {
 	 */
 	public void setMobileNumber(String mobileNumber) {
 		this.mobileNumber = mobileNumber;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
 	}
 	
 	
