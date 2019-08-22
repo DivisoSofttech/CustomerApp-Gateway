@@ -39,6 +39,7 @@ import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
+import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -508,4 +509,9 @@ public class QueryResource {
 		return queryService.findNotAuxilaryProducts(iDPcode,pageable);
     }
 */
+	
+	@GetMapping("/combos-productId/{productId}")
+	public Page<ComboLineItem> findComboByProductId(@PathVariable Long productId){
+		return queryService.findAllCombosByProductId(productId);
+	}
 }

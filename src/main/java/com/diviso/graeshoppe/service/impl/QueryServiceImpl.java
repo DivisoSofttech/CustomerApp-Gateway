@@ -43,6 +43,7 @@ import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
+import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
@@ -996,6 +997,14 @@ public class QueryServiceImpl implements QueryService {
 				.must(termQuery("storeId", storeId)).must(rangeQuery("date").gte(from).lte(to))).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
+	}
+
+	@Override
+	public Page<ComboLineItem> findAllCombosByProductId(Long productId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("product.id", productId)).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, ComboLineItem.class);
+
 	}
 
 	/*
