@@ -68,7 +68,9 @@ public class PaymentCommandResource {
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
-		orderDTO.setApprovalDetailsId(order.getApprovalDetails().getId());
+		if(order.getApprovalDetails()!=null) {
+			orderDTO.setApprovalDetailsId(order.getApprovalDetails().getId());
+		}
 		orderDTO.setPaymentRef(dto.getBody().getId()+"");
 		orderDTO.setStatusId(4l);
 		orderCommadnREsourceApi.updateOrderUsingPUT(orderDTO);
