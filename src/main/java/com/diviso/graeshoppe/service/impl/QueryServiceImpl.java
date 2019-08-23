@@ -162,20 +162,20 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public Page<Review> findAllReviews(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
 	}
 
 	@Override
 	public Page<UserRating> findAllUserRatings(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}
 
 	@Override
 	public Page<Store> findAllStores(Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).withPageable(pageable).build();
 		Page<Store> storePage = elasticsearchOperations.queryForPage(searchQuery, Store.class);
 
 		storePage.forEach(store -> {
@@ -243,7 +243,7 @@ public class QueryServiceImpl implements QueryService {
 
 				.withIndices("product").withTypes("product")
 				
-				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")).build();
+				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")).withPageable(pageable).build();
 
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
 		
@@ -317,7 +317,7 @@ public class QueryServiceImpl implements QueryService {
 
 				.withSearchType(QUERY_THEN_FETCH).withIndices("storetype").withTypes("storetype")
 
-				.addAggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword")).build();
+				.addAggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword")).withPageable(pageable).build();
 
 		AggregatedPage<StoreType> result = elasticsearchTemplate.queryForPage(searchQuery, StoreType.class);
 
@@ -415,7 +415,7 @@ public class QueryServiceImpl implements QueryService {
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable) {
 		log.info("Customer Id is " + customerId);
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId.keyword", customerId))
-				.withIndices("orderaddress").withTypes("orderaddress").build();
+				.withIndices("orderaddress").withTypes("orderaddress").withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Address.class);
 	}
 
@@ -452,7 +452,7 @@ public class QueryServiceImpl implements QueryService {
 
 		Set<Store> storeSet = new HashSet<>();
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("name", name)).withPageable(pageable).build();
 		List<StoreType> storeTypeList = elasticsearchOperations.queryForList(searchQuery, StoreType.class);
 		for (StoreType storeType : storeTypeList) {
 			storeSet.add(storeType.getStore());
@@ -468,7 +468,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Category> findCategoryByIDPcode(String iDPcode, Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
 
 	}
@@ -486,7 +486,7 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", userId))
 						.must(QueryBuilders.termQuery("category.name.keyword", categoryName)))
-				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
+				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).withPageable(pageable).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Product.class);
 
@@ -503,7 +503,7 @@ public class QueryServiceImpl implements QueryService {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("type.name.keyword", name)))
-				.withIndices("deliveryinfo").withTypes("deliveryinfo").withSourceFilter(sourceFilter.build()).build();
+				.withIndices("deliveryinfo").withTypes("deliveryinfo").withSourceFilter(sourceFilter.build()).withPageable(pageable).build();
 
 		List<DeliveryInfo> deliveryInfoList = elasticsearchOperations.queryForList(searchQuery, DeliveryInfo.class);
 		for (DeliveryInfo delivery : deliveryInfoList) {
@@ -523,7 +523,7 @@ public class QueryServiceImpl implements QueryService {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
 				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("iDPcode.keyword", userId))
 						.must(QueryBuilders.termQuery("category.id", categoryId)))
-				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).build();
+				.withIndices("product").withTypes("product").withSourceFilter(sourceFilter.build()).withPageable(pageable).build();
 
 		List<Product> productList = elasticsearchOperations.queryForPage(searchQuery, Product.class).getContent();
 
@@ -565,7 +565,7 @@ public class QueryServiceImpl implements QueryService {
 
 	@Override
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery()).withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Customer.class);
 	}
 
@@ -573,7 +573,7 @@ public class QueryServiceImpl implements QueryService {
 	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
-				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).build();
+				.withQuery(matchQuery("name", searchTerm).prefixLength(3)).withPageable(pageable).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 	}
@@ -600,7 +600,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.id", storeId)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.id", storeId)).withPageable(pageable).build();
 
 		Page<DeliveryInfo> deliveryinfos = elasticsearchOperations.queryForPage(searchQuery, DeliveryInfo.class);
 
@@ -764,7 +764,7 @@ public class QueryServiceImpl implements QueryService {
 		Set<Store> storeSet = new HashSet<Store>();
 		Set<HeaderSearch> values = new HashSet<HeaderSearch>();
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", searchTerm)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchQuery("name", searchTerm)).withPageable(pageable).build();
 
 		elasticsearchTemplate.query(searchQuery, new JestResultsExtractor<Set<HeaderSearch>>() {
 
@@ -821,7 +821,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<Store> findAndSortStoreByMinAount(Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-				.withSort(SortBuilders.fieldSort("minAmount").order(SortOrder.DESC)).build();
+				.withSort(SortBuilders.fieldSort("minAmount").order(SortOrder.DESC)).withPageable(pageable).build();
 		return elasticsearchOperations.queryForPage(searchQuery, Store.class);
 
 	}
@@ -835,7 +835,7 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable) {
 
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).withPageable(pageable).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, StoreType.class);
 	}
