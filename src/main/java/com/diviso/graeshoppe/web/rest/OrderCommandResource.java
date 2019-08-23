@@ -196,4 +196,9 @@ public class OrderCommandResource {
 		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
 	}
 	
+	@PutMapping("/addresses")
+	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) {
+		return addressResourceApi.updateAddressUsingPUT(addressDTO);
+	}
+	
 }
