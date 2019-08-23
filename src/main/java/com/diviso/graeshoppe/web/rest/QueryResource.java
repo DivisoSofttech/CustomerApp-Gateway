@@ -418,6 +418,10 @@ public class QueryResource {
 		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
 		
     }
+	@GetMapping("/orderByOrderId/{orderId}")
+	public ResponseEntity<Order> findOrderByOrderId(@PathVariable String orderId) {
+		return ResponseEntity.ok(queryService.findOrderByOrderId(orderId)) ;
+	}
 	
 
 	/*
