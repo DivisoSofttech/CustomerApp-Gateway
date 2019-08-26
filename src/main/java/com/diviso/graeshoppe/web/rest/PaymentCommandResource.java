@@ -6,6 +6,7 @@ import java.time.ZoneId;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.payment.model.ProcessPaymentRequest;
 import com.diviso.graeshoppe.service.QueryService;
+import com.braintreegateway.BraintreeGateway;
+import com.braintreegateway.ClientTokenRequest;
+import com.braintreegateway.Environment;
 import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.client.order.model.NotificationDTO;
@@ -45,7 +49,12 @@ public class PaymentCommandResource {
 	private NotificationResourceApi notificationResourceApi;
 	@Autowired
 	private QueryService queryService;
-	
+	private static BraintreeGateway gateway = new BraintreeGateway(
+			  Environment.SANDBOX,
+			  "5nmr8r4nbybmdmx9",
+			  "kcvvkpxg7zpk6g42",
+			  "0891247da7e5adc1a259646835135188"
+			);
 	@Autowired
 	private PaypalCommandResourceApi paypalCommandResourceApi;
 	
@@ -105,4 +114,12 @@ public class PaymentCommandResource {
 	public ResponseEntity<Void> executePayment(@RequestBody PaymentExecutionRequest paymentExecutionRequest,@PathVariable String paymentId) {
 		return paypalCommandResourceApi.executePaymentUsingPOST(paymentId, paymentExecutionRequest);
 	}
+	
+	@GetMapping("/clientToken")
+	public String createClientAuthToken() {
+		ClientTokenRequest clientTokenRequest = new ClientTokenRequest();
+		String clientToken = gateway.clientToken().generate(clientTokenRequest);
+		return clientToken;
+	}
+	
 }

@@ -1,142 +1,208 @@
 package com.diviso.graeshoppe.client.order.model;
 
-
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-import java.io.Serializable;
 import java.util.Objects;
+import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
- * A AuxilaryOrderLine.
+ * AuxilaryOrderLine
  */
+@Validated
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-26T19:41:35.587285+05:30[Asia/Kolkata]")
 
-@Document(indexName = "auxilaryorderline")
-public class AuxilaryOrderLine implements Serializable {
+public class AuxilaryOrderLine   {
+  @JsonProperty("id")
+  private Long id = null;
 
-    private static final long serialVersionUID = 1L;
+  @JsonProperty("orderLine")
+  private OrderLine orderLine = null;
+
+  @JsonProperty("pricePerUnit")
+  private Double pricePerUnit = null;
+
+  @JsonProperty("productId")
+  private Long productId = null;
+
+  @JsonProperty("quantity")
+  private Integer quantity = null;
+
+  @JsonProperty("total")
+  private Double total = null;
+
+  public AuxilaryOrderLine id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public AuxilaryOrderLine orderLine(OrderLine orderLine) {
+    this.orderLine = orderLine;
+    return this;
+  }
+
+  /**
+   * Get orderLine
+   * @return orderLine
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OrderLine getOrderLine() {
+    return orderLine;
+  }
+
+  public void setOrderLine(OrderLine orderLine) {
+    this.orderLine = orderLine;
+  }
+
+  public AuxilaryOrderLine pricePerUnit(Double pricePerUnit) {
+    this.pricePerUnit = pricePerUnit;
+    return this;
+  }
+
+  /**
+   * Get pricePerUnit
+   * @return pricePerUnit
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getPricePerUnit() {
+    return pricePerUnit;
+  }
+
+  public void setPricePerUnit(Double pricePerUnit) {
+    this.pricePerUnit = pricePerUnit;
+  }
+
+  public AuxilaryOrderLine productId(Long productId) {
+    this.productId = productId;
+    return this;
+  }
+
+  /**
+   * Get productId
+   * @return productId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getProductId() {
+    return productId;
+  }
+
+  public void setProductId(Long productId) {
+    this.productId = productId;
+  }
+
+  public AuxilaryOrderLine quantity(Integer quantity) {
+    this.quantity = quantity;
+    return this;
+  }
+
+  /**
+   * Get quantity
+   * @return quantity
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Integer getQuantity() {
+    return quantity;
+  }
+
+  public void setQuantity(Integer quantity) {
+    this.quantity = quantity;
+  }
+
+  public AuxilaryOrderLine total(Double total) {
+    this.total = total;
+    return this;
+  }
+
+  /**
+   * Get total
+   * @return total
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Double getTotal() {
+    return total;
+  }
+
+  public void setTotal(Double total) {
+    this.total = total;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AuxilaryOrderLine auxilaryOrderLine = (AuxilaryOrderLine) o;
+    return Objects.equals(this.id, auxilaryOrderLine.id) &&
+        Objects.equals(this.orderLine, auxilaryOrderLine.orderLine) &&
+        Objects.equals(this.pricePerUnit, auxilaryOrderLine.pricePerUnit) &&
+        Objects.equals(this.productId, auxilaryOrderLine.productId) &&
+        Objects.equals(this.quantity, auxilaryOrderLine.quantity) &&
+        Objects.equals(this.total, auxilaryOrderLine.total);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, orderLine, pricePerUnit, productId, quantity, total);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class AuxilaryOrderLine {\n");
     
-    
-    private Long id;
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    orderLine: ").append(toIndentedString(orderLine)).append("\n");
+    sb.append("    pricePerUnit: ").append(toIndentedString(pricePerUnit)).append("\n");
+    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
+    sb.append("    total: ").append(toIndentedString(total)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
 
-    private Long productId;
-
-	    private Integer quantity;
-
-    private Double pricePerUnit;
-
-    private Double total;
-
-
-    private OrderLine orderLine;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getProductId() {
-        return productId;
-    }
-
-    public AuxilaryOrderLine productId(Long productId) {
-        this.productId = productId;
-        return this;
-    }
-
-    public void setProductId(Long productId) {
-        this.productId = productId;
-    }
-
-    public Integer getQuantity() {
-        return quantity;
-    }
-
-    public AuxilaryOrderLine quantity(Integer quantity) {
-        this.quantity = quantity;
-        return this;
-    }
-
-    public void setQuantity(Integer quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getPricePerUnit() {
-        return pricePerUnit;
-    }
-
-    public AuxilaryOrderLine pricePerUnit(Double pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
-        return this;
-    }
-
-    public void setPricePerUnit(Double pricePerUnit) {
-        this.pricePerUnit = pricePerUnit;
-    }
-
-    public Double getTotal() {
-        return total;
-    }
-
-    public AuxilaryOrderLine total(Double total) {
-        this.total = total;
-        return this;
-    }
-
-    public void setTotal(Double total) {
-        this.total = total;
-    }
-
-    public OrderLine getOrderLine() {
-        return orderLine;
-    }
-
-    public AuxilaryOrderLine orderLine(OrderLine orderLine) {
-        this.orderLine = orderLine;
-        return this;
-    }
-
-    public void setOrderLine(OrderLine orderLine) {
-        this.orderLine = orderLine;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        AuxilaryOrderLine auxilaryOrderLine = (AuxilaryOrderLine) o;
-        if (auxilaryOrderLine.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), auxilaryOrderLine.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "AuxilaryOrderLine{" +
-            "id=" + getId() +
-            ", productId=" + getProductId() +
-            ", quantity=" + getQuantity() +
-            ", pricePerUnit=" + getPricePerUnit() +
-            ", total=" + getTotal() +
-            "}";
-    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+

@@ -10,56 +10,56 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * ComboItem
+ * Reportsummary
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-26T19:41:35.587285+05:30[Asia/Kolkata]")
 
-public class ComboItem   {
-  @JsonProperty("comboItem")
-  private String comboItem = null;
+public class Reportsummary   {
+  @JsonProperty("count")
+  private Long count = null;
 
-  @JsonProperty("quantity")
-  private Double quantity = null;
+  @JsonProperty("total")
+  private Double total = null;
 
-  public ComboItem comboItem(String comboItem) {
-    this.comboItem = comboItem;
+  public Reportsummary count(Long count) {
+    this.count = count;
     return this;
   }
 
   /**
-   * Get comboItem
-   * @return comboItem
+   * Get count
+   * @return count
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getComboItem() {
-    return comboItem;
+  public Long getCount() {
+    return count;
   }
 
-  public void setComboItem(String comboItem) {
-    this.comboItem = comboItem;
+  public void setCount(Long count) {
+    this.count = count;
   }
 
-  public ComboItem quantity(Double quantity) {
-    this.quantity = quantity;
+  public Reportsummary total(Double total) {
+    this.total = total;
     return this;
   }
 
   /**
-   * Get quantity
-   * @return quantity
+   * Get total
+   * @return total
   **/
   @ApiModelProperty(value = "")
 
 
-  public Double getQuantity() {
-    return quantity;
+  public Double getTotal() {
+    return total;
   }
 
-  public void setQuantity(Double quantity) {
-    this.quantity = quantity;
+  public void setTotal(Double total) {
+    this.total = total;
   }
 
 
@@ -71,23 +71,23 @@ public class ComboItem   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ComboItem comboItem = (ComboItem) o;
-    return Objects.equals(this.comboItem, comboItem.comboItem) &&
-        Objects.equals(this.quantity, comboItem.quantity);
+    Reportsummary reportsummary = (Reportsummary) o;
+    return Objects.equals(this.count, reportsummary.count) &&
+        Objects.equals(this.total, reportsummary.total);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(comboItem, quantity);
+    return Objects.hash(count, total);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ComboItem {\n");
+    sb.append("class Reportsummary {\n");
     
-    sb.append("    comboItem: ").append(toIndentedString(comboItem)).append("\n");
-    sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
+    sb.append("    count: ").append(toIndentedString(count)).append("\n");
+    sb.append("    total: ").append(toIndentedString(total)).append("\n");
     sb.append("}");
     return sb.toString();
   }

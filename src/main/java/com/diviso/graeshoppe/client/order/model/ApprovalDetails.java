@@ -1,116 +1,159 @@
 package com.diviso.graeshoppe.client.order.model;
 
-
-import org.hibernate.annotations.Cache;
-import org.hibernate.annotations.CacheConcurrencyStrategy;
-
-import javax.persistence.*;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.time.OffsetDateTime;
+import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
- * A ApprovalDetails.
+ * ApprovalDetails
  */
-@Entity
-@Table(name = "approval_details")
-@Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-@Document(indexName = "approvaldetails")
-public class ApprovalDetails implements Serializable {
+@Validated
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-26T19:41:35.587285+05:30[Asia/Kolkata]")
 
-    private static final long serialVersionUID = 1L;
+public class ApprovalDetails   {
+  @JsonProperty("acceptedAt")
+  private OffsetDateTime acceptedAt = null;
+
+  @JsonProperty("decision")
+  private String decision = null;
+
+  @JsonProperty("expectedDelivery")
+  private OffsetDateTime expectedDelivery = null;
+
+  @JsonProperty("id")
+  private Long id = null;
+
+  public ApprovalDetails acceptedAt(OffsetDateTime acceptedAt) {
+    this.acceptedAt = acceptedAt;
+    return this;
+  }
+
+  /**
+   * Get acceptedAt
+   * @return acceptedAt
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getAcceptedAt() {
+    return acceptedAt;
+  }
+
+  public void setAcceptedAt(OffsetDateTime acceptedAt) {
+    this.acceptedAt = acceptedAt;
+  }
+
+  public ApprovalDetails decision(String decision) {
+    this.decision = decision;
+    return this;
+  }
+
+  /**
+   * Get decision
+   * @return decision
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getDecision() {
+    return decision;
+  }
+
+  public void setDecision(String decision) {
+    this.decision = decision;
+  }
+
+  public ApprovalDetails expectedDelivery(OffsetDateTime expectedDelivery) {
+    this.expectedDelivery = expectedDelivery;
+    return this;
+  }
+
+  /**
+   * Get expectedDelivery
+   * @return expectedDelivery
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public OffsetDateTime getExpectedDelivery() {
+    return expectedDelivery;
+  }
+
+  public void setExpectedDelivery(OffsetDateTime expectedDelivery) {
+    this.expectedDelivery = expectedDelivery;
+  }
+
+  public ApprovalDetails id(Long id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * Get id
+   * @return id
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+
+  @Override
+  public boolean equals(java.lang.Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    ApprovalDetails approvalDetails = (ApprovalDetails) o;
+    return Objects.equals(this.acceptedAt, approvalDetails.acceptedAt) &&
+        Objects.equals(this.decision, approvalDetails.decision) &&
+        Objects.equals(this.expectedDelivery, approvalDetails.expectedDelivery) &&
+        Objects.equals(this.id, approvalDetails.id);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(acceptedAt, decision, expectedDelivery, id);
+  }
+
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class ApprovalDetails {\n");
     
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    sb.append("    acceptedAt: ").append(toIndentedString(acceptedAt)).append("\n");
+    sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
+    sb.append("    expectedDelivery: ").append(toIndentedString(expectedDelivery)).append("\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
 
-    @Column(name = "accepted_at")
-    private Instant acceptedAt;
-
-    @Column(name = "expected_delivery")
-    private Instant expectedDelivery;
-
-    @Column(name = "decision")
-    private String decision;
-
-    // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
-    public Long getId() {
-        return id;
+  /**
+   * Convert the given object to string with each line indented by 4 spaces
+   * (except the first line).
+   */
+  private String toIndentedString(java.lang.Object o) {
+    if (o == null) {
+      return "null";
     }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Instant getAcceptedAt() {
-        return acceptedAt;
-    }
-
-    public ApprovalDetails acceptedAt(Instant acceptedAt) {
-        this.acceptedAt = acceptedAt;
-        return this;
-    }
-
-    public void setAcceptedAt(Instant acceptedAt) {
-        this.acceptedAt = acceptedAt;
-    }
-
-    public Instant getExpectedDelivery() {
-        return expectedDelivery;
-    }
-
-    public ApprovalDetails expectedDelivery(Instant expectedDelivery) {
-        this.expectedDelivery = expectedDelivery;
-        return this;
-    }
-
-    public void setExpectedDelivery(Instant expectedDelivery) {
-        this.expectedDelivery = expectedDelivery;
-    }
-
-    public String getDecision() {
-        return decision;
-    }
-
-    public ApprovalDetails decision(String decision) {
-        this.decision = decision;
-        return this;
-    }
-
-    public void setDecision(String decision) {
-        this.decision = decision;
-    }
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        ApprovalDetails approvalDetails = (ApprovalDetails) o;
-        if (approvalDetails.getId() == null || getId() == null) {
-            return false;
-        }
-        return Objects.equals(getId(), approvalDetails.getId());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(getId());
-    }
-
-    @Override
-    public String toString() {
-        return "ApprovalDetails{" +
-            "id=" + getId() +
-            ", acceptedAt='" + getAcceptedAt() + "'" +
-            ", expectedDelivery='" + getExpectedDelivery() + "'" +
-            ", decision='" + getDecision() + "'" +
-            "}";
-    }
+    return o.toString().replace("\n", "\n    ");
+  }
 }
+
