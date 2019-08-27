@@ -18,6 +18,9 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+
+import org.springframework.data.elasticsearch.annotations.Document;
+import org.springframework.stereotype.Indexed;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -27,7 +30,7 @@ import javax.validation.constraints.*;
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-26T19:41:35.587285+05:30[Asia/Kolkata]")
-
+@Document(indexName = "order")
 public class Order   {
   @JsonProperty("appliedOffers")
   @Valid
