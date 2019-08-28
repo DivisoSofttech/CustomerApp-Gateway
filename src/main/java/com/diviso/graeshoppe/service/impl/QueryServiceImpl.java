@@ -44,6 +44,7 @@ import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
@@ -1005,6 +1006,13 @@ public class QueryServiceImpl implements QueryService {
 
 		return elasticsearchOperations.queryForPage(searchQuery, ComboLineItem.class);
 
+	}
+
+	@Override
+	public Discount findDiscountByProductId(Long productId) {
+		StringQuery searchQuery = new StringQuery(termQuery("id", productId).toString());
+		Product product=elasticsearchOperations.queryForObject(searchQuery, Product.class);
+		return product.getDiscount();
 	}
 
 	/*

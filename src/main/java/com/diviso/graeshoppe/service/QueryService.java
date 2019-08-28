@@ -15,6 +15,7 @@ import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
@@ -193,6 +194,8 @@ public interface QueryService {
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId);
 
 	public Page<ComboLineItem> findAllCombosByProductId(Long productId);
+
+	public Discount findDiscountByProductId(Long productId);
 
 	
 

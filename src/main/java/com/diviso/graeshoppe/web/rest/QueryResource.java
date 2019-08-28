@@ -40,6 +40,7 @@ import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
+import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
@@ -518,4 +519,10 @@ public class QueryResource {
 	public Page<ComboLineItem> findComboByProductId(@PathVariable Long productId){
 		return queryService.findAllCombosByProductId(productId);
 	}
+	
+	@GetMapping("/discount-productId/{productId}")
+	public Discount findDiscountByProductId(@PathVariable Long productId){
+		return queryService.findDiscountByProductId(productId);
+	}
+	
 }
