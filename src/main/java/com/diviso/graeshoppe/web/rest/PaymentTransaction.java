@@ -2,6 +2,13 @@ package com.diviso.graeshoppe.web.rest;
 
 public class PaymentTransaction {
 
+	@Override
+	public String toString() {
+		return String.format(
+				"PaymentTransaction [nounce=%s,\n customerId=%s,\n amount=%s,\n getNounce()=%s,\n getCustomerId()=%s,\n getAmount()=%s,\n getClass()=%s,\n hashCode()=%s,\n toString()=%s]",
+				nounce, customerId, amount, getNounce(), getCustomerId(), getAmount(), getClass(), hashCode(),
+				super.toString());
+	}
 	/**
 	 * @return the nounce
 	 */

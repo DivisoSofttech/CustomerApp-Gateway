@@ -140,10 +140,12 @@ public class PaymentCommandResource {
 				customerId(paymentTransaction.getCustomerId())
 				.options().
 				submitForSettlement(true).done();
+				
 		Result<Transaction> result = gateway.transaction().sale(request);
 		PaymentTransactionResponse paymentTransactionResponse=new PaymentTransactionResponse();
 		if (result.isSuccess()) {
 			Transaction transaction = result.getTarget();
+			paymentTransactionResponse.setTransactionId(transaction.getId());
 			System.out.println("Success!: " + transaction.getId());
 		} else if (result.getTransaction() != null) {
 			Transaction transaction = result.getTransaction();
