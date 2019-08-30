@@ -71,7 +71,7 @@ spring:
     data:
         elasticsearch:
            cluster-name: 73af03d382dd4317b9515b023d8e7c20
-           cluster-nodes: https://73af03d382dd4317b9515b023d8e7c20.asia-northeast1.gcp.cloud.es.io:9243/ 
+           cluster-nodes: https://73af03d382dd4317b9515b023d8e7c20.asia-northeast1.gcp.cloud.es.io:9243/
            properties:
                path:
                    logs: target/elasticsearch/log
