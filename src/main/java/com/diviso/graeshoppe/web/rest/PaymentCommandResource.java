@@ -71,7 +71,7 @@ public class PaymentCommandResource {
 	}
 
 	@PostMapping("/processPayment/{status}/{taskId}")
-	public ResponseEntity<PaymentDTO> processPayment(@RequestBody PaymentDTO paymentDTO, @PathVariable String status,
+	public ResponseEntity<CommandResource> processPayment(@RequestBody PaymentDTO paymentDTO, @PathVariable String status,
 			@PathVariable String taskId) {
 		paymentDTO.setDateAndTime(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<PaymentDTO> dto = paymentResourceApi.createPaymentUsingPOST(paymentDTO);
@@ -103,8 +103,8 @@ public class PaymentCommandResource {
 		ProcessPaymentRequest processPaymentRequest = new ProcessPaymentRequest();
 		processPaymentRequest.setPaymentStatus(status);
 		processPaymentRequest.setTaskId(taskId);
-		processPaymentRequest(processPaymentRequest);
-		return dto;
+		return processPaymentRequest(processPaymentRequest);
+		
 	}
 
 	public ResponseEntity<CommandResource> processPaymentRequest(
