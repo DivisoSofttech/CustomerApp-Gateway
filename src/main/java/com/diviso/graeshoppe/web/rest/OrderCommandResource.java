@@ -48,8 +48,8 @@ import com.diviso.graeshoppe.client.order.model.Order;
 @RestController
 @RequestMapping("/api/command")
 public class OrderCommandResource {
-	
-	private static final Logger LOG=LoggerFactory.getLogger(OrderCommandResource.class);
+
+	private static final Logger LOG = LoggerFactory.getLogger(OrderCommandResource.class);
 	@Autowired
 	private OrderCommandResourceApi orderCommandResourceApi;
 	@Autowired
@@ -60,10 +60,10 @@ public class OrderCommandResource {
 	private AuxilaryOrderLineResourceApi auxilaryOrderLineApi;
 	@Autowired
 	private DeliveryInfoResourceApi deliveryInfoCommandApi;
-	
+
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
-	
+
 	@Autowired
 	private OfferResourceApi offerResourceApi;
 	@Autowired
@@ -77,10 +77,10 @@ public class OrderCommandResource {
 
 	@GetMapping("/sendMessage")
 	public String send(Principal principal) {
-		messagingTemplate.convertAndSendToUser("test", "/queue/notification",
-				"Message from " + principal.getName());
+		messagingTemplate.convertAndSendToUser("test", "/queue/notification", "Message from " + principal.getName());
 		return "done";
 	}
+
 	@PostMapping("/order/initiateOrder")
 	public ResponseEntity<CommandResource> initiateOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
@@ -109,10 +109,10 @@ public class OrderCommandResource {
 			});
 
 		});
-		LOG.info("Applied Offers are "+order.getAppliedOffers());
-		
-		order.getAppliedOffers().forEach(offer ->{
-			OfferDTO offerDTO=new OfferDTO();
+		LOG.info("Applied Offers are " + order.getAppliedOffers());
+
+		order.getAppliedOffers().forEach(offer -> {
+			OfferDTO offerDTO = new OfferDTO();
 			offerDTO.setOfferRef(offer.getOfferRef());
 			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			createOfferLine(offerDTO);
@@ -124,9 +124,9 @@ public class OrderCommandResource {
 	public ResponseEntity<AuxilaryOrderLineDTO> createAuxilaryLineItem(AuxilaryOrderLineDTO auxilaryOrderLineDTO) {
 		return auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
 	}
-	
+
 	public ResponseEntity<OfferDTO> createOfferLine(OfferDTO offerDTO) {
-		LOG.info("OfferDTO in create Offerline is "+offerDTO);
+		LOG.info("OfferDTO in create Offerline is " + offerDTO);
 		return offerResourceApi.createOfferUsingPOST(offerDTO);
 	}
 
@@ -147,7 +147,9 @@ public class OrderCommandResource {
 		DeliveryInfoDTO deliveryInfoDTO = new DeliveryInfoDTO();
 		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
-		deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
+		if (deliveryInfo.getDeliveryAddress() != null) {
+			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
+		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
 		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO);
 		long deliveryId = deliveryInfoResult.getBody().getSelfId();
@@ -165,8 +167,6 @@ public class OrderCommandResource {
 		return result;
 
 	}
-
-
 
 	public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) {
 
@@ -195,10 +195,10 @@ public class OrderCommandResource {
 	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notificationDTO) {
 		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
 	}
-	
+
 	@PutMapping("/addresses")
 	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) {
 		return addressResourceApi.updateAddressUsingPUT(addressDTO);
 	}
-	
+
 }
