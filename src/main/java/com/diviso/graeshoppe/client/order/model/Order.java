@@ -18,9 +18,6 @@ import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.stereotype.Indexed;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -29,12 +26,12 @@ import javax.validation.constraints.*;
  * Order
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-26T19:41:35.587285+05:30[Asia/Kolkata]")
-@Document(indexName = "order")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-04T12:56:54.526485+05:30[Asia/Kolkata]")
+
 public class Order   {
   @JsonProperty("appliedOffers")
   @Valid
-  private List<Offer> appliedOffers = new ArrayList<Offer>();
+  private List<Offer> appliedOffers = null;
 
   @JsonProperty("approvalDetails")
   private ApprovalDetails approvalDetails = null;
@@ -43,7 +40,7 @@ public class Order   {
   private String customerId = null;
 
   @JsonProperty("date")
-  private @Valid Instant date = null;
+  private Instant date = null;
 
   @JsonProperty("deliveryInfo")
   private DeliveryInfo deliveryInfo = null;
@@ -62,7 +59,7 @@ public class Order   {
 
   @JsonProperty("orderLines")
   @Valid
-  private Set<OrderLine> orderLines = new HashSet<OrderLine>();
+  private Set<OrderLine> orderLines = null;
 
   @JsonProperty("paymentRef")
   private String paymentRef = null;
