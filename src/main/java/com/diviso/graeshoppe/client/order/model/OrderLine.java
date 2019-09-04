@@ -37,7 +37,7 @@ public class OrderLine   {
 
   @JsonProperty("requiedAuxilaries")
   @Valid
-  private List<AuxilaryOrderLine> requiedAuxilaries = null;
+  private List<AuxilaryOrderLine> requiedAuxilaries = new ArrayList<>();
 
   @JsonProperty("total")
   private Double total = null;
