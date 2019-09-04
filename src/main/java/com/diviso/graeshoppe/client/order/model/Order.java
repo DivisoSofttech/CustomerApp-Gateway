@@ -31,7 +31,7 @@ import javax.validation.constraints.*;
 public class Order   {
   @JsonProperty("appliedOffers")
   @Valid
-  private List<Offer> appliedOffers = new ArrayList<>()
+  private List<Offer> appliedOffers = new ArrayList<>();
 
   @JsonProperty("approvalDetails")
   private ApprovalDetails approvalDetails = null;
