@@ -160,11 +160,12 @@ public class OrderCommandResource {
 			orderResult.setStatusId(2l);
 		} else if (result.getBody().getNextTaskName().equals("Process Payment")) {
 			orderResult.setStatusId(3l);
+			updateOrder(orderResult);
 			orderCommandResourceApi.publishOrderToMessagebrokerUsingPOST(orderResult.getOrderId());
 
 		}
 		System.out.println("The updated order is " + orderResult.getStatusId());
-		updateOrder(orderResult);
+		
 		return result;
 
 	}
