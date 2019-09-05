@@ -158,6 +158,7 @@ public class OrderCommandResource {
 		orderResult.setDeliveryInfoId(deliveryId);
 		ResponseEntity<CommandResource> result = deliveryInfoResult;
 		if (result.getBody().getNextTaskName().equals("Accept Order")) {
+			updateOrder(orderResult);
 			orderResult.setStatusId(2l);
 		} else if (result.getBody().getNextTaskName().equals("Process Payment")) {
 			orderResult.setStatusId(3l);
