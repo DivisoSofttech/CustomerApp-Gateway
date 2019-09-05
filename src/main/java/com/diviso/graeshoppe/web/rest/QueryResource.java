@@ -288,9 +288,9 @@ public class QueryResource {
 		return queryService.findStoreBySearchTerm(searchTerm, pageable);
 	}
 
-	@GetMapping("/rating-count")
-	public List<Entry> findRatingCount(Pageable pageable) {
-		queryService.findRatingCount(pageable);
+	@GetMapping("/review-count")
+	public Integer findReviewCountByStoreId(String storeId) {
+		queryService.findReviewByStoreId(storeId);
 		return null;
 	}
 

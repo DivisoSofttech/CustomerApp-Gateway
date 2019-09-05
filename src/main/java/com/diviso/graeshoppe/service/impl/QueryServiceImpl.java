@@ -207,8 +207,9 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public Page<Review> findReviewByStoreId(String userName) {
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("userName", userName)).build();
+	public Page<Review> findReviewByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
+
 		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
 	}
 
@@ -1014,6 +1015,7 @@ public class QueryServiceImpl implements QueryService {
 		Product product=elasticsearchOperations.queryForObject(searchQuery, Product.class);
 		return product.getDiscount();
 	}
+
 
 	/*
 	 * (non-Javadoc)
