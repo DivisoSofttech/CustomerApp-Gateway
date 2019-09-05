@@ -530,6 +530,7 @@ public class QueryServiceImpl implements QueryService {
 		List<Product> productList = elasticsearchOperations.queryForPage(searchQuery, Product.class).getContent();
 
 		for (Product product : productList) {
+			log.debug("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=List of product:",product);
 			if ((product.isIsAuxilaryItem() == false)) {
 
 				StringQuery query = new StringQuery(termQuery("product.id", product.getId()).toString());
