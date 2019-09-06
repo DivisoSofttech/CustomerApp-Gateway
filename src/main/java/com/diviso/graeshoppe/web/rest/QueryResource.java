@@ -68,7 +68,7 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 import io.swagger.annotations.ApiParam;
 
 @RestController
-@RequestMapping("/api/query")
+//@RequestMapping("/api/query")
 public class QueryResource {
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
