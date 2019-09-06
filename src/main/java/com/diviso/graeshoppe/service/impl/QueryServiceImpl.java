@@ -5,6 +5,8 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import org.elasticsearch.search.aggregations.bucket.filter.Filter;
+import org.elasticsearch.search.aggregations.bucket.filter.FilterAggregationBuilder;
 
 import java.time.Instant;
 import java.util.ArrayList;
@@ -263,6 +265,9 @@ public class QueryServiceImpl implements QueryService {
 	@Override
 	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
 
+		
+		
+		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
@@ -273,37 +278,39 @@ public class QueryServiceImpl implements QueryService {
 
 								true))
 						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
-
-						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
-				.build();
-
+				
+						.subAggregation(AggregationBuilders.filter("store",QueryBuilders.termQuery("iDPcode", storeId)))).build();
+		//AggregationBuilders.terms("store").field("iDPcode.keyword"))
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
 
 		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
 
-		List<Entry> storeBasedEntry = new ArrayList<Entry>();
-		orderAgg.getBuckets().forEach(bucket -> {
-
-			int i = 0;
-			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
-					.getKeyAsString();
-			System.out.println("storeName" + storeName);
-
-			if (storeName.equals(storeId)) {
-
-				Entry storeEntry = bucket;
-
-				storeBasedEntry.add(storeEntry);
-
-			}
-			i++;
-
-		});
-       for(Entry r:storeBasedEntry) {
-    	   System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"+r.toString());
-       }
+		/*
+		 * List<Entry> storeBasedEntry = new ArrayList<Entry>();
+		 * orderAgg.getBuckets().forEach(bucket -> {
+		 * 
+		 * int i = 0; String storeName = bucket.getAggregation("store",
+		 * TermsAggregation.class).getBuckets().get(i) .getKeyAsString();
+		 * System.out.println("storeName" + storeName);
+		 * 
+		 * if (storeName.equals(storeId)) {
+		 * 
+		 * Entry storeEntry = bucket;
+		 * 
+		 * storeBasedEntry.add(storeEntry);
+		 * 
+		 * } i++;
+		 * 
+		 * }); for(Entry r:storeBasedEntry) { System.out.println(
+		 * "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-getCount()=="+r.getCount());
+		 * System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyy-getKeyAsString()=="+r.
+		 * getKeyAsString());
+		 * 
+		 * }
+		 */
 		
-		return storeBasedEntry;
+		//return storeBasedEntry;
+		return orderAgg.getBuckets();
 	}
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
