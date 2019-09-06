@@ -51,7 +51,7 @@ public interface QueryService {
 
 	public Store findStoreByRegNo(String regNo);
 
-	public Page<Review> findReviewByStoreId(String userName);
+
 
 	public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
 
@@ -66,6 +66,8 @@ public interface QueryService {
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name);
 
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
+	
+	public Page<Review> findReviewByStoreId(String storeId);
 
 	public Page<Product> findAllProductByName(String name);
 
