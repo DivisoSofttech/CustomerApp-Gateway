@@ -216,7 +216,7 @@ ajith.anand@lxisoft.com
 	@Override
 	public Long findReviewCountByStoreId(String storeId) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
-		return elasticsearchOperations.count(searchQuery);
+		return elasticsearchOperations.count(searchQuery,Review.class);
 		
 	}
 	
