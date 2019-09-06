@@ -144,7 +144,8 @@ public class QueryServiceImpl implements QueryService {
 	 * public List<Result> findAll(String searchTerm, Pageable pageable) {
 	 * List<Result> values = new ArrayList<Result>(); ;
 	 * 
-	 * SearchQuery searchQuery = new NativeSearchQueryBuilder()
+	 * SearchQuery searchQuery = new NativeSearchQueryBuilder()divisobyta_009
+ajith.anand@lxisoft.com
 	 * .withQuery(matchQuery("name", searchTerm).fuzziness(Fuzziness.TWO)).build();
 	 * 
 	 * elasticsearchTemplate.query(searchQuery, new
@@ -213,9 +214,16 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
+	public Long findReviewCountByStoreId(String storeId) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
+		return elasticsearchOperations.count(searchQuery);
+		
+	}
+	
+	@Override
 	public Page<Review> findReviewByStoreId(String storeId) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("store.regNo", storeId)).build();
-
+		
 		return elasticsearchOperations.queryForPage(searchQuery, Review.class);
 	}
 
@@ -263,56 +271,62 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
-
-		
-		
+	public List<Entry> findCategoryAndCountByStoreId(String storeId,Pageable pageable) {
 		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-
+				
 				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
-
+				
 				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
-
+						
 						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
-
+								
 								true))
 						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
-				
-						.subAggregation(AggregationBuilders.filter("store",QueryBuilders.termQuery("iDPcode", storeId)))).build();
-		//AggregationBuilders.terms("store").field("iDPcode.keyword"))
+						
+						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword")))
+				.build();
+
 		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
 
 		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
 
-		/*
-		 * List<Entry> storeBasedEntry = new ArrayList<Entry>();
-		 * orderAgg.getBuckets().forEach(bucket -> {
-		 * 
-		 * int i = 0; String storeName = bucket.getAggregation("store",
-		 * TermsAggregation.class).getBuckets().get(i) .getKeyAsString();
-		 * System.out.println("storeName" + storeName);
-		 * 
-		 * if (storeName.equals(storeId)) {
-		 * 
-		 * Entry storeEntry = bucket;
-		 * 
-		 * storeBasedEntry.add(storeEntry);
-		 * 
-		 * } i++;
-		 * 
-		 * }); for(Entry r:storeBasedEntry) { System.out.println(
-		 * "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx-getCount()=="+r.getCount());
-		 * System.out.println("yyyyyyyyyyyyyyyyyyyyyyyyyyyyy-getKeyAsString()=="+r.
-		 * getKeyAsString());
-		 * 
-		 * }
-		 */
-		
-		//return storeBasedEntry;
-		return orderAgg.getBuckets();
-	}
+		List<Entry> storeBasedEntry = new ArrayList<Entry>();
 
+		/*List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
+		.filter(bucket->  bucket.getAggregation("store", TermsAggregation.class).getBuckets()
+				.stream()
+				.filter(subbucket-> subbucket.getKey().equals(storeId)).findFirst().isPresent()
+				).collect(Collectors.toList());
+		*/
+		
+		orderAgg.getBuckets().forEach(bucket -> {
+			
+			int i = 0;
+			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
+
+			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
+					bucket.getCount(), averagePrice));
+
+			System.out.println("SSSSSSSSSSSSSSSSSS"
+					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
+
+			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
+					.getKeyAsString();
+			
+			if (storeName.equals(storeId)) {
+				
+				Entry storeEntry = bucket;
+				
+				storeBasedEntry.add(storeEntry);
+			}
+			i++;
+			System.out.println(
+					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
+		});
+		// return orderAgg.getBuckets();
+	return storeBasedEntry;
+	}
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())

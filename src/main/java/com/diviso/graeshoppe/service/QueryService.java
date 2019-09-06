@@ -199,6 +199,8 @@ public interface QueryService {
 
 	public Discount findDiscountByProductId(Long productId);
 
+	public Long findReviewCountByStoreId(String storeId);
+
 	
 
 	
