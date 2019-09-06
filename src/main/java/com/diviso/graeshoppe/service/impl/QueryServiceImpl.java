@@ -278,38 +278,31 @@ public class QueryServiceImpl implements QueryService {
 
 		List<Entry> storeBasedEntry = new ArrayList<Entry>();
 
-		/*List<Entry> listentry=orderAgg.getBuckets().stream().filter(bucket->bucket.getKey().equals(customerId))
-		.filter(bucket->  bucket.getAggregation("store", TermsAggregation.class).getBuckets()
-				.stream()
-				.filter(subbucket-> subbucket.getKey().equals(storeId)).findFirst().isPresent()
-				).collect(Collectors.toList());
-		*/
 		
-		orderAgg.getBuckets().forEach(bucket -> {
-			
-			int i = 0;
-			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
-
-		System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
-					bucket.getCount(), averagePrice));
-
-			System.out.println("Q"
-					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
-
-			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
-					.getKeyAsString();
-			System.out.println("storeName"+storeName);
-			if (storeName.equals(storeId))  {
-				
-				Entry storeEntry = bucket;
-				
-				storeBasedEntry.add(storeEntry);
-				
-			}
-			i++;
-			System.out.println(
-				"hhhhhhhhhhhhhhhhhhhhhhhhhhh" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
-		});
+		
+		  orderAgg.getBuckets().forEach(bucket -> {
+		  
+		  int i = 0; double averagePrice =
+		 bucket.getAvgAggregation("avgPrice").getAvg();
+		  
+		  System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f",
+		  bucket.getKey(), bucket.getCount(), averagePrice));
+		  
+		  System.out.println("Q" + bucket.getAggregation("store",
+		  TermsAggregation.class).getBuckets().get(i).getKeyAsString());
+		  
+		  String storeName = bucket.getAggregation("store",
+		  TermsAggregation.class).getBuckets().get(i) .getKeyAsString();
+		  System.out.println("storeName"+storeName); if (storeName.equals(storeId)) {
+		  
+		  Entry storeEntry = bucket;
+		  
+		  storeBasedEntry.add(storeEntry);
+		  
+		  } i++; System.out.println( "hhhhhhhhhhhhhhhhhhhhhhhhhhh" +
+		  bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
+		  });
+		 
 		// return orderAgg.getBuckets();
 	return storeBasedEntry;
 	}
