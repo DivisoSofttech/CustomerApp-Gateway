@@ -290,25 +290,25 @@ public class QueryServiceImpl implements QueryService {
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
 
-			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
+		System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
 					bucket.getCount(), averagePrice));
 
-			System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
+			System.out.println("Q"
 					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
 
 			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
 					.getKeyAsString();
-			
-			if (storeName.equals(storeId)) {
+			System.out.println("storeName"+storeName);
+			if (storeName.equals(storeId))  {
 				
 				Entry storeEntry = bucket;
 				
 				storeBasedEntry.add(storeEntry);
-				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@storeEntry"+storeEntry);
+				
 			}
 			i++;
 			System.out.println(
-					"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPp" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
+				"hhhhhhhhhhhhhhhhhhhhhhhhhhh" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
 		// return orderAgg.getBuckets();
 	return storeBasedEntry;
