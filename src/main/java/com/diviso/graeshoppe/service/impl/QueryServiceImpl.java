@@ -238,7 +238,7 @@ public class QueryServiceImpl implements QueryService {
 	}
 
 	@Override
-	public List<Entry> findCategoryAndCount(Pageable pageable) {
+	public List<Entry> findCategoryAndCount(Pageable pageable) {  
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
 				.withSearchType(QUERY_THEN_FETCH)
@@ -293,7 +293,7 @@ public class QueryServiceImpl implements QueryService {
 			System.out.println(String.format("Key: %s, Doc count: %d, Average Price: %f", bucket.getKey(),
 					bucket.getCount(), averagePrice));
 
-			System.out.println("SSSSSSSSSSSSSSSSSS"
+			System.out.println("QQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQQ"
 					+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString());
 
 			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
@@ -304,10 +304,11 @@ public class QueryServiceImpl implements QueryService {
 				Entry storeEntry = bucket;
 				
 				storeBasedEntry.add(storeEntry);
+				System.out.println("@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@storeEntry"+storeEntry);
 			}
 			i++;
 			System.out.println(
-					"SSSSSSSSSSSSSSSSSS" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
+					"PPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPPp" + bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
 		});
 		// return orderAgg.getBuckets();
 	return storeBasedEntry;
