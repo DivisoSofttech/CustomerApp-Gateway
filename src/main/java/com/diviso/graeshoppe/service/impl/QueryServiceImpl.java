@@ -282,15 +282,13 @@ public class QueryServiceImpl implements QueryService {
 		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
 
 		List<Entry> storeBasedEntry = new ArrayList<Entry>();
-		List<Entry> storeAgg = new ArrayList<Entry>();
 		orderAgg.getBuckets().forEach(bucket -> {
 
 			int i = 0;
-			storeAgg.add(bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i));
-			System.out.println("RRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRRR-storeAgg.size():"+storeAgg.size());
-			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i).getKeyAsString();
+			String storeName = bucket.getAggregation("store", TermsAggregation.class).getBuckets().get(i)
+					.getKeyAsString();
 			System.out.println("storeName" + storeName);
-			
+
 			if (storeName.equals(storeId)) {
 
 				Entry storeEntry = bucket;
@@ -299,11 +297,12 @@ public class QueryServiceImpl implements QueryService {
 
 			}
 			i++;
-		//	System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhh"
-			//		+ bucket.getAggregation("store", TermsAggregation.class).getBuckets().size());
-		});
 
-		// return orderAgg.getBuckets();
+		});
+       for(Entry r:storeBasedEntry) {
+    	   System.out.println("zzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzzz"+r.toString());
+       }
+		
 		return storeBasedEntry;
 	}
 
