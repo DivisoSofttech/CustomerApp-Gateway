@@ -289,9 +289,9 @@ public class QueryResource {
 	}
 
 	@GetMapping("/review-count")
-	public Integer findReviewCountByStoreId(String storeId) {
-		queryService.findReviewByStoreId(storeId);
-		return null;
+	public Long findReviewCountByStoreId(String storeId) {
+		Long l=queryService.findReviewCountByStoreId(storeId);
+		return l;
 	}
 
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
