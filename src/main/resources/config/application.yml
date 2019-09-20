@@ -232,7 +232,7 @@ payment:
    url: dev.ci2.divisosofttech.com:9090
 socket:
    server:
-      host: dev.ci2.divisosofttech.com
+      host: 104.198.222.106
       port: 9999
 
    
