@@ -381,6 +381,19 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 		Product product = elasticsearchOperations.queryForObject(searchQuery, Product.class);
 		return product.getDiscount();
 	}
+	
+	/*
+	 * to find category by storeId
+	 */
+
+	@Override
+	public Page<Category> findCategoryByIDPcode(String iDPcode, Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode))
+				.withPageable(pageable).build();
+		return elasticsearchOperations.queryForPage(searchQuery, Category.class);
+
+	}
 
 	/*
 	 * (non-Javadoc)
