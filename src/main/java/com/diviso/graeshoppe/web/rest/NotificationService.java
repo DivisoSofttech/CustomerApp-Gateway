@@ -1,6 +1,5 @@
 package com.diviso.graeshoppe.web.rest;
 
-import java.nio.ByteBuffer;
 import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
@@ -11,7 +10,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import com.diviso.graeshoppe.client.order.model.NotificationDTO;
@@ -28,6 +26,7 @@ public class NotificationService {
 
 	@StreamListener(MessageBinderConfiguration.NOTIFICATION)
 	public void listenToNotifications(KStream<String, Notificaton> message) {
+		LOG.info("Message Notification is being subscribed ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		message.foreach((key, value) -> {
 			LOG.info("Notification Value consumed is " + value);
 			sendNotification(value);
@@ -35,6 +34,7 @@ public class NotificationService {
 	}
 
 	private void sendNotification(Notificaton message) {
+		LOG.info("Notification is send ia socket server");
 			NotificationDTO notificationDTO=new NotificationDTO();
 			notificationDTO.setDate(OffsetDateTime.ofInstant(Instant.ofEpochMilli(message.getDate()),ZoneId.systemDefault()));
 			notificationDTO.setTitle(message.getTitle());
