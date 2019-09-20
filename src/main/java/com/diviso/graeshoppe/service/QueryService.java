@@ -31,15 +31,7 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 public interface QueryService {
 
-	public Page<Product> findProductByCategoryId(Long categoryId, String userId, Pageable pageable);
-
 	public Page<Customer> findAllCustomersWithoutSearch(Pageable pageable);
-
-	public Page<Product> findAllProductBySearchTerm(String searchTerm, Pageable pageable);
-
-	public Page<StockCurrent> findStockCurrentByProductId(Long productId, Pageable pageable);
-
-	public Page<StockCurrent> findStockCurrentByProductName(String name, String storeId, Pageable pageable);
 
 	public Page<Review> findAllReviews(Pageable pageable);
 
@@ -47,17 +39,9 @@ public interface QueryService {
 
 	public Page<Store> findAllStores(Pageable pageable);
 
-	public Page<Product> findAllProductsByStoreId(String storeId);
-
 	public Store findStoreByRegNo(String regNo);
 
-
-
-	public Page<StockCurrent> findStockCurrentByStoreId(String storeId);
-
 	public Page<UserRating> findUserRatingByRegNo(String regNo);
-
-	public List<Entry> findCategoryAndCount(Pageable pageable);
 
 	public Customer findCustomerByReference(String reference);
 
@@ -66,14 +50,10 @@ public interface QueryService {
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name);
 
 	public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
-	
+
 	public Page<Review> findReviewByStoreId(String storeId);
 
-	public Page<Product> findAllProductByName(String name);
-
 	public List<Entry> findRatingCount(Pageable pageable);
-
-	public Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId);
 
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable);
 
@@ -81,11 +61,7 @@ public interface QueryService {
 
 	public Page<Store> findStoreByDeliveryType(String deliveryType);
 
-	public Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable);
-
 	public Page<Store> findStoreByTypeName(String name, Pageable pageable);
-
-	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId, Pageable pageable);
 
 	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable);
 
@@ -105,13 +81,7 @@ public interface QueryService {
 
 	public Page<Store> findStoreByRating();
 
-	public Page<StockCurrent> findAndSortProductByPrice(Double from, Double to);
-
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId);
-
-	//public OrderMaster findOrderMasterByOrderId(String orderId);
-
-	public Product findProductById(Long id);
 
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable);
 
@@ -127,33 +97,7 @@ public interface QueryService {
 
 	public List<Entry> findStoreTypeAndCount(Pageable pageable);
 
-	/**
-	 * @param storeId
-	 * @param pageable
-	 * @return
-	 */
 	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable);
-
-	/**
-	 * @param name
-	 * @return
-	 */
-	public Page<Product> findProductsByCategoryName(String name);
-
-	/**
-	 * @return
-	 */
-	List<Product> findAllProducts();
-
-	/**
-	 * @param productId
-	 */
-	public Page<AuxilaryLineItem> findAllAuxilariesByProductId(Long productId);
-
-	/**
-	 * @param categoryName
-	 */
-	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(String categoryName,String storeId);
 
 	/**
 	 * @param storeId
@@ -167,55 +111,18 @@ public interface QueryService {
 	 * @param distance
 	 * @return
 	 */
-	//public Page<Store> findByLocationNear(Point point, Distance distance,Pageable pageable);
+	// public Page<Store> findByLocationNear(Point point, Distance distance,Pageable
+	// pageable);
 
-	
 	public StoreSettings getStoreSettings(String IDPCode);
 
 	public StoreAddress getStoreAddress(String iDPCode);
 
-	Long findOrderCountByCustomerId(String customerId );
+	Long findOrderCountByCustomerId(String customerId);
 
-	/**
-	 * @param storeId 
-	 * @param pageable
-	 * @return
-	 */
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
-
-	/**
-	 * @param statusName
-	 */
 	public Page<Order> findOrderByStatusName(String statusName);
 
-	/**
-	 * @param from
-	 * @param to
-	 * @return
-	 */
-	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to,String storeId);
-
-	public Page<ComboLineItem> findAllCombosByProductId(Long productId);
-
-	public Discount findDiscountByProductId(Long productId);
+	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
 
 	public Long findReviewCountByStoreId(String storeId);
-
-	
-
-	
-
-	/**
-	 * @param iDPcode
-	 * @param pageable
-	 * @return
-	 */
-	//public Page<Product> findNotAuxilaryProducts(String iDPcode, Pageable pageable);
-
-	/**
-	 * @param categoryName
-	 * @param storeId
-	 * @return
-	 */
-
 }

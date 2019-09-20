@@ -1,13 +1,10 @@
 package com.diviso.graeshoppe.web.rest;
 
-import java.time.Instant;
-
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,10 +27,6 @@ import com.diviso.graeshoppe.client.product.model.CategoryDTO;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
 import com.diviso.graeshoppe.client.product.model.UOMDTO;
-import com.diviso.graeshoppe.client.sale.api.SaleResourceApi;
-import com.diviso.graeshoppe.client.sale.api.TicketLineResourceApi;
-import com.diviso.graeshoppe.client.sale.model.SaleDTO;
-import com.diviso.graeshoppe.client.sale.model.TicketLineDTO;
 import com.diviso.graeshoppe.client.store.api.ReplyResourceApi;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreResourceApi;
@@ -56,21 +49,17 @@ public class CommandResource {
 
 	@Autowired
 	private CategoryResourceApi categoryResourceApi;
-	/*@Autowired
-	private StockLineResourceApi stockLineResourceApi;*/
+
 	@Autowired
 	private ProductResourceApi productResourceApi;
 	@Autowired
 	private ContactResourceApi contactResourceApi;
 	@Autowired
 	private CustomerResourceApi customerResourceApi;
-	@Autowired
-	private SaleResourceApi saleResourceApi;
+
 	@Autowired
 	private StockCurrentResourceApi stockCurrentResourceApi;
-	/*@Autowired
-	private StockDiaryResourceApi stockDiaryResourceApi;
-*/
+
 	@Autowired
 	private StoreResourceApi storeResourceApi;
 
@@ -84,14 +73,11 @@ public class CommandResource {
 	private ReviewResourceApi reviewResourceApi;
 
 	@Autowired
-	TicketLineResourceApi ticketLineResourceApi;
-
-	@Autowired
 	QueryService queryService;
 
 	@Autowired
 	QueryResource queryResource;
-	
+
 	private final Logger log = LoggerFactory.getLogger(CommandResource.class);
 
 	@PostMapping("/customers/register-customer")
@@ -166,41 +152,6 @@ public class CommandResource {
 		productResourceApi.deleteProductUsingDELETE(id);
 	}
 
-	@PostMapping("/sales")
-	public ResponseEntity<SaleDTO> createSale(@RequestBody SaleDTO saleDTO) {
-		saleDTO.date(Instant.now());
-
-		return saleResourceApi.createSaleUsingPOST(saleDTO);
-	}
-
-	@PutMapping("/sales")
-	public ResponseEntity<SaleDTO> updateSale(@RequestBody SaleDTO saleDTO) {
-		return this.saleResourceApi.updateSaleUsingPUT(saleDTO);
-	}
-
-	@DeleteMapping("/sales/{id}")
-	public void deleteSale(@PathVariable Long id) {
-		this.ticketLineResourceApi.findAllTicketLinesBySaleIdUsingGET(id).getBody().forEach(ticket -> {
-			this.deleteTicketline(ticket.getId());
-		});
-		this.saleResourceApi.deleteSaleUsingDELETE(id);
-	}
-
-	@PostMapping("/ticket-lines")
-	public ResponseEntity<TicketLineDTO> createTickerLine(@RequestBody TicketLineDTO ticketLineDTO) {
-		return this.ticketLineResourceApi.createTicketLineUsingPOST(ticketLineDTO);
-	}
-
-	@PutMapping("/ticket-lines")
-	public ResponseEntity<TicketLineDTO> updateTicketLine(@RequestBody TicketLineDTO ticketLineDTO) {
-		return ticketLineResourceApi.updateTicketLineUsingPUT(ticketLineDTO);
-	}
-
-	@DeleteMapping("/ticket-lines/{id}")
-	public void deleteTicketline(@PathVariable Long id) {
-		ticketLineResourceApi.deleteTicketLineUsingDELETE(id);
-	}
-
 	@PutMapping("/uoms")
 	public ResponseEntity<UOMDTO> updateUOM(@RequestBody UOMDTO uomDTO) {
 		return uomResourceApi.updateUOMUsingPUT(uomDTO);
@@ -211,31 +162,6 @@ public class CommandResource {
 		uomResourceApi.deleteUOMUsingDELETE(id);
 	}
 
-/*	@PostMapping("/stocklines")
-	public ResponseEntity<StockLineDTO> createStockLine(@RequestBody StockLineDTO stockLine) {
-		return this.stockLineResourceApi.createStockLineUsingPOST(stockLine);
-	}
-
-	@PutMapping("/stocklines")
-	public ResponseEntity<StockLineDTO> updateStockLine(@RequestBody StockLineDTO stockLine) {
-		return this.stockLineResourceApi.updateStockLineUsingPUT(stockLine);
-	}
-
-	@DeleteMapping("/stocklines/{id}")
-	public ResponseEntity<Void> deleteStockLine(@PathVariable Long id) {
-		return this.stockLineResourceApi.deleteStockLineUsingDELETE(id);
-	}
-
-	@PostMapping("/stock-diaries")
-	public ResponseEntity<StockDiaryDTO> createStockCurrent(@RequestBody StockDiaryDTO stockDiary) {
-		return this.stockDiaryResourceApi.createStockDiaryUsingPOST(stockDiary);
-	}
-
-	@PutMapping("/stock-diaries")
-	public ResponseEntity<StockDiaryDTO> updateStockDiary(@RequestBody StockDiaryDTO stockDiary) {
-		return this.stockDiaryResourceApi.updateStockDiaryUsingPUT(stockDiary);
-	}*/
-
 	@PostMapping("/stock-currents")
 	public ResponseEntity<StockCurrentDTO> createStockCurrent(@RequestBody StockCurrentDTO stockCurrent) {
 		return this.stockCurrentResourceApi.createStockCurrentUsingPOST(stockCurrent);
@@ -245,11 +171,6 @@ public class CommandResource {
 	public ResponseEntity<StockCurrentDTO> updateStockCurrent(@RequestBody StockCurrentDTO StockCurrent) {
 		return this.stockCurrentResourceApi.updateStockCurrentUsingPUT(StockCurrent);
 	}
-
-/*	@PostMapping("/stock-of-product")
-	public ResponseEntity<StockDiaryDTO> createStockOfProduct(@RequestBody StockDiaryDTO stockDiaryDTO) {
-		return this.stockDiaryResourceApi.createStockOfProductUsingPOST(stockDiaryDTO);
-	}*/
 
 	@PostMapping("/stores")
 	public ResponseEntity<StoreDTO> createStore(@RequestBody StoreDTO storeDTO) {
@@ -313,41 +234,40 @@ public class CommandResource {
 	}
 
 	@PostMapping("/rating-review")
-	public  ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,Pageable pageable) {
-		
-		
+	public ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,
+			Pageable pageable) {
+
 		UserRatingDTO userRatingDTO = ratingReview.getRating();
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>ratingdto>>>>>>>>>>>>>>>>>>>>>>  "+userRatingDTO);
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>ratingdto>>>>>>>>>>>>>>>>>>>>>>  " + userRatingDTO);
 		ReviewDTO reviewDTO = ratingReview.getReview();
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>reviewdto>>>>>>>>>>>>>>>>>>>>>>  "+reviewDTO);
-		StoreDTO store=null;
-		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO+"     condition...     "+(userRatingDTO.getRating() != null));
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>reviewdto>>>>>>>>>>>>>>>>>>>>>>  " + reviewDTO);
+		StoreDTO store = null;
+		log.info(">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>" + userRatingDTO + ">>>>>>>>>>>>>>>>>>>>>" + reviewDTO
+				+ "     condition...     " + (userRatingDTO.getRating() != null));
 		if (userRatingDTO.getRating() != null) {
-			
-			 store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
-			 log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>"+store.getRegNo()+"     "+userRatingDTO.getUserName());
+
+			store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
+			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>" + store.getRegNo() + "     "
+					+ userRatingDTO.getUserName());
 			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
-			
+
 			log.info(">>>>>>>>>>>>>>>>>>>>>>alreadyRatedUser: >>>>>>>>>>>>>>>>>>>>>>>>" + alreadyRatedUser);
 
 			if (alreadyRatedUser == null) {
 				log.info("............create................");
 
 				ResponseEntity<ReviewDTO> review = reviewResourceApi.createReviewUsingPOST(reviewDTO);
-				
-				log.info("...........saved review............."+review.getBody());
 
-				log.info("............check userrating................  "+userRatingDTO);
-				
+				log.info("...........saved review............." + review.getBody());
+
+				log.info("............check userrating................  " + userRatingDTO);
+
 				ResponseEntity<UserRatingDTO> ratingDTO = userRatingResourceApi
 						.createUserRatingUsingPOST(userRatingDTO);
-				
-				log.info("............saved rating.........."+ratingDTO.getBody());
-				
-				
-				
-				
+
+				log.info("............saved rating.........." + ratingDTO.getBody());
+
 				ratingReview.setRating(ratingDTO.getBody());
 				ratingReview.setReview(review.getBody());
 			} else {
@@ -380,7 +300,7 @@ public class CommandResource {
 			}
 
 		}
-		 return queryResource.findRatingReviewByStoreidAndCustomerName(store.getRegNo(), pageable);
+		return queryResource.findRatingReviewByStoreidAndCustomerName(store.getRegNo(), pageable);
 	}
 
 }
