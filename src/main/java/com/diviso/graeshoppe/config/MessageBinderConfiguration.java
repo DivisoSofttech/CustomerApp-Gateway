@@ -8,7 +8,7 @@ import com.diviso.graeshoppe.order.avro.Notificaton;
 
 public interface MessageBinderConfiguration {
 
-	String NOTIFICATION="notificaton";
+	String NOTIFICATION="notification";
 
 	@Input(NOTIFICATION)
 	KStream<String, Notificaton> order();
