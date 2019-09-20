@@ -89,7 +89,6 @@ public class OrderCommandResource {
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
-		orderDTO.setStatusId(1l);
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
@@ -152,24 +151,8 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
-		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO);
-		long deliveryId = deliveryInfoResult.getBody().getSelfId();
-		OrderDTO orderResult = orderCommandResourceApi.getOrderUsingGET(orderId).getBody();
-		orderResult.setDeliveryInfoId(deliveryId);
-		ResponseEntity<CommandResource> result = deliveryInfoResult;
-		if (result.getBody().getNextTaskName().equals("Accept Order")) {
-			updateOrder(orderResult);
-			orderResult.setStatusId(2l);
-		} else if (result.getBody().getNextTaskName().equals("Process Payment")) {
-			orderResult.setStatusId(3l);
-			updateOrder(orderResult);
-			orderCommandResourceApi.publishOrderToMessagebrokerUsingPOST(orderResult.getOrderId());
-
-		}
-		System.out.println("The updated order is " + orderResult.getStatusId());
-		
-		return result;
-
+		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO); 
+		return deliveryInfoResult;
 	}
 
 	public ResponseEntity<CommandResource> createOrder(@RequestBody OrderDTO orderDTO) {
