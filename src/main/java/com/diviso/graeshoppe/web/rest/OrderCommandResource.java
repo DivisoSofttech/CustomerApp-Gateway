@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.diviso.graeshoppe.client.order.api.AddressResourceApi;
 import com.diviso.graeshoppe.client.order.api.ApprovalDetailsResourceApi;
 import com.diviso.graeshoppe.client.order.api.AuxilaryOrderLineResourceApi;
+import com.diviso.graeshoppe.client.order.api.DeliveryInfoCommandResourceApi;
 import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
 import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OfferResourceApi;
@@ -60,7 +61,7 @@ public class OrderCommandResource {
 	@Autowired
 	private AuxilaryOrderLineResourceApi auxilaryOrderLineApi;
 	@Autowired
-	private DeliveryInfoResourceApi deliveryInfoCommandApi;
+	private DeliveryInfoCommandResourceApi deliveryInfoCommandApi;
 
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
@@ -143,7 +144,7 @@ public class OrderCommandResource {
 
 	@PostMapping("/orders/collectDeliveryDetails/{taskId}/{orderId}")
 	public ResponseEntity<CommandResource> collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo,
-			@PathVariable String taskId, @PathVariable Long orderId) {
+			@PathVariable String taskId, @PathVariable String orderId) {
 		DeliveryInfoDTO deliveryInfoDTO = new DeliveryInfoDTO();
 		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
 		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
@@ -151,7 +152,7 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
-		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO); 
+		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO,orderId); 
 		return deliveryInfoResult;
 	}
 
@@ -166,8 +167,8 @@ public class OrderCommandResource {
 	}
 
 	public ResponseEntity<CommandResource> createDeliveryInfo(@PathVariable String taskId,
-			@RequestBody DeliveryInfoDTO deliveryInfoDTO) {
-		return deliveryInfoCommandApi.createDeliveryInfoUsingPOST(taskId, deliveryInfoDTO);
+			@RequestBody DeliveryInfoDTO deliveryInfoDTO,String orderId) {
+		return deliveryInfoCommandApi.createDeliveryInfoUsingPOST(taskId,orderId, deliveryInfoDTO);
 	}
 
 	public ResponseEntity<DeliveryInfoDTO> updateDeliveryInfo(DeliveryInfoDTO deliveryInfoDTO) {
