@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * AddressDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-04T12:56:54.526485+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-20T12:19:44.691292+05:30[Asia/Kolkata]")
 
 public class AddressDTO   {
   @JsonProperty("addressType")
@@ -44,7 +44,7 @@ public class AddressDTO   {
   private Long phone = null;
 
   @JsonProperty("pincode")
-  private Long pincode = null;
+  private String pincode = null;
 
   @JsonProperty("roadNameAreaOrStreet")
   private String roadNameAreaOrStreet = null;
@@ -232,7 +232,7 @@ public class AddressDTO   {
     this.phone = phone;
   }
 
-  public AddressDTO pincode(Long pincode) {
+  public AddressDTO pincode(String pincode) {
     this.pincode = pincode;
     return this;
   }
@@ -244,11 +244,11 @@ public class AddressDTO   {
   @ApiModelProperty(value = "")
 
 
-  public Long getPincode() {
+  public String getPincode() {
     return pincode;
   }
 
-  public void setPincode(Long pincode) {
+  public void setPincode(String pincode) {
     this.pincode = pincode;
   }
 
