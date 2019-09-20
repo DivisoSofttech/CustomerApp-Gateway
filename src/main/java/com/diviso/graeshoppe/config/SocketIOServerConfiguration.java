@@ -19,6 +19,7 @@ public class SocketIOServerConfiguration {
 	
 	@Bean
 	public SocketIOServer getSocketIoServer() {
+		System.out.println("Host is "+host+" port is "+port);
 		com.corundumstudio.socketio.Configuration configuration = new com.corundumstudio.socketio.Configuration();
 		configuration.setHostname(host);
 		configuration.setPort(port);
