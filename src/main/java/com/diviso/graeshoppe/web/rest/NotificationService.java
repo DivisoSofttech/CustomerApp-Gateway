@@ -26,7 +26,6 @@ public class NotificationService {
 
 	@StreamListener(MessageBinderConfiguration.NOTIFICATION)
 	public void listenToNotifications(KStream<String, Notificaton> message) {
-		LOG.info("Message Notification is being subscribed ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^");
 		message.foreach((key, value) -> {
 			LOG.info("Notification Value consumed is " + value);
 			sendNotification(value);
@@ -34,7 +33,7 @@ public class NotificationService {
 	}
 
 	private void sendNotification(Notificaton message) {
-		LOG.info("Notification is send ia socket server");
+		LOG.info("Notification is send via socket server");
 			NotificationDTO notificationDTO=new NotificationDTO();
 			notificationDTO.setDate(OffsetDateTime.ofInstant(Instant.ofEpochMilli(message.getDate()),ZoneId.systemDefault()));
 			notificationDTO.setTitle(message.getTitle());
