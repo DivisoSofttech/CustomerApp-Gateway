@@ -54,6 +54,7 @@ import com.diviso.graeshoppe.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.service.StoreQueryService;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
@@ -68,6 +69,9 @@ public class QueryResource {
 
 	@Autowired
 	ProductQueryService productqueryService;
+	
+	@Autowired
+	StoreQueryService storeQueryService;
 
 	@Autowired
 	CategoryResourceApi categoryResourceApi;
@@ -146,7 +150,7 @@ public class QueryResource {
 
 	@GetMapping("/findAllCategories/{iDPcode}")
 	public ResponseEntity<Page<Category>> findAllCategories(@PathVariable String iDPcode, Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findCategoryByIDPcode(iDPcode, pageable));
+		return ResponseEntity.ok().body(productqueryService.findCategoryByIDPcode(iDPcode, pageable));
 	}
 
 	@GetMapping("/products/{id}")
@@ -167,22 +171,22 @@ public class QueryResource {
 
 	@GetMapping("/reviews")
 	public ResponseEntity<Page<Review>> findAllReviews(Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findAllReviews(pageable));
+		return ResponseEntity.ok().body(storeQueryService.findAllReviews(pageable));
 	}
 
 	@GetMapping("/user-ratings")
 	public ResponseEntity<Page<UserRating>> findAllUserRatings(Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findAllUserRatings(pageable));
+		return ResponseEntity.ok().body(storeQueryService.findAllUserRatings(pageable));
 	}
 
 	@GetMapping("/user-rating/{regNo}")
 	public ResponseEntity<Page<UserRating>> findUserRatingByRegNo(@PathVariable String regNo) {
-		return ResponseEntity.ok().body(queryService.findUserRatingByRegNo(regNo));
+		return ResponseEntity.ok().body(storeQueryService.findUserRatingByRegNo(regNo));
 	}
 
 	@GetMapping("/stores")
 	public ResponseEntity<Page<Store>> findAllStores(Pageable pageable) {
-		return ResponseEntity.ok().body(queryService.findAllStores(pageable));
+		return ResponseEntity.ok().body(storeQueryService.findAllStores(pageable));
 	}
 
 	@GetMapping("/findproducts/{storeId}")
@@ -192,12 +196,12 @@ public class QueryResource {
 
 	@GetMapping("/store/{regNo}")
 	public ResponseEntity<Store> findStoreByRegisterNumber(@PathVariable String regNo) {
-		return ResponseEntity.ok().body(queryService.findStoreByRegNo(regNo));
+		return ResponseEntity.ok().body(storeQueryService.findStoreByRegNo(regNo));
 	}
 
 	@GetMapping("/review/{userName}")
 	public ResponseEntity<Page<Review>> findReviewsByStoreId(@PathVariable String userName) {
-		return ResponseEntity.ok().body(queryService.findReviewByStoreId(userName));
+		return ResponseEntity.ok().body(storeQueryService.findReviewByStoreId(userName));
 	}
 
 	@GetMapping("/stockcurrent/{storeId}")
@@ -223,17 +227,17 @@ public class QueryResource {
 
 	@GetMapping("/findStoreTypeAndCount")
 	public List<Entry> findStoreAndCount(Pageable pageable) {
-		return queryService.findStoreTypeAndCount(pageable);
+		return storeQueryService.findStoreTypeAndCount(pageable);
 	}
 
 	@GetMapping("/rating/{storeId}/{name}")
 	public UserRating findRatingByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
-		return queryService.findRatingByStoreIdAndCustomerName(storeId, name);
+		return storeQueryService.findRatingByStoreIdAndCustomerName(storeId, name);
 	}
 
 	@GetMapping("/review/{storeId}/{name}")
 	public Review findReviewByStoreIdAndCustomerName(@PathVariable String storeId, @PathVariable String name) {
-		return queryService.findReviewByStoreIdAndCustomerName(storeId, name);
+		return storeQueryService.findReviewByStoreIdAndCustomerName(storeId, name);
 	}
 
 	@GetMapping("/findRatingReview/{storeId}")
@@ -245,9 +249,9 @@ public class QueryResource {
 
 		for (Customer c : customerList) {
 
-			UserRating rating = queryService.findRatingByStoreIdAndCustomerName(storeId, c.getReference());
+			UserRating rating = storeQueryService.findRatingByStoreIdAndCustomerName(storeId, c.getReference());
 
-			Review review = queryService.findReviewByStoreIdAndCustomerName(storeId, c.getReference());
+			Review review = storeQueryService.findReviewByStoreIdAndCustomerName(storeId, c.getReference());
 
 			if (rating != null) {
 
@@ -273,19 +277,19 @@ public class QueryResource {
 
 	@GetMapping("/findStore/{searchTerm}")
 	public Page<Store> findStoreBySearchTerm(@PathVariable String searchTerm, Pageable pageable) {
-		return queryService.findStoreBySearchTerm(searchTerm, pageable);
+		return storeQueryService.findStoreBySearchTerm(searchTerm, pageable);
 	}
 
 	@GetMapping("/review-count")
 	public Long findReviewCountByStoreId(String storeId) {
-		Long l = queryService.findReviewCountByStoreId(storeId);
+		Long l = storeQueryService.findReviewCountByStoreId(storeId);
 		return l;
 	}
 
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
 	public ResponseEntity<List<Store>> findStoresByDeliveryType(@PathVariable String deliveryType) {
 		log.info("..............." + deliveryType);
-		return ResponseEntity.ok().body(queryService.findStoreByDeliveryType(deliveryType).getContent());
+		return ResponseEntity.ok().body(storeQueryService.findStoreByDeliveryType(deliveryType).getContent());
 	}
 
 	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
@@ -298,7 +302,7 @@ public class QueryResource {
 
 	@GetMapping("/findStoreByTypeName/{name}")
 	public Page<Store> findStoreByTypeName(@PathVariable String name, Pageable pageable) {
-		return queryService.findStoreByTypeName(name, pageable);
+		return storeQueryService.findStoreByTypeName(name, pageable);
 	}
 
 	@GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
@@ -318,18 +322,18 @@ public class QueryResource {
 	@GetMapping("/deliveryTypes/{storeId}")
 	public Page<Type> findAllDeliveryTypesByStoreId(@PathVariable Long storeId, Pageable pageable) {
 
-		return queryService.findAllDeliveryTypesByStoreId(storeId, pageable);
+		return storeQueryService.findAllDeliveryTypesByStoreId(storeId, pageable);
 
 	}
 
 	@GetMapping("/rating/{storeId}")
 	public UserRating findRatingByStoreId(@PathVariable String storeId) {
-		return queryService.findRatingByStoreId(storeId);
+		return storeQueryService.findRatingByStoreId(storeId);
 	}
 
 	@GetMapping("/ratingByName/{name}")
 	public UserRating findRatingByCustomerName(@PathVariable String name) {
-		return queryService.findRatingByStoreId(name);
+		return storeQueryService.findRatingByStoreId(name);
 	}
 
 	/*
@@ -344,7 +348,7 @@ public class QueryResource {
 	@GetMapping("/storeByRating")
 	public Page<Store> findStoreByRating() {
 
-		return queryService.findStoreByRating();
+		return storeQueryService.findStoreByRating();
 	}
 
 	@GetMapping("/productByPrice/{from}/{to}")
@@ -355,35 +359,35 @@ public class QueryResource {
 
 	@GetMapping("/deliveryinfoByStoreId/{storeId}")
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(@PathVariable String storeId) {
-		return queryService.findDeliveryInfoByStoreId(storeId);
+		return storeQueryService.findDeliveryInfoByStoreId(storeId);
 	}
 
 	@GetMapping("/header/{searchTerm}")
 	public Page<Store> header(@PathVariable("searchTerm") String searchTerm, Pageable pageable) {
-		return queryService.headerSearch(searchTerm, pageable);
+		return storeQueryService.headerSearch(searchTerm, pageable);
 	}
 
 	@GetMapping("/storeByLocationName/{locationName}")
 	public Page<Store> findStoreByLocationName(@PathVariable String locationName) {
 
-		return queryService.findStoreByLocationName(locationName);
+		return storeQueryService.findStoreByLocationName(locationName);
 	}
 
 	@GetMapping("/sortStoreByMinAmount")
 	public Page<Store> findAndSortStoreBydeliveryTime(Pageable pageable) {
 
-		return queryService.findAndSortStoreByMinAount(pageable);
+		return storeQueryService.findAndSortStoreByMinAount(pageable);
 	}
 
 	@GetMapping("/storesByStoreType/{storeType}")
 	public Page<Store> findStoreByStoreType(@PathVariable String storeType, Pageable pageable) {
 
-		return queryService.findStoreByType(storeType, pageable);
+		return storeQueryService.findStoreByType(storeType, pageable);
 	}
 
 	@GetMapping("/store-type/{storeId}")
 	public Page<StoreType> findStoreTypeByStoreId(@PathVariable String storeId, Pageable pageable) {
-		return queryService.findStoreTypeByStoreId(storeId, pageable);
+		return storeQueryService.findStoreTypeByStoreId(storeId, pageable);
 	}
 
 	@GetMapping("/stores/banners")
@@ -459,14 +463,14 @@ public class QueryResource {
 	@GetMapping("/storeSettings/{IDPCode}")
 	public StoreSettings getStoreSettings(@PathVariable String IDPCode) {
 
-		return queryService.getStoreSettings(IDPCode);
+		return storeQueryService.getStoreSettings(IDPCode);
 
 	}
 
 	@GetMapping("/storeAddress/{IDPCode}")
 	public StoreAddress getStoreAddress(@PathVariable String IDPCode) {
 
-		return queryService.getStoreAddress(IDPCode);
+		return storeQueryService.getStoreAddress(IDPCode);
 
 	}
 

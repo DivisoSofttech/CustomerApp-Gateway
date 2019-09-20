@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
+import com.diviso.graeshoppe.client.product.model.Category;
 import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
@@ -15,6 +16,8 @@ import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 public interface ProductQueryService {
 
+
+	public Page<Category> findCategoryByIDPcode(String iDPcode, Pageable pageable);
 	
 	public Page<Product> findProductByCategoryId(Long categoryId, String userId, Pageable pageable);
 

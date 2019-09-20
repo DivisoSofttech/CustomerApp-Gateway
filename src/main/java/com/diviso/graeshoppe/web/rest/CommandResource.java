@@ -39,6 +39,7 @@ import com.diviso.graeshoppe.client.store.model.ReviewDTO;
 import com.diviso.graeshoppe.client.store.model.StoreDTO;
 import com.diviso.graeshoppe.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.service.StoreQueryService;
 
 @RestController
 @RequestMapping("/api/command")
@@ -74,6 +75,9 @@ public class CommandResource {
 
 	@Autowired
 	QueryService queryService;
+	
+	@Autowired
+	StoreQueryService storeQueryService;
 
 	@Autowired
 	QueryResource queryResource;
@@ -249,7 +253,7 @@ public class CommandResource {
 			store = storeResourceApi.getStoreUsingGET(userRatingDTO.getStoreId()).getBody();
 			log.info(">>>>>>>>>>>>>>>>>>>>>>>>IF>>>>>>>>>>>>>>>>>>>>>>" + store.getRegNo() + "     "
 					+ userRatingDTO.getUserName());
-			UserRating alreadyRatedUser = queryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
+			UserRating alreadyRatedUser = storeQueryService.findRatingByStoreIdAndCustomerName(store.getRegNo(),
 					userRatingDTO.getUserName());
 
 			log.info(">>>>>>>>>>>>>>>>>>>>>>alreadyRatedUser: >>>>>>>>>>>>>>>>>>>>>>>>" + alreadyRatedUser);
@@ -281,7 +285,7 @@ public class CommandResource {
 					log.info("................username:............" + userRatingDTO.getUserName()
 							+ "..........storeId..........." + store.getRegNo() + "...........");
 
-					Review alreadyreviewed = queryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
+					Review alreadyreviewed = storeQueryService.findReviewByStoreIdAndCustomerName(store.getRegNo(),
 							userRatingDTO.getUserName());
 
 					log.info("...................   " + alreadyreviewed + "     ...............");
