@@ -14,7 +14,7 @@ import org.springframework.cloud.stream.annotation.StreamListener;
 import com.corundumstudio.socketio.SocketIOServer;
 import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.config.MessageBinderConfiguration;
-import com.diviso.graeshoppe.order.avro.Notificaton;
+import com.diviso.graeshoppe.notification.avro.Notificaton;
 
 @EnableBinding(MessageBinderConfiguration.class)
 public class NotificationService {
