@@ -5,8 +5,8 @@
  */
 package com.diviso.graeshoppe.client.payment.api;
 
-import com.diviso.graeshoppe.client.payment.model.PaymentDetails;
-import com.diviso.graeshoppe.client.payment.model.PaymentHistory;
+import com.diviso.graeshoppe.client.payment.model.PaymentTransaction;
+import com.diviso.graeshoppe.client.payment.model.PaymentTransactionResponse;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -28,30 +28,32 @@ import java.util.Map;
 import java.util.Optional;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-23T12:15:47.246272+05:30[Asia/Kolkata]")
 
-@Api(value = "PaypalQueryResource", description = "the PaypalQueryResource API")
-public interface PaypalQueryResourceApi {
+@Api(value = "BraintreeCommandResource", description = "the BraintreeCommandResource API")
+public interface BraintreeCommandResourceApi {
 
-    @ApiOperation(value = "getAllPaymentsFromGateway", nickname = "getAllPaymentsFromGatewayUsingGET", notes = "", response = PaymentHistory.class, tags={ "paypal-query-resource", })
+    @ApiOperation(value = "createClientAuthToken", nickname = "createClientAuthTokenUsingGET", notes = "", response = String.class, tags={ "braintree-command-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = PaymentHistory.class),
+        @ApiResponse(code = 200, message = "OK", response = String.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/paypal/payments",
+    @RequestMapping(value = "/api/clientToken",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<PaymentHistory> getAllPaymentsFromGatewayUsingGET();
+    ResponseEntity<String> createClientAuthTokenUsingGET();
 
 
-    @ApiOperation(value = "getPayment", nickname = "getPaymentUsingGET1", notes = "", response = PaymentDetails.class, tags={ "paypal-query-resource", })
+    @ApiOperation(value = "createTransaction", nickname = "createTransactionUsingPOST", notes = "", response = PaymentTransactionResponse.class, tags={ "braintree-command-resource", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = PaymentDetails.class),
+        @ApiResponse(code = 200, message = "OK", response = PaymentTransactionResponse.class),
+        @ApiResponse(code = 201, message = "Created"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/payments/paypal/{payment_id}",
+    @RequestMapping(value = "/api/transaction",
         produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<PaymentDetails> getPaymentUsingGET1(@ApiParam(value = "payment_id",required=true) @PathVariable("payment_id") String paymentId);
+        consumes = "application/json",
+        method = RequestMethod.POST)
+    ResponseEntity<PaymentTransactionResponse> createTransactionUsingPOST(@ApiParam(value = "paymentTransaction" ,required=true )  @Valid @RequestBody PaymentTransaction paymentTransaction);
 
 }
