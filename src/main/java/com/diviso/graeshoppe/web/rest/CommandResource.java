@@ -17,8 +17,12 @@ import org.springframework.web.bind.annotation.RestController;
 import com.diviso.graeshoppe.client.aggregators.CustomerAggregator;
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
+import com.diviso.graeshoppe.client.customer.api.FavouriteProductResourceApi;
+import com.diviso.graeshoppe.client.customer.api.FavouriteStoreResourceApi;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProductDTO;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStoreDTO;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
@@ -72,7 +76,13 @@ public class CommandResource {
 
 	@Autowired
 	private ReviewResourceApi reviewResourceApi;
+	
+	@Autowired
+	FavouriteProductResourceApi favouriteProductResourceApi;
 
+	@Autowired
+	FavouriteStoreResourceApi favouriteStoreResourceApi;
+	
 	@Autowired
 	QueryService queryService;
 	
@@ -236,7 +246,27 @@ public class CommandResource {
 	public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
 		return this.reviewResourceApi.deleteReviewUsingDELETE(id);
 	}
+	
+	@PostMapping("/favouritestore")
+	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(@RequestBody FavouriteStoreDTO favouriteStoreDTO) {
+		return this.createFavouriteStore(favouriteStoreDTO);
+	}
 
+	@DeleteMapping("/favouritestore/{id}")
+	public ResponseEntity<Void> deleteFavouriteStore(@PathVariable Long id) {
+		return this.deleteFavouriteStore(id);
+	}
+
+	@PostMapping("/favouriteproduct")
+	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(@RequestBody FavouriteProductDTO favouriteProductDTO) {
+		return this.createFavouriteProduct(favouriteProductDTO);
+	}
+
+	@DeleteMapping("/favouriteproduct/{id}")
+	public ResponseEntity<Void> deleteFavouriteProduct(@PathVariable Long id) {
+		return this.deleteFavouriteProduct(id);
+	}
+		
 	@PostMapping("/rating-review")
 	public ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,
 			Pageable pageable) {
