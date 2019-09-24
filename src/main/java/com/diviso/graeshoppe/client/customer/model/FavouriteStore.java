@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -10,42 +11,43 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * FavouriteProductDTO
+ * FavouriteStore
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class FavouriteProductDTO   {
-  @JsonProperty("customerId")
-  private Long customerId = null;
+public class FavouriteStore   {
+  @JsonProperty("customer")
+  private Customer customer = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("productId")
-  private Long productId = null;
+  @JsonProperty("storeId")
+  private Long storeId = null;
 
-  public FavouriteProductDTO customerId(Long customerId) {
-    this.customerId = customerId;
+  public FavouriteStore customer(Customer customer) {
+    this.customer = customer;
     return this;
   }
 
   /**
-   * Get customerId
-   * @return customerId
+   * Get customer
+   * @return customer
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getCustomerId() {
-    return customerId;
+  public Customer getCustomer() {
+    return customer;
   }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
-  public FavouriteProductDTO id(Long id) {
+  public FavouriteStore id(Long id) {
     this.id = id;
     return this;
   }
@@ -65,24 +67,24 @@ public class FavouriteProductDTO   {
     this.id = id;
   }
 
-  public FavouriteProductDTO productId(Long productId) {
-    this.productId = productId;
+  public FavouriteStore storeId(Long storeId) {
+    this.storeId = storeId;
     return this;
   }
 
   /**
-   * Get productId
-   * @return productId
+   * Get storeId
+   * @return storeId
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getProductId() {
-    return productId;
+  public Long getStoreId() {
+    return storeId;
   }
 
-  public void setProductId(Long productId) {
-    this.productId = productId;
+  public void setStoreId(Long storeId) {
+    this.storeId = storeId;
   }
 
 
@@ -94,25 +96,25 @@ public class FavouriteProductDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FavouriteProductDTO favouriteProductDTO = (FavouriteProductDTO) o;
-    return Objects.equals(this.customerId, favouriteProductDTO.customerId) &&
-        Objects.equals(this.id, favouriteProductDTO.id) &&
-        Objects.equals(this.productId, favouriteProductDTO.productId);
+    FavouriteStore favouriteStore = (FavouriteStore) o;
+    return Objects.equals(this.customer, favouriteStore.customer) &&
+        Objects.equals(this.id, favouriteStore.id) &&
+        Objects.equals(this.storeId, favouriteStore.storeId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, id, productId);
+    return Objects.hash(customer, id, storeId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FavouriteProductDTO {\n");
+    sb.append("class FavouriteStore {\n");
     
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
+    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    storeId: ").append(toIndentedString(storeId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

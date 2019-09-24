@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -13,17 +14,17 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * NoteDTO
+ * Note
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class NoteDTO   {
+public class Note   {
   @JsonProperty("createdDate")
   private LocalDate createdDate = null;
 
-  @JsonProperty("customerId")
-  private Long customerId = null;
+  @JsonProperty("customer")
+  private Customer customer = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -31,7 +32,7 @@ public class NoteDTO   {
   @JsonProperty("matter")
   private String matter = null;
 
-  public NoteDTO createdDate(LocalDate createdDate) {
+  public Note createdDate(LocalDate createdDate) {
     this.createdDate = createdDate;
     return this;
   }
@@ -52,27 +53,28 @@ public class NoteDTO   {
     this.createdDate = createdDate;
   }
 
-  public NoteDTO customerId(Long customerId) {
-    this.customerId = customerId;
+  public Note customer(Customer customer) {
+    this.customer = customer;
     return this;
   }
 
   /**
-   * Get customerId
-   * @return customerId
+   * Get customer
+   * @return customer
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getCustomerId() {
-    return customerId;
+  public Customer getCustomer() {
+    return customer;
   }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
-  public NoteDTO id(Long id) {
+  public Note id(Long id) {
     this.id = id;
     return this;
   }
@@ -92,7 +94,7 @@ public class NoteDTO   {
     this.id = id;
   }
 
-  public NoteDTO matter(String matter) {
+  public Note matter(String matter) {
     this.matter = matter;
     return this;
   }
@@ -121,25 +123,25 @@ public class NoteDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    NoteDTO noteDTO = (NoteDTO) o;
-    return Objects.equals(this.createdDate, noteDTO.createdDate) &&
-        Objects.equals(this.customerId, noteDTO.customerId) &&
-        Objects.equals(this.id, noteDTO.id) &&
-        Objects.equals(this.matter, noteDTO.matter);
+    Note note = (Note) o;
+    return Objects.equals(this.createdDate, note.createdDate) &&
+        Objects.equals(this.customer, note.customer) &&
+        Objects.equals(this.id, note.id) &&
+        Objects.equals(this.matter, note.matter);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(createdDate, customerId, id, matter);
+    return Objects.hash(createdDate, customer, id, matter);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class NoteDTO {\n");
+    sb.append("class Note {\n");
     
     sb.append("    createdDate: ").append(toIndentedString(createdDate)).append("\n");
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
+    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    matter: ").append(toIndentedString(matter)).append("\n");
     sb.append("}");
