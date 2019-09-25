@@ -28,7 +28,9 @@ public class NotificationService {
 	public void listenToNotifications(KStream<String, Notification> message) {
 		message.foreach((key, value) -> {
 			LOG.info("Notification Value consumed is " + value);
-			sendNotification(value);
+			if(value.getType().equals("Approved-Notification")) {
+				sendNotification(value);
+			}
 		});
 	}
 
