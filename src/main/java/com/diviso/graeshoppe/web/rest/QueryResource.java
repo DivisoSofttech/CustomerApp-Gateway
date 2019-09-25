@@ -13,16 +13,18 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.customer.api.ContactResourceApi;
 import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
-import com.diviso.graeshoppe.client.customer.domain.Customer;
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
-
+import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
+import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
@@ -114,7 +116,9 @@ public class QueryResource {
 
 	@GetMapping("/customers/findByReference/{reference}")
 	public ResponseEntity<CustomerDTO> findCustomerByReference(@PathVariable String reference) {
-		return customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
+	 //customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
+			
+			return customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
@@ -493,6 +497,18 @@ public class QueryResource {
 	@GetMapping("/discount-productId/{productId}")
 	public Discount findDiscountByProductId(@PathVariable Long productId) {
 		return productqueryService.findDiscountByProductId(productId);
+	}
+	
+	@PostMapping("/customer/otp_send")
+	ResponseEntity<OTPResponse> sendSMS(@RequestParam String message, @RequestParam String apiKey, @RequestParam long  numbers, @RequestParam String sender) {
+    			
+		return customerResourceApi.sendSMSUsingPOST(apiKey, message, numbers, sender);
+	}
+	
+    @PostMapping("/customer/otp_challenge")
+	ResponseEntity<OTPChallenge> verifyOTP(@RequestParam long numbers, @RequestParam String code, @RequestParam String apiKey) {
+  			
+		return customerResourceApi.verifyOTPUsingPOST(apiKey, code, numbers);
 	}
 
 }

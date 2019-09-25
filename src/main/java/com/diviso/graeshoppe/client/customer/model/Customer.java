@@ -1,29 +1,42 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Address;
+import com.diviso.graeshoppe.client.customer.model.Contact;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
+import com.diviso.graeshoppe.client.customer.model.Note;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CustomerDTO
+ * Customer
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
+@Document(indexName = "customer")
+public class Customer   {
+  @JsonProperty("addresses")
+  @Valid
+  private List<Address> addresses = null;
 
-public class CustomerDTO   {
   @JsonProperty("card")
   private String card = null;
 
-  @JsonProperty("contactId")
-  private Long contactId = null;
+  @JsonProperty("contact")
+  private Contact contact = null;
 
   @JsonProperty("curDebt")
   private Double curDebt = null;
@@ -34,6 +47,14 @@ public class CustomerDTO   {
   @JsonProperty("discount")
   private Double discount = null;
 
+  @JsonProperty("favouriteproducts")
+  @Valid
+  private List<FavouriteProduct> favouriteproducts = null;
+
+  @JsonProperty("favouritestores")
+  @Valid
+  private List<FavouriteStore> favouritestores = null;
+
   @JsonProperty("id")
   private Long id = null;
 
@@ -42,6 +63,10 @@ public class CustomerDTO   {
 
   @JsonProperty("name")
   private String name = null;
+
+  @JsonProperty("notes")
+  @Valid
+  private List<Note> notes = null;
 
   @JsonProperty("photo")
   private byte[] photo = null;
@@ -58,7 +83,36 @@ public class CustomerDTO   {
   @JsonProperty("visible")
   private Boolean visible = null;
 
-  public CustomerDTO card(String card) {
+  public Customer addresses(List<Address> addresses) {
+    this.addresses = addresses;
+    return this;
+  }
+
+  public Customer addAddressesItem(Address addressesItem) {
+    if (this.addresses == null) {
+      this.addresses = new ArrayList<Address>();
+    }
+    this.addresses.add(addressesItem);
+    return this;
+  }
+
+  /**
+   * Get addresses
+   * @return addresses
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Address> getAddresses() {
+    return addresses;
+  }
+
+  public void setAddresses(List<Address> addresses) {
+    this.addresses = addresses;
+  }
+
+  public Customer card(String card) {
     this.card = card;
     return this;
   }
@@ -78,27 +132,28 @@ public class CustomerDTO   {
     this.card = card;
   }
 
-  public CustomerDTO contactId(Long contactId) {
-    this.contactId = contactId;
+  public Customer contact(Contact contact) {
+    this.contact = contact;
     return this;
   }
 
   /**
-   * Get contactId
-   * @return contactId
+   * Get contact
+   * @return contact
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getContactId() {
-    return contactId;
+  public Contact getContact() {
+    return contact;
   }
 
-  public void setContactId(Long contactId) {
-    this.contactId = contactId;
+  public void setContact(Contact contact) {
+    this.contact = contact;
   }
 
-  public CustomerDTO curDebt(Double curDebt) {
+  public Customer curDebt(Double curDebt) {
     this.curDebt = curDebt;
     return this;
   }
@@ -118,7 +173,7 @@ public class CustomerDTO   {
     this.curDebt = curDebt;
   }
 
-  public CustomerDTO debtDate(LocalDate debtDate) {
+  public Customer debtDate(LocalDate debtDate) {
     this.debtDate = debtDate;
     return this;
   }
@@ -139,7 +194,7 @@ public class CustomerDTO   {
     this.debtDate = debtDate;
   }
 
-  public CustomerDTO discount(Double discount) {
+  public Customer discount(Double discount) {
     this.discount = discount;
     return this;
   }
@@ -159,7 +214,65 @@ public class CustomerDTO   {
     this.discount = discount;
   }
 
-  public CustomerDTO id(Long id) {
+  public Customer favouriteproducts(List<FavouriteProduct> favouriteproducts) {
+    this.favouriteproducts = favouriteproducts;
+    return this;
+  }
+
+  public Customer addFavouriteproductsItem(FavouriteProduct favouriteproductsItem) {
+    if (this.favouriteproducts == null) {
+      this.favouriteproducts = new ArrayList<FavouriteProduct>();
+    }
+    this.favouriteproducts.add(favouriteproductsItem);
+    return this;
+  }
+
+  /**
+   * Get favouriteproducts
+   * @return favouriteproducts
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<FavouriteProduct> getFavouriteproducts() {
+    return favouriteproducts;
+  }
+
+  public void setFavouriteproducts(List<FavouriteProduct> favouriteproducts) {
+    this.favouriteproducts = favouriteproducts;
+  }
+
+  public Customer favouritestores(List<FavouriteStore> favouritestores) {
+    this.favouritestores = favouritestores;
+    return this;
+  }
+
+  public Customer addFavouritestoresItem(FavouriteStore favouritestoresItem) {
+    if (this.favouritestores == null) {
+      this.favouritestores = new ArrayList<FavouriteStore>();
+    }
+    this.favouritestores.add(favouritestoresItem);
+    return this;
+  }
+
+  /**
+   * Get favouritestores
+   * @return favouritestores
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<FavouriteStore> getFavouritestores() {
+    return favouritestores;
+  }
+
+  public void setFavouritestores(List<FavouriteStore> favouritestores) {
+    this.favouritestores = favouritestores;
+  }
+
+  public Customer id(Long id) {
     this.id = id;
     return this;
   }
@@ -179,7 +292,7 @@ public class CustomerDTO   {
     this.id = id;
   }
 
-  public CustomerDTO maxDebt(Double maxDebt) {
+  public Customer maxDebt(Double maxDebt) {
     this.maxDebt = maxDebt;
     return this;
   }
@@ -199,7 +312,7 @@ public class CustomerDTO   {
     this.maxDebt = maxDebt;
   }
 
-  public CustomerDTO name(String name) {
+  public Customer name(String name) {
     this.name = name;
     return this;
   }
@@ -219,7 +332,36 @@ public class CustomerDTO   {
     this.name = name;
   }
 
-  public CustomerDTO photo(byte[] photo) {
+  public Customer notes(List<Note> notes) {
+    this.notes = notes;
+    return this;
+  }
+
+  public Customer addNotesItem(Note notesItem) {
+    if (this.notes == null) {
+      this.notes = new ArrayList<Note>();
+    }
+    this.notes.add(notesItem);
+    return this;
+  }
+
+  /**
+   * Get notes
+   * @return notes
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Note> getNotes() {
+    return notes;
+  }
+
+  public void setNotes(List<Note> notes) {
+    this.notes = notes;
+  }
+
+  public Customer photo(byte[] photo) {
     this.photo = photo;
     return this;
   }
@@ -239,7 +381,7 @@ public class CustomerDTO   {
     this.photo = photo;
   }
 
-  public CustomerDTO photoContentType(String photoContentType) {
+  public Customer photoContentType(String photoContentType) {
     this.photoContentType = photoContentType;
     return this;
   }
@@ -259,7 +401,7 @@ public class CustomerDTO   {
     this.photoContentType = photoContentType;
   }
 
-  public CustomerDTO reference(String reference) {
+  public Customer reference(String reference) {
     this.reference = reference;
     return this;
   }
@@ -279,7 +421,7 @@ public class CustomerDTO   {
     this.reference = reference;
   }
 
-  public CustomerDTO searchKey(String searchKey) {
+  public Customer searchKey(String searchKey) {
     this.searchKey = searchKey;
     return this;
   }
@@ -299,7 +441,7 @@ public class CustomerDTO   {
     this.searchKey = searchKey;
   }
 
-  public CustomerDTO visible(Boolean visible) {
+  public Customer visible(Boolean visible) {
     this.visible = visible;
     return this;
   }
@@ -328,40 +470,48 @@ public class CustomerDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CustomerDTO customerDTO = (CustomerDTO) o;
-    return Objects.equals(this.card, customerDTO.card) &&
-        Objects.equals(this.contactId, customerDTO.contactId) &&
-        Objects.equals(this.curDebt, customerDTO.curDebt) &&
-        Objects.equals(this.debtDate, customerDTO.debtDate) &&
-        Objects.equals(this.discount, customerDTO.discount) &&
-        Objects.equals(this.id, customerDTO.id) &&
-        Objects.equals(this.maxDebt, customerDTO.maxDebt) &&
-        Objects.equals(this.name, customerDTO.name) &&
-        Objects.equals(this.photo, customerDTO.photo) &&
-        Objects.equals(this.photoContentType, customerDTO.photoContentType) &&
-        Objects.equals(this.reference, customerDTO.reference) &&
-        Objects.equals(this.searchKey, customerDTO.searchKey) &&
-        Objects.equals(this.visible, customerDTO.visible);
+    Customer customer = (Customer) o;
+    return Objects.equals(this.addresses, customer.addresses) &&
+        Objects.equals(this.card, customer.card) &&
+        Objects.equals(this.contact, customer.contact) &&
+        Objects.equals(this.curDebt, customer.curDebt) &&
+        Objects.equals(this.debtDate, customer.debtDate) &&
+        Objects.equals(this.discount, customer.discount) &&
+        Objects.equals(this.favouriteproducts, customer.favouriteproducts) &&
+        Objects.equals(this.favouritestores, customer.favouritestores) &&
+        Objects.equals(this.id, customer.id) &&
+        Objects.equals(this.maxDebt, customer.maxDebt) &&
+        Objects.equals(this.name, customer.name) &&
+        Objects.equals(this.notes, customer.notes) &&
+        Objects.equals(this.photo, customer.photo) &&
+        Objects.equals(this.photoContentType, customer.photoContentType) &&
+        Objects.equals(this.reference, customer.reference) &&
+        Objects.equals(this.searchKey, customer.searchKey) &&
+        Objects.equals(this.visible, customer.visible);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(card, contactId, curDebt, debtDate, discount, id, maxDebt, name, photo, photoContentType, reference, searchKey, visible);
+    return Objects.hash(addresses, card, contact, curDebt, debtDate, discount, favouriteproducts, favouritestores, id, maxDebt, name, notes, photo, photoContentType, reference, searchKey, visible);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CustomerDTO {\n");
+    sb.append("class Customer {\n");
     
+    sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
     sb.append("    card: ").append(toIndentedString(card)).append("\n");
-    sb.append("    contactId: ").append(toIndentedString(contactId)).append("\n");
+    sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
     sb.append("    curDebt: ").append(toIndentedString(curDebt)).append("\n");
     sb.append("    debtDate: ").append(toIndentedString(debtDate)).append("\n");
     sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
+    sb.append("    favouriteproducts: ").append(toIndentedString(favouriteproducts)).append("\n");
+    sb.append("    favouritestores: ").append(toIndentedString(favouritestores)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    maxDebt: ").append(toIndentedString(maxDebt)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    notes: ").append(toIndentedString(notes)).append("\n");
     sb.append("    photo: ").append(toIndentedString(photo)).append("\n");
     sb.append("    photoContentType: ").append(toIndentedString(photoContentType)).append("\n");
     sb.append("    reference: ").append(toIndentedString(reference)).append("\n");

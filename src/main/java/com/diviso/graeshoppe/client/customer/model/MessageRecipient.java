@@ -10,42 +10,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * FavouriteProductDTO
+ * MessageRecipient
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class FavouriteProductDTO   {
-  @JsonProperty("customerId")
-  private Long customerId = null;
-
+public class MessageRecipient   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("productId")
-  private Long productId = null;
+  @JsonProperty("recipient")
+  private Long recipient = null;
 
-  public FavouriteProductDTO customerId(Long customerId) {
-    this.customerId = customerId;
-    return this;
-  }
-
-  /**
-   * Get customerId
-   * @return customerId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
-  }
-
-  public FavouriteProductDTO id(Long id) {
+  public MessageRecipient id(Long id) {
     this.id = id;
     return this;
   }
@@ -65,24 +42,24 @@ public class FavouriteProductDTO   {
     this.id = id;
   }
 
-  public FavouriteProductDTO productId(Long productId) {
-    this.productId = productId;
+  public MessageRecipient recipient(Long recipient) {
+    this.recipient = recipient;
     return this;
   }
 
   /**
-   * Get productId
-   * @return productId
+   * Get recipient
+   * @return recipient
   **/
   @ApiModelProperty(value = "")
 
 
-  public Long getProductId() {
-    return productId;
+  public Long getRecipient() {
+    return recipient;
   }
 
-  public void setProductId(Long productId) {
-    this.productId = productId;
+  public void setRecipient(Long recipient) {
+    this.recipient = recipient;
   }
 
 
@@ -94,25 +71,23 @@ public class FavouriteProductDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FavouriteProductDTO favouriteProductDTO = (FavouriteProductDTO) o;
-    return Objects.equals(this.customerId, favouriteProductDTO.customerId) &&
-        Objects.equals(this.id, favouriteProductDTO.id) &&
-        Objects.equals(this.productId, favouriteProductDTO.productId);
+    MessageRecipient messageRecipient = (MessageRecipient) o;
+    return Objects.equals(this.id, messageRecipient.id) &&
+        Objects.equals(this.recipient, messageRecipient.recipient);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(customerId, id, productId);
+    return Objects.hash(id, recipient);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FavouriteProductDTO {\n");
+    sb.append("class MessageRecipient {\n");
     
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
+    sb.append("    recipient: ").append(toIndentedString(recipient)).append("\n");
     sb.append("}");
     return sb.toString();
   }

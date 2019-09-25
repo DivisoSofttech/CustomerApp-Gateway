@@ -1,23 +1,31 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.City;
+import com.diviso.graeshoppe.client.customer.model.Country;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CountryDTO
+ * State
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class CountryDTO   {
-  @JsonProperty("code")
-  private String code = null;
+public class State   {
+  @JsonProperty("cities")
+  @Valid
+  private List<City> cities = null;
+
+  @JsonProperty("country")
+  private Country country = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -25,30 +33,57 @@ public class CountryDTO   {
   @JsonProperty("name")
   private String name = null;
 
-  @JsonProperty("phonecode")
-  private Integer phonecode = null;
+  public State cities(List<City> cities) {
+    this.cities = cities;
+    return this;
+  }
 
-  public CountryDTO code(String code) {
-    this.code = code;
+  public State addCitiesItem(City citiesItem) {
+    if (this.cities == null) {
+      this.cities = new ArrayList<City>();
+    }
+    this.cities.add(citiesItem);
     return this;
   }
 
   /**
-   * Get code
-   * @return code
+   * Get cities
+   * @return cities
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public String getCode() {
-    return code;
+  public List<City> getCities() {
+    return cities;
   }
 
-  public void setCode(String code) {
-    this.code = code;
+  public void setCities(List<City> cities) {
+    this.cities = cities;
   }
 
-  public CountryDTO id(Long id) {
+  public State country(Country country) {
+    this.country = country;
+    return this;
+  }
+
+  /**
+   * Get country
+   * @return country
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public Country getCountry() {
+    return country;
+  }
+
+  public void setCountry(Country country) {
+    this.country = country;
+  }
+
+  public State id(Long id) {
     this.id = id;
     return this;
   }
@@ -68,7 +103,7 @@ public class CountryDTO   {
     this.id = id;
   }
 
-  public CountryDTO name(String name) {
+  public State name(String name) {
     this.name = name;
     return this;
   }
@@ -88,26 +123,6 @@ public class CountryDTO   {
     this.name = name;
   }
 
-  public CountryDTO phonecode(Integer phonecode) {
-    this.phonecode = phonecode;
-    return this;
-  }
-
-  /**
-   * Get phonecode
-   * @return phonecode
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Integer getPhonecode() {
-    return phonecode;
-  }
-
-  public void setPhonecode(Integer phonecode) {
-    this.phonecode = phonecode;
-  }
-
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -117,27 +132,27 @@ public class CountryDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CountryDTO countryDTO = (CountryDTO) o;
-    return Objects.equals(this.code, countryDTO.code) &&
-        Objects.equals(this.id, countryDTO.id) &&
-        Objects.equals(this.name, countryDTO.name) &&
-        Objects.equals(this.phonecode, countryDTO.phonecode);
+    State state = (State) o;
+    return Objects.equals(this.cities, state.cities) &&
+        Objects.equals(this.country, state.country) &&
+        Objects.equals(this.id, state.id) &&
+        Objects.equals(this.name, state.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, id, name, phonecode);
+    return Objects.hash(cities, country, id, name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CountryDTO {\n");
+    sb.append("class State {\n");
     
-    sb.append("    code: ").append(toIndentedString(code)).append("\n");
+    sb.append("    cities: ").append(toIndentedString(cities)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    phonecode: ").append(toIndentedString(phonecode)).append("\n");
     sb.append("}");
     return sb.toString();
   }

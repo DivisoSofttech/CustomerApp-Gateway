@@ -1,6 +1,8 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Country;
+import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
@@ -10,23 +12,23 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * AddressDTO
+ * Address
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class AddressDTO   {
+public class Address   {
   @JsonProperty("addressLine1")
   private String addressLine1 = null;
 
   @JsonProperty("addressLine2")
   private String addressLine2 = null;
 
-  @JsonProperty("countryId")
-  private Long countryId = null;
+  @JsonProperty("country")
+  private Country country = null;
 
-  @JsonProperty("customerId")
-  private Long customerId = null;
+  @JsonProperty("customer")
+  private Customer customer = null;
 
   @JsonProperty("id")
   private Long id = null;
@@ -34,7 +36,7 @@ public class AddressDTO   {
   @JsonProperty("postCode")
   private String postCode = null;
 
-  public AddressDTO addressLine1(String addressLine1) {
+  public Address addressLine1(String addressLine1) {
     this.addressLine1 = addressLine1;
     return this;
   }
@@ -54,7 +56,7 @@ public class AddressDTO   {
     this.addressLine1 = addressLine1;
   }
 
-  public AddressDTO addressLine2(String addressLine2) {
+  public Address addressLine2(String addressLine2) {
     this.addressLine2 = addressLine2;
     return this;
   }
@@ -74,47 +76,49 @@ public class AddressDTO   {
     this.addressLine2 = addressLine2;
   }
 
-  public AddressDTO countryId(Long countryId) {
-    this.countryId = countryId;
+  public Address country(Country country) {
+    this.country = country;
     return this;
   }
 
   /**
-   * Get countryId
-   * @return countryId
+   * Get country
+   * @return country
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getCountryId() {
-    return countryId;
+  public Country getCountry() {
+    return country;
   }
 
-  public void setCountryId(Long countryId) {
-    this.countryId = countryId;
+  public void setCountry(Country country) {
+    this.country = country;
   }
 
-  public AddressDTO customerId(Long customerId) {
-    this.customerId = customerId;
+  public Address customer(Customer customer) {
+    this.customer = customer;
     return this;
   }
 
   /**
-   * Get customerId
-   * @return customerId
+   * Get customer
+   * @return customer
   **/
   @ApiModelProperty(value = "")
 
+  @Valid
 
-  public Long getCustomerId() {
-    return customerId;
+  public Customer getCustomer() {
+    return customer;
   }
 
-  public void setCustomerId(Long customerId) {
-    this.customerId = customerId;
+  public void setCustomer(Customer customer) {
+    this.customer = customer;
   }
 
-  public AddressDTO id(Long id) {
+  public Address id(Long id) {
     this.id = id;
     return this;
   }
@@ -134,7 +138,7 @@ public class AddressDTO   {
     this.id = id;
   }
 
-  public AddressDTO postCode(String postCode) {
+  public Address postCode(String postCode) {
     this.postCode = postCode;
     return this;
   }
@@ -163,29 +167,29 @@ public class AddressDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    AddressDTO addressDTO = (AddressDTO) o;
-    return Objects.equals(this.addressLine1, addressDTO.addressLine1) &&
-        Objects.equals(this.addressLine2, addressDTO.addressLine2) &&
-        Objects.equals(this.countryId, addressDTO.countryId) &&
-        Objects.equals(this.customerId, addressDTO.customerId) &&
-        Objects.equals(this.id, addressDTO.id) &&
-        Objects.equals(this.postCode, addressDTO.postCode);
+    Address address = (Address) o;
+    return Objects.equals(this.addressLine1, address.addressLine1) &&
+        Objects.equals(this.addressLine2, address.addressLine2) &&
+        Objects.equals(this.country, address.country) &&
+        Objects.equals(this.customer, address.customer) &&
+        Objects.equals(this.id, address.id) &&
+        Objects.equals(this.postCode, address.postCode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(addressLine1, addressLine2, countryId, customerId, id, postCode);
+    return Objects.hash(addressLine1, addressLine2, country, customer, id, postCode);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class AddressDTO {\n");
+    sb.append("class Address {\n");
     
     sb.append("    addressLine1: ").append(toIndentedString(addressLine1)).append("\n");
     sb.append("    addressLine2: ").append(toIndentedString(addressLine2)).append("\n");
-    sb.append("    countryId: ").append(toIndentedString(countryId)).append("\n");
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
+    sb.append("    country: ").append(toIndentedString(country)).append("\n");
+    sb.append("    customer: ").append(toIndentedString(customer)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    postCode: ").append(toIndentedString(postCode)).append("\n");
     sb.append("}");

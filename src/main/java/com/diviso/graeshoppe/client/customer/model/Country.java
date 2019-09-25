@@ -1,21 +1,29 @@
 package com.diviso.graeshoppe.client.customer.model;
 
 import java.util.Objects;
+import com.diviso.graeshoppe.client.customer.model.Address;
+import com.diviso.graeshoppe.client.customer.model.State;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CountryDTO
+ * Country
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-24T10:30:24.694+05:30[Asia/Kolkata]")
 
-public class CountryDTO   {
+public class Country   {
+  @JsonProperty("addresses")
+  @Valid
+  private List<Address> addresses = null;
+
   @JsonProperty("code")
   private String code = null;
 
@@ -28,7 +36,40 @@ public class CountryDTO   {
   @JsonProperty("phonecode")
   private Integer phonecode = null;
 
-  public CountryDTO code(String code) {
+  @JsonProperty("states")
+  @Valid
+  private List<State> states = null;
+
+  public Country addresses(List<Address> addresses) {
+    this.addresses = addresses;
+    return this;
+  }
+
+  public Country addAddressesItem(Address addressesItem) {
+    if (this.addresses == null) {
+      this.addresses = new ArrayList<Address>();
+    }
+    this.addresses.add(addressesItem);
+    return this;
+  }
+
+  /**
+   * Get addresses
+   * @return addresses
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Address> getAddresses() {
+    return addresses;
+  }
+
+  public void setAddresses(List<Address> addresses) {
+    this.addresses = addresses;
+  }
+
+  public Country code(String code) {
     this.code = code;
     return this;
   }
@@ -48,7 +89,7 @@ public class CountryDTO   {
     this.code = code;
   }
 
-  public CountryDTO id(Long id) {
+  public Country id(Long id) {
     this.id = id;
     return this;
   }
@@ -68,7 +109,7 @@ public class CountryDTO   {
     this.id = id;
   }
 
-  public CountryDTO name(String name) {
+  public Country name(String name) {
     this.name = name;
     return this;
   }
@@ -88,7 +129,7 @@ public class CountryDTO   {
     this.name = name;
   }
 
-  public CountryDTO phonecode(Integer phonecode) {
+  public Country phonecode(Integer phonecode) {
     this.phonecode = phonecode;
     return this;
   }
@@ -108,6 +149,35 @@ public class CountryDTO   {
     this.phonecode = phonecode;
   }
 
+  public Country states(List<State> states) {
+    this.states = states;
+    return this;
+  }
+
+  public Country addStatesItem(State statesItem) {
+    if (this.states == null) {
+      this.states = new ArrayList<State>();
+    }
+    this.states.add(statesItem);
+    return this;
+  }
+
+  /**
+   * Get states
+   * @return states
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<State> getStates() {
+    return states;
+  }
+
+  public void setStates(List<State> states) {
+    this.states = states;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -117,27 +187,31 @@ public class CountryDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CountryDTO countryDTO = (CountryDTO) o;
-    return Objects.equals(this.code, countryDTO.code) &&
-        Objects.equals(this.id, countryDTO.id) &&
-        Objects.equals(this.name, countryDTO.name) &&
-        Objects.equals(this.phonecode, countryDTO.phonecode);
+    Country country = (Country) o;
+    return Objects.equals(this.addresses, country.addresses) &&
+        Objects.equals(this.code, country.code) &&
+        Objects.equals(this.id, country.id) &&
+        Objects.equals(this.name, country.name) &&
+        Objects.equals(this.phonecode, country.phonecode) &&
+        Objects.equals(this.states, country.states);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(code, id, name, phonecode);
+    return Objects.hash(addresses, code, id, name, phonecode, states);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CountryDTO {\n");
+    sb.append("class Country {\n");
     
+    sb.append("    addresses: ").append(toIndentedString(addresses)).append("\n");
     sb.append("    code: ").append(toIndentedString(code)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    phonecode: ").append(toIndentedString(phonecode)).append("\n");
+    sb.append("    states: ").append(toIndentedString(states)).append("\n");
     sb.append("}");
     return sb.toString();
   }
