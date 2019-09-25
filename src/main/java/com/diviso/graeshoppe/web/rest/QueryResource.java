@@ -499,16 +499,6 @@ public class QueryResource {
 		return productqueryService.findDiscountByProductId(productId);
 	}
 	
-	@PostMapping("/customer/otp_send")
-	ResponseEntity<OTPResponse> sendSMS(@RequestParam String message, @RequestParam String apiKey, @RequestParam long  numbers, @RequestParam String sender) {
-    			
-		return customerResourceApi.sendSMSUsingPOST(apiKey, message, numbers, sender);
-	}
 	
-    @PostMapping("/customer/otp_challenge")
-	ResponseEntity<OTPChallenge> verifyOTP(@RequestParam long numbers, @RequestParam String code, @RequestParam String apiKey) {
-  			
-		return customerResourceApi.verifyOTPUsingPOST(apiKey, code, numbers);
-	}
 
 }

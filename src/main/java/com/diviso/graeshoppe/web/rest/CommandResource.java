@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.aggregators.CustomerAggregator;
@@ -23,6 +24,8 @@ import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProductDTO;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStoreDTO;
+import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
+import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
@@ -76,16 +79,16 @@ public class CommandResource {
 
 	@Autowired
 	private ReviewResourceApi reviewResourceApi;
-	
+
 	@Autowired
 	FavouriteProductResourceApi favouriteProductResourceApi;
 
 	@Autowired
 	FavouriteStoreResourceApi favouriteStoreResourceApi;
-	
+
 	@Autowired
 	QueryService queryService;
-	
+
 	@Autowired
 	StoreQueryService storeQueryService;
 
@@ -103,10 +106,23 @@ public class CommandResource {
 		customerDTO.setReference(customerAggregator.getReference());
 		contactDTO.setMobileNumber(customerAggregator.getMobileNumber());
 		contactDTO.setEmail(customerAggregator.getEmail());
+		contactDTO.setPhoneCode(customerAggregator.getPhoneCode());
 		ContactDTO resultDTO = contactResourceApi.createContactUsingPOST(contactDTO).getBody();
 		customerDTO.setContactId(resultDTO.getId());
 		return customerResourceApi.createCustomerUsingPOST(customerDTO);
 
+	}
+
+	@PostMapping("/customer/otp_send")
+	ResponseEntity<OTPResponse> sendSMS(@RequestParam long numbers) {
+
+		return customerResourceApi.sendSMSUsingPOST(numbers);
+	}
+
+	@PostMapping("/customer/otp_challenge")
+	ResponseEntity<OTPChallenge> verifyOTP(@RequestParam long numbers, @RequestParam String code) {
+
+		return customerResourceApi.verifyOTPUsingPOST(code, numbers);
 	}
 
 	@PutMapping("/customers")
@@ -246,7 +262,7 @@ public class CommandResource {
 	public ResponseEntity<Void> deleteReview(@PathVariable Long id) {
 		return this.reviewResourceApi.deleteReviewUsingDELETE(id);
 	}
-	
+
 	@PostMapping("/favouritestore")
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(@RequestBody FavouriteStoreDTO favouriteStoreDTO) {
 		return this.createFavouriteStore(favouriteStoreDTO);
@@ -258,7 +274,8 @@ public class CommandResource {
 	}
 
 	@PostMapping("/favouriteproduct")
-	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(@RequestBody FavouriteProductDTO favouriteProductDTO) {
+	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(
+			@RequestBody FavouriteProductDTO favouriteProductDTO) {
 		return this.createFavouriteProduct(favouriteProductDTO);
 	}
 
@@ -266,7 +283,7 @@ public class CommandResource {
 	public ResponseEntity<Void> deleteFavouriteProduct(@PathVariable Long id) {
 		return this.deleteFavouriteProduct(id);
 	}
-		
+
 	@PostMapping("/rating-review")
 	public ResponseEntity<Page<RatingReview>> createRatingAndReview(@RequestBody RatingReview ratingReview,
 			Pageable pageable) {
