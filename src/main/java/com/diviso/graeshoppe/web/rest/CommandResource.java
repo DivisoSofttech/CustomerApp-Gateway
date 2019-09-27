@@ -265,23 +265,23 @@ public class CommandResource {
 
 	@PostMapping("/favouritestore")
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(@RequestBody FavouriteStoreDTO favouriteStoreDTO) {
-		return this.createFavouriteStore(favouriteStoreDTO);
+		return this.favouriteStoreResourceApi.createFavouriteStoreUsingPOST(favouriteStoreDTO);
 	}
 
 	@DeleteMapping("/favouritestore/{id}")
 	public ResponseEntity<Void> deleteFavouriteStore(@PathVariable Long id) {
-		return this.deleteFavouriteStore(id);
+		return this.favouriteStoreResourceApi.deleteFavouriteStoreUsingDELETE(id);
 	}
 
 	@PostMapping("/favouriteproduct")
 	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(
 			@RequestBody FavouriteProductDTO favouriteProductDTO) {
-		return this.createFavouriteProduct(favouriteProductDTO);
+		return this.favouriteProductResourceApi.createFavouriteProductUsingPOST(favouriteProductDTO);
 	}
 
 	@DeleteMapping("/favouriteproduct/{id}")
 	public ResponseEntity<Void> deleteFavouriteProduct(@PathVariable Long id) {
-		return this.deleteFavouriteProduct(id);
+		return this.favouriteProductResourceApi.deleteFavouriteProductUsingDELETE(id);
 	}
 
 	@PostMapping("/rating-review")

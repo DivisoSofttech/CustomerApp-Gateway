@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
@@ -33,5 +35,9 @@ public interface QueryService {
 	public Page<Order> findOrderByStatusName(String statusName);
 
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
+
+	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable);
+
+	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);
 	
 }
