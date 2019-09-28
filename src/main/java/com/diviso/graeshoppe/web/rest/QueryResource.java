@@ -109,6 +109,12 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
+	
+	@GetMapping("/findProductById/{id}")
+	public ResponseEntity<Product> findProductById(@PathVariable Long id) {
+		return ResponseEntity.ok().body(productqueryService.findProductById(id));
+
+	}
 
 	@GetMapping("/findCustomerByMobileNumber/{mobileNumber}")
 	public ResponseEntity<CustomerDTO> findByMobileNumber(@PathVariable Long mobileNumber) {
@@ -518,7 +524,7 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/favouritestoresbycustomerreference/{reference}")
-	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable){
+	Page<FavouriteStore> findFavouriteStoresByCustomerReference(@PathVariable String reference, Pageable pageable){
 		return queryService.findFavouriteStoresByCustomerReference(reference, pageable);
 	}
 	
