@@ -110,6 +110,11 @@ public class QueryResource {
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
 
+	@GetMapping("/findCustomerByMobileNumber/{mobileNumber}")
+	public ResponseEntity<CustomerDTO> findByMobileNumber(@PathVariable Long mobileNumber) {
+		return customerResourceApi.findByMobileNumberUsingGET(mobileNumber);
+	}
+	
 	@GetMapping("/findStoreById/{id}")
 	public ResponseEntity<Store> findStoreById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(storeQueryService.findStoreById(id));
