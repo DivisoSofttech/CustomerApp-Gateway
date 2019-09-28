@@ -14,6 +14,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.store.model.Store;
 
 public interface QueryService {
 
@@ -38,8 +39,6 @@ public interface QueryService {
 
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
 
-	public Long findOrderCountByCustomerIdAndStatusNameUsingGET(String string, String customerId, int i,
-			int j, ArrayList arrayList);
 	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable);
 
 	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);

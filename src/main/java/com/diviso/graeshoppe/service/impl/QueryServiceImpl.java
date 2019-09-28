@@ -32,6 +32,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.store.model.Store;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
@@ -187,49 +188,6 @@ public class QueryServiceImpl implements QueryService{
 
 
 	@Override
-	public Long findOrderCountByCustomerIdAndStatusNameUsingGET(String statusName, String customerId, int page,
-			int size, ArrayList arrayList) {
-
-
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
-				.withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
-				.addAggregation(AggregationBuilders.terms("customer").field("customerId.keyword")
-						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
-								true))
-						.subAggregation(AggregationBuilders.avg("avgPrice").field("grandTotal"))
-						.subAggregation(AggregationBuilders.terms("statusName").field("status.name.keyword")))
-				.build();
-
-		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
-
-		TermsAggregation orderAgg = result.getAggregation("customer", TermsAggregation.class);
-		List<Entry> statusBasedEntry = new ArrayList<Entry>();
-
-		orderAgg.getBuckets().forEach(bucket -> {
-
-			List<Entry> listStatus = bucket.getAggregation("statusName", TermsAggregation.class).getBuckets();
-
-			for (int i = 0; i < listStatus.size(); i++) {
-
-				if (bucket.getKey().equals(customerId)) {
-					if (listStatus.get(i).getKey().equals(statusName)) {
-
-						statusBasedEntry
-								.add(bucket.getAggregation("statusName", TermsAggregation.class).getBuckets().get(i));
-					}
-				}
-
-			}
-
-		});
-
-		statusBasedEntry.forEach(e -> {
-			count = e.getCount();
-		});
-		return count;
-	}
-
-	@Override
 	public Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable) {
 		// .........
 		SearchQuery searchQuery = new NativeSearchQueryBuilder()
@@ -237,4 +195,6 @@ public class QueryServiceImpl implements QueryService{
 
 		return elasticsearchOperations.queryForPage(searchQuery, FavouriteStore.class);
 	}
+	
+	
 }

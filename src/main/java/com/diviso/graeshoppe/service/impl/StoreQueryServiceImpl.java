@@ -83,6 +83,13 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	ElasticsearchOperations elasticsearchOperations;
 
 
+	@Override
+	public Store findStoreById(Long id) {
+		// .........
+		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
+		return elasticsearchOperations.queryForObject(searchQuery, Store.class);
+
+	}
 	/*
 	 * public List<Result> findAll(String searchTerm, Pageable pageable) {
 	 * List<Result> values = new ArrayList<Result>(); ;
