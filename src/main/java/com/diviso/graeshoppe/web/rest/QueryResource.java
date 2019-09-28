@@ -117,19 +117,8 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findCustomerByMobileNumber/{mobileNumber}")
-	public ResponseEntity<CustomerDTO> findByMobileNumber(@PathVariable Long mobileNumber) {	
-		ResponseEntity<CustomerDTO> customerDTO = null;
-		try {
-			  customerDTO= customerResourceApi.findByMobileNumberUsingGET(mobileNumber);
-			 return customerDTO;
-
-		}catch(Error e) {
-			System.out.println("Message error is "+e.getMessage());
-			 log.info("status code of findBYMobilenumber is "+customerDTO.getStatusCode());
-
-			 return customerDTO;
-		}
-		 //log.info("status code of findBYMobilenumber is "+customerDTO.getStatusCode());
+	public ResponseEntity<CustomerDTO> findByMobileNumber(@PathVariable Long mobileNumber) {
+		return customerResourceApi.findByMobileNumberUsingGET(mobileNumber);
 	}
 	
 	@GetMapping("/findStoreById/{id}")
