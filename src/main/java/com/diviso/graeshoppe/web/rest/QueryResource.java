@@ -23,6 +23,8 @@ import com.diviso.graeshoppe.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
 import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
@@ -497,6 +499,17 @@ public class QueryResource {
 	@GetMapping("/discount-productId/{productId}")
 	public Discount findDiscountByProductId(@PathVariable Long productId) {
 		return productqueryService.findDiscountByProductId(productId);
+	}
+	
+	@GetMapping("/favouriteproductsbycustomerreference/{reference}")
+	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable){
+		
+		return queryService.findFavouriteProductsByCustomerReference(reference, pageable);
+	}
+	
+	@GetMapping("/favouritestoresbycustomerreference/{reference}")
+	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable){
+		return queryService.findFavouriteStoresByCustomerReference(reference, pageable);
 	}
 	
 	

@@ -27,6 +27,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
@@ -46,7 +48,7 @@ public class QueryServiceImpl implements QueryService{
 
 	int i = 0;
 	Long count = 0L;
-	private final Logger log = LoggerFactory.getLogger(StoreQueryServiceImpl.class);
+	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
 	public QueryServiceImpl(JestClient jestClient) {
 		this.jestClient = jestClient;
@@ -172,6 +174,15 @@ public class QueryServiceImpl implements QueryService{
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
 	}
+	
+	@Override
+	public Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable) {
+		// .........
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(matchQuery("customer.reference", reference)).withPageable(pageable).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, FavouriteProduct.class);
+	}
 
 
 
@@ -218,4 +229,12 @@ public class QueryServiceImpl implements QueryService{
 		return count;
 	}
 
+	@Override
+	public Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable) {
+		// .........
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(matchQuery("customer.reference", reference)).withPageable(pageable).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, FavouriteStore.class);
+	}
 }

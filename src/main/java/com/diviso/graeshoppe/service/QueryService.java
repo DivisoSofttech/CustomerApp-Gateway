@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
+import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
+import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
@@ -38,5 +40,8 @@ public interface QueryService {
 
 	public Long findOrderCountByCustomerIdAndStatusNameUsingGET(String string, String customerId, int i,
 			int j, ArrayList arrayList);
+	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable);
+
+	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);
 	
 }
