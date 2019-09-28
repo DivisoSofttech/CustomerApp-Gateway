@@ -3,7 +3,6 @@ package com.diviso.graeshoppe.web.rest;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,7 +60,6 @@ import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
 
-import io.github.jhipster.web.util.ResponseUtil;
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 @RestController
@@ -75,7 +73,7 @@ public class QueryResource {
 
 	@Autowired
 	ProductQueryService productqueryService;
-
+	
 	@Autowired
 	StoreQueryService storeQueryService;
 
@@ -111,7 +109,7 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
-
+	
 	@GetMapping("/findProductById/{id}")
 	public ResponseEntity<Product> findProductById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(productqueryService.findProductById(id));
@@ -120,17 +118,16 @@ public class QueryResource {
 
 	@GetMapping("/findCustomerByMobileNumber/{mobileNumber}")
 	public ResponseEntity<CustomerDTO> findByMobileNumber(@PathVariable Long mobileNumber) {
-		Optional<CustomerDTO> customerDTO = Optional
-				.of(customerResourceApi.findByMobileNumberUsingGET(mobileNumber).getBody());
-		return ResponseUtil.wrapOrNotFound(customerDTO);
+		 ResponseEntity<CustomerDTO> customerDTO= customerResourceApi.findByMobileNumberUsingGET(mobileNumber);
+		 log.info("status code of findBYMobilenumber is "+customerDTO.getStatusCode());
+		 return customerDTO;
 	}
-
+	
 	@GetMapping("/findStoreById/{id}")
 	public ResponseEntity<Store> findStoreById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(storeQueryService.findStoreById(id));
 
 	}
-
 	@GetMapping("/findProductByCategoryIdAndUserId/{categoryId}/{userId}")
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
@@ -139,9 +136,9 @@ public class QueryResource {
 
 	@GetMapping("/customers/findByReference/{reference}")
 	public ResponseEntity<CustomerDTO> findCustomerByReference(@PathVariable String reference) {
-		// customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
-
-		return customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
+	 //customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
+			
+			return customerResourceApi.modelToDtoUsingPOST(queryService.findCustomerByReference(reference));
 	}
 
 	@GetMapping("/findStockCurrentByProductId/{productId}")
@@ -521,16 +518,18 @@ public class QueryResource {
 	public Discount findDiscountByProductId(@PathVariable Long productId) {
 		return productqueryService.findDiscountByProductId(productId);
 	}
-
+	
 	@GetMapping("/favouriteproductsbycustomerreference/{reference}")
-	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable) {
-
+	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable){
+		
 		return queryService.findFavouriteProductsByCustomerReference(reference, pageable);
 	}
-
+	
 	@GetMapping("/favouritestoresbycustomerreference/{reference}")
-	Page<FavouriteStore> findFavouriteStoresByCustomerReference(@PathVariable String reference, Pageable pageable) {
+	Page<FavouriteStore> findFavouriteStoresByCustomerReference(@PathVariable String reference, Pageable pageable){
 		return queryService.findFavouriteStoresByCustomerReference(reference, pageable);
 	}
+	
+	
 
 }
