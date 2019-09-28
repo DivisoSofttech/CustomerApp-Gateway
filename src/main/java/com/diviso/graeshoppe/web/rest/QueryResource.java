@@ -110,8 +110,8 @@ public class QueryResource {
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
 
-	@GetMapping("/findStoreById")
-	public ResponseEntity<Store> findStoreById(Long id) {
+	@GetMapping("/findStoreById/{id}")
+	public ResponseEntity<Store> findStoreById(@PathVariable Long id) {
 		return ResponseEntity.ok().body(storeQueryService.findStoreById(id));
 
 	}

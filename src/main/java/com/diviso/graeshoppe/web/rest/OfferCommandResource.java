@@ -1,6 +1,10 @@
 package com.diviso.graeshoppe.web.rest;
 
 
+import javax.swing.text.DefaultEditorKit.CutAction;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,14 +24,15 @@ public class OfferCommandResource {
 	@Autowired
 	private AggregateCommandResourceApi aggregateCommandResourceApi;
 
-	
+	private Logger log=LoggerFactory.getLogger(OfferCommandResource.class);
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
 	
 	@PostMapping("/claimOffer/{customerId}")
 	public ResponseEntity<OrderModel> checkOfferEligibility(@RequestBody OrderModel orderModel,@PathVariable String customerId) {
 		Long count=orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "delivered").getBody();
-				orderModel.setOrderNumber(count+1);
+		log.info("Count for the customer "+customerId+" is "+count);
+		orderModel.setOrderNumber(count+1);
 		orderModel.setPromoCode("SUPER20");
 		
 		ResponseEntity<OrderModel> result=aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
