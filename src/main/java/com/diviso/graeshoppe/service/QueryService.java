@@ -1,10 +1,12 @@
 package com.diviso.graeshoppe.service;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.order.model.Address;
@@ -33,5 +35,8 @@ public interface QueryService {
 	public Page<Order> findOrderByStatusName(String statusName);
 
 	public Page<Order> findOrderByDatebetweenAndStoreId(Instant from, Instant to, String storeId);
+
+	public Long findOrderCountByCustomerIdAndStatusNameUsingGET(String string, String customerId, int i,
+			int j, ArrayList arrayList);
 	
 }

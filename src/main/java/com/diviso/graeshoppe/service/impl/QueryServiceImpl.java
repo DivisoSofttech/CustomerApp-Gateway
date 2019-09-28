@@ -5,8 +5,10 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -21,6 +23,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
@@ -41,6 +44,8 @@ public class QueryServiceImpl implements QueryService{
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
 
+	int i = 0;
+	Long count = 0L;
 	private final Logger log = LoggerFactory.getLogger(StoreQueryServiceImpl.class);
 
 	public QueryServiceImpl(JestClient jestClient) {
@@ -166,6 +171,51 @@ public class QueryServiceImpl implements QueryService{
 				.must(termQuery("storeId", storeId)).must(rangeQuery("date").gte(from).lte(to))).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Order.class);
+	}
+
+
+
+	@Override
+	public Long findOrderCountByCustomerIdAndStatusNameUsingGET(String statusName, String customerId, int page,
+			int size, ArrayList arrayList) {
+
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
+				.withSearchType(QUERY_THEN_FETCH).withIndices("order").withTypes("order")
+				.addAggregation(AggregationBuilders.terms("customer").field("customerId.keyword")
+						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
+								true))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("grandTotal"))
+						.subAggregation(AggregationBuilders.terms("statusName").field("status.name.keyword")))
+				.build();
+
+		AggregatedPage<Order> result = elasticsearchTemplate.queryForPage(searchQuery, Order.class);
+
+		TermsAggregation orderAgg = result.getAggregation("customer", TermsAggregation.class);
+		List<Entry> statusBasedEntry = new ArrayList<Entry>();
+
+		orderAgg.getBuckets().forEach(bucket -> {
+
+			List<Entry> listStatus = bucket.getAggregation("statusName", TermsAggregation.class).getBuckets();
+
+			for (int i = 0; i < listStatus.size(); i++) {
+
+				if (bucket.getKey().equals(customerId)) {
+					if (listStatus.get(i).getKey().equals(statusName)) {
+
+						statusBasedEntry
+								.add(bucket.getAggregation("statusName", TermsAggregation.class).getBuckets().get(i));
+					}
+				}
+
+			}
+
+		});
+
+		statusBasedEntry.forEach(e -> {
+			count = e.getCount();
+		});
+		return count;
 	}
 
 }
