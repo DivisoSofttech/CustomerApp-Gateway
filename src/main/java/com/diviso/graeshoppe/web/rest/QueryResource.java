@@ -31,6 +31,7 @@ import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
 import com.diviso.graeshoppe.client.product.api.ProductResourceApi;
 import com.diviso.graeshoppe.client.product.api.StockCurrentResourceApi;
@@ -534,4 +535,8 @@ public class QueryResource {
 		return queryService.findNotificationByReceiverId(receiverId, pageable);
 	}
 
+	@GetMapping("/findOrderLinesByOrderId/{orderId}")
+	public List<OrderLine> findOrderLinesByOrderId(Long orderId) {
+		return queryService.findOrderLinesByOrderId(orderId);
+	}
 }
