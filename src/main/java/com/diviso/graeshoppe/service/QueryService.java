@@ -10,6 +10,7 @@ import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
+import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 
@@ -39,5 +40,7 @@ public interface QueryService {
 	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable);
 
 	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);
+
+	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable);
 	
 }

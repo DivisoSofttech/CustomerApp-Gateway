@@ -28,6 +28,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
 import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
+import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.product.api.CategoryResourceApi;
@@ -512,6 +513,9 @@ public class QueryResource {
 		return queryService.findFavouriteStoresByCustomerReference(reference, pageable);
 	}
 	
-	
+	@GetMapping("/findnotificationbyreceiverid/{reference}")
+	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable){
+		return queryService.findNotificationByReceiverId(receiverId, pageable);
+	}
 
 }

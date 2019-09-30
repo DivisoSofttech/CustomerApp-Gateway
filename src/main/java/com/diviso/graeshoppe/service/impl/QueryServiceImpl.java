@@ -12,6 +12,8 @@ import java.util.List;
 
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
+import org.elasticsearch.search.sort.SortBuilders;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +29,7 @@ import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
+import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.service.QueryService;
@@ -89,15 +92,13 @@ public class QueryServiceImpl implements QueryService{
 	@Override
 	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("customerId", customerId))
-				.withPageable(pageable).build();
+				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC)).withPageable(pageable).build();
 
 		Page<Order> orderPage = elasticsearchOperations.queryForPage(searchQuery, Order.class);
 		orderPage.forEach(order -> {
 
 			order.setOrderLines(new HashSet<OrderLine>(findOrderLinesByOrderId(order.getId())));
-
 		});
-
 		return orderPage;
 
 	}
@@ -187,4 +188,15 @@ public class QueryServiceImpl implements QueryService{
 
 		return elasticsearchOperations.queryForPage(searchQuery, FavouriteStore.class);
 	}
+	
+	@Override
+	public Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(termQuery("receiverId", receiverId))
+				.withSort(SortBuilders.fieldSort("id").order(SortOrder.DESC))
+				.withPageable(pageable).build();
+
+		return elasticsearchOperations.queryForPage(searchQuery, Notification.class);
+	}
+
 }
