@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * UniqueOrderIDDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-20T12:19:44.691292+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-28T11:16:25.982319+05:30[Asia/Kolkata]")
 
 public class UniqueOrderIDDTO   {
   @JsonProperty("id")

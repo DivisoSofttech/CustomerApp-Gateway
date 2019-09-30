@@ -5,8 +5,10 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -23,6 +25,7 @@ import org.springframework.data.elasticsearch.core.ElasticsearchOperations;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.data.elasticsearch.core.query.StringQuery;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.client.customer.model.Customer;
@@ -32,6 +35,7 @@ import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.store.model.Store;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
@@ -46,6 +50,8 @@ public class QueryServiceImpl implements QueryService{
 	private final JestClient jestClient;
 	private final JestElasticsearchTemplate elasticsearchTemplate;
 
+	int i = 0;
+	Long count = 0L;
 	private final Logger log = LoggerFactory.getLogger(QueryServiceImpl.class);
 
 	public QueryServiceImpl(JestClient jestClient) {
@@ -179,6 +185,8 @@ public class QueryServiceImpl implements QueryService{
 
 		return elasticsearchOperations.queryForPage(searchQuery, FavouriteProduct.class);
 	}
+
+
 
 	@Override
 	public Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable) {

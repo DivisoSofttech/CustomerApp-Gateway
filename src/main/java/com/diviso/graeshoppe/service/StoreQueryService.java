@@ -37,6 +37,7 @@ public interface StoreQueryService {
 	public Page<UserRating> findAllUserRatings(Pageable pageable);
 
 	public Page<Store> findAllStores(Pageable pageable);
+	public Store findStoreById(Long id);
 
 	public Store findStoreByRegNo(String regNo);
 
