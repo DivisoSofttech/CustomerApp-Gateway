@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-28T11:16:25.982319+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-01T13:51:27.312951+05:30[Asia/Kolkata]")
 
 @Api(value = "OfferResource", description = "the OfferResource API")
 public interface OfferResourceApi {

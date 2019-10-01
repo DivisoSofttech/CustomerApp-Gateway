@@ -68,6 +68,8 @@ public class QueryResource {
 
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
+	
+	
 	@Autowired
 	QueryService queryService;
 
@@ -109,6 +111,12 @@ public class QueryResource {
 
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
+	
+	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")
+	public ResponseEntity<OpenTask> getTaskDetails(@PathVariable String taskName,@PathVariable String orderId,@PathVariable String storeId) {
+		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName,orderId, storeId);
+		
+	}
 	
 	@GetMapping("/findProductById/{id}")
 	public ResponseEntity<Product> findProductById(@PathVariable Long id) {
