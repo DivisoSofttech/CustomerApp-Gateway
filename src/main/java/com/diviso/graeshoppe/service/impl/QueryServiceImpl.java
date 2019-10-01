@@ -35,6 +35,7 @@ import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.store.model.Store;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
@@ -205,6 +206,17 @@ public class QueryServiceImpl implements QueryService{
 				.withPageable(pageable).build();
 
 		return elasticsearchOperations.queryForPage(searchQuery, Notification.class);
+	}
+
+
+
+	@Override
+	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("receiverId", receiverId))
+						.must(QueryBuilders.matchQuery("status", status)))
+				.build();
+		return elasticsearchOperations.count(searchQuery, Order.class);
 	}
 
 }

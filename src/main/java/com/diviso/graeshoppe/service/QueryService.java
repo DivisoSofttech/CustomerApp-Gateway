@@ -45,5 +45,7 @@ public interface QueryService {
 	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);
 
 	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable);
+
+	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 	
 }

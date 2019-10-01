@@ -548,8 +548,8 @@ public class QueryResource {
 		return queryService.findOrderLinesByOrderId(orderId);
 	}
 	
-	@GetMapping("/findnotificationcount/{receiverId}")
-	Page<Notification> findNotificationCountByReceiverIdAndStatusName(String receiverId, Pageable pageable){
-		return queryService.findNotificationByReceiverId(receiverId, pageable);
+	@GetMapping("/findnotificationcount/{receiverId}/{status}")
+	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status){
+		return queryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
 }
