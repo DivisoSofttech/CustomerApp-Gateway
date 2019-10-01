@@ -104,6 +104,7 @@ public class CommandResource {
 		ContactDTO contactDTO = new ContactDTO();
 		customerDTO.setName(customerAggregator.getName());
 		customerDTO.setReference(customerAggregator.getReference());
+		customerDTO.setSearchKey(customerAggregator.getSearchKey());
 		contactDTO.setMobileNumber(customerAggregator.getMobileNumber());
 		contactDTO.setEmail(customerAggregator.getEmail());
 		contactDTO.setPhoneCode(customerAggregator.getPhoneCode());
