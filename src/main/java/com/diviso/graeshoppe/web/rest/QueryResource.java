@@ -538,7 +538,7 @@ public class QueryResource {
 		return queryService.findFavouriteStoresByCustomerReference(reference, pageable);
 	}
 	
-	@GetMapping("/findnotificationbyreceiverid/{reference}")
+	@GetMapping("/findnotificationbyreceiverid/{receiverId}")
 	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable){
 		return queryService.findNotificationByReceiverId(receiverId, pageable);
 	}
@@ -546,5 +546,10 @@ public class QueryResource {
 	@GetMapping("/findOrderLinesByOrderId/{orderId}")
 	public List<OrderLine> findOrderLinesByOrderId(Long orderId) {
 		return queryService.findOrderLinesByOrderId(orderId);
+	}
+	
+	@GetMapping("/findnotificationcount/{receiverId}")
+	Page<Notification> findNotificationCountByReceiverIdAndStatusName(String receiverId, Pageable pageable){
+		return queryService.findNotificationByReceiverId(receiverId, pageable);
 	}
 }
