@@ -11,6 +11,7 @@ import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
+import com.diviso.graeshoppe.domain.ElasticDataEntry;
 
 import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
 
@@ -53,11 +54,11 @@ public interface ProductQueryService {
 
 	public Page<StockCurrent> findStockCurrentByCategoryNameAndStoreId(String categoryName,String storeId);
 
-	public List<Entry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
-
 	public Page<ComboLineItem> findAllCombosByProductId(Long productId);
 
 	public Discount findDiscountByProductId(Long productId);
+	
+	public List<ElasticDataEntry> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
 
 
 }

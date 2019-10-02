@@ -58,6 +58,7 @@ import com.diviso.graeshoppe.client.store.domain.Type;
 import com.diviso.graeshoppe.client.store.domain.UserRating;
 import com.diviso.graeshoppe.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.client.store.model.StoreTypeDTO;
+import com.diviso.graeshoppe.domain.ElasticDataEntry;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.StoreQueryService;
@@ -248,7 +249,7 @@ public class QueryResource {
 	}
 
 	@GetMapping("/findCategoryAndCountBystoreId/{storeId}")
-	public List<Entry> findCategoryAndCountBystoreId(@PathVariable String storeId, Pageable pageable) {
+	public List<ElasticDataEntry> findCategoryAndCountBystoreId(@PathVariable String storeId, Pageable pageable) {
 
 		return productqueryService.findCategoryAndCountByStoreId(storeId, pageable);
 	}

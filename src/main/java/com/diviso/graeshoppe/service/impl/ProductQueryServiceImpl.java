@@ -33,6 +33,7 @@ import com.diviso.graeshoppe.client.product.model.ComboLineItem;
 import com.diviso.graeshoppe.client.product.model.Discount;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
+import com.diviso.graeshoppe.domain.ElasticDataEntry;
 import com.diviso.graeshoppe.service.ProductQueryService;
 import com.github.vanroy.springdata.jest.JestElasticsearchTemplate;
 import com.github.vanroy.springdata.jest.aggregation.AggregatedPage;
@@ -143,7 +144,7 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 
 	}
 
-	@Override
+/*	@Override
 	public List<Entry> findCategoryAndCountByStoreId(String storeId,Pageable pageable) {
 		
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
@@ -173,7 +174,7 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 				).collect(Collectors.toList());
 		*/
 		
-		orderAgg.getBuckets().forEach(bucket -> {
+		/*orderAgg.getBuckets().forEach(bucket -> {
 			
 			int i = 0;
 			double averagePrice = bucket.getAvgAggregation("avgPrice").getAvg();
@@ -395,33 +396,52 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see com.diviso.graeshoppe.service.QueryService#findNotAuxilaryProducts(java.
-	 * lang.String, org.springframework.data.domain.Pageable)
-	 */
-	/*
-	 * @Override public Page<Product> findNotAuxilaryProducts(String iDPcode,
-	 * Pageable pageable) { SearchQuery searchQuery = new
-	 * 
-	 * NativeSearchQueryBuilder().withQuery(termQuery("iDPcode", iDPcode)).build();
-	 * 
-	 * List<Product> products = elasticsearchOperations.queryForList(searchQuery,
-	 * Product.class);
-	 * 
-	 * 
-	 * List<Product> notAuxProducts = new ArrayList<Product>();
-	 * 
-	 * products.forEach(p -> {
-	 * 
-	 * if ((p.isIsAuxilaryItem() == false)) {
-	 * 
-	 * notAuxProducts.add(p); }
-	 * 
-	 * });
-	 * 
-	 * return new PageImpl(notAuxProducts); }
-	 */
-	
+	@Override
+	public List<ElasticDataEntry> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
+
+				.withSearchType(QUERY_THEN_FETCH).withIndices("product").withTypes("product")
+
+				.addAggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword")
+
+						.order(org.elasticsearch.search.aggregations.bucket.terms.Terms.Order.aggregation("avgPrice",
+
+								true))
+						.subAggregation(AggregationBuilders.avg("avgPrice").field("sellingPrice"))
+				
+						.subAggregation(AggregationBuilders.terms("store").field("iDPcode.keyword"))).build();
+		AggregatedPage<Product> result = elasticsearchTemplate.queryForPage(searchQuery, Product.class);
+
+		TermsAggregation orderAgg = result.getAggregation("totalcategories", TermsAggregation.class);
+
+		
+		  List<ElasticDataEntry> storeBasedEntry = new ArrayList<ElasticDataEntry>();
+		 
+		  orderAgg.getBuckets().forEach(bucket -> {
+			  
+			  
+			   int i = 0; 
+		 
+				  String storeName =  bucket.getAggregation("store",TermsAggregation.class).getBuckets().get(i).getKeyAsString();
+			  
+		 
+		  if (storeName.equals(storeId)) {
+			  ElasticDataEntry elasticDataEntry =new ElasticDataEntry();
+			  elasticDataEntry.setKeyAsString(bucket.getKeyAsString());
+			  elasticDataEntry.setKey(bucket.getKeyAsString());
+			  elasticDataEntry.setCount( bucket.getAggregation("store",TermsAggregation.class).getBuckets().get(i).getCount());
+		
+		  
+		  storeBasedEntry.add(elasticDataEntry);
+		 
+		 
+		  } i++;
+		 
+		  }); 
+		
+
+		return   storeBasedEntry;
+	}
+
 }
