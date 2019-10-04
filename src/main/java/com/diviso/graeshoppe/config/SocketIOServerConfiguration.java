@@ -1,5 +1,7 @@
 package com.diviso.graeshoppe.config;
 
+import java.io.InputStream;
+
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -23,6 +25,9 @@ public class SocketIOServerConfiguration {
 		com.corundumstudio.socketio.Configuration configuration = new com.corundumstudio.socketio.Configuration();
 		configuration.setHostname(host);
 		configuration.setPort(port);
+		configuration.setKeyStorePassword("password");
+        InputStream stream = SocketIOServerConfiguration.class.getResourceAsStream("/config/tls/kc.pkcs12");
+        configuration.setKeyStore(stream);
 		SocketIOServer ioServer = new SocketIOServer(configuration);
 		ioServer.start();
 		return ioServer;
