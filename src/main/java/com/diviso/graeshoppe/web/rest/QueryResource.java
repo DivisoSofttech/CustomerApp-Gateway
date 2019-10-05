@@ -550,7 +550,7 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/findnotificationcount/{receiverId}/{status}")
-	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status){
+	Long findNotificationCountByReceiverIdAndStatusName(@PathVariable String receiverId, @PathVariable String status){
 		return queryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
 }
