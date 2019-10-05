@@ -216,7 +216,7 @@ public class QueryServiceImpl implements QueryService{
 				.withQuery(QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("receiverId", receiverId))
 						.must(QueryBuilders.matchQuery("status", status)))
 				.build();
-		return elasticsearchOperations.count(searchQuery, Order.class);
+		return elasticsearchOperations.count(searchQuery, Notification.class);
 	}
 
 }
