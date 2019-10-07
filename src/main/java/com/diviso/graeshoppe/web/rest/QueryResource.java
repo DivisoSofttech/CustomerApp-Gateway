@@ -529,7 +529,7 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/favouriteproductsbycustomerreference/{reference}")
-	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable){
+	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(@PathVariable String reference, Pageable pageable){
 		
 		return queryService.findFavouriteProductsByCustomerReference(reference, pageable);
 	}
@@ -540,12 +540,12 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/findnotificationbyreceiverid/{receiverId}")
-	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable){
+	Page<Notification> findNotificationByReceiverId(@PathVariable String receiverId, Pageable pageable){
 		return queryService.findNotificationByReceiverId(receiverId, pageable);
 	}
 
 	@GetMapping("/findOrderLinesByOrderId/{orderId}")
-	public List<OrderLine> findOrderLinesByOrderId(Long orderId) {
+	public List<OrderLine> findOrderLinesByOrderId(@PathVariable Long orderId) {
 		return queryService.findOrderLinesByOrderId(orderId);
 	}
 	
