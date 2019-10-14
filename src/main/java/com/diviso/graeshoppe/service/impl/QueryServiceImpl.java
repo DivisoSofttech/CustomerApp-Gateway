@@ -117,6 +117,14 @@ public class QueryServiceImpl implements QueryService{
 		return elasticsearchOperations.queryForList(searchQuery, OrderLine.class);
 	}
 	
+	@Override
+	public Page<OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("order.id", orderId))
+				.withPageable(pageable).build();
+		return elasticsearchOperations.queryForPage(searchQuery, OrderLine.class);
+	}
+	
+	
 	/*
 	 * (non-Javadoc)
 	 * 

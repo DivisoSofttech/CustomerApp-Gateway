@@ -51,5 +51,7 @@ public interface QueryService {
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 
 	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
+
+	Page<OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable);
 	
 }

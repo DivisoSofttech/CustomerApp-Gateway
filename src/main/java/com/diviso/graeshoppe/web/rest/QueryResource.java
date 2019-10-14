@@ -550,6 +550,11 @@ public class QueryResource {
 		return queryService.findOrderLinesByOrderId(orderId);
 	}
 	
+	@GetMapping("/findAllOrderLinesByOrderId/{orderId}")
+	public Page<OrderLine> findAllOrderLinesByOrderId(@PathVariable Long orderId, Pageable pageable) {
+		return queryService.findAllOrderLinesByOrderId(orderId, pageable);
+	}
+	
 	@GetMapping("/findnotificationcount/{receiverId}/{status}")
 	Long findNotificationCountByReceiverIdAndStatusName(@PathVariable String receiverId, @PathVariable String status){
 		return queryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
