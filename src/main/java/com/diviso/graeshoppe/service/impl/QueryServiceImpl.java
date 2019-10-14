@@ -32,6 +32,7 @@ import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
+import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
@@ -217,6 +218,14 @@ public class QueryServiceImpl implements QueryService{
 						.must(QueryBuilders.matchQuery("status", status)))
 				.build();
 		return elasticsearchOperations.count(searchQuery, Notification.class);
+	}
+
+	@Override
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable) {
+		SearchQuery searchQuery = new NativeSearchQueryBuilder()
+				.withQuery(termQuery("orderLine.id", orderLineId))
+				.withPageable(pageable).build();
+		return elasticsearchOperations.queryForPage(searchQuery, AuxilaryOrderLine.class);
 	}
 
 }

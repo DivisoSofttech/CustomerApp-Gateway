@@ -28,6 +28,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
 import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
+import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
@@ -552,5 +553,10 @@ public class QueryResource {
 	@GetMapping("/findnotificationcount/{receiverId}/{status}")
 	Long findNotificationCountByReceiverIdAndStatusName(@PathVariable String receiverId, @PathVariable String status){
 		return queryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
+	}
+	
+	@GetMapping("/findAuxilaryOrderLineByOrderLineId/{orderLineId}")
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long orderLineId, Pageable pageable) {
+		return queryService.findAuxilaryOrderLineByOrderLineId(orderLineId, pageable);
 	}
 }
