@@ -66,7 +66,7 @@ public class OrderMaster   {
   @JsonProperty("orderFromCustomer")
   private Long orderFromCustomer = null;
 
-  @JsonProperty("orderLine")
+  @JsonProperty("orderLines")
   @Valid
   private List<OrderLine> orderLine = null;
 
