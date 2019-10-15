@@ -12,9 +12,11 @@ import com.diviso.graeshoppe.client.customer.model.Customer;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
+import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.client.store.model.Store;
 
 public interface QueryService {
@@ -47,5 +49,9 @@ public interface QueryService {
 	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable);
 
 	public Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
+
+	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
+
+	Page<OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable);
 	
 }
