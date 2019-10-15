@@ -44,6 +44,7 @@ import com.diviso.graeshoppe.client.product.model.Product;
 import com.diviso.graeshoppe.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.product.model.StockCurrentDTO;
+import com.diviso.graeshoppe.client.report.model.OrderAggregator;
 import com.diviso.graeshoppe.client.store.api.BannerResourceApi;
 import com.diviso.graeshoppe.client.store.api.ReviewResourceApi;
 import com.diviso.graeshoppe.client.store.api.StoreTypeResourceApi;
@@ -73,6 +74,8 @@ public class QueryResource {
 	private final Logger log = LoggerFactory.getLogger(QueryResource.class);
 
 	
+	@Autowired
+	com.diviso.graeshoppe.client.report.api.QueryResourceApi queryResource;
 	
 	@Autowired
 	QueryService queryService;
@@ -370,15 +373,6 @@ public class QueryResource {
 		return storeQueryService.findRatingByStoreId(name);
 	}
 
-	/*
-	 * @GetMapping("/orderMaster/{orderId}") public OrderMaster
-	 * findOrderMasterByOrderId(@PathVariable String orderId) {
-	 * 
-	 * return queryService.findOrderMasterByOrderId(orderId);
-	 * 
-	 * }
-	 */
-
 	@GetMapping("/storeByRating")
 	public Page<Store> findStoreByRating() {
 
@@ -564,4 +558,10 @@ public class QueryResource {
 	public Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(@PathVariable Long orderLineId, Pageable pageable) {
 		return queryService.findAuxilaryOrderLineByOrderLineId(orderLineId, pageable);
 	}
+	
+	@GetMapping("/orderaggregator/{orderNumber}")
+	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
+		return queryResource.getOrderAggregatorUsingGET(orderNumber);
+	}
+	
 }
