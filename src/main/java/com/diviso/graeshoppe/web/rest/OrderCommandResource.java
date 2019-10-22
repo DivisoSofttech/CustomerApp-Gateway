@@ -1,9 +1,7 @@
 package com.diviso.graeshoppe.web.rest;
 
 import java.security.Principal;
-import java.time.Instant;
-import java.time.OffsetDateTime;
-import java.time.ZoneId;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,7 +27,9 @@ import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
 import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OfferResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
+import com.diviso.graeshoppe.client.order.api.OrderLineCommandResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
+import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
@@ -57,12 +57,13 @@ public class OrderCommandResource {
 	@Autowired
 	private OrderLineResourceApi orderLineResourceApi;
 	@Autowired
-	private ApprovalDetailsResourceApi approvalDetailsApi;
+	private OrderLineCommandResourceApi orderLineCommandResource;
 	@Autowired
 	private AuxilaryOrderLineResourceApi auxilaryOrderLineApi;
 	@Autowired
 	private DeliveryInfoCommandResourceApi deliveryInfoCommandApi;
-
+	@Autowired
+	private OrderQueryResourceApi orderQueryResource;
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
 
@@ -152,7 +153,7 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
-		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO,orderId); 
+		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO, orderId);
 		return deliveryInfoResult;
 	}
 
@@ -167,8 +168,8 @@ public class OrderCommandResource {
 	}
 
 	public ResponseEntity<CommandResource> createDeliveryInfo(@PathVariable String taskId,
-			@RequestBody DeliveryInfoDTO deliveryInfoDTO,String orderId) {
-		return deliveryInfoCommandApi.createDeliveryInfoUsingPOST(taskId,orderId, deliveryInfoDTO);
+			@RequestBody DeliveryInfoDTO deliveryInfoDTO, String orderId) {
+		return deliveryInfoCommandApi.createDeliveryInfoUsingPOST(taskId, orderId, deliveryInfoDTO);
 	}
 
 	public ResponseEntity<DeliveryInfoDTO> updateDeliveryInfo(DeliveryInfoDTO deliveryInfoDTO) {
@@ -177,6 +178,54 @@ public class OrderCommandResource {
 
 	public ResponseEntity<OrderDTO> updateOrder(OrderDTO orderDTO) {
 		return orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
+	}
+
+	@PutMapping("/delivery-info")
+	public ResponseEntity<DeliveryInfoDTO> editDeliveryInfo(@RequestBody DeliveryInfo deliveryInfo) {
+		DeliveryInfoDTO deliveryInfoDTO = new DeliveryInfoDTO();
+		deliveryInfoDTO.setId(deliveryInfo.getId());
+		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
+		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
+		if (deliveryInfo.getDeliveryAddress() != null) {
+			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
+		}
+		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
+		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
+	}
+
+	@PutMapping("/order")
+	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
+		OrderDTO orderDTO = new OrderDTO();
+		orderDTO.setCustomerId(order.getCustomerId());
+		orderDTO.setStoreId(order.getStoreId());
+		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setEmail(order.getEmail());
+		orderDTO.setId(order.getId());
+		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
+		ResponseEntity<List<OrderLineDTO>> orderLines=orderLineCommandResource.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
+		orderLines.getBody().forEach(orderLine -> {
+			OrderLineDTO orderLineDTO = new OrderLineDTO();
+			orderLineDTO.setId(orderLine.getId());
+			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
+			orderLineDTO.setProductId(orderLine.getProductId());
+			orderLineDTO.setQuantity(orderLine.getQuantity());
+			orderLineDTO.setTotal(orderLine.getTotal());
+			orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+			OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
+			ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine=auxilaryOrderLineApi.getAllAuxilaryOrderLinesUsingGET1(orderLine.getId());
+			auxilaryOrderLine.getBody().forEach(auxilaryIem -> {
+				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+				auxilaryOrderLineDTO.setId(auxilaryIem.getId());
+				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+				auxilaryOrderLineDTO.setPricePerUnit(auxilaryIem.getPricePerUnit());
+				auxilaryOrderLineDTO.setProductId(auxilaryIem.getProductId());
+				auxilaryOrderLineDTO.setQuantity(auxilaryIem.getQuantity());
+				auxilaryOrderLineDTO.setTotal(auxilaryIem.getTotal());
+				auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+			});
+
+		});
+		return orderDTOResponse;
 	}
 
 	@PutMapping("/notifications")
@@ -193,6 +242,5 @@ public class OrderCommandResource {
 	public ResponseEntity<Void> deleteAddress(@PathVariable Long id) {
 		return addressResourceApi.deleteAddressUsingDELETE(id);
 	}
-	
-	
+
 }

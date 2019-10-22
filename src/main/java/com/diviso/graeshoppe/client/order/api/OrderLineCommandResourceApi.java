@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-01T13:51:27.312951+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-22T09:53:01.950469+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderLineCommandResource", description = "the OrderLineCommandResource API")
 public interface OrderLineCommandResourceApi {
@@ -53,6 +53,18 @@ public interface OrderLineCommandResourceApi {
     @RequestMapping(value = "/api/order-lines/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteOrderLineUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "findByOrderId", nickname = "findByOrderIdUsingGET", notes = "", response = OrderLineDTO.class, responseContainer = "List", tags={ "order-line-command-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = OrderLineDTO.class, responseContainer = "List"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findbyorderid/{orderId}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<List<OrderLineDTO>> findByOrderIdUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId);
 
 
     @ApiOperation(value = "getAllOrderLines", nickname = "getAllOrderLinesUsingGET", notes = "", response = OrderLineDTO.class, responseContainer = "List", tags={ "order-line-command-resource", })

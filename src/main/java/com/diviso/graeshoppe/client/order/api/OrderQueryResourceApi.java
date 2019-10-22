@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-01T13:51:27.312951+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-22T09:53:01.950469+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderQueryResource", description = "the OrderQueryResource API")
 public interface OrderQueryResourceApi {
@@ -51,7 +51,7 @@ public interface OrderQueryResourceApi {
     @RequestMapping(value = "/api/taskDetails/{taskName}/{orderId}/{storeId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId);
+    ResponseEntity<OpenTask> getTaskDetailsUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "storeId",required=true) @PathVariable("storeId") String storeId,@ApiParam(value = "taskName",required=true) @PathVariable("taskName") String taskName);
 
 
     @ApiOperation(value = "getTasks", nickname = "getTasksUsingGET", notes = "", response = OpenTask.class, responseContainer = "List", tags={ "order-query-resource", })
