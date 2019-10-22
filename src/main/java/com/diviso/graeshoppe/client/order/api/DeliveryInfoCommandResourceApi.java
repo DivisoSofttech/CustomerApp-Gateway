@@ -38,7 +38,7 @@ public interface DeliveryInfoCommandResourceApi {
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/delivery-infos/{taskId}/{orderId}",
+    @RequestMapping(value = "/api/delivery-infos/{orderId}/{taskId}",
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
