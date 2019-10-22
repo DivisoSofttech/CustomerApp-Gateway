@@ -25,9 +25,9 @@ public class SocketIOServerConfiguration {
 		com.corundumstudio.socketio.Configuration configuration = new com.corundumstudio.socketio.Configuration();
 		configuration.setHostname(host);
 		configuration.setPort(port);
-//		configuration.setKeyStorePassword("password");
-//        InputStream stream = SocketIOServerConfiguration.class.getResourceAsStream("/config/tls/kc.pkcs12");
-//        configuration.setKeyStore(stream);
+		configuration.setKeyStorePassword("password");
+        InputStream stream = SocketIOServerConfiguration.class.getResourceAsStream("/config/tls/ci2.pkcs12");
+        configuration.setKeyStore(stream);
 		SocketIOServer ioServer = new SocketIOServer(configuration);
 		ioServer.start();
 		return ioServer;

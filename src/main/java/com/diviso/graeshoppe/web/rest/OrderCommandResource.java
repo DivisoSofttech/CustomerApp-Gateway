@@ -148,6 +148,7 @@ public class OrderCommandResource {
 		return result;
 	}
 
+	
 	@PostMapping("/orders/collectDeliveryDetails/{taskId}/{orderId}")
 	public ResponseEntity<CommandResource> collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo,
 			@PathVariable String taskId, @PathVariable String orderId) {
