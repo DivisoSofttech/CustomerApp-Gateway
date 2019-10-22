@@ -1,6 +1,7 @@
 package com.diviso.graeshoppe.web.rest;
 
 import java.security.Principal;
+import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
@@ -94,7 +95,7 @@ public class OrderCommandResource {
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setAllergyNote(order.getAllergyNote());
-		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
