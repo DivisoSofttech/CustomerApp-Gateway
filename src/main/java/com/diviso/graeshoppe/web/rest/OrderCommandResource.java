@@ -1,6 +1,8 @@
 package com.diviso.graeshoppe.web.rest;
 
 import java.security.Principal;
+import java.time.OffsetDateTime;
+import java.time.ZoneId;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -91,6 +93,8 @@ public class OrderCommandResource {
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
+		orderDTO.setAllergyNote(order.getAllergyNote());
+		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
@@ -201,6 +205,8 @@ public class OrderCommandResource {
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setId(order.getId());
+		orderDTO.setAllergyNote(order.getAllergyNote());
+		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 		ResponseEntity<List<OrderLineDTO>> orderLines=orderLineCommandResource.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 		orderLines.getBody().forEach(orderLine -> {

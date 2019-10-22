@@ -21,6 +21,8 @@ import java.util.List;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Column;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -44,8 +46,42 @@ public class Order   {
 
   @JsonProperty("date")
   private Instant date = null;
+  
+  @JsonProperty( "allergy_note")
+  private String allergyNote;
 
-  @JsonProperty("deliveryInfo")
+  @JsonProperty( "pre_order_date")
+  private Instant preOrderDate;
+
+  /**
+ * @return the allergyNote
+ */
+public String getAllergyNote() {
+	return allergyNote;
+}
+
+/**
+ * @param allergyNote the allergyNote to set
+ */
+public void setAllergyNote(String allergyNote) {
+	this.allergyNote = allergyNote;
+}
+
+/**
+ * @return the preOrderDate
+ */
+public Instant getPreOrderDate() {
+	return preOrderDate;
+}
+
+/**
+ * @param preOrderDate the preOrderDate to set
+ */
+public void setPreOrderDate(Instant preOrderDate) {
+	this.preOrderDate = preOrderDate;
+}
+
+@JsonProperty("deliveryInfo")
   private DeliveryInfo deliveryInfo = null;
 
   @JsonProperty("email")
