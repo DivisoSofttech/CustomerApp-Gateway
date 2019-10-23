@@ -47,10 +47,10 @@ public class Order   {
   @JsonProperty("date")
   private Instant date = null;
   
-  @JsonProperty( "allergy_note")
+  @JsonProperty( "allergyNote")
   private String allergyNote;
 
-  @JsonProperty( "pre_order_date")
+  @JsonProperty( "preOrderDate")
   private Instant preOrderDate;
 
   /**
