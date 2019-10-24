@@ -220,8 +220,20 @@ public class OrderCommandResource {
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 		CompletableFuture<String> completableFuture = new CompletableFuture<>();
 		completableFuture.runAsync(() -> {
-			LOG.info("Async function working############################",order);
-			LOG.info("Async function working############################",order);
+			LOG.info("Async function working############################"+order);
+			LOG.info("Async function working############################"+order);
+			LOG.info("Async function working############################"+order);
+
+			LOG.info("Async function working############################"+order);
+
+			LOG.info("Async function working############################"+order);
+
+			LOG.info("Async function working############################"+order);
+
+			LOG.info("Async function working############################"+order);
+
+			LOG.info("Async function working############################"+order);
+
 			ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 					.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 			order.getOrderLines().forEach(updatedOrderLine -> {
@@ -284,6 +296,8 @@ public class OrderCommandResource {
 
 				}
 			});
+			LOG.info("Async function working############################end"+order);
+
 			completableFuture.complete("completed");
 		});
 		return orderDTOResponse;
