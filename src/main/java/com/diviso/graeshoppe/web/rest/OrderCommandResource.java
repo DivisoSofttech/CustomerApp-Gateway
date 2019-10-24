@@ -208,7 +208,9 @@ public class OrderCommandResource {
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setId(order.getId());
 		orderDTO.setAllergyNote(order.getAllergyNote());
-		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+        if(order.getPreOrderDate()!=null){
+           orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+        }
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 		ResponseEntity<List<OrderLineDTO>> orderLines=orderLineCommandResource.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 		orderLines.getBody().forEach(orderLine -> {
