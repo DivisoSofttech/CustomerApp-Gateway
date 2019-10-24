@@ -221,9 +221,10 @@ public class OrderCommandResource {
 		CompletableFuture<String> completableFuture = new CompletableFuture<>();
 		completableFuture.runAsync(() -> {
 			LOG.info("Async function working############################");
+			Order orderThread= order;
 			ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 					.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
-			order.getOrderLines().forEach(updatedOrderLine -> {
+			orderThread.getOrderLines().forEach(updatedOrderLine -> {
 				LOG.info("Async function working############################ foreach1");
 
 				OrderLineDTO orderLineDTO = new OrderLineDTO();
