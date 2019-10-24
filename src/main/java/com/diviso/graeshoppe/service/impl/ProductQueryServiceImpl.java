@@ -263,21 +263,14 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 		List<Product> productList = elasticsearchOperations.queryForPage(searchQuery, Product.class).getContent();
 
 		for (Product product : productList) {
-			System.out.println(
-					"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=List of product:" + product);
 			if ((product.isIsAuxilaryItem() == false)) {
 
 				StringQuery query = new StringQuery(termQuery("product.id", product.getId()).toString());
 
 				stockCurrentList.add(elasticsearchOperations.queryForObject(query, StockCurrent.class));
 				for (StockCurrent stockCurrent : stockCurrentList) {
-
-					System.out.println(
-							"+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++=stockcurrentList"
-									+ stockCurrent);
 				}
 
-				System.out.println("<<<<<<<stockCurrentSize:" + stockCurrentList.size());
 			}
 		}
 
@@ -287,7 +280,6 @@ public class ProductQueryServiceImpl implements ProductQueryService{
 
 	@Override
 	public Product findProductById(Long id) {
-		log.info("..............id  impl ............." + id);
 
 		StringQuery searchQuery = new StringQuery(termQuery("id", id).toString());
 

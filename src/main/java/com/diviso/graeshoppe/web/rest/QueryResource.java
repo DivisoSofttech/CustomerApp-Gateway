@@ -325,14 +325,13 @@ public class QueryResource {
 
 	@GetMapping("/storesByDeliveryType/{deliveryType}")
 	public ResponseEntity<List<Store>> findStoresByDeliveryType(@PathVariable String deliveryType) {
-		log.info("..............." + deliveryType);
+
 		return ResponseEntity.ok().body(storeQueryService.findStoreByDeliveryType(deliveryType).getContent());
 	}
 
 	@GetMapping("/findProductByStoreIdAndCategoryName/{userId}/{categoryName}")
 	public ResponseEntity<Page<Product>> findProductByStoreIdAndCategoryName(@PathVariable String userId,
 			@PathVariable String categoryName, Pageable pageable) {
-		log.debug("REST request to findProductByStoreIdAndCategoryName : {}", userId, categoryName);
 		return ResponseEntity.ok()
 				.body(productqueryService.findProductByStoreIdAndCategoryName(userId, categoryName, pageable));
 	}
@@ -345,7 +344,6 @@ public class QueryResource {
 	@GetMapping("/findStockCurrentByStoreIdAndCategoryId/{userId}/{categoryId}")
 	public List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(@PathVariable("userId") String userId,
 			@PathVariable("categoryId") Long categoryId, Pageable pageable) {
-		log.debug("REST request to findStockCurrentByStoreIdAndCategoryId : {}", userId, categoryId);
 		return productqueryService.findStockCurrentByStoreIdAndCategoryId(userId, categoryId, pageable);
 	}
 

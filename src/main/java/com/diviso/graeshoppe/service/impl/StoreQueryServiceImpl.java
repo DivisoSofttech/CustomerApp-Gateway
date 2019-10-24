@@ -189,7 +189,6 @@ ajith.anand@lxisoft.com
 
 	@Override
 	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name) {
-		System.out.println("....................... impl ................" + storeId + "      " + name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId))
 						.must(QueryBuilders.termQuery("userName", name)).toString());
@@ -199,7 +198,6 @@ ajith.anand@lxisoft.com
 
 	@Override
 	public UserRating findRatingByStoreId(String storeId) {
-		System.out.println("....................... impl ................" + storeId);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("store.regNo", storeId)).toString());
 		UserRating rating = elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
@@ -208,7 +206,6 @@ ajith.anand@lxisoft.com
 
 	@Override
 	public UserRating findRatingByName(String name) {
-		System.out.println("....................... impl ................" + name);
 		StringQuery stringQuery = new StringQuery(
 				QueryBuilders.boolQuery().must(QueryBuilders.termQuery("userName", name)).toString());
 		UserRating rating = elasticsearchOperations.queryForObject(stringQuery, UserRating.class);
@@ -405,7 +402,6 @@ ajith.anand@lxisoft.com
 
 					if (searchHit.index.equals("store")) {
 						result.setStoreNo(searchHit.source.get("regNo").getAsString());
-						System.out.println("************Store*****************" + result.getStoreNo());
 					} else {
 						result.setStoreNo(searchHit.source.get("iDPcode").getAsString());
 					}
