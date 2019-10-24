@@ -201,6 +201,7 @@ public class OrderCommandResource {
 		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 	}
 
+	@SuppressWarnings("static-access")
 	@PutMapping("/order")
 	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
@@ -217,8 +218,8 @@ public class OrderCommandResource {
 			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
 		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
-
-		CompletableFuture.runAsync(() -> {
+		CompletableFuture<String> completableFuture = new CompletableFuture<>();
+		completableFuture.runAsync(() -> {
 			LOG.info("Async function working############################");
 			ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 					.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
@@ -282,7 +283,7 @@ public class OrderCommandResource {
 
 				}
 			});
-
+			completableFuture.complete("completed");
 		});
 		return orderDTOResponse;
 
