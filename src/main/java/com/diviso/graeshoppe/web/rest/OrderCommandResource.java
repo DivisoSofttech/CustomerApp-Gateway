@@ -224,7 +224,7 @@ public class OrderCommandResource {
 
 			OrderLineDTO currentOrderLine = orderLines.getBody().stream()
 					.filter(orderline ->{ 
-                        LOG.info("Orderline filter check%%%% " + orderline.getId() == updatedOrderLine.getId());
+                        LOG.info("Orderline filter check%%%% currentid " + orderline.getId()+" updated id "+updatedOrderLine.getId());
                         return orderline.getId() == updatedOrderLine.getId();
                     }).findFirst().get();
 			if (currentOrderLine != null) {
