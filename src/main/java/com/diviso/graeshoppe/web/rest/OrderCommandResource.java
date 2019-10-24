@@ -5,6 +5,7 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -221,15 +222,15 @@ public class OrderCommandResource {
 
 		order.getOrderLines().forEach(updatedOrderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
-
-			OrderLineDTO currentOrderLine = orderLines.getBody().stream()
-					.filter(orderline ->{ 
-                        LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId()+" updated id "+updatedOrderLine.getProductId());
-                        return orderline.getProductId() == updatedOrderLine.getProductId();
-                    }).findFirst().get();
-			if (currentOrderLine != null) {
-				orderLineDTO.setId(currentOrderLine.getId());
+			Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
+				LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
+						+ updatedOrderLine.getProductId());
+				return orderline.getProductId() == updatedOrderLine.getProductId();
+			}).findFirst();
+			if (currentOrderLine.isPresent()) {
+				orderLineDTO.setId(currentOrderLine.get().getId());
 			}
+
 			orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
 			orderLineDTO.setProductId(updatedOrderLine.getProductId());
 			orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
@@ -237,24 +238,36 @@ public class OrderCommandResource {
 			orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
 			OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
 
-			ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
-					.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.getId());
+			if (currentOrderLine.isPresent()) {
+				ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
+						.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
 
-			updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
-				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-				AuxilaryOrderLineDTO currentAux = auxilaryOrderLine.getBody().stream()
-						.filter(aux -> aux.getId() == updatedAux.getId()).findFirst().get();
-				if (currentAux != null) {
-					auxilaryOrderLineDTO.setId(currentAux.getId());
-				}
-				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-				auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
-				auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
-				auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
-				auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
-				auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
+							.filter(aux -> aux.getId() == updatedAux.getId()).findFirst();
+					if (currentAux.isPresent()) {
+						auxilaryOrderLineDTO.setId(currentAux.get().getId());
+					}
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
+					auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
+					auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
+					auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
 
-			});
+				});
+			} else {
+				updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(auxNew.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(auxNew.getProductId());
+					auxilaryOrderLineDTO.setQuantity(auxNew.getQuantity());
+					auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
+					auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
+				});
+			}
 
 		});
 		return orderDTOResponse;
