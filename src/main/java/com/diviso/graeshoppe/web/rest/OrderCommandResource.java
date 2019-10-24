@@ -223,7 +223,10 @@ public class OrderCommandResource {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 
 			OrderLineDTO currentOrderLine = orderLines.getBody().stream()
-					.filter(orderline -> orderline.getId() == updatedOrderLine.getId()).findFirst().get();
+					.filter(orderline ->{ 
+                        LOG.info("Orderline filter check%%%% " + orderline.getId() == updatedOrderLine.getId());
+                        return orderline.getId() == updatedOrderLine.getId();
+                    }).findFirst().get();
 			if (currentOrderLine != null) {
 				orderLineDTO.setId(currentOrderLine.getId());
 			}
