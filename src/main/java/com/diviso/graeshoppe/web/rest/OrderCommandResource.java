@@ -227,21 +227,18 @@ public class OrderCommandResource {
 						+ updatedOrderLine.getProductId());
 				return orderline.getProductId() == updatedOrderLine.getProductId();
 			}).findFirst();
+			
+			// check if the orderline is already present in the order if it is it will get updates
 			if (currentOrderLine.isPresent()) {
 				orderLineDTO.setId(currentOrderLine.get().getId());
-			}
-
-			orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
-			orderLineDTO.setProductId(updatedOrderLine.getProductId());
-			orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
-			orderLineDTO.setTotal(updatedOrderLine.getTotal());
-			orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-			OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
-
-			if (currentOrderLine.isPresent()) {
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
 				ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
 						.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
-
 				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
 					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
 					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
@@ -258,6 +255,13 @@ public class OrderCommandResource {
 
 				});
 			} else {
+				// else the new orderline will be added to the order again 
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.createOrderLineUsingPOST(orderLineDTO).getBody();
 				updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
 					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
 					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
@@ -267,8 +271,8 @@ public class OrderCommandResource {
 					auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
 					auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
 				});
-			}
 
+			}
 		});
 		return orderDTOResponse;
 
