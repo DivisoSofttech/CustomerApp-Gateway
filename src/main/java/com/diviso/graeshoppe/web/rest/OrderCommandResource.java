@@ -90,6 +90,7 @@ public class OrderCommandResource {
 		return "done";
 	}
 
+	@SuppressWarnings("static-access")
 	@PostMapping("/order/initiateOrder")
 	public ResponseEntity<CommandResource> initiateOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
@@ -100,7 +101,11 @@ public class OrderCommandResource {
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
+		CompletableFuture<String> completableFuture = new CompletableFuture<>();
+		completableFuture.runAsync(() -> {
+			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%%");
 		order.getOrderLines().forEach(orderLine -> {
+			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach");
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
 			orderLineDTO.setProductId(orderLine.getProductId());
@@ -109,6 +114,8 @@ public class OrderCommandResource {
 			orderLineDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			OrderLineDTO lineDTOResult = createOrderLine(orderLineDTO).getBody();
 			orderLine.getRequiedAuxilaries().forEach(auxilaryIem -> {
+				LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach 2" );
+
 				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
 				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
 				auxilaryOrderLineDTO.setPricePerUnit(auxilaryIem.getPricePerUnit());
@@ -117,7 +124,9 @@ public class OrderCommandResource {
 				auxilaryOrderLineDTO.setTotal(auxilaryIem.getTotal());
 				createAuxilaryLineItem(auxilaryOrderLineDTO);
 			});
+			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% end?***********");
 
+		});
 		});
 		LOG.info("Applied Offers are " + order.getAppliedOffers());
 
