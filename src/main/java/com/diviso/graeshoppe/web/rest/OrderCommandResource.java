@@ -127,8 +127,6 @@ public class OrderCommandResource {
 			createOfferLine(offerDTO);
 		});
 
-		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is " + Thread.currentThread());
-
 		return orderDTOResponse;
 	}
 
