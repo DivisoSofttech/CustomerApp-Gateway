@@ -102,10 +102,11 @@ public class OrderCommandResource {
 		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		CompletableFuture<String> completableFuture = new CompletableFuture<>();
+		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
 		completableFuture.runAsync(() -> {
-			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%%");
+			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%%"+Thread.currentThread());
 		order.getOrderLines().forEach(orderLine -> {
-			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach");
+			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach"+Thread.currentThread());
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
 			orderLineDTO.setProductId(orderLine.getProductId());
@@ -125,6 +126,7 @@ public class OrderCommandResource {
 				createAuxilaryLineItem(auxilaryOrderLineDTO);
 			});
 			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% end?***********");
+			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
 
 		});
 		});
@@ -136,6 +138,8 @@ public class OrderCommandResource {
 			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			createOfferLine(offerDTO);
 		});
+
+		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
 
 		return orderDTOResponse;
 	}
