@@ -101,12 +101,7 @@ public class OrderCommandResource {
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
-		CompletableFuture<String> completableFuture = new CompletableFuture<>();
-		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
-		completableFuture.runAsync(() -> {
-			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%%"+Thread.currentThread());
 		order.getOrderLines().forEach(orderLine -> {
-			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach"+Thread.currentThread());
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
 			orderLineDTO.setProductId(orderLine.getProductId());
@@ -115,8 +110,6 @@ public class OrderCommandResource {
 			orderLineDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			OrderLineDTO lineDTOResult = createOrderLine(orderLineDTO).getBody();
 			orderLine.getRequiedAuxilaries().forEach(auxilaryIem -> {
-				LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% in foreach 2" );
-
 				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
 				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
 				auxilaryOrderLineDTO.setPricePerUnit(auxilaryIem.getPricePerUnit());
@@ -125,13 +118,8 @@ public class OrderCommandResource {
 				auxilaryOrderLineDTO.setTotal(auxilaryIem.getTotal());
 				createAuxilaryLineItem(auxilaryOrderLineDTO);
 			});
-			LOG.info("In async initiate order %%%%%%%%%%%%%%%%%% end?***********");
-			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
 
 		});
-		}).thenRun(()-> completableFuture.complete("completed"));
-		LOG.info("Applied Offers are " + order.getAppliedOffers());
-
 		order.getAppliedOffers().forEach(offer -> {
 			OfferDTO offerDTO = new OfferDTO();
 			offerDTO.setOfferRef(offer.getOfferRef());
@@ -139,7 +127,7 @@ public class OrderCommandResource {
 			createOfferLine(offerDTO);
 		});
 
-		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
+		LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is " + Thread.currentThread());
 
 		return orderDTOResponse;
 	}
@@ -231,26 +219,10 @@ public class OrderCommandResource {
 			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
 		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
-		CompletableFuture<String> completableFuture = new CompletableFuture<>();
-		completableFuture.runAsync(() -> {
-			LOG.info("Async function working############################"+order);
-			LOG.info("Async function working############################"+order);
-			LOG.info("Async function working############################"+order);
-
-			LOG.info("Async function working############################"+order);
-
-			LOG.info("Async function working############################"+order);
-
-			LOG.info("Async function working############################"+order);
-
-			LOG.info("Async function working############################"+order);
-
-			LOG.info("Async function working############################"+order);
 
 			ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 					.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 			order.getOrderLines().forEach(updatedOrderLine -> {
-				LOG.info("Async function working############################ foreach1");
 
 				OrderLineDTO orderLineDTO = new OrderLineDTO();
 				Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
@@ -261,8 +233,6 @@ public class OrderCommandResource {
 				// check if the orderline is already present in the order if it is it will get
 				// updates
 				if (currentOrderLine.isPresent()) {
-					LOG.info("Async function working############################ ifcheck");
-
 					orderLineDTO.setId(currentOrderLine.get().getId());
 					orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
 					orderLineDTO.setProductId(updatedOrderLine.getProductId());
@@ -288,8 +258,6 @@ public class OrderCommandResource {
 
 					});
 				} else {
-					LOG.info("Async function working############################ else part");
-
 					// else the new orderline will be added to the order again
 					orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
 					orderLineDTO.setProductId(updatedOrderLine.getProductId());
@@ -309,10 +277,7 @@ public class OrderCommandResource {
 
 				}
 			});
-			LOG.info("Async function working############################end"+order);
 
-			completableFuture.complete("completed");
-		});
 		return orderDTOResponse;
 
 	}
