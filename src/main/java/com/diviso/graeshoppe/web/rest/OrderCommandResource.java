@@ -129,7 +129,7 @@ public class OrderCommandResource {
 			LOG.info("$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$Thread name is "+Thread.currentThread());
 
 		});
-		});
+		}).thenRun(()-> completableFuture.complete("completed"));
 		LOG.info("Applied Offers are " + order.getAppliedOffers());
 
 		order.getAppliedOffers().forEach(offer -> {
