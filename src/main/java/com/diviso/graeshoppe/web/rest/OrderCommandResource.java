@@ -285,12 +285,12 @@ public class OrderCommandResource {
 				} else {
 					isDelete = true;
 				}
-			if(isDelete) {
+			}
+			if (isDelete) {
 				System.out.println("Is present for deletion^^^^^^^^^^^^");
 				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
 				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
 						current.getOrderId());
-			}
 			}
 
 		});
