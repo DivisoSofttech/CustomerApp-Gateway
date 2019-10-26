@@ -222,16 +222,6 @@ public class OrderCommandResource {
 
 		order.getOrderLines().forEach(updatedOrderLine -> {
 
-			Optional<OrderLineDTO> s = orderLines.getBody().stream()
-					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
-					.findFirst();
-			if(s.isPresent()) {
-				System.out.println("Is present for deletion^^^^^^^^^^^^");
-				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^"+s.get());
-			}
-		});
-		order.getOrderLines().forEach(updatedOrderLine -> {
-
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
 			Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
 				LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
@@ -286,6 +276,18 @@ public class OrderCommandResource {
 			}
 		});
 
+		// deleting the removed orderlines
+		order.getOrderLines().forEach(updatedOrderLine -> {
+			Optional<OrderLineDTO> s = orderLines.getBody().stream()
+					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
+					.findFirst();
+			if (s.isPresent()) {
+				System.out.println("Is present for deletion^^^^^^^^^^^^");
+				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + s.get());
+				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(s.get().getProductId(),
+						orderLines.getBody().get(0).getOrderId());
+			}
+		});
 		return orderDTOResponse;
 
 	}
