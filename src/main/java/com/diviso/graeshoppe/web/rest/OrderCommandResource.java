@@ -276,18 +276,38 @@ public class OrderCommandResource {
 			}
 		});
 
-		// deleting the removed orderlines
-		order.getOrderLines().forEach(updatedOrderLine -> {
-			Optional<OrderLineDTO> s = orderLines.getBody().stream()
-					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
-					.findFirst();
-			if (s.isPresent()) {
+		orderLines.getBody().stream().forEach(current -> {
+			boolean isDelete = false;
+			for (OrderLine updated : order.getOrderLines()) {
+				if (current.getProductId() == updated.getProductId()) {
+					isDelete = false;
+					continue;
+				} else {
+					isDelete = true;
+				}
+			if(isDelete) {
 				System.out.println("Is present for deletion^^^^^^^^^^^^");
-				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + s.get());
-				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(s.get().getProductId(),
-						orderLines.getBody().get(0).getOrderId());
+				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
+				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
+						current.getOrderId());
 			}
+			}
+
 		});
+
+		// deleting the removed orderlines
+//		order.getOrderLines().forEach(updatedOrderLine -> {
+//
+//			Optional<OrderLineDTO> s = orderLines.getBody().stream()
+//					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
+//					.findFirst();
+//			if (s.isPresent()) {
+//				System.out.println("Is present for deletion^^^^^^^^^^^^");
+//				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + s.get());
+//				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(s.get().getProductId(),
+//						orderLines.getBody().get(0).getOrderId());
+//			}
+//		});
 		return orderDTOResponse;
 
 	}
