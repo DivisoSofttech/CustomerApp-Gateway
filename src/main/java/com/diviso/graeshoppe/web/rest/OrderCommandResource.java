@@ -277,21 +277,25 @@ public class OrderCommandResource {
 		});
 
 		orderLines.getBody().stream().forEach(current -> {
-			boolean isDelete = false;
-			for (OrderLine updated : order.getOrderLines()) {
-				if (current.getProductId() == updated.getProductId()) {
-					isDelete = false;
-					continue;
-				} else {
-					isDelete = true;
+
+				boolean isDelete = false;
+				for (OrderLine updated : order.getOrderLines()) {
+					if (current.getProductId() == updated.getProductId()) {
+						System.out.println("############################## if in productid is"+current.getProductId());
+						isDelete = false;
+						break;
+					} else {
+						System.out.println("############################## else productid is"+current.getProductId());
+						isDelete = true;
+					}
 				}
-			}
-			if (isDelete) {
-				System.out.println("Is present for deletion^^^^^^^^^^^^");
-				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
-				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
-						current.getOrderId());
-			}
+				if (isDelete) {
+					System.out.println("Is present for deletion^^^^^^^^^^^^");
+					System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
+					orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
+							current.getOrderId());
+				}
+			
 
 		});
 
