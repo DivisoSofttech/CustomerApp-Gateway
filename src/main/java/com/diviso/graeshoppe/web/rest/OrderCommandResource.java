@@ -200,7 +200,6 @@ public class OrderCommandResource {
 		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 	}
 
-	@SuppressWarnings("static-access")
 	@PutMapping("/order")
 	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
@@ -218,63 +217,74 @@ public class OrderCommandResource {
 		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 
-			ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
-					.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
-			order.getOrderLines().forEach(updatedOrderLine -> {
+		ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
+				.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 
-				OrderLineDTO orderLineDTO = new OrderLineDTO();
-				Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
-					LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
-							+ updatedOrderLine.getProductId());
-					return orderline.getProductId() == updatedOrderLine.getProductId();
-				}).findFirst();
-				// check if the orderline is already present in the order if it is it will get
-				// updates
-				if (currentOrderLine.isPresent()) {
-					orderLineDTO.setId(currentOrderLine.get().getId());
-					orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
-					orderLineDTO.setProductId(updatedOrderLine.getProductId());
-					orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
-					orderLineDTO.setTotal(updatedOrderLine.getTotal());
-					orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-					OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
-					ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
-							.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
-					updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
-						AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-						Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
-								.filter(aux -> aux.getId() == updatedAux.getId()).findFirst();
-						if (currentAux.isPresent()) {
-							auxilaryOrderLineDTO.setId(currentAux.get().getId());
-						}
-						auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-						auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
-						auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
-						auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
-						auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
-						auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+		order.getOrderLines().forEach(updatedOrderLine -> {
 
-					});
-				} else {
-					// else the new orderline will be added to the order again
-					orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
-					orderLineDTO.setProductId(updatedOrderLine.getProductId());
-					orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
-					orderLineDTO.setTotal(updatedOrderLine.getTotal());
-					orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-					OrderLineDTO lineDTOResult = orderLineResourceApi.createOrderLineUsingPOST(orderLineDTO).getBody();
-					updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
-						AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-						auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-						auxilaryOrderLineDTO.setPricePerUnit(auxNew.getPricePerUnit());
-						auxilaryOrderLineDTO.setProductId(auxNew.getProductId());
-						auxilaryOrderLineDTO.setQuantity(auxNew.getQuantity());
-						auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
-						auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
-					});
+			Optional<OrderLineDTO> s = orderLines.getBody().stream()
+					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
+					.findFirst();
+			if(s.isPresent()) {
+				System.out.println("Is present for deletion^^^^^^^^^^^^");
+				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^"+s.get());
+			}
+		});
+		order.getOrderLines().forEach(updatedOrderLine -> {
 
-				}
-			});
+			OrderLineDTO orderLineDTO = new OrderLineDTO();
+			Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
+				LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
+						+ updatedOrderLine.getProductId());
+				return orderline.getProductId() == updatedOrderLine.getProductId();
+			}).findFirst();
+			// check if the orderline is already present in the order if it is it will get
+			// updates
+			if (currentOrderLine.isPresent()) {
+				orderLineDTO.setId(currentOrderLine.get().getId());
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
+				ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
+						.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
+				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
+							.filter(aux -> aux.getId() == updatedAux.getId()).findFirst();
+					if (currentAux.isPresent()) {
+						auxilaryOrderLineDTO.setId(currentAux.get().getId());
+					}
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
+					auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
+					auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
+					auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+
+				});
+			} else {
+				// else the new orderline will be added to the order again
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.createOrderLineUsingPOST(orderLineDTO).getBody();
+				updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(auxNew.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(auxNew.getProductId());
+					auxilaryOrderLineDTO.setQuantity(auxNew.getQuantity());
+					auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
+					auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
+				});
+
+			}
+		});
 
 		return orderDTOResponse;
 

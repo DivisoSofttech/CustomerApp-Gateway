@@ -204,7 +204,7 @@ public class OrderLine   {
       return false;
     }
     OrderLine orderLine = (OrderLine) o;
-    return Objects.equals(this.id, orderLine.id) &&
+    return 
         Objects.equals(this.order, orderLine.order) &&
         Objects.equals(this.pricePerUnit, orderLine.pricePerUnit) &&
         Objects.equals(this.productId, orderLine.productId) &&
