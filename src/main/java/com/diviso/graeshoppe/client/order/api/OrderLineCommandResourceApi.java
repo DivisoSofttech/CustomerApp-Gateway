@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-26T14:32:15.785498+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-29T12:42:01.121660+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderLineCommandResource", description = "the OrderLineCommandResource API")
 public interface OrderLineCommandResourceApi {
@@ -53,7 +53,7 @@ public interface OrderLineCommandResourceApi {
     @RequestMapping(value = "/api/deleteByProductIdAndOrderId/{productId}/{orderId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId);
+    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId,@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId);
 
 
     @ApiOperation(value = "deleteOrderLine", nickname = "deleteOrderLineUsingDELETE", notes = "", tags={ "order-line-command-resource", })

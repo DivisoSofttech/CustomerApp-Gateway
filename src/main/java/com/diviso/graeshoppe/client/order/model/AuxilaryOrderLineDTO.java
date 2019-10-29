@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * AuxilaryOrderLineDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-26T14:32:15.785498+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-29T12:42:01.121660+05:30[Asia/Kolkata]")
 
 public class AuxilaryOrderLineDTO   {
   @JsonProperty("id")

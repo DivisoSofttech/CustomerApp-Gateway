@@ -197,6 +197,9 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
+		ResponseEntity<OrderDTO> orderDTO=orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
+		orderDTO.getBody().setDeliveryInfoId(deliveryInfo.getId());
+		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
 		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 	}
 
@@ -281,7 +284,7 @@ public class OrderCommandResource {
 				boolean isDelete = false;
 				for (OrderLine updated : order.getOrderLines()) {
 					if (current.getProductId() == updated.getProductId()) {
-						System.out.println("############################## if in productid is"+current.getProductId());
+						System.out.println("############################## if inown in my proje productid is"+current.getProductId());
 						isDelete = false;
 						break;
 					} else {

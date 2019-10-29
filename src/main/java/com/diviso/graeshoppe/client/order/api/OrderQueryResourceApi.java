@@ -6,6 +6,7 @@
 package com.diviso.graeshoppe.client.order.api;
 
 import com.diviso.graeshoppe.client.order.model.OpenTask;
+import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -25,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-26T14:32:15.785498+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-29T12:42:01.121660+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderQueryResource", description = "the OrderQueryResource API")
 public interface OrderQueryResourceApi {
@@ -40,6 +41,18 @@ public interface OrderQueryResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<Long> countByCustomerIdAndStatusNameUsingGET(@ApiParam(value = "customerId",required=true) @PathVariable("customerId") String customerId,@ApiParam(value = "statusName",required=true) @PathVariable("statusName") String statusName);
+
+
+    @ApiOperation(value = "findByDeliveryInfoId", nickname = "findByDeliveryInfoIdUsingGET", notes = "", response = OrderDTO.class, tags={ "order-query-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = OrderDTO.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findByDeliveryInfoId/{id}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<OrderDTO> findByDeliveryInfoIdUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "getTaskDetails", nickname = "getTaskDetailsUsingGET", notes = "", response = OpenTask.class, tags={ "order-query-resource", })
