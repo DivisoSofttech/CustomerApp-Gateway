@@ -211,6 +211,9 @@ public class OrderCommandResource {
 		orderDTO.setOrderId(order.getOrderId());
 		orderDTO.setDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		orderDTO.setStatusId(1l);
+        if(order.getDeliveryInfo()!=null){
+               orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
+        }
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		if (order.getPreOrderDate() != null) {
 			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
