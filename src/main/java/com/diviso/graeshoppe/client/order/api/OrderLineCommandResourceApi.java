@@ -53,7 +53,7 @@ public interface OrderLineCommandResourceApi {
     @RequestMapping(value = "/api/deleteByProductIdAndOrderId/{productId}/{orderId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId,@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId);
+    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId);
 
 
     @ApiOperation(value = "deleteOrderLine", nickname = "deleteOrderLineUsingDELETE", notes = "", tags={ "order-line-command-resource", })
