@@ -200,6 +200,7 @@ public class OrderCommandResource {
 		ResponseEntity<OrderDTO> orderDTO=orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
 		orderDTO.getBody().setDeliveryInfoId(deliveryInfo.getId());
 		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
+		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
 		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 	}
 
