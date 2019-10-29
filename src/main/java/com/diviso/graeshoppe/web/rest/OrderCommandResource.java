@@ -197,10 +197,11 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
+		ResponseEntity<DeliveryInfoDTO> result = deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
 		ResponseEntity<OrderDTO> orderDTO=orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
 		orderDTO.getBody().setDeliveryInfoId(deliveryInfo.getId());
 		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
-		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
+		return result;
 	}
 
 	@PutMapping("/order")
@@ -214,9 +215,9 @@ public class OrderCommandResource {
 		orderDTO.setOrderId(order.getOrderId());
 		orderDTO.setDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		orderDTO.setStatusId(1l);
-        if(order.getDeliveryInfo()!=null){
-               orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
-        }
+		if (order.getDeliveryInfo() != null) {
+			orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
+		}
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		if (order.getPreOrderDate() != null) {
 			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
@@ -284,24 +285,24 @@ public class OrderCommandResource {
 
 		orderLines.getBody().stream().forEach(current -> {
 
-				boolean isDelete = false;
-				for (OrderLine updated : order.getOrderLines()) {
-					if (current.getProductId() == updated.getProductId()) {
-						System.out.println("############################## if inown in my proje productid is"+current.getProductId());
-						isDelete = false;
-						break;
-					} else {
-						System.out.println("############################## else productid is"+current.getProductId());
-						isDelete = true;
-					}
+			boolean isDelete = false;
+			for (OrderLine updated : order.getOrderLines()) {
+				if (current.getProductId() == updated.getProductId()) {
+					System.out.println("############################## if inown in my proje productid is"
+							+ current.getProductId());
+					isDelete = false;
+					break;
+				} else {
+					System.out.println("############################## else productid is" + current.getProductId());
+					isDelete = true;
 				}
-				if (isDelete) {
-					System.out.println("Is present for deletion^^^^^^^^^^^^");
-					System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
-					orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
-							current.getOrderId());
-				}
-			
+			}
+			if (isDelete) {
+				System.out.println("Is present for deletion^^^^^^^^^^^^");
+				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
+				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
+						current.getOrderId());
+			}
 
 		});
 
