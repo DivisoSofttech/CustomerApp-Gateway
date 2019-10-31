@@ -33,7 +33,7 @@ public class OfferCommandResource {
 		Long count=orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "delivered").getBody();
 		log.info("Count for the customer "+customerId+" is "+count);
 		orderModel.setOrderNumber(count+1);
-		orderModel.setPromoCode("SUPER20");
+		orderModel.setPromoCode("SUPER10");
 		
 		ResponseEntity<OrderModel> result=aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
 		return result;
