@@ -30,7 +30,7 @@ public class OfferCommandResource {
 	
 	@PostMapping("/claimOffer/{customerId}")
 	public ResponseEntity<OrderModel> checkOfferEligibility(@RequestBody OrderModel orderModel,@PathVariable String customerId) {
-		Long count=orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "delivered").getBody();
+		Long count=orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "payment-processed").getBody();
 		log.info("Count for the customer "+customerId+" is "+count);
 		orderModel.setOrderNumber(count+1);
 		orderModel.setPromoCode("SUPER10");
