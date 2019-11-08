@@ -90,7 +90,6 @@ public class OrderCommandResource {
 		return "done";
 	}
 
-	@SuppressWarnings("static-access")
 	@PostMapping("/order/initiateOrder")
 	public ResponseEntity<CommandResource> initiateOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = new OrderDTO();
@@ -123,6 +122,8 @@ public class OrderCommandResource {
 		order.getAppliedOffers().forEach(offer -> {
 			OfferDTO offerDTO = new OfferDTO();
 			offerDTO.setOfferRef(offer.getOfferRef());
+			offerDTO.setOrderDiscountAmount(offer.getOrderDiscountAmount());
+			offerDTO.setDescription(offer.getDescription());
 			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			createOfferLine(offerDTO);
 		});
@@ -198,7 +199,7 @@ public class OrderCommandResource {
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
 		ResponseEntity<DeliveryInfoDTO> result = deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
-		ResponseEntity<OrderDTO> orderDTO=orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
+		ResponseEntity<OrderDTO> orderDTO = orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
 		orderDTO.getBody().setDeliveryInfoId(deliveryInfo.getId());
 		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
 		return result;
@@ -250,7 +251,7 @@ public class OrderCommandResource {
 				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
 					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
 					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
-							.filter(aux -> aux.getId() == updatedAux.getId()).findFirst();
+							.filter(aux -> aux.getProductId() == updatedAux.getProductId()).findFirst();
 					if (currentAux.isPresent()) {
 						auxilaryOrderLineDTO.setId(currentAux.get().getId());
 					}
@@ -288,37 +289,19 @@ public class OrderCommandResource {
 			boolean isDelete = false;
 			for (OrderLine updated : order.getOrderLines()) {
 				if (current.getProductId() == updated.getProductId()) {
-					System.out.println("############################## if inown in my proje productid is"
-							+ current.getProductId());
 					isDelete = false;
 					break;
 				} else {
-					System.out.println("############################## else productid is" + current.getProductId());
 					isDelete = true;
 				}
 			}
 			if (isDelete) {
-				System.out.println("Is present for deletion^^^^^^^^^^^^");
-				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + current);
 				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
 						current.getOrderId());
 			}
 
 		});
 
-		// deleting the removed orderlines
-//		order.getOrderLines().forEach(updatedOrderLine -> {
-//
-//			Optional<OrderLineDTO> s = orderLines.getBody().stream()
-//					.filter(currentOrderLine -> updatedOrderLine.getProductId() != currentOrderLine.getProductId())
-//					.findFirst();
-//			if (s.isPresent()) {
-//				System.out.println("Is present for deletion^^^^^^^^^^^^");
-//				System.out.println("Orderline to delete is ^^^^^^^^^^^^^^^" + s.get());
-//				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(s.get().getProductId(),
-//						orderLines.getBody().get(0).getOrderId());
-//			}
-//		});
 		return orderDTOResponse;
 
 	}
