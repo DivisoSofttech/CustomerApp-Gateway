@@ -73,6 +73,7 @@ public class PaymentCommandResource {
 		orderDTO.setCustomerId(order.getCustomerId());
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setSubTotal(order.getSubTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		if(order.getPreOrderDate()!=null) {

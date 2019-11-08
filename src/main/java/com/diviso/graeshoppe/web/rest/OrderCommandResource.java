@@ -96,6 +96,7 @@ public class OrderCommandResource {
 		orderDTO.setCustomerId(order.getCustomerId());
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setSubTotal(order.getSubTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
@@ -211,6 +212,7 @@ public class OrderCommandResource {
 		orderDTO.setCustomerId(order.getCustomerId());
 		orderDTO.setStoreId(order.getStoreId());
 		orderDTO.setGrandTotal(order.getGrandTotal());
+		orderDTO.setSubTotal(order.getSubTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setId(order.getId());
 		orderDTO.setOrderId(order.getOrderId());
