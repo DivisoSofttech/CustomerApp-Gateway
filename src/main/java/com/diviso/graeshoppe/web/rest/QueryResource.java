@@ -291,11 +291,11 @@ public class QueryResource {
 		List<Customer> customerList = queryService.findAllCustomersWithoutSearch(pageable).getContent();
 
 		for (Customer c : customerList) {
-
+			System.out.println("+++++++++++++++++++++-----"+c);
 			UserRating rating = storeQueryService.findRatingByStoreIdAndCustomerName(storeId, c.getReference());
-
+			System.out.println("+++++++++++++++++++++-----"+rating);
 			Review review = storeQueryService.findReviewByStoreIdAndCustomerName(storeId, c.getReference());
-
+			System.out.println("+++++++++++++++++++++-----"+review);
 			if (rating != null) {
 
 				RatingReview ratingReview = new RatingReview();
