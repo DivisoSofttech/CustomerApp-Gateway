@@ -14,6 +14,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
+import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
@@ -27,6 +28,8 @@ public interface QueryService {
 	public Customer findCustomerByReference(String reference);
 
 	public Page<Address> findByCustomerId(String customerId, Pageable pageable);
+
+	public List<Offer> findOfferLinesByOrderId(Long orderId) ;
 
 	public Order findById(Long id);
 	

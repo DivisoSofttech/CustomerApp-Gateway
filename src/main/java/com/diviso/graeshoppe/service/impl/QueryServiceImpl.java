@@ -34,6 +34,7 @@ import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
+import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.product.model.Product;
@@ -118,9 +119,15 @@ public class QueryServiceImpl implements QueryService{
 	}
 	
 	@Override
+	public List<Offer> findOfferLinesByOrderId(Long orderId) {
+		StringQuery searchQuery = new StringQuery(termQuery("order.id", orderId).toString());
+		return elasticsearchOperations.queryForList(searchQuery, Offer.class);
+	}
+	
+	@Override
 	public Page<OrderLine> findAllOrderLinesByOrderId(Long orderId, Pageable pageable) {
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(termQuery("order.id", orderId))
-				.withPageable(pageable).build();
+				.withPageable(pageable).withIndices("offerline").withTypes("offerline").build();
 		return elasticsearchOperations.queryForPage(searchQuery, OrderLine.class);
 	}
 	
