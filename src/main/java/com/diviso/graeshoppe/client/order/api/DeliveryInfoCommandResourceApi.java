@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-22T09:53:01.950469+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-29T12:42:01.121660+05:30[Asia/Kolkata]")
 
 @Api(value = "DeliveryInfoCommandResource", description = "the DeliveryInfoCommandResource API")
 public interface DeliveryInfoCommandResourceApi {
@@ -38,11 +38,11 @@ public interface DeliveryInfoCommandResourceApi {
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/delivery-infos/{orderId}/{taskId}",
+    @RequestMapping(value = "/api/delivery-infos/{taskId}/{orderId}",
         produces = "*/*", 
         consumes = "application/json",
         method = RequestMethod.POST)
-    ResponseEntity<CommandResource> createDeliveryInfoUsingPOST(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId,@ApiParam(value = "deliveryInfoDTO" ,required=true )  @Valid @RequestBody DeliveryInfoDTO deliveryInfoDTO);
+    ResponseEntity<CommandResource> createDeliveryInfoUsingPOST(@ApiParam(value = "taskId",required=true) @PathVariable("taskId") String taskId,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId,@ApiParam(value = "deliveryInfoDTO" ,required=true )  @Valid @RequestBody DeliveryInfoDTO deliveryInfoDTO);
 
 
     @ApiOperation(value = "deleteDeliveryInfo", nickname = "deleteDeliveryInfoUsingDELETE", notes = "", tags={ "delivery-info-command-resource", })

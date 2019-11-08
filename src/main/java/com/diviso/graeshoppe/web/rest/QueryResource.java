@@ -30,6 +30,7 @@ import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
+import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.OpenTask;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
@@ -145,6 +146,11 @@ public class QueryResource {
 	public Page<Product> findProductByCategoryIdAndUserId(@PathVariable Long categoryId, @PathVariable String userId,
 			Pageable pageable) {
 		return productqueryService.findProductByCategoryId(categoryId, userId, pageable);
+	}
+	
+	@GetMapping("/findOfferLinesByOrderId/{id}")
+	public List<Offer> findOfferLinesByOrderId(@PathVariable Long id) {
+		return queryService.findOfferLinesByOrderId(id);
 	}
 
 	@GetMapping("/customers/findByReference/{reference}")

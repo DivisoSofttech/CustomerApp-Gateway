@@ -5,6 +5,8 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.CompletableFuture;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,6 +37,7 @@ import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
+import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
 import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
 import com.diviso.graeshoppe.service.QueryService;
@@ -116,11 +119,11 @@ public class OrderCommandResource {
 			});
 
 		});
-		LOG.info("Applied Offers are " + order.getAppliedOffers());
-
 		order.getAppliedOffers().forEach(offer -> {
 			OfferDTO offerDTO = new OfferDTO();
 			offerDTO.setOfferRef(offer.getOfferRef());
+			offerDTO.setOrderDiscountAmount(offer.getOrderDiscountAmount());
+			offerDTO.setDescription(offer.getDescription());
 			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
 			createOfferLine(offerDTO);
 		});
@@ -148,7 +151,6 @@ public class OrderCommandResource {
 		return result;
 	}
 
-	
 	@PostMapping("/orders/collectDeliveryDetails/{taskId}/{orderId}")
 	public ResponseEntity<CommandResource> collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo,
 			@PathVariable String taskId, @PathVariable String orderId) {
@@ -196,7 +198,11 @@ public class OrderCommandResource {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
 		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
-		return deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
+		ResponseEntity<DeliveryInfoDTO> result = deliveryInfoCommandApi.updateDeliveryInfoUsingPUT(deliveryInfoDTO);
+		ResponseEntity<OrderDTO> orderDTO = orderQueryResource.findByDeliveryInfoIdUsingGET(deliveryInfo.getId());
+		orderDTO.getBody().setDeliveryInfoId(deliveryInfo.getId());
+		orderCommandResourceApi.updateOrderUsingPUT(orderDTO.getBody());
+		return result;
 	}
 
 	@PutMapping("/order")
@@ -207,35 +213,97 @@ public class OrderCommandResource {
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setId(order.getId());
+		orderDTO.setOrderId(order.getOrderId());
+		orderDTO.setDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
+		orderDTO.setStatusId(1l);
+		if (order.getDeliveryInfo() != null) {
+			orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
+		}
 		orderDTO.setAllergyNote(order.getAllergyNote());
-        if(order.getPreOrderDate()!=null){
-           orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
-        }
+		if (order.getPreOrderDate() != null) {
+			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
-		ResponseEntity<List<OrderLineDTO>> orderLines=orderLineCommandResource.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
-		orderLines.getBody().forEach(orderLine -> {
+
+		ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
+				.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
+
+		order.getOrderLines().forEach(updatedOrderLine -> {
+
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
-			orderLineDTO.setId(orderLine.getId());
-			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
-			orderLineDTO.setProductId(orderLine.getProductId());
-			orderLineDTO.setQuantity(orderLine.getQuantity());
-			orderLineDTO.setTotal(orderLine.getTotal());
-			orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-			OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
-			ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine=auxilaryOrderLineApi.getAllAuxilaryOrderLinesUsingGET1(orderLine.getId());
-			auxilaryOrderLine.getBody().forEach(auxilaryIem -> {
-				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-				auxilaryOrderLineDTO.setId(auxilaryIem.getId());
-				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-				auxilaryOrderLineDTO.setPricePerUnit(auxilaryIem.getPricePerUnit());
-				auxilaryOrderLineDTO.setProductId(auxilaryIem.getProductId());
-				auxilaryOrderLineDTO.setQuantity(auxilaryIem.getQuantity());
-				auxilaryOrderLineDTO.setTotal(auxilaryIem.getTotal());
-				auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
-			});
+			Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
+				LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
+						+ updatedOrderLine.getProductId());
+				return orderline.getProductId() == updatedOrderLine.getProductId();
+			}).findFirst();
+			// check if the orderline is already present in the order if it is it will get
+			// updates
+			if (currentOrderLine.isPresent()) {
+				orderLineDTO.setId(currentOrderLine.get().getId());
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
+				ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
+						.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
+				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
+							.filter(aux -> aux.getProductId() == updatedAux.getProductId()).findFirst();
+					if (currentAux.isPresent()) {
+						auxilaryOrderLineDTO.setId(currentAux.get().getId());
+					}
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
+					auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
+					auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
+					auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+
+				});
+			} else {
+				// else the new orderline will be added to the order again
+				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
+				orderLineDTO.setProductId(updatedOrderLine.getProductId());
+				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
+				orderLineDTO.setTotal(updatedOrderLine.getTotal());
+				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
+				OrderLineDTO lineDTOResult = orderLineResourceApi.createOrderLineUsingPOST(orderLineDTO).getBody();
+				updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
+					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
+					auxilaryOrderLineDTO.setPricePerUnit(auxNew.getPricePerUnit());
+					auxilaryOrderLineDTO.setProductId(auxNew.getProductId());
+					auxilaryOrderLineDTO.setQuantity(auxNew.getQuantity());
+					auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
+					auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
+				});
+
+			}
+		});
+
+		orderLines.getBody().stream().forEach(current -> {
+
+			boolean isDelete = false;
+			for (OrderLine updated : order.getOrderLines()) {
+				if (current.getProductId() == updated.getProductId()) {
+					isDelete = false;
+					break;
+				} else {
+					isDelete = true;
+				}
+			}
+			if (isDelete) {
+				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
+						current.getOrderId());
+			}
 
 		});
+
 		return orderDTOResponse;
+
 	}
 
 	@PutMapping("/notifications")

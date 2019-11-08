@@ -75,7 +75,9 @@ public class PaymentCommandResource {
 		orderDTO.setGrandTotal(order.getGrandTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setAllergyNote(order.getAllergyNote());
-		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+		if(order.getPreOrderDate()!=null) {
+			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+		}
 		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
 		if (order.getApprovalDetails() != null) {
 			orderDTO.setApprovalDetailsId(order.getApprovalDetails().getId());
