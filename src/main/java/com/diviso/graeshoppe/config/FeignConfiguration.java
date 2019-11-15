@@ -1,13 +1,8 @@
 package com.diviso.graeshoppe.config;
 
-import org.springframework.boot.web.embedded.undertow.UndertowBuilderCustomizer;
-import org.springframework.boot.web.embedded.undertow.UndertowServletWebServerFactory;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-
-import io.undertow.Undertow;
-import io.undertow.Undertow.Builder;
 
 @Configuration
 @EnableFeignClients(basePackages = "com.diviso.graeshoppe")

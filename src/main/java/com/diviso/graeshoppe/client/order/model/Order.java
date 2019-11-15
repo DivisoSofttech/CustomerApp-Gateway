@@ -1,6 +1,5 @@
 package com.diviso.graeshoppe.client.order.model;
 
-import java.util.Objects;
 import java.util.Set;
 
 import com.diviso.graeshoppe.client.order.model.ApprovalDetails;
@@ -9,12 +8,9 @@ import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.Status;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.Instant;
-import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -22,9 +18,7 @@ import java.util.List;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 
-import javax.persistence.Column;
 import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
  * Order

@@ -1,8 +1,6 @@
 package com.diviso.graeshoppe.web.rest;
 
 
-import javax.swing.text.DefaultEditorKit.CutAction;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

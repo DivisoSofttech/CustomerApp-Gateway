@@ -6,13 +6,10 @@ import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
-
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortBuilders;
@@ -34,16 +31,6 @@ import org.springframework.data.geo.Distance;
 import org.springframework.data.geo.Point;
 import org.springframework.stereotype.Service;
 
-import com.diviso.graeshoppe.client.customer.domain.Customer;
-import com.diviso.graeshoppe.client.order.model.Address;
-import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderLine;
-import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
-import com.diviso.graeshoppe.client.product.model.Category;
-import com.diviso.graeshoppe.client.product.model.ComboLineItem;
-import com.diviso.graeshoppe.client.product.model.Discount;
-import com.diviso.graeshoppe.client.product.model.Product;
-import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.HeaderSearch;
 import com.diviso.graeshoppe.client.store.domain.Review;
@@ -171,6 +158,7 @@ ajith.anand@lxisoft.com
 		return elasticsearchOperations.queryForPage(searchQuery, UserRating.class);
 	}
 
+	@Override
 	public List<Entry> findStoreTypeAndCount(Pageable pageable) {
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(matchAllQuery())
@@ -385,6 +373,7 @@ ajith.anand@lxisoft.com
 	}
 
 
+	@Override
 	public Page<Store> headerSearch(String searchTerm, Pageable pageable) {
 		Set<Store> storeSet = new HashSet<Store>();
 		Set<HeaderSearch> values = new HashSet<HeaderSearch>();
@@ -516,6 +505,7 @@ ajith.anand@lxisoft.com
 	 * return storeSearchrepository.findByLocationNear(point,distance,pageable); }
 	 */
 
+	@Override
 	public StoreSettings getStoreSettings(String IDPCode) {
 
 		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());
@@ -523,6 +513,7 @@ ajith.anand@lxisoft.com
 		return store.getStoreSettings();
 	}
 
+	@Override
 	public StoreAddress getStoreAddress(String IDPCode) {
 
 		StringQuery searchQuery = new StringQuery(termQuery("regNo", IDPCode).toString());

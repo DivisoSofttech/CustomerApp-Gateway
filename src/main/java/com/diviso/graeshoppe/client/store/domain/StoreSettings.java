@@ -2,8 +2,6 @@ package com.diviso.graeshoppe.client.store.domain;
 
 
 
-import javax.persistence.*;
-
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.Objects;

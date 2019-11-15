@@ -10,23 +10,20 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
+import java.time.LocalDate;
 
 /**
  * Customer
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-28T12:48:05.037111+05:30[Asia/Kolkata]")
-@Document(indexName = "customer")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
+
 public class Customer   {
   @JsonProperty("addresses")
   @Valid
@@ -40,6 +37,9 @@ public class Customer   {
 
   @JsonProperty("curDebt")
   private Double curDebt = null;
+
+  @JsonProperty("customerUniqueId")
+  private String customerUniqueId = null;
 
   @JsonProperty("debtDate")
   private LocalDate debtDate = null;
@@ -171,6 +171,26 @@ public class Customer   {
 
   public void setCurDebt(Double curDebt) {
     this.curDebt = curDebt;
+  }
+
+  public Customer customerUniqueId(String customerUniqueId) {
+    this.customerUniqueId = customerUniqueId;
+    return this;
+  }
+
+  /**
+   * Get customerUniqueId
+   * @return customerUniqueId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getCustomerUniqueId() {
+    return customerUniqueId;
+  }
+
+  public void setCustomerUniqueId(String customerUniqueId) {
+    this.customerUniqueId = customerUniqueId;
   }
 
   public Customer debtDate(LocalDate debtDate) {
@@ -475,6 +495,7 @@ public class Customer   {
         Objects.equals(this.card, customer.card) &&
         Objects.equals(this.contact, customer.contact) &&
         Objects.equals(this.curDebt, customer.curDebt) &&
+        Objects.equals(this.customerUniqueId, customer.customerUniqueId) &&
         Objects.equals(this.debtDate, customer.debtDate) &&
         Objects.equals(this.discount, customer.discount) &&
         Objects.equals(this.favouriteproducts, customer.favouriteproducts) &&
@@ -492,7 +513,7 @@ public class Customer   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(addresses, card, contact, curDebt, debtDate, discount, favouriteproducts, favouritestores, id, maxDebt, name, notes, photo, photoContentType, reference, searchKey, visible);
+    return Objects.hash(addresses, card, contact, curDebt, customerUniqueId, debtDate, discount, favouriteproducts, favouritestores, id, maxDebt, name, notes, photo, photoContentType, reference, searchKey, visible);
   }
 
   @Override
@@ -504,6 +525,7 @@ public class Customer   {
     sb.append("    card: ").append(toIndentedString(card)).append("\n");
     sb.append("    contact: ").append(toIndentedString(contact)).append("\n");
     sb.append("    curDebt: ").append(toIndentedString(curDebt)).append("\n");
+    sb.append("    customerUniqueId: ").append(toIndentedString(customerUniqueId)).append("\n");
     sb.append("    debtDate: ").append(toIndentedString(debtDate)).append("\n");
     sb.append("    discount: ").append(toIndentedString(discount)).append("\n");
     sb.append("    favouriteproducts: ").append(toIndentedString(favouriteproducts)).append("\n");

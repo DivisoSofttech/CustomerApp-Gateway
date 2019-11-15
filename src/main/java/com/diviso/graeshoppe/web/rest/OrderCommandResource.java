@@ -6,8 +6,6 @@ import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.List;
 import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,10 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.order.api.AddressResourceApi;
-import com.diviso.graeshoppe.client.order.api.ApprovalDetailsResourceApi;
 import com.diviso.graeshoppe.client.order.api.AuxilaryOrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.api.DeliveryInfoCommandResourceApi;
-import com.diviso.graeshoppe.client.order.api.DeliveryInfoResourceApi;
 import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OfferResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
@@ -39,13 +35,9 @@ import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
-import com.diviso.graeshoppe.client.product.model.AuxilaryLineItemDTO;
 import com.diviso.graeshoppe.service.QueryService;
-import com.diviso.graeshoppe.client.order.model.AcceptOrderRequest;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AddressDTO;
-import com.diviso.graeshoppe.client.order.model.ApprovalDetails;
-import com.diviso.graeshoppe.client.order.model.ApprovalDetailsDTO;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLineDTO;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
@@ -73,6 +65,7 @@ public class OrderCommandResource {
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
 
+	
 	@Autowired
 	private OfferResourceApi offerResourceApi;
 	@Autowired
@@ -230,6 +223,8 @@ public class OrderCommandResource {
 		ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 				.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 
+		
+		
 		order.getOrderLines().forEach(updatedOrderLine -> {
 
 			OrderLineDTO orderLineDTO = new OrderLineDTO();

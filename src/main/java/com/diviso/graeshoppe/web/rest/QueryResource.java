@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +24,6 @@ import com.diviso.graeshoppe.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.client.customer.model.FavouriteStore;
-import com.diviso.graeshoppe.client.customer.model.OTPChallenge;
-import com.diviso.graeshoppe.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.Notification;
@@ -566,6 +563,11 @@ public class QueryResource {
 	@GetMapping("/orderaggregator/{orderNumber}")
 	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
 		return queryResource.getOrderAggregatorUsingGET(orderNumber);
+	}
+	
+	@GetMapping("/checkUserExists/{reference}")
+	public ResponseEntity<Boolean> checkUserExists(@PathVariable String reference) {
+		return customerResourceApi.checkUserExistsUsingGET(reference);
 	}
 	
 }

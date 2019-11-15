@@ -15,9 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.client.payment.model.ProcessPaymentRequest;
 import com.diviso.graeshoppe.service.QueryService;
-import com.diviso.graeshoppe.client.order.api.NotificationResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderCommandResourceApi;
-import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.payment.api.BraintreeCommandResourceApi;

@@ -1,7 +1,5 @@
 package com.diviso.graeshoppe.domain;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-
 public class ElasticDataEntry {
 
 	  @Override

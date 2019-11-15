@@ -1,23 +1,9 @@
 package com.diviso.graeshoppe.service;
 
-import java.time.Instant;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.geo.Distance;
-import org.springframework.data.geo.Point;
-
-import com.diviso.graeshoppe.client.customer.domain.Customer;
-import com.diviso.graeshoppe.client.order.model.Address;
-import com.diviso.graeshoppe.client.order.model.Order;
-import com.diviso.graeshoppe.client.order.model.OrderLine;
-import com.diviso.graeshoppe.client.product.model.AuxilaryLineItem;
-import com.diviso.graeshoppe.client.product.model.Category;
-import com.diviso.graeshoppe.client.product.model.ComboLineItem;
-import com.diviso.graeshoppe.client.product.model.Discount;
-import com.diviso.graeshoppe.client.product.model.Product;
-import com.diviso.graeshoppe.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
 import com.diviso.graeshoppe.client.store.domain.Review;
 import com.diviso.graeshoppe.client.store.domain.Store;

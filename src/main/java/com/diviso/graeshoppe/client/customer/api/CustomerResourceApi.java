@@ -28,10 +28,22 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-28T12:48:05.037111+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
 
 @Api(value = "CustomerResource", description = "the CustomerResource API")
 public interface CustomerResourceApi {
+
+    @ApiOperation(value = "checkUserExists", nickname = "checkUserExistsUsingGET", notes = "", response = Boolean.class, tags={ "customer-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = Boolean.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/checkUserExists/{reference}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<Boolean> checkUserExistsUsingGET(@ApiParam(value = "reference",required=true) @PathVariable("reference") String reference);
+
 
     @ApiOperation(value = "createCustomer", nickname = "createCustomerUsingPOST", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
     @ApiResponses(value = { 
