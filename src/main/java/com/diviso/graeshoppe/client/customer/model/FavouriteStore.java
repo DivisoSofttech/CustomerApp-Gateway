@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -16,6 +18,7 @@ import javax.validation.constraints.*;
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
 
+@Document(indexName = "favouritestore")
 public class FavouriteStore   {
   @JsonProperty("customer")
   private Customer customer = null;
