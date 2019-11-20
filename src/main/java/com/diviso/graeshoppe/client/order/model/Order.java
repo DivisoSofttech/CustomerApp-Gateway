@@ -7,6 +7,7 @@ import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.Status;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
@@ -40,6 +41,7 @@ public class Order   {
   private String customerId = null;
 
   @JsonProperty("date")
+  @JsonFormat(pattern="yyyy-dd-MM HH:mm:ss Z")
   private OffsetDateTime date = null;
   
   @JsonProperty( "allergyNote")
