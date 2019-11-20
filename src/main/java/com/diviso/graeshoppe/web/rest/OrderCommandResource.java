@@ -92,7 +92,6 @@ public class OrderCommandResource {
 		orderDTO.setSubTotal(order.getSubTotal());
 		orderDTO.setEmail(order.getEmail());
 		orderDTO.setAllergyNote(order.getAllergyNote());
-		orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = new OrderLineDTO();

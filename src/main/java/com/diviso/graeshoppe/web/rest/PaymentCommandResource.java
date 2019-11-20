@@ -63,27 +63,6 @@ public class PaymentCommandResource {
 			@PathVariable String taskId) {
 		paymentDTO.setDateAndTime(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
 		ResponseEntity<PaymentDTO> dto = paymentResourceApi.createPaymentUsingPOST(paymentDTO);
-		Order order = queryService.findOrderByOrderId(paymentDTO.getTargetId());
-		OrderDTO orderDTO = new OrderDTO();
-		orderDTO.setId(order.getId());
-		orderDTO.setDate(OffsetDateTime.ofInstant(order.getDate(), ZoneId.systemDefault()));
-		orderDTO.setOrderId(order.getOrderId());
-		orderDTO.setCustomerId(order.getCustomerId());
-		orderDTO.setStoreId(order.getStoreId());
-		orderDTO.setGrandTotal(order.getGrandTotal());
-		orderDTO.setSubTotal(order.getSubTotal());
-		orderDTO.setEmail(order.getEmail());
-		orderDTO.setAllergyNote(order.getAllergyNote());
-		if(order.getPreOrderDate()!=null) {
-			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
-		}
-		orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
-		if (order.getApprovalDetails() != null) {
-			orderDTO.setApprovalDetailsId(order.getApprovalDetails().getId());
-		}
-		orderDTO.setPaymentRef(dto.getBody().getId() + "");
-		orderDTO.setStatusId(4l);
-		orderCommadnREsourceApi.updateOrderUsingPUT(orderDTO);
 		ProcessPaymentRequest processPaymentRequest = new ProcessPaymentRequest();
 		processPaymentRequest.setPaymentStatus(status);
 		processPaymentRequest.setTaskId(taskId);
