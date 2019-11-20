@@ -11,6 +11,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -39,7 +40,7 @@ public class Order   {
   private String customerId = null;
 
   @JsonProperty("date")
-  private Instant date = null;
+  private OffsetDateTime date = null;
   
   @JsonProperty( "allergyNote")
   private String allergyNote;
@@ -174,7 +175,7 @@ public void setPreOrderDate(Instant preOrderDate) {
     this.customerId = customerId;
   }
 
-  public Order date(Instant date) {
+  public Order date(OffsetDateTime date) {
     this.date = date;
     return this;
   }
@@ -187,11 +188,11 @@ public void setPreOrderDate(Instant preOrderDate) {
 
   @Valid
 
-  public Instant getDate() {
+  public OffsetDateTime getDate() {
     return date;
   }
 
-  public void setDate(Instant date) {
+  public void setDate(OffsetDateTime date) {
     this.date = date;
   }
 
