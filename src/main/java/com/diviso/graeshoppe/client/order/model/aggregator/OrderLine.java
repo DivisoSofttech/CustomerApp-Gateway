@@ -20,9 +20,6 @@ public class OrderLine   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("order")
-  private Order order = null;
-
   @JsonProperty("pricePerUnit")
   private Double pricePerUnit = null;
 
@@ -61,26 +58,13 @@ public class OrderLine   {
     this.id = id;
   }
 
-  public OrderLine order(Order order) {
-    this.order = order;
-    return this;
-  }
+
 
   /**
    * Get order
    * @return order
   **/
-  @ApiModelProperty(value = "")
 
-  @Valid
-
-  public Order getOrder() {
-    return order;
-  }
-
-  public void setOrder(Order order) {
-    this.order = order;
-  }
 
   public OrderLine pricePerUnit(Double pricePerUnit) {
     this.pricePerUnit = pricePerUnit;
@@ -202,7 +186,6 @@ public class OrderLine   {
     }
     OrderLine orderLine = (OrderLine) o;
     return 
-        Objects.equals(this.order, orderLine.order) &&
         Objects.equals(this.pricePerUnit, orderLine.pricePerUnit) &&
         Objects.equals(this.productId, orderLine.productId) &&
         Objects.equals(this.quantity, orderLine.quantity) &&
@@ -212,7 +195,7 @@ public class OrderLine   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, order, pricePerUnit, productId, quantity, requiedAuxilaries, total);
+    return Objects.hash(id, pricePerUnit, productId, quantity, requiedAuxilaries, total);
   }
 
   @Override
@@ -221,7 +204,6 @@ public class OrderLine   {
     sb.append("class OrderLine {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    order: ").append(toIndentedString(order)).append("\n");
     sb.append("    pricePerUnit: ").append(toIndentedString(pricePerUnit)).append("\n");
     sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");

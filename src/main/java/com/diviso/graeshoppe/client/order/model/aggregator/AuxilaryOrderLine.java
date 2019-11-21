@@ -17,8 +17,6 @@ public class AuxilaryOrderLine   {
   @JsonProperty("id")
   private Long id = null;
 
-  @JsonProperty("orderLine")
-  private OrderLine orderLine = null;
 
   @JsonProperty("pricePerUnit")
   private Double pricePerUnit = null;
@@ -54,26 +52,7 @@ public class AuxilaryOrderLine   {
     this.id = id;
   }
 
-  public AuxilaryOrderLine orderLine(OrderLine orderLine) {
-    this.orderLine = orderLine;
-    return this;
-  }
-
-  /**
-   * Get orderLine
-   * @return orderLine
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public OrderLine getOrderLine() {
-    return orderLine;
-  }
-
-  public void setOrderLine(OrderLine orderLine) {
-    this.orderLine = orderLine;
-  }
+ 
 
   public AuxilaryOrderLine pricePerUnit(Double pricePerUnit) {
     this.pricePerUnit = pricePerUnit;
@@ -166,7 +145,6 @@ public class AuxilaryOrderLine   {
     }
     AuxilaryOrderLine auxilaryOrderLine = (AuxilaryOrderLine) o;
     return Objects.equals(this.id, auxilaryOrderLine.id) &&
-        Objects.equals(this.orderLine, auxilaryOrderLine.orderLine) &&
         Objects.equals(this.pricePerUnit, auxilaryOrderLine.pricePerUnit) &&
         Objects.equals(this.productId, auxilaryOrderLine.productId) &&
         Objects.equals(this.quantity, auxilaryOrderLine.quantity) &&
@@ -175,7 +153,7 @@ public class AuxilaryOrderLine   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, orderLine, pricePerUnit, productId, quantity, total);
+    return Objects.hash(id, pricePerUnit, productId, quantity, total);
   }
 
   @Override
@@ -184,7 +162,6 @@ public class AuxilaryOrderLine   {
     sb.append("class AuxilaryOrderLine {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    orderLine: ").append(toIndentedString(orderLine)).append("\n");
     sb.append("    pricePerUnit: ").append(toIndentedString(pricePerUnit)).append("\n");
     sb.append("    productId: ").append(toIndentedString(productId)).append("\n");
     sb.append("    quantity: ").append(toIndentedString(quantity)).append("\n");
