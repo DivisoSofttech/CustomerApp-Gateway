@@ -216,48 +216,41 @@ public class OrderCommandResource {
 		return result;
 	}
 
+	@DeleteMapping("/orders/{id}")
+	public void deleteOrderLine(@PathVariable Long id) {
+		orderLineCommandResource.deleteOrderLineUsingDELETE(id);
+	}
+
+	@DeleteMapping("/auxilaries/{id}")
+	public void deleteAuxilaryOrderLine(@PathVariable Long id) {
+		auxilaryOrderLineApi.deleteAuxilaryOrderLineUsingDELETE(id);
+	}
+
 	@PutMapping("/order")
 	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
 
 		OrderDTO orderDTO = orderMapper.toDto(order);
 		ResponseEntity<OrderDTO> orderResult = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
-		order.getOrderLines().stream()
-				.filter(orderLine -> orderLine.getState().equals("CREATE") && orderLine.getId() == null)
-				.forEach(orderLine -> {
-					LOG.info("Creating orderline in editOrder "+orderLine.getProductId());
-					orderLineCommandResource.createOrderLineUsingPOST(orderLineMapper.toDto(orderLine));
-					orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> auxilaryOrderLineApi
-							.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineMapper.toDto(auxilaryOrderLine)));
-				});
-		order.getOrderLines().stream()
-				.filter(orderLine -> orderLine.getState().equals("UPDATE") && orderLine.getId() != null)
-				.forEach(orderLine -> {
-					LOG.info("Updating orderline in editOrder "+orderLine.getProductId());
-					orderLineCommandResource.updateOrderLineUsingPUT(orderLineMapper.toDto(orderLine));
-					orderLine.getRequiedAuxilaries().stream().forEach(auxilaryOrderLine -> {
-						if (auxilaryOrderLine.getState().equals("UPDATE")) {
-							auxilaryOrderLineApi
-									.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineMapper.toDto(auxilaryOrderLine));
-						}
-					});
-				});
-		order.getOrderLines().stream()
-				.filter(orderLine -> orderLine.getState().equals("DELETE") && orderLine.getId() != null)
-				.forEach(orderLine -> {
-					LOG.info("Deleting orderline in editOrder "+orderLine.getProductId());
-					orderLineCommandResource.deleteOrderLineUsingDELETE(orderLineMapper.toDto(orderLine).getId());
-					orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> auxilaryOrderLineApi
-							.deleteAuxilaryOrderLineUsingDELETE(auxilaryOrderLine.getId()));
-				});
+		order.getOrderLines().forEach(orderLine -> {
+			OrderLineDTO orderLineDTO = orderLineMapper.toDto(orderLine);
+			orderLineDTO.setOrderId(orderDTO.getId());
+			orderLineCommandResource.updateOrderLineUsingPUT(orderLineDTO);
+			orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> {
+				AuxilaryOrderLineDTO auxilaryOrderLineDTO = auxilaryOrderLineMapper.toDto(auxilaryOrderLine);
+				auxilaryOrderLineDTO.setOrderLineId(orderLineDTO.getId());
+				auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+			});
 
-		order.getAppliedOffers().stream().filter(offer -> offer.getState().equals("UPDATE"))
-				.forEach(offer -> offerResourceApi.updateOfferUsingPUT(offerMapper.toDto(offer)));
+		});
 
+		order.getAppliedOffers().forEach(offer -> {
+			OfferDTO offerDTO = offerMapper.toDto(offer);
+			offerDTO.setOrderId(orderDTO.getId());
+			offerResourceApi.updateOfferUsingPUT(offerDTO);
+		});
 		return orderResult;
 	}
 
-	
-	
 	@PutMapping("/notifications")
 	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notificationDTO) {
 		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
