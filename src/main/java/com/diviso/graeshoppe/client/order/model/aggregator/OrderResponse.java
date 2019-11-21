@@ -1,4 +1,6 @@
-package com.diviso.graeshoppe.client.order.model;
+package com.diviso.graeshoppe.client.order.model.aggregator;
+
+import com.diviso.graeshoppe.client.order.model.CommandResource;
 
 public class OrderResponse {
 

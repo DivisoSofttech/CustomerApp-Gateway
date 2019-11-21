@@ -33,9 +33,8 @@ import com.diviso.graeshoppe.client.order.api.OrderLineResourceApi;
 import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
-import com.diviso.graeshoppe.client.order.model.OrderLine;
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
-import com.diviso.graeshoppe.client.order.model.OrderResponse;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.mapper.AuxilaryOrderLineMapper;
 import com.diviso.graeshoppe.service.mapper.DeliveryInfoMapper;
@@ -44,14 +43,15 @@ import com.diviso.graeshoppe.service.mapper.OrderLineMapper;
 import com.diviso.graeshoppe.service.mapper.OrderMapper;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AddressDTO;
-import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
+import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLineDTO;
-import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
+import com.diviso.graeshoppe.client.order.model.aggregator.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
 import com.diviso.graeshoppe.client.order.model.NotificationDTO;
-import com.diviso.graeshoppe.client.order.model.Offer;
+import com.diviso.graeshoppe.client.order.model.aggregator.Offer;
 import com.diviso.graeshoppe.client.order.model.OfferDTO;
-import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.order.model.aggregator.Order;
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderResponse;
 
 @RestController
 @RequestMapping("/api/command")

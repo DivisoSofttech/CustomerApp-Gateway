@@ -3,7 +3,7 @@ package com.diviso.graeshoppe.service.mapper;
 
 import org.mapstruct.*;
 
-import com.diviso.graeshoppe.client.order.model.Order;
+import com.diviso.graeshoppe.client.order.model.aggregator.Order;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 
 /**
