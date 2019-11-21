@@ -112,6 +112,7 @@ public class OrderCommandResource {
 		ResponseEntity<CommandResource> resource = createOrder(orderDTO);
 		Order orderResult = orderMapper.toEntity(orderDTO);
 		orderResult.setId(resource.getBody().getSelfId());
+		orderResult.setOrderId(resource.getBody().getOrderId());
 		orderResponse.setCommandResource(resource.getBody());
 		orderResponse.setOrder(orderResult);
 		order.getOrderLines().forEach(orderLine -> {
@@ -122,8 +123,10 @@ public class OrderCommandResource {
 			orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> {
 				AuxilaryOrderLineDTO auxilaryOrderLineDTO = auxilaryOrderLineMapper.toDto(auxilaryOrderLine);
 				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-				AuxilaryOrderLineDTO auxilaryOrderLineDTOresult = createAuxilaryLineItem(auxilaryOrderLineDTO).getBody();
-				AuxilaryOrderLine auxilaryOrderLineresult = auxilaryOrderLineMapper.toEntity(auxilaryOrderLineDTOresult);
+				AuxilaryOrderLineDTO auxilaryOrderLineDTOresult = createAuxilaryLineItem(auxilaryOrderLineDTO)
+						.getBody();
+				AuxilaryOrderLine auxilaryOrderLineresult = auxilaryOrderLineMapper
+						.toEntity(auxilaryOrderLineDTOresult);
 				orderLineResult.getRequiedAuxilaries().add(auxilaryOrderLineresult);
 			});
 			orderResponse.getOrder().getOrderLines().add(orderLineResult);
@@ -162,13 +165,10 @@ public class OrderCommandResource {
 	@PostMapping("/orders/collectDeliveryDetails/{taskId}/{orderId}")
 	public ResponseEntity<CommandResource> collectDeliveryDetails(@RequestBody DeliveryInfo deliveryInfo,
 			@PathVariable String taskId, @PathVariable String orderId) {
-		DeliveryInfoDTO deliveryInfoDTO = new DeliveryInfoDTO();
-		deliveryInfoDTO.setDeliveryCharge(deliveryInfo.getDeliveryCharge());
-		deliveryInfoDTO.setDeliveryType(deliveryInfo.getDeliveryType());
+		DeliveryInfoDTO deliveryInfoDTO = deliveryInfoMapper.toDto(deliveryInfo);
 		if (deliveryInfo.getDeliveryAddress() != null) {
 			deliveryInfoDTO.setDeliveryAddressId(deliveryInfo.getDeliveryAddress().getId());
 		}
-		deliveryInfoDTO.setDeliveryNotes(deliveryInfo.getDeliveryNotes());
 		ResponseEntity<CommandResource> deliveryInfoResult = createDeliveryInfo(taskId, deliveryInfoDTO, orderId);
 		return deliveryInfoResult;
 	}
@@ -230,7 +230,8 @@ public class OrderCommandResource {
 		}
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		if (order.getPreOrderDate() != null) {
-			///orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+			/// orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(),
+			/// ZoneId.systemDefault()));
 		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 
