@@ -41,6 +41,9 @@ import com.diviso.graeshoppe.service.mapper.DeliveryInfoMapper;
 import com.diviso.graeshoppe.service.mapper.OfferMapper;
 import com.diviso.graeshoppe.service.mapper.OrderLineMapper;
 import com.diviso.graeshoppe.service.mapper.OrderMapper;
+
+import afu.org.checkerframework.checker.units.qual.h;
+
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AddressDTO;
 import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
@@ -215,107 +218,46 @@ public class OrderCommandResource {
 
 	@PutMapping("/order")
 	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
-		OrderDTO orderDTO = new OrderDTO();
-		orderDTO.setCustomerId(order.getCustomerId());
-		orderDTO.setStoreId(order.getStoreId());
-		orderDTO.setGrandTotal(order.getGrandTotal());
-		orderDTO.setSubTotal(order.getSubTotal());
-		orderDTO.setEmail(order.getEmail());
-		orderDTO.setId(order.getId());
-		orderDTO.setOrderId(order.getOrderId());
-		orderDTO.setDate(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
-		orderDTO.setStatusId(1l);
-		if (order.getDeliveryInfo() != null) {
-			orderDTO.setDeliveryInfoId(order.getDeliveryInfo().getId());
-		}
-		orderDTO.setAllergyNote(order.getAllergyNote());
-		if (order.getPreOrderDate() != null) {
-			/// orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(),
-			/// ZoneId.systemDefault()));
-		}
-		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 
-		ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
-				.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
-
-		order.getOrderLines().forEach(updatedOrderLine -> {
-
-			OrderLineDTO orderLineDTO = new OrderLineDTO();
-			Optional<OrderLineDTO> currentOrderLine = orderLines.getBody().stream().filter(orderline -> {
-				LOG.info("Orderline filter check%%%% currentid " + orderline.getProductId() + " updated id "
-						+ updatedOrderLine.getProductId());
-				return orderline.getProductId() == updatedOrderLine.getProductId();
-			}).findFirst();
-			// check if the orderline is already present in the order if it is it will get
-			// updates
-			if (currentOrderLine.isPresent()) {
-				orderLineDTO.setId(currentOrderLine.get().getId());
-				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
-				orderLineDTO.setProductId(updatedOrderLine.getProductId());
-				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
-				orderLineDTO.setTotal(updatedOrderLine.getTotal());
-				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-				OrderLineDTO lineDTOResult = orderLineResourceApi.updateOrderLineUsingPUT(orderLineDTO).getBody();
-				ResponseEntity<List<AuxilaryOrderLineDTO>> auxilaryOrderLine = auxilaryOrderLineApi
-						.getAllAuxilaryOrderLinesUsingGET1(currentOrderLine.get().getId());
-				updatedOrderLine.getRequiedAuxilaries().forEach(updatedAux -> {
-					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-					Optional<AuxilaryOrderLineDTO> currentAux = auxilaryOrderLine.getBody().stream()
-							.filter(aux -> aux.getProductId() == updatedAux.getProductId()).findFirst();
-					if (currentAux.isPresent()) {
-						auxilaryOrderLineDTO.setId(currentAux.get().getId());
-					}
-					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-					auxilaryOrderLineDTO.setPricePerUnit(updatedAux.getPricePerUnit());
-					auxilaryOrderLineDTO.setProductId(updatedAux.getProductId());
-					auxilaryOrderLineDTO.setQuantity(updatedAux.getQuantity());
-					auxilaryOrderLineDTO.setTotal(updatedAux.getTotal());
-					auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
-
+		OrderDTO orderDTO = orderMapper.toDto(order);
+		ResponseEntity<OrderDTO> orderResult = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
+		order.getOrderLines().stream()
+				.filter(orderLine -> orderLine.getState().equals("CREATE") && orderLine.getId() == null)
+				.forEach(orderLine -> {
+					LOG.info("Creating orderline in editOrder "+orderLine.getProductId());
+					orderLineCommandResource.createOrderLineUsingPOST(orderLineMapper.toDto(orderLine));
+					orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> auxilaryOrderLineApi
+							.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineMapper.toDto(auxilaryOrderLine)));
 				});
-			} else {
-				// else the new orderline will be added to the order again
-				orderLineDTO.setPricePerUnit(updatedOrderLine.getPricePerUnit());
-				orderLineDTO.setProductId(updatedOrderLine.getProductId());
-				orderLineDTO.setQuantity(updatedOrderLine.getQuantity());
-				orderLineDTO.setTotal(updatedOrderLine.getTotal());
-				orderLineDTO.setOrderId(orderDTOResponse.getBody().getId());
-				OrderLineDTO lineDTOResult = orderLineResourceApi.createOrderLineUsingPOST(orderLineDTO).getBody();
-				updatedOrderLine.getRequiedAuxilaries().forEach(auxNew -> {
-					AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
-					auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-					auxilaryOrderLineDTO.setPricePerUnit(auxNew.getPricePerUnit());
-					auxilaryOrderLineDTO.setProductId(auxNew.getProductId());
-					auxilaryOrderLineDTO.setQuantity(auxNew.getQuantity());
-					auxilaryOrderLineDTO.setTotal(auxNew.getTotal());
-					auxilaryOrderLineApi.createAuxilaryOrderLineUsingPOST(auxilaryOrderLineDTO);
+		order.getOrderLines().stream()
+				.filter(orderLine -> orderLine.getState().equals("UPDATE") && orderLine.getId() != null)
+				.forEach(orderLine -> {
+					LOG.info("Updating orderline in editOrder "+orderLine.getProductId());
+					orderLineCommandResource.updateOrderLineUsingPUT(orderLineMapper.toDto(orderLine));
+					orderLine.getRequiedAuxilaries().stream().forEach(auxilaryOrderLine -> {
+						if (auxilaryOrderLine.getState().equals("UPDATE")) {
+							auxilaryOrderLineApi
+									.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineMapper.toDto(auxilaryOrderLine));
+						}
+					});
+				});
+		order.getOrderLines().stream()
+				.filter(orderLine -> orderLine.getState().equals("DELETE") && orderLine.getId() != null)
+				.forEach(orderLine -> {
+					LOG.info("Deleting orderline in editOrder "+orderLine.getProductId());
+					orderLineCommandResource.deleteOrderLineUsingDELETE(orderLineMapper.toDto(orderLine).getId());
+					orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> auxilaryOrderLineApi
+							.deleteAuxilaryOrderLineUsingDELETE(auxilaryOrderLine.getId()));
 				});
 
-			}
-		});
+		order.getAppliedOffers().stream().filter(offer -> offer.getState().equals("UPDATE"))
+				.forEach(offer -> offerResourceApi.updateOfferUsingPUT(offerMapper.toDto(offer)));
 
-		orderLines.getBody().stream().forEach(current -> {
-
-			boolean isDelete = false;
-			for (OrderLine updated : order.getOrderLines()) {
-				if (current.getProductId() == updated.getProductId()) {
-					isDelete = false;
-					break;
-				} else {
-					isDelete = true;
-				}
-			}
-			if (isDelete) {
-				orderLineCommandResource.deleteByProductIdAndOrderIdUsingGET(current.getProductId(),
-						current.getOrderId());
-			}
-
-		});
-
-		return orderDTOResponse;
-
+		return orderResult;
 	}
 
+	
+	
 	@PutMapping("/notifications")
 	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notificationDTO) {
 		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
