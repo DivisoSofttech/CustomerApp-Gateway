@@ -47,7 +47,7 @@ public class Order   {
   private String allergyNote;
 
   @JsonProperty( "preOrderDate")
-  private Instant preOrderDate;
+  private OffsetDateTime preOrderDate;
   
   private List<Offer> offerLines;
 
@@ -68,14 +68,14 @@ public void setAllergyNote(String allergyNote) {
 /**
  * @return the preOrderDate
  */
-public Instant getPreOrderDate() {
+public OffsetDateTime getPreOrderDate() {
 	return preOrderDate;
 }
 
 /**
  * @param preOrderDate the preOrderDate to set
  */
-public void setPreOrderDate(Instant preOrderDate) {
+public void setPreOrderDate(OffsetDateTime preOrderDate) {
 	this.preOrderDate = preOrderDate;
 }
 

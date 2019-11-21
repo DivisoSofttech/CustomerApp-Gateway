@@ -230,7 +230,7 @@ public class OrderCommandResource {
 		}
 		orderDTO.setAllergyNote(order.getAllergyNote());
 		if (order.getPreOrderDate() != null) {
-			orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
+			///orderDTO.setPreOrderDate(OffsetDateTime.ofInstant(order.getPreOrderDate(), ZoneId.systemDefault()));
 		}
 		ResponseEntity<OrderDTO> orderDTOResponse = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
 

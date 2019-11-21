@@ -13,20 +13,10 @@ import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
 public interface OrderLineMapper extends EntityMapper<OrderLineDTO, OrderLine> {
 
     @Override
-	@Mapping(source = "order.id", target = "orderId")
     OrderLineDTO toDto(OrderLine orderLine);
 
     @Override
-	@Mapping(source = "orderId", target = "order")
-    @Mapping(target = "requiedAuxilaries", ignore = true)
     OrderLine toEntity(OrderLineDTO orderLineDTO);
 
-    default OrderLine fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        OrderLine orderLine = new OrderLine();
-        orderLine.setId(id);
-        return orderLine;
-    }
+    
 }

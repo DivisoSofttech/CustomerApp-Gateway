@@ -13,19 +13,10 @@ import com.diviso.graeshoppe.client.order.model.OfferDTO;
 public interface OfferMapper extends EntityMapper<OfferDTO, Offer> {
 
     @Override
-	@Mapping(source = "order.id", target = "orderId")
     OfferDTO toDto(Offer offer);
 
     @Override
-	@Mapping(source = "orderId", target = "order")
     Offer toEntity(OfferDTO offerDTO);
 
-    default Offer fromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Offer offer = new Offer();
-        offer.setId(id);
-        return offer;
-    }
+    
 }
