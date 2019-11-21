@@ -51,7 +51,7 @@ import com.diviso.graeshoppe.client.order.model.NotificationDTO;
 import com.diviso.graeshoppe.client.order.model.aggregator.Offer;
 import com.diviso.graeshoppe.client.order.model.OfferDTO;
 import com.diviso.graeshoppe.client.order.model.aggregator.Order;
-import com.diviso.graeshoppe.client.order.model.aggregator.OrderResponse;
+import com.diviso.graeshoppe.client.order.model.aggregator.OrderInitiateResponse;
 
 @RestController
 @RequestMapping("/api/command")
@@ -106,8 +106,8 @@ public class OrderCommandResource {
 	}
 
 	@PostMapping("/order/initiateOrder")
-	public ResponseEntity<OrderResponse> initiateOrder(@RequestBody Order order) {
-		OrderResponse orderResponse = new OrderResponse();
+	public ResponseEntity<OrderInitiateResponse> initiateOrder(@RequestBody Order order) {
+		OrderInitiateResponse orderResponse = new OrderInitiateResponse();
 		OrderDTO orderDTO = orderMapper.toDto(order);
 		ResponseEntity<CommandResource> resource = createOrder(orderDTO);
 		Order orderResult = orderMapper.toEntity(orderDTO);

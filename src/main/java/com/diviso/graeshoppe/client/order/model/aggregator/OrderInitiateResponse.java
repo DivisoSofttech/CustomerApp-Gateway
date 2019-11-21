@@ -2,7 +2,7 @@ package com.diviso.graeshoppe.client.order.model.aggregator;
 
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 
-public class OrderResponse {
+public class OrderInitiateResponse {
 
 	private CommandResource commandResource;
 	private Order order;
@@ -14,7 +14,7 @@ public class OrderResponse {
 	}
 	@Override
 	public String toString() {
-		return String.format("OrderResponse [commandResource=%s,\n order=%s]", commandResource, order);
+		return String.format("OrderInitiateResponse [commandResource=%s,\n order=%s]", commandResource, order);
 	}
 	/**
 	 * @param commandResource the commandResource to set
