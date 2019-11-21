@@ -48,6 +48,8 @@ public class Order   {
 
   @JsonProperty( "preOrderDate")
   private Instant preOrderDate;
+  
+  private List<Offer> offerLines;
 
   /**
  * @return the allergyNote
@@ -537,5 +539,13 @@ public void setStoreId(String storeId) {
     }
     return o.toString().replace("\n", "\n    ");
   }
+
+public List<Offer> getOfferLines() {
+	return offerLines;
+}
+
+public void setOfferLines(List<Offer> offerLines) {
+	this.offerLines = offerLines;
+}
 }
 

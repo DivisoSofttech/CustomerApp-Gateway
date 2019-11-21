@@ -14,6 +14,22 @@ public class Offer implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
+	@JsonProperty("id")
+	private Long id;
+	/**
+	 * @return the id
+	 */
+	public Long getId() {
+		return id;
+	}
+
+	/**
+	 * @param id the id to set
+	 */
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	@JsonProperty("offerRef")
 	private String offerRef;
 	@JsonProperty("orderDiscountAmount")

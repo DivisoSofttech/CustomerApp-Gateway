@@ -35,13 +35,21 @@ import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
+import com.diviso.graeshoppe.client.order.model.OrderResponse;
 import com.diviso.graeshoppe.service.QueryService;
+import com.diviso.graeshoppe.service.mapper.AuxilaryOrderLineMapper;
+import com.diviso.graeshoppe.service.mapper.DeliveryInfoMapper;
+import com.diviso.graeshoppe.service.mapper.OfferMapper;
+import com.diviso.graeshoppe.service.mapper.OrderLineMapper;
+import com.diviso.graeshoppe.service.mapper.OrderMapper;
 import com.diviso.graeshoppe.client.order.model.Address;
 import com.diviso.graeshoppe.client.order.model.AddressDTO;
+import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLine;
 import com.diviso.graeshoppe.client.order.model.AuxilaryOrderLineDTO;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfo;
 import com.diviso.graeshoppe.client.order.model.DeliveryInfoDTO;
 import com.diviso.graeshoppe.client.order.model.NotificationDTO;
+import com.diviso.graeshoppe.client.order.model.Offer;
 import com.diviso.graeshoppe.client.order.model.OfferDTO;
 import com.diviso.graeshoppe.client.order.model.Order;
 
@@ -65,7 +73,6 @@ public class OrderCommandResource {
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
 
-	
 	@Autowired
 	private OfferResourceApi offerResourceApi;
 	@Autowired
@@ -77,6 +84,21 @@ public class OrderCommandResource {
 	@Autowired
 	private SimpMessagingTemplate messagingTemplate;
 
+	@Autowired
+	private OrderMapper orderMapper;
+
+	@Autowired
+	private AuxilaryOrderLineMapper auxilaryOrderLineMapper;
+
+	@Autowired
+	private OrderLineMapper orderLineMapper;
+
+	@Autowired
+	private DeliveryInfoMapper deliveryInfoMapper;
+
+	@Autowired
+	private OfferMapper offerMapper;
+
 	@GetMapping("/sendMessage")
 	public String send(Principal principal) {
 		messagingTemplate.convertAndSendToUser("test", "/queue/notification", "Message from " + principal.getName());
@@ -84,45 +106,37 @@ public class OrderCommandResource {
 	}
 
 	@PostMapping("/order/initiateOrder")
-	public ResponseEntity<CommandResource> initiateOrder(@RequestBody Order order) {
-		OrderDTO orderDTO = new OrderDTO();
-		orderDTO.setCustomerId(order.getCustomerId());
-		orderDTO.setStoreId(order.getStoreId());
-		orderDTO.setGrandTotal(order.getGrandTotal());
-		orderDTO.setSubTotal(order.getSubTotal());
-		orderDTO.setEmail(order.getEmail());
-		orderDTO.setAllergyNote(order.getAllergyNote());
-		orderDTO.setDate(order.getDate());
-		ResponseEntity<CommandResource> orderDTOResponse = createOrder(orderDTO);
+	public ResponseEntity<OrderResponse> initiateOrder(@RequestBody Order order) {
+		OrderResponse orderResponse = new OrderResponse();
+		OrderDTO orderDTO = orderMapper.toDto(order);
+		ResponseEntity<CommandResource> resource = createOrder(orderDTO);
+		Order orderResult = orderMapper.toEntity(orderDTO);
+		orderResult.setId(resource.getBody().getSelfId());
+		orderResponse.setCommandResource(resource.getBody());
+		orderResponse.setOrder(orderResult);
 		order.getOrderLines().forEach(orderLine -> {
-			OrderLineDTO orderLineDTO = new OrderLineDTO();
-			orderLineDTO.setPricePerUnit(orderLine.getPricePerUnit());
-			orderLineDTO.setProductId(orderLine.getProductId());
-			orderLineDTO.setQuantity(orderLine.getQuantity());
-			orderLineDTO.setTotal(orderLine.getTotal());
-			orderLineDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
+			OrderLineDTO orderLineDTO = orderLineMapper.toDto(orderLine);
+			orderLineDTO.setOrderId(resource.getBody().getSelfId());
 			OrderLineDTO lineDTOResult = createOrderLine(orderLineDTO).getBody();
-			orderLine.getRequiedAuxilaries().forEach(auxilaryIem -> {
-				AuxilaryOrderLineDTO auxilaryOrderLineDTO = new AuxilaryOrderLineDTO();
+			OrderLine orderLineResult = orderLineMapper.toEntity(lineDTOResult);
+			orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> {
+				AuxilaryOrderLineDTO auxilaryOrderLineDTO = auxilaryOrderLineMapper.toDto(auxilaryOrderLine);
 				auxilaryOrderLineDTO.setOrderLineId(lineDTOResult.getId());
-				auxilaryOrderLineDTO.setPricePerUnit(auxilaryIem.getPricePerUnit());
-				auxilaryOrderLineDTO.setProductId(auxilaryIem.getProductId());
-				auxilaryOrderLineDTO.setQuantity(auxilaryIem.getQuantity());
-				auxilaryOrderLineDTO.setTotal(auxilaryIem.getTotal());
-				createAuxilaryLineItem(auxilaryOrderLineDTO);
+				AuxilaryOrderLineDTO auxilaryOrderLineDTOresult = createAuxilaryLineItem(auxilaryOrderLineDTO).getBody();
+				AuxilaryOrderLine auxilaryOrderLineresult = auxilaryOrderLineMapper.toEntity(auxilaryOrderLineDTOresult);
+				orderLineResult.getRequiedAuxilaries().add(auxilaryOrderLineresult);
 			});
-
+			orderResponse.getOrder().getOrderLines().add(orderLineResult);
 		});
 		order.getAppliedOffers().forEach(offer -> {
-			OfferDTO offerDTO = new OfferDTO();
-			offerDTO.setOfferRef(offer.getOfferRef());
-			offerDTO.setOrderDiscountAmount(offer.getOrderDiscountAmount());
-			offerDTO.setDescription(offer.getDescription());
-			offerDTO.setOrderId(orderDTOResponse.getBody().getSelfId());
-			createOfferLine(offerDTO);
+			OfferDTO offerDTO = offerMapper.toDto(offer);
+			offerDTO.setOrderId(resource.getBody().getSelfId());
+			OfferDTO offerDTOResult = createOfferLine(offerDTO).getBody();
+			Offer offerResult = offerMapper.toEntity(offerDTOResult);
+			orderResponse.getOrder().getAppliedOffers().add(offerResult);
 		});
 
-		return orderDTOResponse;
+		return ResponseEntity.ok(orderResponse);
 	}
 
 	public ResponseEntity<AuxilaryOrderLineDTO> createAuxilaryLineItem(AuxilaryOrderLineDTO auxilaryOrderLineDTO) {
@@ -223,8 +237,6 @@ public class OrderCommandResource {
 		ResponseEntity<List<OrderLineDTO>> orderLines = orderLineCommandResource
 				.findByOrderIdUsingGET(orderDTOResponse.getBody().getOrderId());
 
-		
-		
 		order.getOrderLines().forEach(updatedOrderLine -> {
 
 			OrderLineDTO orderLineDTO = new OrderLineDTO();
