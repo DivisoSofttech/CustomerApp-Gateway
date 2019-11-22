@@ -34,6 +34,7 @@ import com.diviso.graeshoppe.client.order.api.OrderQueryResourceApi;
 import com.diviso.graeshoppe.client.order.model.CommandResource;
 import com.diviso.graeshoppe.client.order.model.OrderDTO;
 import com.diviso.graeshoppe.client.order.model.aggregator.OrderLine;
+import com.diviso.graeshoppe.client.payment.model.OrderResponse;
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
 import com.diviso.graeshoppe.service.QueryService;
 import com.diviso.graeshoppe.service.mapper.AuxilaryOrderLineMapper;
@@ -227,28 +228,35 @@ public class OrderCommandResource {
 	}
 
 	@PutMapping("/order")
-	public ResponseEntity<OrderDTO> editOrder(@RequestBody Order order) {
-
+	public ResponseEntity<Order> editOrder(@RequestBody Order order) {
 		OrderDTO orderDTO = orderMapper.toDto(order);
 		ResponseEntity<OrderDTO> orderResult = orderCommandResourceApi.updateOrderUsingPUT(orderDTO);
+		Order orderResponse = orderMapper.toEntity(orderResult.getBody());
 		order.getOrderLines().forEach(orderLine -> {
 			OrderLineDTO orderLineDTO = orderLineMapper.toDto(orderLine);
 			orderLineDTO.setOrderId(orderDTO.getId());
-			orderLineCommandResource.updateOrderLineUsingPUT(orderLineDTO);
+			OrderLineDTO orderLineResult = orderLineCommandResource.updateOrderLineUsingPUT(orderLineDTO).getBody();
+			OrderLine orderLineresponse = orderLineMapper.toEntity(orderLineResult);
 			orderLine.getRequiedAuxilaries().forEach(auxilaryOrderLine -> {
 				AuxilaryOrderLineDTO auxilaryOrderLineDTO = auxilaryOrderLineMapper.toDto(auxilaryOrderLine);
 				auxilaryOrderLineDTO.setOrderLineId(orderLineDTO.getId());
-				auxilaryOrderLineApi.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO);
+				AuxilaryOrderLineDTO auxilaryOrderLineResult = auxilaryOrderLineApi
+						.updateAuxilaryOrderLineUsingPUT(auxilaryOrderLineDTO).getBody();
+				AuxilaryOrderLine auxilaryOrderLineResponse  = auxilaryOrderLineMapper.toEntity(auxilaryOrderLineResult);
+				orderLineresponse.getRequiedAuxilaries().add(auxilaryOrderLineResponse);
 			});
+			orderResponse.getOrderLines().add(orderLineresponse);
 
 		});
 
 		order.getAppliedOffers().forEach(offer -> {
 			OfferDTO offerDTO = offerMapper.toDto(offer);
 			offerDTO.setOrderId(orderDTO.getId());
-			offerResourceApi.updateOfferUsingPUT(offerDTO);
+			OfferDTO offerDTOresult = offerResourceApi.updateOfferUsingPUT(offerDTO).getBody();
+			Offer offerResponse = offerMapper.toEntity(offerDTOresult);
+			orderResponse.getAppliedOffers().add(offerResponse);
 		});
-		return orderResult;
+		return ResponseEntity.ok(orderResponse);
 	}
 
 	@PutMapping("/notifications")
