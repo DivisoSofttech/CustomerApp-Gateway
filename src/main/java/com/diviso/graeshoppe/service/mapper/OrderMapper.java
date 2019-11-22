@@ -13,9 +13,11 @@ import com.diviso.graeshoppe.client.order.model.OrderDTO;
 public interface OrderMapper extends EntityMapper<OrderDTO, Order> {
 
     @Mapping(source = "deliveryInfo.id", target = "deliveryInfoId")
+    @Mapping(source = "status.id", target = "statusId")
     OrderDTO toDto(Order order);
 
     @Mapping(source = "deliveryInfoId", target = "deliveryInfo.id")
+    @Mapping(source = "statusId", target = "status.id")
     Order toEntity(OrderDTO orderDTO);
 
    
