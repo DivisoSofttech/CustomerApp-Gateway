@@ -2,14 +2,11 @@ package com.diviso.graeshoppe.client.order.model.aggregator;
 
 import java.util.Objects;
 import com.diviso.graeshoppe.client.order.model.aggregator.AuxilaryOrderLine;
-import com.diviso.graeshoppe.client.order.model.aggregator.Order;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 
 /**

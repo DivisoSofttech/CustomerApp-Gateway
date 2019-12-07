@@ -28,7 +28,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-27T10:26:27.966+05:30[Asia/Kolkata]")
 
 @Api(value = "CustomerResource", description = "the CustomerResource API")
 public interface CustomerResourceApi {
@@ -88,10 +88,10 @@ public interface CustomerResourceApi {
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/findByReference/{reference}",
+    @RequestMapping(value = "/api/findByIdpcode/{idpCode}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<Customer> findByReferenceUsingGET(@ApiParam(value = "reference",required=true) @PathVariable("reference") String reference);
+    ResponseEntity<Customer> findByReferenceUsingGET(@ApiParam(value = "idpCode",required=true) @PathVariable("idpCode") String idpCode);
 
 
     @ApiOperation(value = "getAllCustomers", nickname = "getAllCustomersUsingGET", notes = "", response = CustomerDTO.class, responseContainer = "List", tags={ "customer-resource", })

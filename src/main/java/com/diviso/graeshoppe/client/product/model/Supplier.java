@@ -4,19 +4,22 @@ import java.util.Objects;
 import com.diviso.graeshoppe.client.product.model.Address;
 import com.diviso.graeshoppe.client.product.model.Contact;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 import java.time.LocalDate;
-import org.springframework.data.elasticsearch.annotations.Document;
+import java.util.Date;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Supplier
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
-@Document(indexName="supplier")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-29T15:19:12.817+05:30[Asia/Kolkata]")
+
 public class Supplier   {
   @JsonProperty("address")
   private Address address = null;

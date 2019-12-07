@@ -1,14 +1,10 @@
 package com.diviso.graeshoppe.service.mapper;
 
+import org.mapstruct.Mapper;
 
-import org.mapstruct.*;
+import com.diviso.graeshoppe.client.product.model.Address;
+import com.diviso.graeshoppe.client.product.model.AddressDTO;
 
-import com.diviso.graeshoppe.client.customer.domain.Address;
-import com.diviso.graeshoppe.client.customer.model.AddressDTO;
-
-/**
- * Mapper for the entity Address and its DTO AddressDTO.
- */
 @Mapper(componentModel = "spring", uses = {})
 public interface AddressMapper extends EntityMapper<AddressDTO, Address> {
 

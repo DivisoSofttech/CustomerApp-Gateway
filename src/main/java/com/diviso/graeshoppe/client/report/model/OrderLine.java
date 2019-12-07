@@ -1,23 +1,23 @@
 package com.diviso.graeshoppe.client.report.model;
 
-import java.util.Objects;
-import com.diviso.graeshoppe.client.report.model.AuxItem;
-import com.diviso.graeshoppe.client.report.model.ComboItem;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+
+import org.springframework.validation.annotation.Validated;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import io.swagger.annotations.ApiModelProperty;
 
 /**
  * OrderLine
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-15T11:16:15.523+05:30[Asia/Kolkata]")
-@Document(indexName = "reportorderline")
+
 public class OrderLine   {
   @JsonProperty("auxItems")
   @Valid

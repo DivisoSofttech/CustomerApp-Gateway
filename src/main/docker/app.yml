@@ -15,17 +15,24 @@ services:
             - SECURITY_OAUTH2_CLIENT_SCOPE=openid profile email
             - SECURITY_OAUTH2_RESOURCE_USER_INFO_URI=http://keycloak:9080/auth/realms/jhipster/protocol/openid-connect/userinfo
             - JHIPSTER_SLEEP=30 # gives time for the JHipster Registry to boot before the application
-            - SPRING_DATA_JEST_URI=http://customergateway-elasticsearch:9200
+            - SPRING_CLOUD_STREAM_KAFKA_BINDER_BROKERS=kafka
+            - SPRING_CLOUD_STREAM_KAFKA_BINDER_ZK_NODES=zookeeper
         ports:
             - 8070:8070
     customergateway-mysql:
         extends:
             file: mysql.yml
             service: customergateway-mysql
-    customergateway-elasticsearch:
+    kafka:
         extends:
-            file: elasticsearch.yml
-            service: customergateway-elasticsearch
+            file: kafka.yml
+            service: kafka
+        environment:
+            - KAFKA_ADVERTISED_HOST_NAME=kafka
+    zookeeper:
+        extends:
+            file: kafka.yml
+            service: zookeeper
     jhipster-registry:
         extends:
             file: jhipster-registry.yml

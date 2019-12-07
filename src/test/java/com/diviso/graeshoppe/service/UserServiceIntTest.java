@@ -3,7 +3,6 @@ package com.diviso.graeshoppe.service;
 import com.diviso.graeshoppe.CustomergatewayApp;
 import com.diviso.graeshoppe.config.Constants;
 import com.diviso.graeshoppe.domain.User;
-import com.diviso.graeshoppe.repository.search.UserSearchRepository;
 import com.diviso.graeshoppe.repository.UserRepository;
 import com.diviso.graeshoppe.service.dto.UserDTO;
 import com.diviso.graeshoppe.security.AuthoritiesConstants;
@@ -36,8 +35,6 @@ import java.util.Map;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -55,14 +52,6 @@ public class UserServiceIntTest {
 
     @Autowired
     private UserService userService;
-
-    /**
-     * This repository is mocked in the com.diviso.graeshoppe.repository.search test package.
-     *
-     * @see com.diviso.graeshoppe.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
 
     @Autowired
     private AuditingHandler auditingHandler;

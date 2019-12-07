@@ -32,7 +32,7 @@ spring:
         include:
             - swagger
             # Uncomment to activate TLS for the dev profile
-            - tls
+            #- tls
     devtools:
         restart:
             enabled: true
@@ -45,7 +45,7 @@ spring:
         stream:
             kafka:
                 binder:
-                    brokers:  dev.servers.divisosofttech.com
+                    brokers: dev.servers.divisosofttech.com
                     zk-nodes: dev.servers.divisosofttech.com
                 streams:
                   binder:
@@ -59,15 +59,14 @@ spring:
                     sensor:
                       consumer:
                            keySerde: org.apache.kafka.common.serialization.Serdes$StringSerde
-                           valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde
+                           valueSerde: io.confluent.kafka.streams.serdes.avro.SpecificAvroSerde       
             bindings:
                 notification:
                     consumer:
                       useNativeDecoding: true
                     destination: notification
                     contentType: application/*+avro
-                    group: notification-groups                                
-
+                    group: notification-groups
     datasource:
         type: com.zaxxer.hikari.HikariDataSource
         url: jdbc:mysql://localhost:3306/customergateway?useUnicode=true&characterEncoding=utf8&useSSL=false&useLegacyDatetimeCode=false&serverTimezone=UTC
@@ -97,17 +96,17 @@ spring:
             hibernate.cache.hazelcast.use_lite_member: true
     data:
         elasticsearch:
-           cluster-name: 039a8d60bba54e46a0021ba33cb2d15d
-           cluster-nodes: https://039a8d60bba54e46a0021ba33cb2d15d.us-west1.gcp.cloud.es.io:9243  
+           cluster-name: f3289c8240234fd8889f26e665ca3b2e
+           cluster-nodes: https://f3289c8240234fd8889f26e665ca3b2e.asia-northeast1.gcp.cloud.es.io:9243/ 
            properties:
                path:
                    logs: target/elasticsearch/log
                    data: target/elasticsearch/data
         jest:
            username: elastic
-           password: oG1Sm3v2HCjBJRvIVxnWtGCL
+           password: DqhheG58ZYn8BzoMZg96DJZz
            readTimeout: 10000
-           uri: https://039a8d60bba54e46a0021ba33cb2d15d.us-west1.gcp.cloud.es.io:9243/ 
+           uri: https://f3289c8240234fd8889f26e665ca3b2e.asia-northeast1.gcp.cloud.es.io:9243/        
     liquibase:
         contexts: dev
     mail:

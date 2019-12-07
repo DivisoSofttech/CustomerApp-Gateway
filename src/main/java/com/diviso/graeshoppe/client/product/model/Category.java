@@ -3,11 +3,11 @@ package com.diviso.graeshoppe.client.product.model;
 import java.util.Objects;
 import com.diviso.graeshoppe.client.product.model.Product;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-
-import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -16,11 +16,10 @@ import javax.validation.constraints.*;
  * Category
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
-@Document(indexName="category")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-29T15:19:12.817+05:30[Asia/Kolkata]")
+
 public class Category   {
   @JsonProperty("description")
-  
   private String description = null;
 
   @JsonProperty("iDPcode")
@@ -34,6 +33,9 @@ public class Category   {
 
   @JsonProperty("imageContentType")
   private String imageContentType = null;
+
+  @JsonProperty("imageLink")
+  private String imageLink = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -113,7 +115,7 @@ public class Category   {
   **/
   @ApiModelProperty(value = "")
 
-@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
+//@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
   public byte[] getImage() {
     return image;
   }
@@ -140,6 +142,26 @@ public class Category   {
 
   public void setImageContentType(String imageContentType) {
     this.imageContentType = imageContentType;
+  }
+
+  public Category imageLink(String imageLink) {
+    this.imageLink = imageLink;
+    return this;
+  }
+
+  /**
+   * Get imageLink
+   * @return imageLink
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getImageLink() {
+    return imageLink;
+  }
+
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
   }
 
   public Category name(String name) {
@@ -206,13 +228,14 @@ public class Category   {
         Objects.equals(this.id, category.id) &&
         Objects.equals(this.image, category.image) &&
         Objects.equals(this.imageContentType, category.imageContentType) &&
+        Objects.equals(this.imageLink, category.imageLink) &&
         Objects.equals(this.name, category.name) &&
         Objects.equals(this.products, category.products);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, iDPcode, id, image, imageContentType, name, products);
+    return Objects.hash(description, iDPcode, id, image, imageContentType, imageLink, name, products);
   }
 
   @Override
@@ -225,6 +248,7 @@ public class Category   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
+    sb.append("    imageLink: ").append(toIndentedString(imageLink)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    products: ").append(toIndentedString(products)).append("\n");
     sb.append("}");

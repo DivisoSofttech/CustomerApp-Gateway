@@ -4,7 +4,6 @@ import com.diviso.graeshoppe.CustomergatewayApp;
 import com.diviso.graeshoppe.domain.Authority;
 import com.diviso.graeshoppe.domain.User;
 import com.diviso.graeshoppe.repository.UserRepository;
-import com.diviso.graeshoppe.repository.search.UserSearchRepository;
 import com.diviso.graeshoppe.security.AuthoritiesConstants;
 
 import com.diviso.graeshoppe.service.UserService;
@@ -64,14 +63,6 @@ public class UserResourceIntTest {
     @Autowired
     private UserRepository userRepository;
 
-    /**
-     * This repository is mocked in the com.diviso.graeshoppe.repository.search test package.
-     *
-     * @see com.diviso.graeshoppe.repository.search.UserSearchRepositoryMockConfiguration
-     */
-    @Autowired
-    private UserSearchRepository mockUserSearchRepository;
-
     @Autowired
     private UserService userService;
 
@@ -101,7 +92,7 @@ public class UserResourceIntTest {
     public void setup() {
         cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).clear();
         cacheManager.getCache(UserRepository.USERS_BY_EMAIL_CACHE).clear();
-        UserResource userResource = new UserResource(userService, mockUserSearchRepository);
+        UserResource userResource = new UserResource(userService);
 
         this.restUserMockMvc = MockMvcBuilders.standaloneSetup(userResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
@@ -141,7 +132,6 @@ public class UserResourceIntTest {
     public void getAllUsers() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         // Get all the users
         restUserMockMvc.perform(get("/api/users?sort=id,desc")
@@ -161,7 +151,6 @@ public class UserResourceIntTest {
     public void getUser() throws Exception {
         // Initialize the database
         userRepository.saveAndFlush(user);
-        mockUserSearchRepository.save(user);
 
         assertThat(cacheManager.getCache(UserRepository.USERS_BY_LOGIN_CACHE).get(user.getLogin())).isNull();
 

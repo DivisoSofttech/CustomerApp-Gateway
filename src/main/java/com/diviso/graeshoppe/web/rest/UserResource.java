@@ -1,8 +1,6 @@
 package com.diviso.graeshoppe.web.rest;
 
 import com.diviso.graeshoppe.config.Constants;
-import com.diviso.graeshoppe.domain.User;
-import com.diviso.graeshoppe.repository.search.UserSearchRepository;
 import com.diviso.graeshoppe.security.AuthoritiesConstants;
 import com.diviso.graeshoppe.service.UserService;
 import com.diviso.graeshoppe.service.dto.UserDTO;
@@ -20,10 +18,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
-
-import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing users.
@@ -57,12 +51,9 @@ public class UserResource {
 
     private final UserService userService;
 
-    private final UserSearchRepository userSearchRepository;
-
-    public UserResource(UserService userService, UserSearchRepository userSearchRepository) {
+    public UserResource(UserService userService) {
 
         this.userService = userService;
-        this.userSearchRepository = userSearchRepository;
     }
 
     /**
@@ -99,19 +90,5 @@ public class UserResource {
         return ResponseUtil.wrapOrNotFound(
             userService.getUserWithAuthoritiesByLogin(login)
                 .map(UserDTO::new));
-    }
-
-    /**
-     * SEARCH /_search/users/:query : search for the User corresponding
-     * to the query.
-     *
-     * @param query the query to search
-     * @return the result of the search
-     */
-    @GetMapping("/_search/users/{query}")
-    public List<User> search(@PathVariable String query) {
-        return StreamSupport
-            .stream(userSearchRepository.search(queryStringQuery(query)).spliterator(), false)
-            .collect(Collectors.toList());
     }
 }

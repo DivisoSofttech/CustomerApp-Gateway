@@ -2,15 +2,18 @@ package com.diviso.graeshoppe.client.product.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * CategoryDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-22T12:40:29.255+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-29T15:19:12.817+05:30[Asia/Kolkata]")
 
 public class CategoryDTO   {
   @JsonProperty("description")
@@ -27,6 +30,9 @@ public class CategoryDTO   {
 
   @JsonProperty("imageContentType")
   private String imageContentType = null;
+
+  @JsonProperty("imageLink")
+  private String imageLink = null;
 
   @JsonProperty("name")
   private String name = null;
@@ -102,7 +108,7 @@ public class CategoryDTO   {
   **/
   @ApiModelProperty(value = "")
 
-@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
+//@Pattern(regexp="^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$") 
   public byte[] getImage() {
     return image;
   }
@@ -129,6 +135,26 @@ public class CategoryDTO   {
 
   public void setImageContentType(String imageContentType) {
     this.imageContentType = imageContentType;
+  }
+
+  public CategoryDTO imageLink(String imageLink) {
+    this.imageLink = imageLink;
+    return this;
+  }
+
+  /**
+   * Get imageLink
+   * @return imageLink
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getImageLink() {
+    return imageLink;
+  }
+
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
   }
 
   public CategoryDTO name(String name) {
@@ -166,12 +192,13 @@ public class CategoryDTO   {
         Objects.equals(this.id, categoryDTO.id) &&
         Objects.equals(this.image, categoryDTO.image) &&
         Objects.equals(this.imageContentType, categoryDTO.imageContentType) &&
+        Objects.equals(this.imageLink, categoryDTO.imageLink) &&
         Objects.equals(this.name, categoryDTO.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(description, iDPcode, id, image, imageContentType, name);
+    return Objects.hash(description, iDPcode, id, image, imageContentType, imageLink, name);
   }
 
   @Override
@@ -184,6 +211,7 @@ public class CategoryDTO   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    image: ").append(toIndentedString(image)).append("\n");
     sb.append("    imageContentType: ").append(toIndentedString(imageContentType)).append("\n");
+    sb.append("    imageLink: ").append(toIndentedString(imageLink)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();

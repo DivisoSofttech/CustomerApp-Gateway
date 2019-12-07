@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * Contact
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-27T10:26:27.966+05:30[Asia/Kolkata]")
 
 public class Contact   {
   @JsonProperty("email")
@@ -80,7 +80,8 @@ public class Contact   {
    * Get mobileNumber
    * @return mobileNumber
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public Long getMobileNumber() {
@@ -100,7 +101,8 @@ public class Contact   {
    * Get phoneCode
    * @return phoneCode
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public Long getPhoneCode() {

@@ -2,16 +2,19 @@ package com.diviso.graeshoppe.client.store.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * ReplyDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-07-29T10:47:29.652+05:30[Asia/Calcutta]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T13:57:13.442+05:30[Asia/Kolkata]")
 
 public class ReplyDTO   {
   @JsonProperty("id")
@@ -28,6 +31,9 @@ public class ReplyDTO   {
 
   @JsonProperty("userName")
   private String userName = null;
+
+  @JsonProperty("userRatingReviewId")
+  private Long userRatingReviewId = null;
 
   public ReplyDTO id(Long id) {
     this.id = id;
@@ -130,6 +136,26 @@ public class ReplyDTO   {
     this.userName = userName;
   }
 
+  public ReplyDTO userRatingReviewId(Long userRatingReviewId) {
+    this.userRatingReviewId = userRatingReviewId;
+    return this;
+  }
+
+  /**
+   * Get userRatingReviewId
+   * @return userRatingReviewId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getUserRatingReviewId() {
+    return userRatingReviewId;
+  }
+
+  public void setUserRatingReviewId(Long userRatingReviewId) {
+    this.userRatingReviewId = userRatingReviewId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -144,12 +170,13 @@ public class ReplyDTO   {
         Objects.equals(this.repliedDate, replyDTO.repliedDate) &&
         Objects.equals(this.reply, replyDTO.reply) &&
         Objects.equals(this.reviewId, replyDTO.reviewId) &&
-        Objects.equals(this.userName, replyDTO.userName);
+        Objects.equals(this.userName, replyDTO.userName) &&
+        Objects.equals(this.userRatingReviewId, replyDTO.userRatingReviewId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, repliedDate, reply, reviewId, userName);
+    return Objects.hash(id, repliedDate, reply, reviewId, userName, userRatingReviewId);
   }
 
   @Override
@@ -162,6 +189,7 @@ public class ReplyDTO   {
     sb.append("    reply: ").append(toIndentedString(reply)).append("\n");
     sb.append("    reviewId: ").append(toIndentedString(reviewId)).append("\n");
     sb.append("    userName: ").append(toIndentedString(userName)).append("\n");
+    sb.append("    userRatingReviewId: ").append(toIndentedString(userRatingReviewId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

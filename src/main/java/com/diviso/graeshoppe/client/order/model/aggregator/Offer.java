@@ -2,7 +2,6 @@ package com.diviso.graeshoppe.client.order.model.aggregator;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 
 /**

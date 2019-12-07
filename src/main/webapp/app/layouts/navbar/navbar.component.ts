@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { JhiLanguageService } from 'ng-jhipster';
+import { SessionStorageService } from 'ngx-webstorage';
 
 import { VERSION } from 'app/app.constants';
-import { AccountService, LoginService } from 'app/core';
+import { JhiLanguageHelper, AccountService, LoginService } from 'app/core';
 import { ProfileService } from 'app/layouts/profiles/profile.service';
 
 @Component({
@@ -19,6 +21,9 @@ export class NavbarComponent implements OnInit {
 
     constructor(
         private loginService: LoginService,
+        private languageService: JhiLanguageService,
+        private languageHelper: JhiLanguageHelper,
+        private sessionStorage: SessionStorageService,
         private accountService: AccountService,
         private profileService: ProfileService,
         private router: Router
@@ -28,10 +33,19 @@ export class NavbarComponent implements OnInit {
     }
 
     ngOnInit() {
+        this.languageHelper.getAll().then(languages => {
+            this.languages = languages;
+        });
+
         this.profileService.getProfileInfo().then(profileInfo => {
             this.inProduction = profileInfo.inProduction;
             this.swaggerEnabled = profileInfo.swaggerEnabled;
         });
+    }
+
+    changeLanguage(languageKey: string) {
+        this.sessionStorage.store('locale', languageKey);
+        this.languageService.changeLanguage(languageKey);
     }
 
     collapseNavbar() {

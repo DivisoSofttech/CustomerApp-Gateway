@@ -13,7 +13,7 @@ import javax.validation.constraints.*;
  * FavouriteStoreDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-15T08:26:13.311849+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-27T10:26:27.966+05:30[Asia/Kolkata]")
 
 public class FavouriteStoreDTO   {
   @JsonProperty("customerId")
@@ -69,13 +69,6 @@ public class FavouriteStoreDTO   {
     this.storeId = storeId;
     return this;
   }
-
-  /**
-   * Get storeId
-   * @return storeId
-  **/
-  @ApiModelProperty(value = "")
-
 
   public Long getStoreId() {
     return storeId;

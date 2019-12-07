@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 
 /**
- * OrderInitiateResponse
+ * OrderResponse
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-23T12:15:47.246272+05:30[Asia/Kolkata]")
@@ -334,7 +334,7 @@ public class OrderResponse   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class OrderInitiateResponse {\n");
+    sb.append("class OrderResponse {\n");
     
     sb.append("    amount: ").append(toIndentedString(amount)).append("\n");
     sb.append("    amountDue: ").append(toIndentedString(amountDue)).append("\n");

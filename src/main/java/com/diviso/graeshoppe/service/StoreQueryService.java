@@ -1,95 +1,75 @@
 package com.diviso.graeshoppe.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import com.diviso.graeshoppe.client.store.domain.DeliveryInfo;
-import com.diviso.graeshoppe.client.store.domain.Review;
-import com.diviso.graeshoppe.client.store.domain.Store;
-import com.diviso.graeshoppe.client.store.domain.StoreAddress;
-import com.diviso.graeshoppe.client.store.domain.StoreSettings;
-import com.diviso.graeshoppe.client.store.domain.StoreType;
-import com.diviso.graeshoppe.client.store.domain.Type;
-import com.diviso.graeshoppe.client.store.domain.UserRating;
 
-import io.searchbox.core.search.aggregation.TermsAggregation.Entry;
+import com.diviso.graeshoppe.client.store.model.Banner;
+import com.diviso.graeshoppe.client.store.model.DeliveryInfo;
+import com.diviso.graeshoppe.client.store.model.Review;
+import com.diviso.graeshoppe.client.store.model.Store;
+import com.diviso.graeshoppe.client.store.model.StoreAddress;
+import com.diviso.graeshoppe.client.store.model.StoreSettings;
+import com.diviso.graeshoppe.client.store.model.StoreType;
+import com.diviso.graeshoppe.client.store.model.Type;
+import com.diviso.graeshoppe.client.store.model.UserRating;
+import com.diviso.graeshoppe.client.store.model.UserRatingReview;
+import com.diviso.graeshoppe.domain.ResultBucket;
+import com.diviso.graeshoppe.domain.StoreTypeWrapper;
 
 public interface StoreQueryService {
 
+	/*Page<Review> findAllReviews(Pageable pageable);
 
-	public Page<Review> findAllReviews(Pageable pageable);
+	Page<UserRating> findAllUserRatings(Pageable pageable);*/
 
-	public Page<UserRating> findAllUserRatings(Pageable pageable);
+	Store findStoreByRegNo(String regNo);
 
-	public Page<Store> findAllStores(Pageable pageable);
-	public Store findStoreById(Long id);
+	List<ResultBucket> findRatingCount(Pageable pageable);
 
-	public Store findStoreByRegNo(String regNo);
+	Page<Store> findStoreByDeliveryType(String deliveryType, Pageable pageable);
 
-	public Page<UserRating> findUserRatingByRegNo(String regNo);
+	//Page<Store> findStoreByType(String name, Pageable pageable);
 
+	Page<Store> findStoreByTypeName(String name, Pageable pageable);
 
-	public UserRating findRatingByStoreIdAndCustomerName(String storeId, String name);
+	Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable);
 
-	public Review findReviewByStoreIdAndCustomerName(String storeId, String name);
+	Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
 
-	public Page<Review> findReviewByStoreId(String storeId);
+	DeliveryInfo findDeliveryInfoById(Long id);
 
-	public List<Entry> findRatingCount(Pageable pageable);
+	Page<Store> findStoreByRating(Pageable pageable);
 
-	public Page<Store> findStoreByDeliveryType(String deliveryType);
+	Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId, Pageable pageable);
 
-	public Page<Store> findStoreByTypeName(String name, Pageable pageable);
+	Page<Store> findStoreByLocationName(String locationName, Pageable pageable);
 
-	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable);
+	Page<Store> findAndSortStoreByMinAmount(Pageable pageable);
 
-	public UserRating findRatingByStoreId(String storeId);
+	Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable);
 
-	public UserRating findRatingByName(String name);
+	Page<Store> facetSearchByStoreTypeName(StoreTypeWrapper storeTypeWrapper, Pageable pageable);
 
-	public Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
+	Page<Store> findAllStores(Pageable pageable);
 
-	public DeliveryInfo findDeliveryInfoById(Long id);
+	List<ResultBucket> findStoreTypeAndCount(Pageable pageable);
 
-	public Page<Store> findStoreByRating();
+	Page<Store> findByLocationNear(Double lat, Double lon, Double distance, String distanceUnit, Pageable pageable);
 
-	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId);
+	Page<Store> headerSearch(String searchTerm, Pageable pageable) throws IOException;
 
-	public Page<Store> headerSearch(String searchTerm, Pageable pageable);
+	StoreSettings getStoreSettings(String iDPCode);
 
-	/*
-	 * Page<Store> findByLocationNear(Point point, Distance distance, Pageable
-	 * pageable);
-	 */
-	public Page<Store> findStoreByLocationName(String locationName);
+	StoreAddress getStoreAddress(String iDPCode);
 
-	public Page<Store> findAndSortStoreByMinAount(Pageable pageable);
+	Store findStoreById(Long id);
 
-	public Page<Store> findStoreByType(String name, Pageable pageable);
+	Page<UserRatingReview> findUserRatingReviewByRegNo(String regNo, Pageable pageable);
+	 Long findUserRatingReviewCountByRegNo(String regNo);
 
-	public List<Entry> findStoreTypeAndCount(Pageable pageable);
+	Page<Banner> findStoreBanner(Pageable pageable);
 
-	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable);
-
-	/**
-	 * @param storeId
-	 * @param pageable
-	 * @return
-	 */
-//	List<Entry> findAllDeliveryCountByStoreId(String storeId, Pageable pageable);
-
-	/**
-	 * @param point
-	 * @param distance
-	 * @return
-	 */
-	// public Page<Store> findByLocationNear(Point point, Distance distance,Pageable
-	// pageable);
-
-	public StoreSettings getStoreSettings(String IDPCode);
-
-	public StoreAddress getStoreAddress(String iDPCode);
-
-	public Long findReviewCountByStoreId(String storeId);
 }

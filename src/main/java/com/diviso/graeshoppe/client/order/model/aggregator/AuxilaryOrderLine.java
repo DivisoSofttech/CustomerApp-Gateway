@@ -1,13 +1,8 @@
 package com.diviso.graeshoppe.client.order.model.aggregator;
 
 import java.util.Objects;
-import com.diviso.graeshoppe.client.order.model.OrderLine;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.annotations.ApiModelProperty;
-
-import org.springframework.data.elasticsearch.annotations.Document;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
 
 /**
  * AuxilaryOrderLine
