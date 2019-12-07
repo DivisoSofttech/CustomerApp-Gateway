@@ -41,11 +41,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class CustomerQueryServiceImpl implements CustomerQueryService {
 	@Autowired
 	ServiceUtility serviceUtility;
-	@Autowired
-	CustomerResourceApi customerResourceApi;
-	@Autowired
-	ContactResourceApi contactResourceApi;
-
+	
 	@Autowired
 	CustomerMapper customerMapper;
 	@Autowired

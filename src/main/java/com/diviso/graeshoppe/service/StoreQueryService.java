@@ -55,7 +55,7 @@ public interface StoreQueryService {
 
 	Page<Store> findAllStores(Pageable pageable);
 
-	List<ResultBucket> findStoreTypeAndCount(Pageable pageable);
+	Page<ResultBucket> findStoreTypeAndCount(Pageable pageable);
 
 	Page<Store> findByLocationNear(Double lat, Double lon, Double distance, String distanceUnit, Pageable pageable);
 

@@ -66,20 +66,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		return serviceUtility.getObjectResult(searchResponse, new Order());
 		
-		/*SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(termQuery("id", id));
-
-		SearchRequest searchRequest = new SearchRequest("order");
-		searchRequest.source(searchSourceBuilder);
-		SearchResponse searchResponse = null;
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-
-		return serviceUtility.getObjectResult(searchResponse, new Order());*/
+		
 
 	}
 

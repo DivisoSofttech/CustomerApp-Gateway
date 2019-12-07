@@ -27,6 +27,7 @@ import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -50,8 +51,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	@Autowired
 	ServiceUtility serviceUtility;
-	@Autowired
-	ProductResourceApi productResourceApi;
+
 
 	@Autowired
 	ProductMapper productMapper;
@@ -207,15 +207,21 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 	}
 
-	@Override
-	public List<ResultBucket> findCategoryAndCount(Pageable pageable) {
+/*	@Override
+	public Page<ResultBucket> findCategoryAndCount(Pageable pageable) {
 		List<ResultBucket> resultBucketList = new ArrayList<>();
-		SearchRequest searchRequest = new SearchRequest("product");
+		//SearchRequest searchRequest = new SearchRequest("product");
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(matchAllQuery());
 		searchSourceBuilder.aggregation(AggregationBuilders.terms("totalcategories").field("category.name.keyword"));
 
-		searchRequest.source(searchSourceBuilder);
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
+		
+		
+		
+		
+		//searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -239,15 +245,18 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		}
 
-		return resultBucketList;
+		//return resultBucketList;
+		
+		return	new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
+	
 	}
 
 
-
+*/
 	@Override
-	public List<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
+	public/* List<ResultBucket>*/  Page<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
 		 List<ResultBucket> resultBucketList = new ArrayList<>();
-		SearchRequest searchRequest = new SearchRequest("product");
+		//SearchRequest searchRequest = new SearchRequest("product");
         SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		FilterAggregationBuilder filterAggregationBuilder = AggregationBuilders.filter("byStoreFilter",
 				QueryBuilders.termQuery("iDPcode.keyword", storeId));
@@ -258,7 +267,13 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		searchSourceBuilder.aggregation(filterAggregationBuilder);
 
 		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-		searchRequest.source(searchSourceBuilder);
+		
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
+		
+		
+		
+	//	searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -281,7 +296,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 					+ bucket.getDocCount());
 
 		}
-	return	resultBucketList;
+	//return	resultBucketList;
+	
+	return	new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
 	}
 
 	@Override
@@ -425,14 +442,14 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new StockCurrent());
 	}*/
 
-	private List<StockCurrent> findStockCurrentByProductId(List<Product> productList) {
+/*	private List<StockCurrent> findStockCurrentByProductId(List<Product> productList) {
 		List<StockCurrent> resultList = new ArrayList<>();
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		/*
+		
 		 * String[] includeFields = new String[] { "iDPcode", "image" }; String[]
 		 * excludeFields = new String[] { "category.*" };
 		 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
-		 */
+		 
 		for (Product product : productList) {
 			searchSourceBuilder.query(termQuery("product.id", product.getId()));
 
@@ -456,7 +473,7 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		}
 		return resultList;
-	}
+	}*/
 
 	@Override
 	public Product findProductById(Long id) {

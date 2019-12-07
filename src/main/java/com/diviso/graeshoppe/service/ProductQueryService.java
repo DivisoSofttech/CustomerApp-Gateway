@@ -33,9 +33,9 @@ public interface ProductQueryService {
 
 	Page<StockCurrent> findStockCurrentByStoreId(String iDPcode, Pageable pageable);
 
-	List<ResultBucket> findCategoryAndCount(Pageable pageable);
+	//Page<ResultBucket> findCategoryAndCount(Pageable pageable);
 
-	List<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
+	/*List<ResultBucket>*/Page<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
 
 	Page<StockCurrent> findAllStockCurrentByProductNameStoreId(String productName, String storeId, Pageable pageable);
 

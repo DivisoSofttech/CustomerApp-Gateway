@@ -124,14 +124,17 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	@Override
-	public List<ResultBucket> findStoreTypeAndCount(Pageable pageable) {
+	public/* List<ResultBucket>*/ Page<ResultBucket> findStoreTypeAndCount(Pageable pageable) {
 		List<ResultBucket> resultBucketList = new ArrayList<>();
-		SearchRequest searchRequest = new SearchRequest("storetype");
+		//SearchRequest searchRequest = new SearchRequest("storetype");
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(matchAllQuery());
 		searchSourceBuilder.aggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword"));
 
-		searchRequest.source(searchSourceBuilder);
+	//	searchRequest.source(searchSourceBuilder);
+		
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("storetype", pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -155,8 +158,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		}
 
-		return resultBucketList;
-
+		//return resultBucketList;
+		return	new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
 	}
 
 	@Override
@@ -471,14 +474,19 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	}
 
-	public List<ResultBucket> findStoreTypeAndCount1(Pageable pageable) {
+	/*public List<ResultBucket>Page<ResultBucket> findStoreTypeAndCount1(Pageable pageable) {
 		List<ResultBucket> resultBucketList = new ArrayList<>();
-		SearchRequest searchRequest = new SearchRequest("storetype");
+		//SearchRequest searchRequest = new SearchRequest("storetype");
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(matchAllQuery());
 		searchSourceBuilder.aggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword"));
 
-		searchRequest.source(searchSourceBuilder);
+		//searchRequest.source(searchSourceBuilder);
+		
+		SearchRequest searchRequest = serviceUtility.generateSearchRequest("storetype", pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
+		
+		
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -502,10 +510,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		}
 
-		return resultBucketList;
-
+		//return resultBucketList;
+		return	new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
 	}
-
+*/
 	@Override
 	public Page<Store> findByLocationNear(Double lat, Double lon, Double distance, String distanceUnit,
 			Pageable pageable) {
