@@ -115,9 +115,11 @@ public class ServiceUtility {
 		int totalElements = 0;
 
 		if (pageNumber == 0) {
+		
 			offset = 0;
+			System.out.println("ttttttttttttttttttttttttt"+offset);
 			totalElements = totalElement;
-
+			System.out.println("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii"+totalElements);
 			
 		} else {
 
@@ -125,9 +127,9 @@ public class ServiceUtility {
 
 			totalElements = (pageNumber * totalElement);*/
 			offset = (pageNumber * totalElement)+1;
-
+			System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+offset);
 			totalElements =  totalElement;
-
+			System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"+totalElements);
 		}
 		sourceBuilder.from(offset);
 		sourceBuilder.size(totalElements);
