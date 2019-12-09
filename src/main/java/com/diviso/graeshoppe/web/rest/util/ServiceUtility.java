@@ -121,10 +121,12 @@ public class ServiceUtility {
 			
 		} else {
 
-			offset = totalElement;
+		/*	offset = totalElement;
 
-			totalElements = (pageNumber * totalElement);
-			
+			totalElements = (pageNumber * totalElement);*/
+			offset = (pageNumber * totalElement)+1;
+
+			totalElements =  totalElement;
 
 		}
 		sourceBuilder.from(offset);
