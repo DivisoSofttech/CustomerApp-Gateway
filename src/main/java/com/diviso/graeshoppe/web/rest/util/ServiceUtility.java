@@ -126,7 +126,7 @@ public class ServiceUtility {
 		/*	offset = totalElement;
 
 			totalElements = (pageNumber * totalElement);*/
-			offset = (pageNumber * totalElement)+1;
+			offset = (pageNumber * totalElement);
 			System.out.println("hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh"+offset);
 			totalElements =  totalElement;
 			System.out.println("uuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuuu"+totalElements);

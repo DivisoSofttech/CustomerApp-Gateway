@@ -159,18 +159,18 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		List<ResultBucket> resultBucketList = new ArrayList<>();
 
-		// SearchRequest searchRequest = new SearchRequest("storetype");
+		 SearchRequest searchRequest = new SearchRequest("storetype");
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(matchAllQuery());
 
-		searchSourceBuilder.aggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword"));
+		searchSourceBuilder.aggregation(AggregationBuilders.terms("totalstoretype").field("name.keyword").size(50));
 
-		// searchRequest.source(searchSourceBuilder);
-
+		 searchRequest.source(searchSourceBuilder);
+/*
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("storetype", pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder);
+				pageable.getPageNumber(), searchSourceBuilder);*/
 
 		SearchResponse searchResponse = null;
 
