@@ -16,14 +16,11 @@ public interface CustomerQueryService {
 
 	CustomerDTO findCustomerByIdpCode(String idpCode);
 
-	/*Page<Address> findByCustomerId(String customerId, Pageable pageable);*/
+	
 	public ContactDTO findContactById(Long id);
-	Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable);
+	Page<FavouriteProduct> findFavouriteProductsByCustomerIdpCode(String idpCode, Pageable pageable);
 	public Boolean checkUserExistsByIdpCode(String idpCode);
 	public CustomerDTO findByMobileNumber(Long mobileNumber);
-	Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable);
-	//public ResponseEntity<CustomerDTO> findByMobileNumber(Long mobileNumber);
-	//public ResponseEntity<CustomerDTO> findCustomerDTOByIdpCode( String idpCode) ;
-	//public ResponseEntity<ContactDTO> findContactById(Long id);
-	//public ResponseEntity<Boolean> checkUserExists(String reference);
+	Page<FavouriteStore> findFavouriteStoresByCustomerIdpCode(String idpCode, Pageable pageable);
+	
 }

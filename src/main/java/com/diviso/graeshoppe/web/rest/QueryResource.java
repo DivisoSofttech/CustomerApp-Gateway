@@ -147,11 +147,11 @@ public class QueryResource {
      * @param idpCode the idpCode of the FavouriteProduct
      * @return  page of FavouriteProduct in body
      */
-	@GetMapping("/favouriteproductsbycustomerreference/{reference}")
-	public Page<FavouriteProduct> findFavouriteProductsByCustomerReference(@PathVariable String reference,
+	@GetMapping("/favouriteproductsbycustomeridpcode/{idpCode}")
+	public Page<FavouriteProduct> findFavouriteProductsByCustomerIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
 
-		return customerQueryService.findFavouriteProductsByCustomerReference(reference, pageable);
+		return customerQueryService.findFavouriteProductsByCustomerIdpCode(idpCode, pageable);
 	}
 
 	/**
@@ -159,10 +159,10 @@ public class QueryResource {
      * @param reference the idpCode of the FavouriteStore
      * @return  page of FavouriteStore in body
      */
-	@GetMapping("/favouritestoresbycustomerreference/{reference}")
-	public Page<FavouriteStore> findFavouriteStoresByCustomerReference(@PathVariable String reference,
+	@GetMapping("/favouritestoresbycustomeridpcode/{idpCode}")
+	public Page<FavouriteStore> findFavouriteStoresByCustomerIdpCode(@PathVariable String idpCode,
 			Pageable pageable) {
-		return customerQueryService.findFavouriteStoresByCustomerReference(reference, pageable);
+		return customerQueryService.findFavouriteStoresByCustomerIdpCode(idpCode, pageable);
 	}
 
 	// ****************product related end points********

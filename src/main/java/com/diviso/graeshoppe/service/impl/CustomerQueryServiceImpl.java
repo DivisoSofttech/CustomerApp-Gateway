@@ -121,10 +121,10 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 	 */
 
 	@Override
-	public Page<FavouriteProduct> findFavouriteProductsByCustomerReference(String reference, Pageable pageable) {
+	public Page<FavouriteProduct> findFavouriteProductsByCustomerIdpCode(String idpCode, Pageable pageable) {
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-				.filter(QueryBuilders.termQuery("customer.reference", reference));
+				.filter(QueryBuilders.termQuery("customer.idpCode.keyword", idpCode));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(dslQuery);
@@ -150,10 +150,10 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 	}
 
 	@Override
-	public Page<FavouriteStore> findFavouriteStoresByCustomerReference(String reference, Pageable pageable) {
+	public Page<FavouriteStore> findFavouriteStoresByCustomerIdpCode(String idpCode, Pageable pageable) {
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-				.filter(QueryBuilders.termQuery("customer.reference", reference));
+				.filter(QueryBuilders.termQuery("customer.idpCode.keyword", idpCode));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(dslQuery);
@@ -201,7 +201,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 	public Boolean checkUserExistsByIdpCode(String idpCode) {
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-				.filter(QueryBuilders.termQuery("idpCode", idpCode));
+				.filter(QueryBuilders.termQuery("idpCode.keyword", idpCode));
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("customer", dslQuery);
 		Customer customer = serviceUtility.getObjectResult(searchResponse, new Customer());
