@@ -575,7 +575,7 @@ public class QueryResource {
      * GET  /orders/:from/:to Get the from date to to date based Order
      * @param from the from date  of  Order
      * @param to the to date of Order
-     * @param storeId the sttoreId of order
+     * @param storeId the storeId of order
      * @param pageable the pageable to create
      * @return page of Order in body 
      */
