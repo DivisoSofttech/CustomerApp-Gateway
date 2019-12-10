@@ -246,7 +246,7 @@ public class QueryResource {
      * @return list of ResultBucket in body
      */
 	@GetMapping("/findCategoryAndCountBystoreId/{storeId}")
-	public /*List<ResultBucket>*/Page<ResultBucket> findCategoryAndCountBystoreId(@PathVariable String storeId, Pageable pageable) {
+	public List<ResultBucket> findCategoryAndCountBystoreId(@PathVariable String storeId, Pageable pageable) {
 
 		return productQueryService.findCategoryAndCountByStoreId(storeId, pageable);
 	}

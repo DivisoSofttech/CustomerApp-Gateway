@@ -328,20 +328,20 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	 * @return the page of ResultBucket in body
 	 */
 	@Override
-	public/* List<ResultBucket> */ Page<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
+	public List<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
 
 		log.debug("input", "storeId");
 
 		List<ResultBucket> resultBucketList = new ArrayList<>();
 
-		// SearchRequest searchRequest = new SearchRequest("product");
+		 SearchRequest searchRequest = new SearchRequest("product");
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		FilterAggregationBuilder filterAggregationBuilder = AggregationBuilders.filter("byStoreFilter",
 				QueryBuilders.termQuery("iDPcode.keyword", storeId));
 
-		TermsAggregationBuilder aggregation = AggregationBuilders.terms("by_categories").field("category.name.keyword");
+		TermsAggregationBuilder aggregation = AggregationBuilders.terms("by_categories").field("category.name.keyword").size(50);
 
 		filterAggregationBuilder.subAggregation(aggregation);
 
@@ -349,10 +349,9 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 
 		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
 
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("product", pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder);
+		
 
-		// searchRequest.source(searchSourceBuilder);
+		searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -383,11 +382,12 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 					+ bucket.getDocCount());
 
 		}
-		// return resultBucketList;
+		// 
 
-		log.info("output", new PageImpl<>(resultBucketList, pageable, resultBucketList.size()));
+		
 
-		return new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
+		//return new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
+		return resultBucketList;
 	}
 
 	/**
