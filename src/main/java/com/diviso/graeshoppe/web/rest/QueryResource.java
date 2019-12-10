@@ -373,7 +373,7 @@ public class QueryResource {
      * @return the ResponseEntity with status 200 (OK) page of ResultBucket in body
      */
 	@GetMapping("/findStoreTypeAndCount")
-	public /*List<ResultBucket>*/ Page<ResultBucket> findStoreTypeAndCount(Pageable pageable) {
+	public List<ResultBucket> findStoreTypeAndCount(Pageable pageable) {
 		return storeQueryService.findStoreTypeAndCount(pageable);
 	}
 

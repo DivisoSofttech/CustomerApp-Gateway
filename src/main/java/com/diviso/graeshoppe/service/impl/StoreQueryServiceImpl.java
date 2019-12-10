@@ -155,7 +155,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @return the page of ResultBucket
 	 */
 	@Override
-	public/* List<ResultBucket> */ Page<ResultBucket> findStoreTypeAndCount(Pageable pageable) {
+	public List<ResultBucket>/* Page<ResultBucket>*/ findStoreTypeAndCount(Pageable pageable) {
 
 		List<ResultBucket> resultBucketList = new ArrayList<>();
 
@@ -206,11 +206,11 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		}
 
-		log.debug("output", new PageImpl<>(resultBucketList, pageable, resultBucketList.size()));
+		//log.debug("output", new PageImpl<>(resultBucketList, pageable, resultBucketList.size()));
 
-		// return resultBucketList;
+		 return resultBucketList;
 
-		return new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
+	//	return new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
 	}
 
 	/**
