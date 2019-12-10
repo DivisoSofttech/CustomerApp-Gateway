@@ -23,7 +23,7 @@ public class OfferCommandServiceImpl implements OfferCommandService {
 
 	@Override
 	public ResponseEntity<OrderModel> claimOffer(OrderModel orderModel, String customerId) {
-		Long count = orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "payment-processed")
+		Long count = orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "payment-processed-unapproved")
 				.getBody();
 		log.info("Count for the customer " + customerId + " is " + count);
 		orderModel.setOrderNumber(count + 1);
