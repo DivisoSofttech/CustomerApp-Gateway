@@ -7,16 +7,25 @@ package com.diviso.graeshoppe.client.order.api;
 
 import com.diviso.graeshoppe.client.order.model.OrderLineDTO;
 import io.swagger.annotations.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.context.request.NativeWebRequest;
+import org.springframework.web.multipart.MultipartFile;
+
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-10-29T12:42:01.121660+05:30[Asia/Kolkata]")
+import java.util.Map;
+import java.util.Optional;
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
 
 @Api(value = "OrderLineCommandResource", description = "the OrderLineCommandResource API")
 public interface OrderLineCommandResourceApi {
@@ -44,7 +53,7 @@ public interface OrderLineCommandResourceApi {
     @RequestMapping(value = "/api/deleteByProductIdAndOrderId/{productId}/{orderId}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId,@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId);
+    ResponseEntity<List<OrderLineDTO>> deleteByProductIdAndOrderIdUsingGET(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") Long orderId,@ApiParam(value = "productId",required=true) @PathVariable("productId") Long productId);
 
 
     @ApiOperation(value = "deleteOrderLine", nickname = "deleteOrderLineUsingDELETE", notes = "", tags={ "order-line-command-resource", })
