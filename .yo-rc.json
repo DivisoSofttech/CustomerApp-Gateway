@@ -35,7 +35,23 @@
         "apis": {
             "store": {
                 "spec": "http://34.74.142.114:8071/v2/api-docs"
+            },
+            "order": {
+                "spec": "http://dev.ci2.divisosofttech.com:8088/v2/api-docs"
+            },
+            "payment": {
+                "spec": "http://dev.ci2.divisosofttech.com:9090/v2/api-docs"
+            },
+            "offer": {
+                "spec": "http://dev.ci2.divisosofttech.com:8095/Offer/v2/api-docs"
+            },
+            "customer": {
+                "spec": "http://dev.ci1.divisosofttech.com:8088/v2/api-docs"
             }
+        },
+        "promptValues": {
+            "inputSpec": "http://dev.ci1.divisosofttech.com:8088/v2/api-docs",
+            "cliName": "customer"
         }
     }
 }

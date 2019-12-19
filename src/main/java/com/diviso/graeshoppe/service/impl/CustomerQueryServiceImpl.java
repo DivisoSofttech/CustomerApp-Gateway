@@ -14,6 +14,8 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -39,11 +41,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
 public class CustomerQueryServiceImpl implements CustomerQueryService {
+
+	private final Logger log = LoggerFactory.getLogger(CustomerQueryServiceImpl.class);
+
 	@Autowired
 	ServiceUtility serviceUtility;
-	
+
 	@Autowired
 	CustomerMapper customerMapper;
+
 	@Autowired
 	ContactMapper contactMapper;
 
@@ -56,9 +62,14 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		this.restHighLevelClient = restHighLevelClient;
 	}
 
+	/**
+	 * @param idpCode the idpCode of the Customer
+	 * @return the CustomerDTO in body
+	 */
 	@Override
 	public CustomerDTO findCustomerByIdpCode(String idpCode) {
 
+		log.debug("input", idpCode);
 		/*
 		 * SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		 * 
@@ -78,6 +89,8 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("customer", dslQuery);
 		Customer customer = serviceUtility.getObjectResult(searchResponse, new Customer());
 
+		log.debug("customer", customer);
+		log.debug("output", customerMapper.toDto(customer));
 		return customerMapper.toDto(customer);
 
 	}
@@ -120,16 +133,28 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 	 * 
 	 */
 
+	/**
+	 * @param idpCode  the idpCode of the Customer
+	 * @param pageable the pageable to create
+	 * @return the page of FavouriteProduct in body
+	 */
 	@Override
 	public Page<FavouriteProduct> findFavouriteProductsByCustomerIdpCode(String idpCode, Pageable pageable) {
+
+		log.debug("inpput", idpCode);
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("customer.idpCode.keyword", idpCode));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
 		searchSourceBuilder.query(dslQuery);
+
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("favouriteproduct", searchSourceBuilder,
 				pageable);
+
+		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new FavouriteProduct()));
+
 		return serviceUtility.getPageResult(searchResponse, pageable, new FavouriteProduct());
 
 		/*
@@ -149,16 +174,27 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		 */
 	}
 
+	/**
+	 * @param idpCode  the idpCode of the Customer
+	 * @param pageable the pageable to create
+	 * @return the page of FavouriteStore in body
+	 */
 	@Override
 	public Page<FavouriteStore> findFavouriteStoresByCustomerIdpCode(String idpCode, Pageable pageable) {
+		log.debug("inpput", idpCode);
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("customer.idpCode.keyword", idpCode));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+
 		searchSourceBuilder.query(dslQuery);
+
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("favouritestore", searchSourceBuilder,
 				pageable);
+
+		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new FavouriteStore()));
+
 		return serviceUtility.getPageResult(searchResponse, pageable, new FavouriteStore());
 		/*
 		 * SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -188,16 +224,31 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 
 	}
 
+	/**
+	 * @param mobileNumber the mobileNumber of the Customer
+	 * @return the CustomerDTO in body
+	 */
 	public CustomerDTO findByMobileNumber(Long mobileNumber) {
+		log.debug("input", mobileNumber);
+
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
 				.filter(QueryBuilders.termQuery("contact.mobileNumber", mobileNumber));
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("customer", dslQuery);
+
 		Customer customer = serviceUtility.getObjectResult(searchResponse, new Customer());
+
+		log.debug("customer", customer);
+
+		log.debug("output", customerMapper.toDto(customer));
 
 		return customerMapper.toDto(customer);
 	}
 
+	/**
+	 * @param idpCode the idpCode of the Customer
+	 * @return the Boolean
+	 */
 	public Boolean checkUserExistsByIdpCode(String idpCode) {
 
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
