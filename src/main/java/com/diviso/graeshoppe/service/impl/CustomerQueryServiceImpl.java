@@ -190,7 +190,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 
 	public CustomerDTO findByMobileNumber(Long mobileNumber) {
 		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-				.filter(QueryBuilders.termQuery("mobileNumber", mobileNumber));
+				.filter(QueryBuilders.termQuery("contact.mobileNumber", mobileNumber));
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("customer", dslQuery);
 		Customer customer = serviceUtility.getObjectResult(searchResponse, new Customer());
