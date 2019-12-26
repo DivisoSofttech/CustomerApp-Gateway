@@ -21,9 +21,6 @@ import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
 
 public interface StoreQueryService {
 
-	/*Page<Review> findAllReviews(Pageable pageable);
-
-	Page<UserRating> findAllUserRatings(Pageable pageable);*/
 
 	Store findStoreByRegNo(String regNo);
 
@@ -68,8 +65,9 @@ public interface StoreQueryService {
 	Store findStoreById(Long id);
 
 	Page<UserRatingReview> findUserRatingReviewByRegNo(String regNo, Pageable pageable);
-	 Long findUserRatingReviewCountByRegNo(String regNo);
+	 
+    Long findUserRatingReviewCountByRegNo(String regNo);
 
-	Page<Banner> findStoreBanner(Pageable pageable);
+	Page<Banner> findBannersByRegNo(Pageable pageable, String regNo);
 
 }

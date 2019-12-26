@@ -932,17 +932,18 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * @return page of Banner in body
 	 */
 	@Override
-	public Page<Banner> findStoreBanner(Pageable pageable) {
-
+	public Page<Banner> findBannersByRegNo(Pageable pageable, String regNo) {
+		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
+				.must(QueryBuilders.matchAllQuery()).filter(QueryBuilders.termQuery("regNo", regNo));
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(matchAllQuery());
+		searchSourceBuilder.query(queryBuilder);
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("banner", searchSourceBuilder, pageable);
 
 		return serviceUtility.getPageResult(searchResponse, pageable, new Banner());
 	}
 
-	// **************************************************************************************************************************
+	
 
 }
