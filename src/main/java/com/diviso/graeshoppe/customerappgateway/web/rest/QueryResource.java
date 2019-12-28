@@ -55,6 +55,8 @@ import com.diviso.graeshoppe.customerappgateway.service.OrderQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
 
+import io.swagger.annotations.ApiParam;
+
 @RestController
 @RequestMapping("/api/query")
 public class QueryResource {
@@ -682,5 +684,17 @@ public class QueryResource {
 
 		return administrationQueryService.findPremiumBanners(pageable);
 	}
+	
+	/**
+     * GET  findLoyaltyPointByIdpCode
+     * @param idpCode 
+     * 
+     */
+	@GetMapping("/findLoyaltyPointByIdpCode/{idpCode}")
+    public Long findLoyaltyPointByIdpCode(@PathVariable String idpCode){
+    	
+    	return customerQueryService.findLoyaltyPointByIdpCode(idpCode);
+    }
+
 	
 }

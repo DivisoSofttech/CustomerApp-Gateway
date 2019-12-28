@@ -96,21 +96,6 @@ public class CommandResource {
 	@PostMapping("/customers/register-customer")
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerAggregator customerAggregator) {
 
-		/*
-		 * CustomerDTO customerDTO = new CustomerDTO(); ContactDTO contactDTO = new
-		 * ContactDTO(); customerDTO.setName(customerAggregator.getName());
-		 * customerDTO.setIdpCode(customerAggregator.getIdpCode());
-		 * customerDTO.setIdpSub(customerAggregator.getIdpSub());
-		 * customerDTO.setImageLink(" ");
-		 * 
-		 * contactDTO.setMobileNumber(customerAggregator.getMobileNumber());
-		 * contactDTO.setEmail(customerAggregator.getEmail());
-		 * 
-		 * contactDTO.setPhoneCode(customerAggregator.getPhoneCode()); ContactDTO
-		 * resultDTO = contactResourceApi.createContactUsingPOST(contactDTO).getBody();
-		 * customerDTO.setContactId(resultDTO.getId()); return
-		 * customerResourceApi.createCustomerUsingPOST(customerDTO);
-		 */
 		return customerCommandService.createCustomer(customerAggregator);
 
 	}
@@ -137,12 +122,7 @@ public class CommandResource {
 
 	@DeleteMapping("/customers/{id}")
 	public void deleteCustomer(@PathVariable Long id) {
-		/*
-		 * Long contactid =
-		 * customerResourceApi.getCustomerUsingGET(id).getBody().getContactId();
-		 * customerResourceApi.deleteCustomerUsingDELETE(id);
-		 * this.deleteContact(contactid);
-		 */
+
 		customerCommandService.deleteCustomer(id);
 
 	}
@@ -163,32 +143,23 @@ public class CommandResource {
 	@PostMapping("/favouriteproduct")
 	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(
 			@RequestBody FavouriteProductDTO favouriteProductDTO) {
-		/*
-		 * return this.favouriteProductResourceApi.createFavouriteProductUsingPOST(
-		 * favouriteProductDTO);
-		 */
 		return customerCommandService.createFavouriteProduct(favouriteProductDTO);
 	}
 
 	@DeleteMapping("/favouriteproduct/{id}")
 	public ResponseEntity<Void> deleteFavouriteProduct(@PathVariable Long id) {
-		/*
-		 * return
-		 * this.favouriteProductResourceApi.deleteFavouriteProductUsingDELETE(id);
-		 */
+
 		return customerCommandService.deleteFavouriteProduct(id);
 	}
 
 	@PostMapping("/favouritestore")
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(@RequestBody FavouriteStoreDTO favouriteStoreDTO) {
-		// return
-		// this.favouriteStoreResourceApi.createFavouriteStoreUsingPOST(favouriteStoreDTO);
 		return customerCommandService.createFavouriteStore(favouriteStoreDTO);
 	}
 
 	@DeleteMapping("/favouritestore/{id}")
 	public ResponseEntity<Void> deleteFavouriteStore(@PathVariable Long id) {
-		// return this.favouriteStoreResourceApi.deleteFavouriteStoreUsingDELETE(id);
+
 		return customerCommandService.deleteFavouriteStore(id);
 	}
 
@@ -202,13 +173,13 @@ public class CommandResource {
 
 	@PutMapping("/replies")
 	public ResponseEntity<ReplyDTO> updateReply(@RequestBody ReplyDTO replyDTO) {
-		// return this.replyResourceApi.updateReplyUsingPUT(replyDTO);
+
 		return storeCommandService.updateReply(replyDTO);
 	}
 
 	@DeleteMapping("/replies/{id}")
 	public ResponseEntity<Void> deleteReply(@PathVariable Long id) {
-		// return this.replyResourceApi.deleteReplyUsingDELETE(id);
+
 		return storeCommandService.deleteReply(id);
 	}
 
@@ -328,4 +299,8 @@ public class CommandResource {
 
 	/***********************************************************************************/
 
+	@PostMapping("/updateLoyaltyPoint/{idpCode}/{point}")
+	CustomerDTO updateLoyaltyPoint(@PathVariable String idpCode, @PathVariable Long point) {
+		return customerCommandService.updateLoyaltyPointUsingPOST(idpCode, point).getBody();
+	}
 }

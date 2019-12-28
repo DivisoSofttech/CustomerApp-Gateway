@@ -33,7 +33,7 @@ import java.util.Optional;
 @Api(value = "CustomerResource", description = "the CustomerResource API")
 public interface CustomerResourceApi {
 
-    @ApiOperation(value = "checkUserExists", nickname = "checkUserExistsUsingGET", notes = "", response = Boolean.class, tags={ "customer-resource", })
+	@ApiOperation(value = "checkUserExists", nickname = "checkUserExistsUsingGET", notes = "", response = Boolean.class, tags={ "customer-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Boolean.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
@@ -70,28 +70,28 @@ public interface CustomerResourceApi {
     ResponseEntity<Void> deleteCustomerUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
-    @ApiOperation(value = "findByMobileNumber", nickname = "findByMobileNumberUsingGET", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = CustomerDTO.class),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/findByMobileNumber/{mobileNumber}",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<CustomerDTO> findByMobileNumberUsingGET(@ApiParam(value = "mobileNumber",required=true) @PathVariable("mobileNumber") Long mobileNumber);
-
-
     @ApiOperation(value = "findByReference", nickname = "findByReferenceUsingGET", notes = "", response = Customer.class, tags={ "customer-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Customer.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/findByIdpcode/{idpCode}",
+    @RequestMapping(value = "/api/findByReference/{reference}",
         produces = "*/*", 
         method = RequestMethod.GET)
-    ResponseEntity<Customer> findByReferenceUsingGET(@ApiParam(value = "idpCode",required=true) @PathVariable("idpCode") String idpCode);
+    ResponseEntity<Customer> findByReferenceUsingGET(@ApiParam(value = "reference",required=true) @PathVariable("reference") String reference);
+
+
+    @ApiOperation(value = "findLoyaltyPointByIdpCode", nickname = "findLoyaltyPointByIdpCodeUsingGET", notes = "", response = Long.class, tags={ "customer-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = Long.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findLoyaltyPointByIdpCode/{idpCode}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<Long> findLoyaltyPointByIdpCodeUsingGET(@ApiParam(value = "idpCode",required=true) @PathVariable("idpCode") String idpCode);
 
 
     @ApiOperation(value = "getAllCustomers", nickname = "getAllCustomersUsingGET", notes = "", response = CustomerDTO.class, responseContainer = "List", tags={ "customer-resource", })
@@ -116,18 +116,6 @@ public interface CustomerResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<CustomerDTO> getCustomerUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
-
-
-    @ApiOperation(value = "getPdfAllCustomers", nickname = "getPdfAllCustomersUsingGET", notes = "", response = byte[].class, tags={ "customer-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = byte[].class),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/pdf/customerReport",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<byte[]> getPdfAllCustomersUsingGET();
 
 
     @ApiOperation(value = "modelToDto", nickname = "modelToDtoUsingPOST", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
@@ -197,6 +185,19 @@ public interface CustomerResourceApi {
     ResponseEntity<CustomerDTO> updateCustomerUsingPUT(@ApiParam(value = "customerDTO" ,required=true )  @Valid @RequestBody CustomerDTO customerDTO);
 
 
+    @ApiOperation(value = "updateLoyaltyPoint", nickname = "updateLoyaltyPointUsingPOST", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = CustomerDTO.class),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/updateLoyaltyPoint/{idpCode}/{point}",
+        produces = "*/*", 
+        method = RequestMethod.POST)
+    ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(@ApiParam(value = "idpCode",required=true) @PathVariable("idpCode") String idpCode,@ApiParam(value = "point",required=true) @PathVariable("point") Long point);
+
+
     @ApiOperation(value = "verifyOTP", nickname = "verifyOTPUsingPOST", notes = "", response = OTPChallenge.class, tags={ "customer-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = OTPChallenge.class),
@@ -208,5 +209,7 @@ public interface CustomerResourceApi {
         produces = "*/*", 
         method = RequestMethod.POST)
     ResponseEntity<OTPChallenge> verifyOTPUsingPOST(@NotNull @ApiParam(value = "code", required = true) @Valid @RequestParam(value = "code", required = true) String code,@NotNull @ApiParam(value = "numbers", required = true) @Valid @RequestParam(value = "numbers", required = true) Long numbers);
+
+
 
 }

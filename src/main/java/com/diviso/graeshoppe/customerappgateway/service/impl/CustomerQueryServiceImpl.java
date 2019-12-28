@@ -52,6 +52,9 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 
 	@Autowired
 	ContactMapper contactMapper;
+	
+	@Autowired
+	CustomerResourceApi customerResourceApi;
 
 	private RestHighLevelClient restHighLevelClient;
 
@@ -261,29 +264,15 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		return result;
 	}
 
-	// delete me when all testing completed
-	/*
-	 * public ResponseEntity<CustomerDTO> findCustomerDTOByIdpCode( String idpCode)
-	 * { return
-	 * customerResourceApi.modelToDtoUsingPOST(findCustomerByIdpCode(idpCode));
-	 * 
-	 * 
-	 * }
+	
+	/**
+	 * @param idpCode the idpCode of the Customer
+	 * @return the loyaltypoint
 	 */
-	// delete me when all testing completed
-	/*
-	 * public ResponseEntity<ContactDTO> findContactById(Long id){ return
-	 * contactResourceApi.getContactUsingGET(id); }
-	 */
+	@Override
+	public Long findLoyaltyPointByIdpCode(String idpCode) {
+	return customerResourceApi.findLoyaltyPointByIdpCodeUsingGET(idpCode).getBody();
 
-	// delete me when all testing completed
-	/*
-	 * public ResponseEntity<Boolean> checkUserExists(String reference){ return
-	 * customerResourceApi.checkUserExistsUsingGET(reference); }
-	 */
-	// delete me when all testing completed
-	/*
-	 * public ResponseEntity<CustomerDTO> findByMobileNumber(Long mobileNumber){
-	 * return customerResourceApi.findByMobileNumberUsingGET(mobileNumber); }
-	 */
+	
+	}
 }

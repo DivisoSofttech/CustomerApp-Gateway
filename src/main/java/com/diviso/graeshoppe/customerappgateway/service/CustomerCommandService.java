@@ -14,6 +14,8 @@ import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteS
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPChallenge;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPResponse;
 
+import io.swagger.annotations.ApiParam;
+
 public interface CustomerCommandService {
 
 	public ResponseEntity<CustomerDTO> createCustomer(CustomerAggregator customerAggregator);
@@ -31,7 +33,8 @@ public interface CustomerCommandService {
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(FavouriteStoreDTO favouriteStoreDTO);
 	public ResponseEntity<Void> deleteFavouriteStore(Long id) ;
 	
-	
+	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point);
+
 	
 	
 }

@@ -106,5 +106,11 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 	}
 
 
+	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point) {
+		return this.customerResourceApi.updateLoyaltyPointUsingPOST(idpCode, point);
+		
+	}
+
+
 
 }
