@@ -934,7 +934,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	@Override
 	public Page<Banner> findBannersByRegNo(Pageable pageable, String regNo) {
 		QueryBuilder queryBuilder = QueryBuilders.boolQuery()
-				.must(QueryBuilders.matchAllQuery()).filter(QueryBuilders.termQuery("regNo.keyword", regNo));
+				.must(QueryBuilders.matchAllQuery()).filter(QueryBuilders.termQuery("store.regNo.keyword", regNo));
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(queryBuilder);
