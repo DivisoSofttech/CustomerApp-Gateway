@@ -4,7 +4,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-import org.elasticsearch.index.query.QueryBuilder;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -19,6 +19,7 @@ import org.elasticsearch.client.RestHighLevelClient;
 import org.elasticsearch.client.core.CountRequest;
 import org.elasticsearch.client.core.CountResponse;
 import org.elasticsearch.common.unit.DistanceUnit;
+import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.aggregations.AggregationBuilders;
@@ -26,35 +27,29 @@ import org.elasticsearch.search.aggregations.Aggregations;
 import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
-import org.elasticsearch.search.sort.ScoreSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.DeliveryInfo;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.HeaderSearch;
-/*import com.diviso.graeshoppe.customerappgateway.client.store.domain.RatingReview;*/
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreAddress;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreSettings;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreType;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
 import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {

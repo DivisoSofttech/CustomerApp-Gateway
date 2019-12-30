@@ -1,10 +1,6 @@
 package com.diviso.graeshoppe.customerappgateway.web.rest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.customerappgateway.client.aggregators.CustomerAggregator;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.ContactResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.CustomerResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.FavouriteProductResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.FavouriteStoreResourceApi;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProductDTO;
@@ -42,31 +34,12 @@ import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentInit
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentInitiateResponse;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTransaction;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTransactionResponse;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.CategoryResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.ProductResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.StockCurrentResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.UomResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.CategoryDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.ProductDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.StockCurrentDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.UOMDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReplyResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReviewResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.StoreResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.UserRatingResourceApi;
-//import com.diviso.graeshoppe.customerappgateway.client.store.domain.RatingReview;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.ReplyDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.ReviewDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReviewDTO;
+import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OfferCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.PaymentCommandService;
-import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
-import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreCommandService;
 
 @RestController
@@ -81,19 +54,13 @@ public class CommandResource {
 
 	@Autowired
 	private StoreCommandService storeCommandService;
-
-	
-
 	@Autowired
 	private PaymentCommandService paymentCommandService;
 
 	@Autowired
 	private OfferCommandService offerCommandService;
 
-	//private final Logger log = LoggerFactory.getLogger(CommandResource.class);
-
-	// **************************customerCommandService*********************************
-	@PostMapping("/customers/register-customer")
+@PostMapping("/customers/register-customer")
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerAggregator customerAggregator) {
 
 		return customerCommandService.createCustomer(customerAggregator);

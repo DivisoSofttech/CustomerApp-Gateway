@@ -8,13 +8,13 @@ import org.springframework.data.domain.Pageable;
 
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.DeliveryInfo;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
+
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreAddress;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreSettings;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreType;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
+
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
@@ -27,8 +27,6 @@ public interface StoreQueryService {
 	List<ResultBucket> findRatingCount(Pageable pageable);
 
 	Page<Store> findStoreByDeliveryType(String deliveryType, Pageable pageable);
-
-	//Page<Store> findStoreByType(String name, Pageable pageable);
 
 	Page<Store> findStoreByTypeName(String name, Pageable pageable);
 
