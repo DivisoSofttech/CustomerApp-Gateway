@@ -963,7 +963,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		PhraseSuggestion phraseSuggestion = suggest.getSuggestion("suggest_name");
 		System.out.println("aaaaaaaaaaaaaaaaaa"+phraseSuggestion.getEntries().size());;
 		for (PhraseSuggestion.Entry entry : phraseSuggestion.getEntries()) { 
-		    for (PhraseSuggestion.Entry.Option option : entry) { 
+			
+			System.out.println("inside firstloop"+entry.getText());
+			for (PhraseSuggestion.Entry.Option option : entry) { 
+				System.out.println("inside 2ndloop");
 		    	System.out.println("option"+option.getText().string());
 		        /*String */suggestText .add(option.getText().string());
 		    }
