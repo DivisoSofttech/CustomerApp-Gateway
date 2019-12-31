@@ -953,7 +953,12 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		searchSourceBuilder.suggest(suggestBuilder);
 		SearchRequest searchRequest = new SearchRequest("store");
 		searchRequest.source(searchSourceBuilder);
-		SearchResponse searchResponse = new SearchResponse();
+	
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
+		}
 		Suggest suggest = searchResponse.getSuggest(); 
 		TermSuggestion termSuggestion = suggest.getSuggestion("suggest_user"); 
 		for (TermSuggestion.Entry entry : termSuggestion.getEntries()) { 
