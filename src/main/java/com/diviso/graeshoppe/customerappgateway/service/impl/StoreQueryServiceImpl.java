@@ -947,11 +947,11 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		List<String> suggestText = new ArrayList<>();
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		SuggestionBuilder termSuggestionBuilder =
-		    SuggestBuilders.termSuggestion("name").text(searchTerm); 
+		    SuggestBuilders.phraseSuggestion("name").text(searchTerm); 
 		SuggestBuilder suggestBuilder = new SuggestBuilder();
 		suggestBuilder.addSuggestion("suggest_name", termSuggestionBuilder); 
 		searchSourceBuilder.suggest(suggestBuilder);
-		SearchRequest searchRequest = new SearchRequest("store","product","category");
+		SearchRequest searchRequest = new SearchRequest("store"/*,"product","category"*/);
 		searchRequest.source(searchSourceBuilder);
 	
 		SearchResponse searchResponse = null;
