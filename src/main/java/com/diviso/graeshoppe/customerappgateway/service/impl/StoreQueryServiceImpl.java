@@ -50,7 +50,10 @@ import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
 import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
+import org.elasticsearch.search.suggest.term.*;
+import org.elasticsearch.search.suggest.*;
+import org.elasticsearch.search.suggest.phrase.*;
+import org.elasticsearch.search.suggest.SuggestBuilder;
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {
 
@@ -939,6 +942,39 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Banner());
 	}
 
+	
+	public List<String> searchSuggestion(String searchTerm){
+		List<String> suggestText = new ArrayList<>();
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		SuggestionBuilder termSuggestionBuilder =
+		    SuggestBuilders.termSuggestion("name").text("spce"); 
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
+		suggestBuilder.addSuggestion("suggest_user", termSuggestionBuilder); 
+		searchSourceBuilder.suggest(suggestBuilder);
+		SearchRequest searchRequest = new SearchRequest("store");
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = new SearchResponse();
+		Suggest suggest = searchResponse.getSuggest(); 
+		TermSuggestion termSuggestion = suggest.getSuggestion("suggest_user"); 
+		for (TermSuggestion.Entry entry : termSuggestion.getEntries()) { 
+		    for (TermSuggestion.Entry.Option option : entry) { 
+		        /*String */suggestText .add(option.getText().string());
+		    }
+		}
+		return suggestText;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
 }

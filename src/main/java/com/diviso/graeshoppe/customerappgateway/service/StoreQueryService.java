@@ -67,5 +67,7 @@ public interface StoreQueryService {
     Long findUserRatingReviewCountByRegNo(String regNo);
 
 	Page<Banner> findBannersByRegNo(Pageable pageable, String regNo);
+	
+	public List<String> searchSuggestion(String searchTerm);
 
 }

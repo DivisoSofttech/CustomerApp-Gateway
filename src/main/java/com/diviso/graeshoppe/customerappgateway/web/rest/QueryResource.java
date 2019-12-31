@@ -514,6 +514,12 @@ public class QueryResource {
 
 	}
 	
+	
+	@GetMapping("/test/{data}")
+	public List<String> searchSuggestion(@PathVariable("data") String data){
+		return storeQueryService.searchSuggestion(data);
+	}
+	
 	// ****************order related end points********
 	
 
