@@ -951,7 +951,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		SuggestBuilder suggestBuilder = new SuggestBuilder();
 		suggestBuilder.addSuggestion("suggest_name",phraseSuggestionBuilder); 
 		searchSourceBuilder.suggest(suggestBuilder);
-		SearchRequest searchRequest = new SearchRequest("store"/*,"product","category"*/);
+		SearchRequest searchRequest = new SearchRequest("store","product","category");
 		searchRequest.source(searchSourceBuilder);
 	
 		SearchResponse searchResponse = null;
@@ -960,9 +960,11 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
 		}
 		Suggest suggest = searchResponse.getSuggest(); 
-		PhraseSuggestion phraseSuggestion = suggest.getSuggestion("suggest_name"); 
+		PhraseSuggestion phraseSuggestion = suggest.getSuggestion("suggest_name");
+		System.out.println("aaaaaaaaaaaaaaaaaa"+phraseSuggestion.getEntries().size());;
 		for (PhraseSuggestion.Entry entry : phraseSuggestion.getEntries()) { 
 		    for (PhraseSuggestion.Entry.Option option : entry) { 
+		    	System.out.println("option"+option.getText().string());
 		        /*String */suggestText .add(option.getText().string());
 		    }
 		}
