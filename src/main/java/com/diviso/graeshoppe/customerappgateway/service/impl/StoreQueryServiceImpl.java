@@ -946,10 +946,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	public List<String> searchSuggestion(String searchTerm){
 		List<String> suggestText = new ArrayList<>();
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		SuggestionBuilder termSuggestionBuilder =
+		SuggestionBuilder phraseSuggestionBuilder =
 		    SuggestBuilders.phraseSuggestion("name").text(searchTerm); 
 		SuggestBuilder suggestBuilder = new SuggestBuilder();
-		suggestBuilder.addSuggestion("suggest_name", termSuggestionBuilder); 
+		suggestBuilder.addSuggestion("suggest_name",phraseSuggestionBuilder); 
 		searchSourceBuilder.suggest(suggestBuilder);
 		SearchRequest searchRequest = new SearchRequest("store"/*,"product","category"*/);
 		searchRequest.source(searchSourceBuilder);
@@ -960,9 +960,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
 		}
 		Suggest suggest = searchResponse.getSuggest(); 
-		TermSuggestion termSuggestion = suggest.getSuggestion("suggest_name"); 
-		for (TermSuggestion.Entry entry : termSuggestion.getEntries()) { 
-		    for (TermSuggestion.Entry.Option option : entry) { 
+		PhraseSuggestion phraseSuggestion = suggest.getSuggestion("suggest_name"); 
+		for (PhraseSuggestion.Entry entry : phraseSuggestion.getEntries()) { 
+		    for (PhraseSuggestion.Entry.Option option : entry) { 
 		        /*String */suggestText .add(option.getText().string());
 		    }
 		}
