@@ -514,6 +514,14 @@ public class QueryResource {
 
 	}
 	
+	@GetMapping("/suggest/{data}")
+	public List<String> getSuggestion(@PathVariable String data) {
+
+		return storeQueryService.searchSuggestion(data);
+
+	}
+	
+	
 	// ****************order related end points********
 	
 
@@ -648,6 +656,10 @@ public class QueryResource {
 		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
 
 	}
+	
+	
+	
+	
 	// ****************Report related end points********
 	
 	/**
