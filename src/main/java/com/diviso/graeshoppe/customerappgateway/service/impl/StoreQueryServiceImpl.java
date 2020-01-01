@@ -949,7 +949,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		SuggestBuilder suggestBuilder = new SuggestBuilder();
 		suggestBuilder.addSuggestion("suggest_name",completionSuggestionBuilder); 
 		searchSourceBuilder.suggest(suggestBuilder);
-		SearchRequest searchRequest = new SearchRequest("storesuggest");
+		SearchRequest searchRequest = new SearchRequest("storesuggestion");
 		searchRequest.source(searchSourceBuilder);
 	
 		SearchResponse searchResponse = null;
