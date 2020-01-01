@@ -1,5 +1,5 @@
 package com.diviso.graeshoppe.customerappgateway.service.impl;
-
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
@@ -943,7 +943,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	
-	public List<String> searchSuggestion(String searchTerm){
+	/*public List<String> searchSuggestion(String searchTerm){
 		List<String> suggestText = new ArrayList<>();
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		SuggestionBuilder phraseSuggestionBuilder =
@@ -968,14 +968,44 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			for (PhraseSuggestion.Entry.Option option : entry) { 
 				System.out.println("inside 2ndloop");
 		    	System.out.println("option"+option.getText().string());
-		        /*String */suggestText .add(option.getText().string());
+		        String suggestText .add(option.getText().string());
 		    }
 		}
 		return suggestText;
 	}
+	*/
 	
+	public List<String> searchSuggestion(String searchTerm){
+		List<String> suggestText = new ArrayList<>();
+		SuggestionBuilder completionSuggestionBuilder = SuggestBuilders.completionSuggestion("suggest").prefix(searchTerm);
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		SuggestBuilder suggestBuilder = new SuggestBuilder();
+		suggestBuilder.addSuggestion("suggest_name",completionSuggestionBuilder); 
+		searchSourceBuilder.suggest(suggestBuilder);
+		SearchRequest searchRequest = new SearchRequest("storesuggest");
+		searchRequest.source(searchSourceBuilder);
 	
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
+		}
+		Suggest suggest = searchResponse.getSuggest(); 
 	
+		CompletionSuggestion completionSuggestion =suggest.getSuggestion("suggest_name");
+	for (CompletionSuggestion.Entry entry : completionSuggestion.getEntries()) { 
+			
+			System.out.println("inside firstloop"+entry.getText());
+			for (PhraseSuggestion.Entry.Option option : entry) { 
+				System.out.println("inside 2ndloop");
+		    	System.out.println("option"+option.getText().string());
+		        suggestText .add(option.getText().string());
+		    }
+		}
+		return suggestText;
+		
+	
+	}
 	
 	
 	
