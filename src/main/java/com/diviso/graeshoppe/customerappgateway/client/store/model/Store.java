@@ -5,6 +5,7 @@ import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Set;
 
+
 import org.springframework.validation.annotation.Validated;
 
 /**
@@ -14,13 +15,13 @@ import org.springframework.validation.annotation.Validated;
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-30T14:09:05.929+05:30[Asia/Kolkata]")
 
 public class Store   {
-    private Long id;
+   
+	private Long id;
 
     private String regNo;
 
 
     private String name;
-
 
     private Double totalRating;
 

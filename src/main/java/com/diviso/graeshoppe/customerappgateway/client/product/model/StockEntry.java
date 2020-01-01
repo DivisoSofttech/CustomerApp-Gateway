@@ -2,6 +2,7 @@ package com.diviso.graeshoppe.customerappgateway.client.product.model;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
@@ -25,7 +26,7 @@ public class StockEntry implements Serializable {
     private String reference;
 
 
-    private LocalDate date;
+    private OffsetDateTime date;
 
     private String description;
 
@@ -71,16 +72,16 @@ public class StockEntry implements Serializable {
         this.reference = reference;
     }
 
-    public LocalDate getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
 
-    public StockEntry date(LocalDate date) {
+    public StockEntry date(OffsetDateTime date) {
         this.date = date;
         return this;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(OffsetDateTime date) {
         this.date = date;
     }
 
