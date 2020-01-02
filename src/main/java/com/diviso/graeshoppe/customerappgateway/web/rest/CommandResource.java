@@ -60,10 +60,6 @@ public class CommandResource {
 	@Autowired
 	private OfferCommandService offerCommandService;
 
-	@PostMapping("/test")
-	public String postTest() {
-		return "It Worked";
-	}
 	
 	public CommandResource() {
 		
