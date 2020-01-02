@@ -1,133 +1,87 @@
 package com.diviso.graeshoppe.customerappgateway.client.store.model;
 
-import java.util.Objects;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
 /**
- * StoreType
+ * StoreTypeDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T13:57:13.442+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-30T14:09:05.929+05:30[Asia/Kolkata]")
 
 public class StoreType   {
-  @JsonProperty("id")
-  private Long id = null;
+		private Long id;
 
-  @JsonProperty("name")
-  private String name = null;
+	    private String name;
 
-  @JsonProperty("store")
-  private Store store = null;
+	    private Store store;
 
-  public StoreType id(Long id) {
-    this.id = id;
-    return this;
-  }
+		public Long getId() {
+			return id;
+		}
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+		public void setId(Long id) {
+			this.id = id;
+		}
 
+		public String getName() {
+			return name;
+		}
 
-  public Long getId() {
-    return id;
-  }
+		public void setName(String name) {
+			this.name = name;
+		}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+		public Store getStore() {
+			return store;
+		}
 
-  public StoreType name(String name) {
-    this.name = name;
-    return this;
-  }
+		public void setStore(Store store) {
+			this.store = store;
+		}
 
-  /**
-   * Get name
-   * @return name
-  **/
-  @ApiModelProperty(value = "")
+		@Override
+		public String toString() {
+			return "StoreType [id=" + id + ", name=" + name + ", store=" + store + "]";
+		}
 
+		@Override
+		public int hashCode() {
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + ((id == null) ? 0 : id.hashCode());
+			result = prime * result + ((name == null) ? 0 : name.hashCode());
+			result = prime * result + ((store == null) ? 0 : store.hashCode());
+			return result;
+		}
 
-  public String getName() {
-    return name;
-  }
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public StoreType store(Store store) {
-    this.store = store;
-    return this;
-  }
-
-  /**
-   * Get store
-   * @return store
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Store getStore() {
-    return store;
-  }
-
-  public void setStore(Store store) {
-    this.store = store;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    StoreType storeType = (StoreType) o;
-    return Objects.equals(this.id, storeType.id) &&
-        Objects.equals(this.name, storeType.name) &&
-        Objects.equals(this.store, storeType.store);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(id, name, store);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class StoreType {\n");
-    
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    store: ").append(toIndentedString(store)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			StoreType other = (StoreType) obj;
+			if (id == null) {
+				if (other.id != null)
+					return false;
+			} else if (!id.equals(other.id))
+				return false;
+			if (name == null) {
+				if (other.name != null)
+					return false;
+			} else if (!name.equals(other.name))
+				return false;
+			if (store == null) {
+				if (other.store != null)
+					return false;
+			} else if (!store.equals(other.store))
+				return false;
+			return true;
+		}
+	    
+	    
+	    
+	    
 }
-

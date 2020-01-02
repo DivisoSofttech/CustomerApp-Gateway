@@ -1,188 +1,113 @@
 package com.diviso.graeshoppe.customerappgateway.client.store.model;
 
-import java.util.Objects;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonCreator;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
-import org.springframework.validation.annotation.Validated;
-import javax.validation.Valid;
-import javax.validation.constraints.*;
 
-/**
- * DeliveryInfo
- */
-@Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-02T13:57:13.442+05:30[Asia/Kolkata]")
 
 public class DeliveryInfo   {
-  @JsonProperty("endTime")
-  private OffsetDateTime endTime = null;
+    private Long id;
 
-  @JsonProperty("id")
-  private Long id = null;
+    private OffsetDateTime startingTime;
 
-  @JsonProperty("startingTime")
-  private OffsetDateTime startingTime = null;
+    private OffsetDateTime endTime;
 
-  @JsonProperty("store")
-  private Store store = null;
+    private Type type;
 
-  @JsonProperty("type")
-  private Type type = null;
+    private Store store;
 
-  public DeliveryInfo endTime(OffsetDateTime endTime) {
-    this.endTime = endTime;
-    return this;
-  }
+	public Long getId() {
+		return id;
+	}
 
-  /**
-   * Get endTime
-   * @return endTime
-  **/
-  @ApiModelProperty(value = "")
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-  @Valid
+	public OffsetDateTime getStartingTime() {
+		return startingTime;
+	}
 
-  public OffsetDateTime getEndTime() {
-    return endTime;
-  }
+	public void setStartingTime(OffsetDateTime startingTime) {
+		this.startingTime = startingTime;
+	}
 
-  public void setEndTime(OffsetDateTime endTime) {
-    this.endTime = endTime;
-  }
+	public OffsetDateTime getEndTime() {
+		return endTime;
+	}
 
-  public DeliveryInfo id(Long id) {
-    this.id = id;
-    return this;
-  }
+	public void setEndTime(OffsetDateTime endTime) {
+		this.endTime = endTime;
+	}
 
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
+	public Type getType() {
+		return type;
+	}
 
+	public void setType(Type type) {
+		this.type = type;
+	}
 
-  public Long getId() {
-    return id;
-  }
+	public Store getStore() {
+		return store;
+	}
 
-  public void setId(Long id) {
-    this.id = id;
-  }
+	public void setStore(Store store) {
+		this.store = store;
+	}
 
-  public DeliveryInfo startingTime(OffsetDateTime startingTime) {
-    this.startingTime = startingTime;
-    return this;
-  }
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((endTime == null) ? 0 : endTime.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((startingTime == null) ? 0 : startingTime.hashCode());
+		result = prime * result + ((store == null) ? 0 : store.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
+		return result;
+	}
 
-  /**
-   * Get startingTime
-   * @return startingTime
-  **/
-  @ApiModelProperty(value = "")
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		DeliveryInfo other = (DeliveryInfo) obj;
+		if (endTime == null) {
+			if (other.endTime != null)
+				return false;
+		} else if (!endTime.equals(other.endTime))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (startingTime == null) {
+			if (other.startingTime != null)
+				return false;
+		} else if (!startingTime.equals(other.startingTime))
+			return false;
+		if (store == null) {
+			if (other.store != null)
+				return false;
+		} else if (!store.equals(other.store))
+			return false;
+		if (type == null) {
+			if (other.type != null)
+				return false;
+		} else if (!type.equals(other.type))
+			return false;
+		return true;
+	}
 
-  @Valid
-
-  public OffsetDateTime getStartingTime() {
-    return startingTime;
-  }
-
-  public void setStartingTime(OffsetDateTime startingTime) {
-    this.startingTime = startingTime;
-  }
-
-  public DeliveryInfo store(Store store) {
-    this.store = store;
-    return this;
-  }
-
-  /**
-   * Get store
-   * @return store
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Store getStore() {
-    return store;
-  }
-
-  public void setStore(Store store) {
-    this.store = store;
-  }
-
-  public DeliveryInfo type(Type type) {
-    this.type = type;
-    return this;
-  }
-
-  /**
-   * Get type
-   * @return type
-  **/
-  @ApiModelProperty(value = "")
-
-  @Valid
-
-  public Type getType() {
-    return type;
-  }
-
-  public void setType(Type type) {
-    this.type = type;
-  }
-
-
-  @Override
-  public boolean equals(java.lang.Object o) {
-    if (this == o) {
-      return true;
-    }
-    if (o == null || getClass() != o.getClass()) {
-      return false;
-    }
-    DeliveryInfo deliveryInfo = (DeliveryInfo) o;
-    return Objects.equals(this.endTime, deliveryInfo.endTime) &&
-        Objects.equals(this.id, deliveryInfo.id) &&
-        Objects.equals(this.startingTime, deliveryInfo.startingTime) &&
-        Objects.equals(this.store, deliveryInfo.store) &&
-        Objects.equals(this.type, deliveryInfo.type);
-  }
-
-  @Override
-  public int hashCode() {
-    return Objects.hash(endTime, id, startingTime, store, type);
-  }
-
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class DeliveryInfo {\n");
+	@Override
+	public String toString() {
+		return "DeliveryInfo [id=" + id + ", startingTime=" + startingTime + ", endTime=" + endTime + ", type=" + type
+				+ ", store=" + store + "]";
+	}
     
-    sb.append("    endTime: ").append(toIndentedString(endTime)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    startingTime: ").append(toIndentedString(startingTime)).append("\n");
-    sb.append("    store: ").append(toIndentedString(store)).append("\n");
-    sb.append("    type: ").append(toIndentedString(type)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
-
-  /**
-   * Convert the given object to string with each line indented by 4 spaces
-   * (except the first line).
-   */
-  private String toIndentedString(java.lang.Object o) {
-    if (o == null) {
-      return "null";
-    }
-    return o.toString().replace("\n", "\n    ");
-  }
 }
 

@@ -1,62 +1,26 @@
 package com.diviso.graeshoppe.customerappgateway.service.impl;
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.http.ResponseEntity;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import com.diviso.graeshoppe.customerappgateway.client.store.api.ReplyResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReviewResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.StoreResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.UserRatingResourceApi;
 import com.diviso.graeshoppe.customerappgateway.client.store.api.UserRatingReviewResourceApi;
-//import com.diviso.graeshoppe.customerappgateway.client.store.domain.RatingReview;
+
 import com.diviso.graeshoppe.customerappgateway.client.store.model.ReplyDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.ReviewDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReviewDTO;
 import com.diviso.graeshoppe.customerappgateway.service.StoreCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
 import com.diviso.graeshoppe.customerappgateway.web.rest.QueryResource;
-
-import io.swagger.annotations.ApiParam;
 @Service
 public class StoreCommandServiceImpl  implements StoreCommandService {
-
-	
-	@Autowired
-	private StoreResourceApi storeResourceApi;
 
 
 	@Autowired
 	private ReplyResourceApi replyResourceApi;
 
-	@Autowired
-	private UserRatingResourceApi userRatingResourceApi;
 
-	@Autowired
-	private ReviewResourceApi reviewResourceApi;
-	
 	@Autowired
 	QueryResource queryResource;
 	

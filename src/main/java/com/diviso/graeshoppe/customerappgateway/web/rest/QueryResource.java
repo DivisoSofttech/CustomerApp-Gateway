@@ -1,43 +1,35 @@
 package com.diviso.graeshoppe.customerappgateway.web.rest;
 
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.time.Instant;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.ContactResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.CustomerResourceApi;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.customerappgateway.client.order.api.OrderQueryResourceApi;
+import com.diviso.graeshoppe.customerappgateway.client.order.model.OpenTask;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Address;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.AuxilaryOrderLine;
+import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Notification;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Offer;
-import com.diviso.graeshoppe.customerappgateway.client.order.model.OpenTask;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Order;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.OrderLine;
-import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Notification;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.CategoryResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.ProductResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.StockCurrentResourceApi;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.AuxilaryLineItem;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.Category;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.ComboLineItem;
@@ -46,29 +38,24 @@ import com.diviso.graeshoppe.customerappgateway.client.product.model.Product;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.StockCurrent;
 import com.diviso.graeshoppe.customerappgateway.client.report.model.OrderAggregator;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.BannerResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReviewResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.StoreTypeResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.UserRatingResourceApi;
+import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.DeliveryInfo;
-//import com.diviso.graeshoppe.customerappgateway.client.store.domain.RatingReview;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreAddress;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreSettings;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreType;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.BannerDTO;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
+import com.diviso.graeshoppe.customerappgateway.service.AdministrationQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.CustomerQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.OfferQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
+
+import io.swagger.annotations.ApiParam;
 
 @RestController
 @RequestMapping("/api/query")
@@ -81,6 +68,9 @@ public class QueryResource {
 	@Autowired
 	StoreQueryService storeQueryService;
 
+	@Autowired
+	AdministrationQueryService administrationQueryService;
+	
 	@Autowired
 	CustomerQueryService customerQueryService;
 
@@ -483,10 +473,10 @@ public class QueryResource {
      * @param pageable the pageable to create
      * @return page of Banner in body 
      */
-	@GetMapping("/stores/banners")
-	public Page<Banner> findStoreBanner(Pageable pageable) {
+	@GetMapping("/stores/findBannersByRegNo/{regNo}")
+	public Page<Banner> findBannersByRegNo(Pageable pageable, String regNo) {
 
-		return storeQueryService.findStoreBanner(pageable);
+		return storeQueryService.findBannersByRegNo(pageable, regNo);
 	}
 	/**
      * GET  /facetSearchByStoreTypeName Get the storeTypeName based Store
@@ -523,6 +513,14 @@ public class QueryResource {
 		return storeQueryService.getStoreAddress(IDPCode);
 
 	}
+	
+	@GetMapping("/suggest/{data}")
+	public List<String> getSuggestion(@PathVariable String data) {
+
+		return storeQueryService.searchSuggestion(data);
+
+	}
+	
 	
 	// ****************order related end points********
 	
@@ -658,6 +656,10 @@ public class QueryResource {
 		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
 
 	}
+	
+	
+	
+	
 	// ****************Report related end points********
 	
 	/**
@@ -683,4 +685,28 @@ public class QueryResource {
 	public List<Offer> findOfferLinesByOrderId(@PathVariable Long id) {
 		return offerQueryService.findOfferLinesByOrderId(id);
 	}
+	
+	/**
+     * GET  /stores/banners Get all premium banners
+     * @param pageable the pageable to create
+     * @return page of Banner in body 
+     */
+	@GetMapping("/administration/premiumBanners")
+	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
+
+		return administrationQueryService.findPremiumBanners(pageable);
+	}
+	
+	/**
+     * GET  findLoyaltyPointByIdpCode
+     * @param idpCode 
+     * 
+     */
+	@GetMapping("/findLoyaltyPointByIdpCode/{idpCode}")
+    public Long findLoyaltyPointByIdpCode(@PathVariable String idpCode){
+    	
+    	return customerQueryService.findLoyaltyPointByIdpCode(idpCode);
+    }
+
+	
 }

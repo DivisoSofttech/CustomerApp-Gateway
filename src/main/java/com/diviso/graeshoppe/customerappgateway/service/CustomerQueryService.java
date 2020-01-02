@@ -6,11 +6,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
-import com.diviso.graeshoppe.customerappgateway.client.customer.model.Customer;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteStore;
-import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Address;
 
 public interface CustomerQueryService {
 
@@ -22,5 +20,5 @@ public interface CustomerQueryService {
 	public Boolean checkUserExistsByIdpCode(String idpCode);
 	public CustomerDTO findByMobileNumber(Long mobileNumber);
 	Page<FavouriteStore> findFavouriteStoresByCustomerIdpCode(String idpCode, Pageable pageable);
-	
+	Long findLoyaltyPointByIdpCode(String idpCode);
 }

@@ -1,10 +1,6 @@
 package com.diviso.graeshoppe.customerappgateway.web.rest;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,10 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.customerappgateway.client.aggregators.CustomerAggregator;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.ContactResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.CustomerResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.FavouriteProductResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.customer.api.FavouriteStoreResourceApi;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProductDTO;
@@ -42,31 +34,12 @@ import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentInit
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentInitiateResponse;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTransaction;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTransactionResponse;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.CategoryResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.ProductResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.StockCurrentResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.api.UomResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.CategoryDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.ProductDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.StockCurrentDTO;
-import com.diviso.graeshoppe.customerappgateway.client.product.model.UOMDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReplyResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.ReviewResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.StoreResourceApi;
-import com.diviso.graeshoppe.customerappgateway.client.store.api.UserRatingResourceApi;
-//import com.diviso.graeshoppe.customerappgateway.client.store.domain.RatingReview;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Review;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRating;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.ReplyDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.ReviewDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreDTO;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingDTO;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReviewDTO;
+import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OfferCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.PaymentCommandService;
-import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
-import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreCommandService;
 
 @RestController
@@ -81,9 +54,6 @@ public class CommandResource {
 
 	@Autowired
 	private StoreCommandService storeCommandService;
-
-	
-
 	@Autowired
 	private PaymentCommandService paymentCommandService;
 
@@ -105,21 +75,6 @@ public class CommandResource {
 	@PostMapping("/customers/register-customer")
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerAggregator customerAggregator) {
 
-		/*
-		 * CustomerDTO customerDTO = new CustomerDTO(); ContactDTO contactDTO = new
-		 * ContactDTO(); customerDTO.setName(customerAggregator.getName());
-		 * customerDTO.setIdpCode(customerAggregator.getIdpCode());
-		 * customerDTO.setIdpSub(customerAggregator.getIdpSub());
-		 * customerDTO.setImageLink(" ");
-		 * 
-		 * contactDTO.setMobileNumber(customerAggregator.getMobileNumber());
-		 * contactDTO.setEmail(customerAggregator.getEmail());
-		 * 
-		 * contactDTO.setPhoneCode(customerAggregator.getPhoneCode()); ContactDTO
-		 * resultDTO = contactResourceApi.createContactUsingPOST(contactDTO).getBody();
-		 * customerDTO.setContactId(resultDTO.getId()); return
-		 * customerResourceApi.createCustomerUsingPOST(customerDTO);
-		 */
 		return customerCommandService.createCustomer(customerAggregator);
 
 	}
@@ -146,12 +101,7 @@ public class CommandResource {
 
 	@DeleteMapping("/customers/{id}")
 	public void deleteCustomer(@PathVariable Long id) {
-		/*
-		 * Long contactid =
-		 * customerResourceApi.getCustomerUsingGET(id).getBody().getContactId();
-		 * customerResourceApi.deleteCustomerUsingDELETE(id);
-		 * this.deleteContact(contactid);
-		 */
+
 		customerCommandService.deleteCustomer(id);
 
 	}
@@ -172,32 +122,23 @@ public class CommandResource {
 	@PostMapping("/favouriteproduct")
 	public ResponseEntity<FavouriteProductDTO> createFavouriteProduct(
 			@RequestBody FavouriteProductDTO favouriteProductDTO) {
-		/*
-		 * return this.favouriteProductResourceApi.createFavouriteProductUsingPOST(
-		 * favouriteProductDTO);
-		 */
 		return customerCommandService.createFavouriteProduct(favouriteProductDTO);
 	}
 
 	@DeleteMapping("/favouriteproduct/{id}")
 	public ResponseEntity<Void> deleteFavouriteProduct(@PathVariable Long id) {
-		/*
-		 * return
-		 * this.favouriteProductResourceApi.deleteFavouriteProductUsingDELETE(id);
-		 */
+
 		return customerCommandService.deleteFavouriteProduct(id);
 	}
 
 	@PostMapping("/favouritestore")
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(@RequestBody FavouriteStoreDTO favouriteStoreDTO) {
-		// return
-		// this.favouriteStoreResourceApi.createFavouriteStoreUsingPOST(favouriteStoreDTO);
 		return customerCommandService.createFavouriteStore(favouriteStoreDTO);
 	}
 
 	@DeleteMapping("/favouritestore/{id}")
 	public ResponseEntity<Void> deleteFavouriteStore(@PathVariable Long id) {
-		// return this.favouriteStoreResourceApi.deleteFavouriteStoreUsingDELETE(id);
+
 		return customerCommandService.deleteFavouriteStore(id);
 	}
 
@@ -211,13 +152,13 @@ public class CommandResource {
 
 	@PutMapping("/replies")
 	public ResponseEntity<ReplyDTO> updateReply(@RequestBody ReplyDTO replyDTO) {
-		// return this.replyResourceApi.updateReplyUsingPUT(replyDTO);
+
 		return storeCommandService.updateReply(replyDTO);
 	}
 
 	@DeleteMapping("/replies/{id}")
 	public ResponseEntity<Void> deleteReply(@PathVariable Long id) {
-		// return this.replyResourceApi.deleteReplyUsingDELETE(id);
+
 		return storeCommandService.deleteReply(id);
 	}
 
@@ -337,4 +278,8 @@ public class CommandResource {
 
 	/***********************************************************************************/
 
+	@PostMapping("/updateLoyaltyPoint/{idpCode}/{point}")
+	CustomerDTO updateLoyaltyPoint(@PathVariable String idpCode, @PathVariable Long point) {
+		return customerCommandService.updateLoyaltyPointUsingPOST(idpCode, point).getBody();
+	}
 }
