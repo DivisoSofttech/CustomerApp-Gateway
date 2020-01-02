@@ -37,7 +37,6 @@ import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingDTO
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReviewDTO;
 import com.diviso.graeshoppe.customerappgateway.service.StoreCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
-import com.diviso.graeshoppe.customerappgateway.web.rest.CommandResource;
 import com.diviso.graeshoppe.customerappgateway.web.rest.QueryResource;
 
 import io.swagger.annotations.ApiParam;

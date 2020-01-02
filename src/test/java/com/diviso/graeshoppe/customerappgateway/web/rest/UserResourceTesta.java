@@ -38,7 +38,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  * Integration tests for the {@link UserResource} REST controller.
  */
 @SpringBootTest(classes = {CustomerappgatewayApp.class, TestSecurityConfiguration.class})
-public class UserResourceIT {
+public class UserResourceTesta {
 
     private static final String DEFAULT_LOGIN = "johndoe";
 

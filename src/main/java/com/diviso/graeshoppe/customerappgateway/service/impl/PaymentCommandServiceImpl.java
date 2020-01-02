@@ -52,11 +52,11 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
 	@Override
 	public ResponseEntity<CommandResource> processPayment(PaymentDTO paymentDTO, String status, String taskId) {
 		paymentDTO.setDateAndTime(OffsetDateTime.ofInstant(Instant.now(), ZoneId.systemDefault()));
-		ResponseEntity<PaymentDTO> dto = paymentResourceApi.createPaymentUsingPOST(paymentDTO);
 		ProcessPaymentRequest processPaymentRequest = new ProcessPaymentRequest();
 		processPaymentRequest.setPaymentStatus(status);
 		processPaymentRequest.setTaskId(taskId);
 		ResponseEntity<CommandResource> resource = processPaymentRequest(processPaymentRequest);
+		ResponseEntity<PaymentDTO> dto = paymentResourceApi.createPaymentUsingPOST(paymentDTO);
 		orderCommadnREsourceApi.publishOrderToMessagebrokerUsingPOST(paymentDTO.getTargetId());
 		return resource;
 	}

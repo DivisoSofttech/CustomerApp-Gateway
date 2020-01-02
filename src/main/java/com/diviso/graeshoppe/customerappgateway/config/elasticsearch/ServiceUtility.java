@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.customerappgateway.web.rest.util;
+package com.diviso.graeshoppe.customerappgateway.config.elasticsearch;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;

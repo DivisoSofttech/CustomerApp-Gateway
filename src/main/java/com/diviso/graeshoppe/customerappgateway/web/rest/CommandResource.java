@@ -90,7 +90,16 @@ public class CommandResource {
 	@Autowired
 	private OfferCommandService offerCommandService;
 
-	//private final Logger log = LoggerFactory.getLogger(CommandResource.class);
+	@PostMapping("/test")
+	public String postTest() {
+		return "It Worked";
+	}
+	
+	public CommandResource() {
+		
+		// TODO Auto-generated constructor stub
+	}
+	//private final Logger log = LoggerFactory.getLogger(CommandResourceTestsI.class);
 
 	// **************************customerCommandService*********************************
 	@PostMapping("/customers/register-customer")

@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CommandResource
+ * CommandResourceTestsI
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
@@ -132,7 +132,7 @@ public class CommandResource   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CommandResource {\n");
+    sb.append("class CommandResourceTestsI {\n");
     
     sb.append("    nextTaskId: ").append(toIndentedString(nextTaskId)).append("\n");
     sb.append("    nextTaskName: ").append(toIndentedString(nextTaskName)).append("\n");

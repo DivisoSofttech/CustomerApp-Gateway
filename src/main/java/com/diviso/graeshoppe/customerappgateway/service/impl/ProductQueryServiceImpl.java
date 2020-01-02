@@ -42,11 +42,11 @@ import com.diviso.graeshoppe.customerappgateway.client.product.model.Discount;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.Product;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.ProductDTO;
 import com.diviso.graeshoppe.customerappgateway.client.product.model.StockCurrent;
+import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.mapper.ProductMapper;
 import com.diviso.graeshoppe.customerappgateway.web.rest.QueryResource;
-import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service

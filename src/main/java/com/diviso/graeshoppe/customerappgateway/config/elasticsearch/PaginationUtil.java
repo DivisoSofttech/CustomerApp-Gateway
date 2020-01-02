@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.customerappgateway.web.rest.util;
+package com.diviso.graeshoppe.customerappgateway.config.elasticsearch;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;

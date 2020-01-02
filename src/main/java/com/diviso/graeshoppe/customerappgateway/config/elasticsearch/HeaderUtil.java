@@ -1,4 +1,4 @@
-package com.diviso.graeshoppe.customerappgateway.web.rest.util;
+package com.diviso.graeshoppe.customerappgateway.config.elasticsearch;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
