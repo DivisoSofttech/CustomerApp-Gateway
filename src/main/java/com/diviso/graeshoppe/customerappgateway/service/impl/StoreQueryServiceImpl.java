@@ -45,10 +45,10 @@ import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreSettings
 import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreType;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
+import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
-import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.search.suggest.term.*;
 import org.elasticsearch.search.suggest.*;

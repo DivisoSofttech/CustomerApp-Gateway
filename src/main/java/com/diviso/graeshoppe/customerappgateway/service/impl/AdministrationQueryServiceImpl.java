@@ -10,8 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner;
+import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
 import com.diviso.graeshoppe.customerappgateway.service.AdministrationQueryService;
-import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 
 @Service
 public class AdministrationQueryServiceImpl implements AdministrationQueryService {

@@ -18,6 +18,7 @@ public class OfferCommandServiceImpl implements OfferCommandService {
 	private AggregateCommandResourceApi aggregateCommandResourceApi;
 
 	private Logger log = LoggerFactory.getLogger(OfferCommandServiceImpl.class);
+	
 	@Autowired
 	private OrderQueryResourceApi orderQueryResourceApi;
 
@@ -26,10 +27,14 @@ public class OfferCommandServiceImpl implements OfferCommandService {
 		Long count = orderQueryResourceApi.countByCustomerIdAndStatusNameUsingGET(customerId, "payment-processed-unapproved")
 				.getBody();
 		log.info("Count for the customer " + customerId + " is " + count);
-		orderModel.setOrderNumber(count + 1);
-		orderModel.setPromoCode("SUPER10");
+		ResponseEntity<OrderModel> result = ResponseEntity.ok(new OrderModel());
+		if(count!=0) {
+			orderModel.setOrderNumber(count + 1);
+			orderModel.setPromoCode("SUPER10");
 
-		ResponseEntity<OrderModel> result = aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
+			result = aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
+		}
+		
 		return result;
 
 	}

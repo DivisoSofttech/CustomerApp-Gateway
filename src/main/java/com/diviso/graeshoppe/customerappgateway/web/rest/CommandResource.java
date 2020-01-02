@@ -60,7 +60,15 @@ public class CommandResource {
 	@Autowired
 	private OfferCommandService offerCommandService;
 
-@PostMapping("/customers/register-customer")
+	
+	public CommandResource() {
+		
+		// TODO Auto-generated constructor stub
+	}
+	//private final Logger log = LoggerFactory.getLogger(CommandResourceTestsI.class);
+
+	// **************************customerCommandService*********************************
+	@PostMapping("/customers/register-customer")
 	public ResponseEntity<CustomerDTO> createCustomer(@RequestBody CustomerAggregator customerAggregator) {
 
 		return customerCommandService.createCustomer(customerAggregator);

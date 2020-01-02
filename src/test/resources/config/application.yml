@@ -130,3 +130,37 @@ kafka:
 # ===================================================================
 
 # application:
+topic:
+   notification: notificationxtest
+elasticsearch:
+   host: 9a8bffb7a852435185aabd4670a7c19e.us-central1.gcp.cloud.es.io
+   port: 9243
+   username: elastic
+   password: zWmOqUXEJMFKJ66Zyn3erGt2
+   scheme: https
+   connectTimeout: 60 #in seconds
+customer:
+   url: dev.ci1.divisosofttech.com:8088
+   
+order:
+   url: dev.ci2.divisosofttech.com:8088
+   
+product: 
+   url: dev.ci1.divisosofttech.com:8084
+   
+sale:
+   url: dev.ci1.divisosofttech.com:8086
+   
+store:
+   url: dev.ci1.divisosofttech.com:8071
+   
+report:
+   url: dev.ci2.divisosofttech.com:8077
+   
+payment:
+   url: dev.ci2.divisosofttech.com:9090
+   
+socket:
+   server:
+      host: 0.0.0.0
+      port: 9999    

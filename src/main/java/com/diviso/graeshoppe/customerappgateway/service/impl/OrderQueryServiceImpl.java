@@ -34,9 +34,9 @@ import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Au
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Order;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.OrderLine;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
+import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Notification;
 import com.diviso.graeshoppe.customerappgateway.service.OrderQueryService;
-import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.elasticsearch.index.query.QueryBuilder;
 

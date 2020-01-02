@@ -33,10 +33,10 @@ import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteP
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteStore;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Address;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
+import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
 import com.diviso.graeshoppe.customerappgateway.service.CustomerQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.mapper.ContactMapper;
 import com.diviso.graeshoppe.customerappgateway.service.mapper.CustomerMapper;
-import com.diviso.graeshoppe.customerappgateway.web.rest.util.ServiceUtility;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Service
