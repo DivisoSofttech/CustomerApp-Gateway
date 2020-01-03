@@ -521,9 +521,9 @@ public class QueryResource {
 		return storeQueryService.searchSuggestion(data);
 
 	}
-	@PostMapping("/test")
-	public Page<HeaderResult> getHeaderResult(@RequestBody HeaderSuggestion headerSuggestion, Pageable pageable){
-		return storeQueryService.getHeaderResult(headerSuggestion,pageable);
+	@GetMapping("/getHeaderResult")
+	public Page<HeaderResult> getHeaderResult(@RequestParam String indexName,@RequestParam String suggestionData, Pageable pageable){
+		return storeQueryService.getHeaderResult(indexName,suggestionData,pageable);
 	}
 	
 	// ****************order related end points********

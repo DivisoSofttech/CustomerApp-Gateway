@@ -634,10 +634,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	}
 
-	public Page<HeaderResult> getHeaderResult(HeaderSuggestion headerSuggestion, Pageable pageable) {
+	public Page<HeaderResult> getHeaderResult(String indexName,String suggestionData,Pageable pageable) {
 		
-		String searchTerm=headerSuggestion.getSuggestionData();
-	    String indexName=headerSuggestion.getIndexName();
+	
+	   
 	    SearchRequest request = null;
 	    if(indexName.equals("store")) {
 	    	request=new  SearchRequest("store");
@@ -655,7 +655,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	    }
 		
 		QueryBuilder queryDsl = QueryBuilders.boolQuery().must(matchAllQuery())
-				.filter(termQuery("name.keyword", searchTerm ));
+				.filter(termQuery("name.keyword",suggestionData));
 		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(queryDsl);
