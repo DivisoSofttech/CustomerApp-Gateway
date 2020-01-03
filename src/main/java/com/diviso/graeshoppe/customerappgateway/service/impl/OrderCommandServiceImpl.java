@@ -116,7 +116,6 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 	}
 
 	public CommandResource createOrder(OrderDTO orderDTO) {
-		System.out.println("Order Going to save is "+orderDTO);
 		return orderCommandResourceApi.createOrderUsingPOST(orderDTO).getBody();
 
 	}
