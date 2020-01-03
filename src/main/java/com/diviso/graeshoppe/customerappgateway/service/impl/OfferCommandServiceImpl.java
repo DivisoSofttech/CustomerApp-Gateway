@@ -19,6 +19,7 @@ public class OfferCommandServiceImpl implements OfferCommandService {
 
 	private Logger log = LoggerFactory.getLogger(OfferCommandServiceImpl.class);
 
+	@Autowired
 	private CustomerQueryService customerQueryService;
 
 	@Override
