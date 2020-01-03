@@ -54,6 +54,7 @@ import com.diviso.graeshoppe.customerappgateway.service.OfferQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
+import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderResult;
 import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderSuggestion;
 import io.swagger.annotations.ApiParam;
 
@@ -520,7 +521,10 @@ public class QueryResource {
 		return storeQueryService.searchSuggestion(data);
 
 	}
-	
+	@PostMapping("/test")
+	public Page<HeaderResult> getHeaderResult(@RequestBody HeaderSuggestion headerSuggestion, Pageable pageable){
+		return storeQueryService.getHeaderResult(headerSuggestion,pageable);
+	}
 	
 	// ****************order related end points********
 	
