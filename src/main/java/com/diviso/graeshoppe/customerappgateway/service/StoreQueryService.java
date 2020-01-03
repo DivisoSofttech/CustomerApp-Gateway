@@ -70,6 +70,6 @@ public interface StoreQueryService {
 
 	Page<Banner> findBannersByRegNo(Pageable pageable, String regNo);
 	public List<HeaderSuggestion> searchSuggestion(String searchTerm);
-	public Page<HeaderResult> getHeaderResult(HeaderSuggestion headerSuggestion, Pageable pageable);
+	public Page<HeaderResult> getHeaderResult(String indexName,String suggestionData,Pageable pageable);
 
 }
