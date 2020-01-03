@@ -35,7 +35,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
+import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderSuggestion;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.DeliveryInfo;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.HeaderSearch;
@@ -599,11 +599,23 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return new PageImpl(storeList);
 
 	}
+/*	public Page<HeaderResult> getHeaderResult(String searchTerm, Pageable pageable) {
+		
+		
+		
+	}*/
+	
+	
+	
+	
+	
+	
+	
 
 	/**
-	 * @param values the HeaderSearch to create
-	 * @param pageable the Pageable to create
-	 * @return  page of Store in body
+	 * @param 
+	 * @param 
+	 * @return 
 	 */
 	@Override
 	public Page<Store> findStoreByLocationName(String locationName, Pageable pageable) {
@@ -942,14 +954,15 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Banner());
 	}
 
-	public List<String> searchSuggestion(String searchTerm){
-		List<String> suggestText = new ArrayList<>();
+	public List<HeaderSuggestion> searchSuggestion(String searchTerm){
+		
+		List<HeaderSuggestion> suggestionList = new ArrayList<>();
 		SuggestionBuilder completionSuggestionBuilder = SuggestBuilders.completionSuggestion("suggest").prefix(searchTerm).size(10);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		SuggestBuilder suggestBuilder = new SuggestBuilder();
 		suggestBuilder.addSuggestion("suggest_name",completionSuggestionBuilder); 
 		searchSourceBuilder.suggest(suggestBuilder);
-		SearchRequest searchRequest = new SearchRequest("storesuggestion,productsuggestion");
+		SearchRequest searchRequest = new SearchRequest("storesuggestion,productsuggestion,categorysuggestion");
 		searchRequest.source(searchSourceBuilder);
 	
 		SearchResponse searchResponse = null;
@@ -963,13 +976,26 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	for (CompletionSuggestion.Entry entry : completionSuggestion.getEntries()) { 
 			
 			System.out.println("inside firstloop"+entry.getText());
-			for (PhraseSuggestion.Entry.Option option : entry) { 
+			for (CompletionSuggestion.Entry.Option option : entry) {
+				String indexName= "";
 				System.out.println("inside 2ndloop");
-		    	System.out.println("option"+option.getText().string());
-		        suggestText .add(option.getText().string());
+				if(option.getHit().getIndex().equals("storesuggestion")) {
+					indexName = "store";
+				}
+				else if (option.getHit().getIndex().equals("productsuggestion")) {
+					indexName = "product";
+				}
+				else {
+					indexName = "category";
+				}
+				HeaderSuggestion headerSuggestion=new HeaderSuggestion();
+				headerSuggestion.setIndexName(indexName);
+				headerSuggestion.setSuggestionData(option.getText().string());
+				 suggestionList.add(headerSuggestion);
+		    	
 		    }
 		}
-		return suggestText;
+		return suggestionList;
 		
 	
 	}

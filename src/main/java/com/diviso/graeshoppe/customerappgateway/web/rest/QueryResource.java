@@ -54,7 +54,7 @@ import com.diviso.graeshoppe.customerappgateway.service.OfferQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
-
+import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderSuggestion;
 import io.swagger.annotations.ApiParam;
 
 @RestController
@@ -515,7 +515,7 @@ public class QueryResource {
 	}
 	
 	@GetMapping("/suggest/{data}")
-	public List<String> getSuggestion(@PathVariable String data) {
+	public List<HeaderSuggestion> getSuggestion(@PathVariable String data) {
 
 		return storeQueryService.searchSuggestion(data);
 
