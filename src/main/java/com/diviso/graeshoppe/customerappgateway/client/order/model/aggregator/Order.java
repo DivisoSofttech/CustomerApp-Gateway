@@ -53,6 +53,23 @@ public void setPaymentMode(String paymentMode) {
   @JsonProperty( "preOrderDate")
   private OffsetDateTime preOrderDate;
   
+  /**
+ * @return the timeZone
+ */
+public String getTimeZone() {
+	return timeZone;
+}
+
+/**
+ * @param timeZone the timeZone to set
+ */
+public void setTimeZone(String timeZone) {
+	this.timeZone = timeZone;
+}
+
+@JsonProperty("timeZone")
+  private String timeZone;
+  
   private String state ="NIL";
   /**
  * @return the allergyNote
@@ -428,14 +445,14 @@ public void setSubTotal(Double subTotal) {
 
 
 
+
+
 @Override
 public String toString() {
-	return "Order [appliedOffers=" + appliedOffers + ", approvalDetails=" + approvalDetails + ", paymentMode="
-			+ paymentMode + ", customerId=" + customerId + ", date=" + date + ", allergyNote=" + allergyNote
-			+ ", preOrderDate=" + preOrderDate + ", state=" + state + ", deliveryInfo=" + deliveryInfo + ", email="
-			+ email + ", grandTotal=" + grandTotal + ", subTotal=" + subTotal + ", id=" + id + ", orderId=" + orderId
-			+ ", orderLines=" + orderLines + ", paymentRef=" + paymentRef + ", status=" + status + ", storeId="
-			+ storeId + "]";
+	return String.format(
+			"Order [appliedOffers=%s,\n approvalDetails=%s,\n paymentMode=%s,\n customerId=%s,\n date=%s,\n allergyNote=%s,\n preOrderDate=%s,\n timeZone=%s,\n state=%s,\n deliveryInfo=%s,\n email=%s,\n grandTotal=%s,\n subTotal=%s,\n id=%s,\n orderId=%s,\n orderLines=%s,\n paymentRef=%s,\n status=%s,\n storeId=%s]",
+			appliedOffers, approvalDetails, paymentMode, customerId, date, allergyNote, preOrderDate, timeZone, state,
+			deliveryInfo, email, grandTotal, subTotal, id, orderId, orderLines, paymentRef, status, storeId);
 }
 
 @Override
