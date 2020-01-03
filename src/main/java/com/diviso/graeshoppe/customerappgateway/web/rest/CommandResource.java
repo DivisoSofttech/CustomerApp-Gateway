@@ -275,7 +275,7 @@ public class CommandResource {
 	/***********************************************************************************/
 
 	@PostMapping("/updateLoyaltyPoint/{idpCode}/{point}")
-	CustomerDTO updateLoyaltyPoint(@PathVariable String idpCode, @PathVariable Long point) {
-		return customerCommandService.updateLoyaltyPointUsingPOST(idpCode, point).getBody();
+	ResponseEntity<CustomerDTO> updateLoyaltyPoint(@PathVariable String idpCode, @PathVariable Long point) {
+		return customerCommandService.updateLoyaltyPointUsingPOST(idpCode, point);
 	}
 }
