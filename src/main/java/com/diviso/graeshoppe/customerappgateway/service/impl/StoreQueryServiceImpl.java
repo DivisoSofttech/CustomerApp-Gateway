@@ -637,7 +637,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	public Page<HeaderResult> getHeaderResult(String indexName,String suggestionData,Pageable pageable) {
 		
 	
-	   
+	   System.out.println("nnnnnnnnnnnnnnn"+indexName);
+	   System.out.println("%%%%SUGGESTIONData%%%%%%%%%%%%%%%"+suggestionData);
+		
 	    SearchRequest request = null;
 	    if(indexName.equals("store")) {
 	    	request=new  SearchRequest("store");
@@ -659,17 +661,17 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(queryDsl);
-		
+		SearchResponse searchResponse	=serviceUtility. searchResponseForPage(indexName,searchSourceBuilder,pageable);
 
-		SearchRequest searchRequestForPage = serviceUtility.generateSearchRequestForMultipleIndex(pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder,request);
+		/*SearchRequest searchRequestForPage = serviceUtility.generateSearchRequestForMultipleIndex(pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder,request);*/
 
-		SearchResponse searchResponse = null;
+	/*	SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequestForPage, RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 
 		
 		

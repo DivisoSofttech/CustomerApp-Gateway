@@ -27,7 +27,7 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 
 		searchSourceBuilder.query(matchAllQuery());
 
-		SearchResponse searchResponse = serviceUtility.searchResponseForPage("premium_banner", searchSourceBuilder, pageable);
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("premiumbanner", searchSourceBuilder, pageable);
 
 		return serviceUtility.getPageResult(searchResponse, pageable, new Banner());
 	}
