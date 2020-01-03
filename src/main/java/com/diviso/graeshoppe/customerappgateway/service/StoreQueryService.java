@@ -18,6 +18,7 @@ import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
 import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
 import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
+import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderSuggestion;
 
 public interface StoreQueryService {
 
@@ -67,6 +68,6 @@ public interface StoreQueryService {
     Long findUserRatingReviewCountByRegNo(String regNo);
 
 	Page<Banner> findBannersByRegNo(Pageable pageable, String regNo);
-	public List<String> searchSuggestion(String searchTerm);
+	public List<HeaderSuggestion> searchSuggestion(String searchTerm);
 
 }
