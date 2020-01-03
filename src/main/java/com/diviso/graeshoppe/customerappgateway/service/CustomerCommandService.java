@@ -33,7 +33,7 @@ public interface CustomerCommandService {
 	public ResponseEntity<FavouriteStoreDTO> createFavouriteStore(FavouriteStoreDTO favouriteStoreDTO);
 	public ResponseEntity<Void> deleteFavouriteStore(Long id) ;
 	
-	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point);
+	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point,String orderId);
 
 	
 	

@@ -57,7 +57,6 @@ public class PaymentCommandServiceImpl implements PaymentCommandService {
 		processPaymentRequest.setPaymentStatus(status);
 		processPaymentRequest.setTaskId(taskId);
 		ResponseEntity<CommandResource> resource = processPaymentRequest(processPaymentRequest);
-		orderCommadnREsourceApi.publishOrderToMessagebrokerUsingPOST(paymentDTO.getTargetId());
 		return resource;
 	}
 

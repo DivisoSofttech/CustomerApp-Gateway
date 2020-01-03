@@ -23,6 +23,7 @@ import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteP
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteStoreDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPChallenge;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPResponse;
+import com.diviso.graeshoppe.customerappgateway.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.customerappgateway.service.OfferCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 @Service
@@ -33,6 +34,8 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 	@Autowired
 	private ContactResourceApi contactResourceApi;
 	
+	@Autowired
+	private OrderCommandResourceApi orderCommandresource;
 	
 	@Autowired
 	FavouriteProductResourceApi favouriteProductResourceApi;
@@ -106,9 +109,10 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 	}
 
 
-	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point) {
-		return this.customerResourceApi.updateLoyaltyPointUsingPOST(idpCode, point);
-		
+	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point,String orderId) {
+		ResponseEntity<CustomerDTO> customer= this.customerResourceApi.updateLoyaltyPointUsingPOST(idpCode, point);
+		orderCommandresource.publishOrderToMessagebrokerUsingPOST(orderId);
+		return customer;
 	}
 
 
