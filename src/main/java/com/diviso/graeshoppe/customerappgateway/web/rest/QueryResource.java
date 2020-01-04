@@ -526,6 +526,11 @@ public class QueryResource {
 		return storeQueryService.getHeaderResult(indexName,suggestionData,pageable);
 	}
 	
+	@GetMapping("/search")
+	public <T> T search(String indexName,Long id) {
+		return storeQueryService.search(indexName,id);
+	}
+	
 	// ****************order related end points********
 	
 
