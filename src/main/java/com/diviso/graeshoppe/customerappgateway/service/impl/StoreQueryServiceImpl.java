@@ -656,22 +656,22 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	    	request=new  SearchRequest("store","product","category");
 	    }
 		
-		QueryBuilder queryDsl = QueryBuilders.boolQuery().must(matchAllQuery())
-				.filter(termQuery("name.keyword",suggestionData));
+		QueryBuilder queryDsl = QueryBuilders.matchQuery("name",suggestionData);
 		
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		searchSourceBuilder.query(queryDsl);
-		SearchResponse searchResponse	=serviceUtility. searchResponseForPage(indexName,searchSourceBuilder,pageable);
 
-		/*SearchRequest searchRequestForPage = serviceUtility.generateSearchRequestForMultipleIndex(pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder,request);*/
+		 searchSourceBuilder = serviceUtility.generatePagination(pageable.getPageSize(),
+				pageable.getPageNumber(), searchSourceBuilder);
 
-	/*	SearchResponse searchResponse = null;
+		 request.source(searchSourceBuilder);
+		 
+		SearchResponse searchResponse = null;
 		try {
-			searchResponse = restHighLevelClient.search(searchRequestForPage, RequestOptions.DEFAULT);
+			searchResponse = restHighLevelClient.search(request, RequestOptions.DEFAULT);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}*/
+		}
 
 		
 		

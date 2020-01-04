@@ -134,10 +134,8 @@ public class ServiceUtility {
 		searchRequest.source(sourceBuilder);
 		return searchRequest;
 	}
-	public SearchRequest generateSearchRequestForMultipleIndex(Integer totalElement, Integer pageNumber,
-			SearchSourceBuilder sourceBuilder,SearchRequest searchRequest) {
-		SearchRequest request =searchRequest;
-
+	public SearchSourceBuilder generatePagination(Integer totalElement, Integer pageNumber,
+			SearchSourceBuilder sourceBuilder) {
 
 		int offset = 0;
 		int totalElements = 0;
@@ -147,20 +145,18 @@ public class ServiceUtility {
 			offset = 0;
 			
 			totalElements = totalElement;
-		
+			
 			
 		} else {
 
-		
 			offset = (pageNumber * totalElement);
-			
+		
 			totalElements =  totalElement;
-
+			
 		}
 		sourceBuilder.from(offset);
 		sourceBuilder.size(totalElements);
 
-		request.source(sourceBuilder);
-		return request;
+		return sourceBuilder;
 	}
 }
