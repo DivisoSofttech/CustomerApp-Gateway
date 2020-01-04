@@ -846,4 +846,28 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 		return productMapper.toDto(product);
 	}
 
+	@Override
+	public Category findCategoryById(Long id) {
+		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		/*
+		 * String[] includeFields = new String[] { "iDPcode", "image" }; String[]
+		 * excludeFields = new String[] { "category.*" };
+		 * searchSourceBuilder.fetchSource(includeFields, excludeFields);
+		 */
+		searchSourceBuilder.query(termQuery("id", id));
+
+		SearchRequest searchRequest = new SearchRequest("category");
+		searchRequest.source(searchSourceBuilder);
+		SearchResponse searchResponse = null;
+		try {
+			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
+		} catch (IOException e) { // TODO Auto-generated
+			e.printStackTrace();
+		}
+
+		log.debug("output", serviceUtility.getObjectResult(searchResponse, new Product()));
+
+		return serviceUtility.getObjectResult(searchResponse, new Category());
+	}
+
 }

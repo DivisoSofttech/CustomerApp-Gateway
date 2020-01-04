@@ -5,6 +5,7 @@ import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -62,6 +63,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 	@Autowired
 	ServiceUtility serviceUtility;
+	@Autowired
+	ProductQueryService productQueryService ;
+	
+	
 
 	private final Logger log = LoggerFactory.getLogger(StoreQueryServiceImpl.class);
 
@@ -721,6 +726,23 @@ private Page<HeaderResult>	getResult(SearchResponse searchResponse,Pageable page
 	return new PageImpl(headerResultList, pageable, searchResponse.getHits().getTotalHits());
 	
 	}
+
+public <T> T search(String indexName,Long id) {
+	
+	if (indexName.equals("store")) {
+		return (T) findStoreById(id);
+	}else if(indexName.equals("product")) {
+		return (T) productQueryService.findProductById(id);
+	}else if(indexName.equals("category")) {
+		return (T) productQueryService.findCategoryById(id);
+	}
+	return (T) findStoreById(id);
+	
+	
+}
+
+
+
 
 	/**
 	 * @param
