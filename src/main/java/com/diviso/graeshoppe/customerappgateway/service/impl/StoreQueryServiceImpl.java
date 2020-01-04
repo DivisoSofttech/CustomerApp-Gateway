@@ -692,12 +692,14 @@ private Page<HeaderResult>	getResult(SearchResponse searchResponse,Pageable page
 
 		if (hit.getIndex().equals("store")) {
 			result.setResultType(hit.getIndex());
+			result.setId((Long) sourceAsMap.get("id"));
 			result.setName((String) sourceAsMap.get("name"));
 			result.setImageLink((String) sourceAsMap.get("imageLink"));
 
 		} else if(hit.getIndex().equals("product")) {
 
 			result.setResultType(hit.getIndex());
+			result.setId((Long) sourceAsMap.get("id"));
 			result.setName((String) sourceAsMap.get("name"));
 			result.setImageLink((String) sourceAsMap.get("imageLink"));
 
@@ -706,6 +708,7 @@ private Page<HeaderResult>	getResult(SearchResponse searchResponse,Pageable page
 		else if(hit.getIndex().equals("category")) {
 
 			result.setResultType(hit.getIndex());
+			result.setId((Long) sourceAsMap.get("id"));
 			result.setName((String) sourceAsMap.get("name"));
 			result.setImageLink((String) sourceAsMap.get("imageLink"));
 
