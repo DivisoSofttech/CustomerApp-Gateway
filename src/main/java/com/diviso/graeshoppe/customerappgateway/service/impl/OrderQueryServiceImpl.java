@@ -107,11 +107,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 
 		Page<Order> orderPage = serviceUtility.getPageResult(searchResponse, pageable, new Order());
-		orderPage.forEach(order -> {
+		/*orderPage.forEach(order -> {
 
 			order.setOrderLines(new HashSet<OrderLine>(findOrderLinesByOrderId(order.getId())));
 
-		});
+		});*/
 
 		log.debug("output", orderPage);
 
