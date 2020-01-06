@@ -623,9 +623,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+sourceAsMap.get("id"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("name"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("imageLink"));
-				Long id=(Long)sourceAsMap.get("id");
+				long id=(long)sourceAsMap.get("id");
+				Long d= id;
 				result.setResultType(hit.getIndex());
-				result.setId(id);
+				result.setId(d);
 				result.setName((String) sourceAsMap.get("name"));
 				result.setImageLink((String) sourceAsMap.get("imageLink"));
 
