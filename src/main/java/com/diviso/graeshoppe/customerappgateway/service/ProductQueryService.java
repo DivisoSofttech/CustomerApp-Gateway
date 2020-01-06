@@ -33,7 +33,7 @@ public interface ProductQueryService {
 
 	Page<StockCurrent> findStockCurrentByStoreId(String iDPcode, Pageable pageable);
 
-	//Page<ResultBucket> findCategoryAndCount(Pageable pageable);
+	
 
 	List<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable);
 
@@ -41,7 +41,7 @@ public interface ProductQueryService {
 
 	Page<Category> findCategoryByIDPcode(String iDPcode, Pageable pageable);
 
-	//Page<Product> findProductByStoreIdAndCategoryName(String userId, String categoryName, Pageable pageable);
+	
 
 	List<StockCurrent> findStockCurrentByStoreIdAndCategoryId(String userId, Long categoryId);
 
@@ -60,6 +60,8 @@ public interface ProductQueryService {
 	Discount findDiscountByProductId(Long productId);
 	
 	public ProductDTO findProductDTO( Long id);
+	
+	Category findCategoryById(Long id);
 
 	
 	

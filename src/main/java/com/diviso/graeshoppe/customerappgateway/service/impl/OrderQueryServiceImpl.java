@@ -97,7 +97,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(dslQuery);
-		searchSourceBuilder.sort(new FieldSortBuilder("id").order(SortOrder.DESC));
+		searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.DESC));
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
 		SearchResponse searchResponse = null;
@@ -107,11 +107,11 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 
 		Page<Order> orderPage = serviceUtility.getPageResult(searchResponse, pageable, new Order());
-		orderPage.forEach(order -> {
+		/*orderPage.forEach(order -> {
 
 			order.setOrderLines(new HashSet<OrderLine>(findOrderLinesByOrderId(order.getId())));
 
-		});
+		});*/
 
 		log.debug("output", orderPage);
 
