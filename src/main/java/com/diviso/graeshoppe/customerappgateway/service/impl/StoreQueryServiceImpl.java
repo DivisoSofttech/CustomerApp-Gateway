@@ -478,7 +478,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("deliveryinfo", searchSourceBuilder,
 				pageable);
 
-		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo()));
+		
 
 		return serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
 
@@ -614,25 +614,40 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		for (SearchHit hit : searchHit) {
 
 			HeaderResult result = new HeaderResult();
-			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
+			Map<String,Object> sourceAsMap = hit.getSourceAsMap();
+	
 
 			if (hit.getIndex().equals("store")) {
+				//Store store=objectMapper.convertValue(hit.getSourceAsMap(),new Store());
+				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+hit.getIndex());
+				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("name"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("imageLink"));
+				Long id=(Long)sourceAsMap.get("id");
 				result.setResultType(hit.getIndex());
-				result.setId((Long) sourceAsMap.get("id"));
+				result.setId(id);
 				result.setName((String) sourceAsMap.get("name"));
 				result.setImageLink((String) sourceAsMap.get("imageLink"));
 
 			} else if (hit.getIndex().equals("product")) {
-
+				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+hit.getIndex());
+				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+(String) sourceAsMap.get("name"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZv"+(String) sourceAsMap.get("imageLink"));
+				Long id=(Long)sourceAsMap.get("id");
 				result.setResultType(hit.getIndex());
-				result.setId((Long) sourceAsMap.get("id"));
+				result.setId(id);
 				result.setName((String) sourceAsMap.get("name"));
 				result.setImageLink((String) sourceAsMap.get("imageLink"));
 
 			} else if (hit.getIndex().equals("category")) {
-
+				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+hit.getIndex());
+				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("name"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("imageLink"));
 				result.setResultType(hit.getIndex());
-				result.setId((Long) sourceAsMap.get("id"));
+				Long id=(Long)sourceAsMap.get("id");
+				result.setId(id);
 				result.setName((String) sourceAsMap.get("name"));
 				result.setImageLink((String) sourceAsMap.get("imageLink"));
 
