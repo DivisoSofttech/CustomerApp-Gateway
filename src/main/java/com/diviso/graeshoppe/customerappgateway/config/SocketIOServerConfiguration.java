@@ -24,7 +24,7 @@ public class SocketIOServerConfiguration {
 		configuration.setHostname(host);
 		configuration.setPort(port);
 		configuration.setKeyStorePassword("password");
-        InputStream stream = SocketIOServerConfiguration.class.getResourceAsStream("/config/tls/ci2.pkcs12");
+        InputStream stream = SocketIOServerConfiguration.class.getResourceAsStream("/config/tls/ci2-24-12-2019.pkcs12");
         configuration.setKeyStore(stream);
 		SocketIOServer ioServer = new SocketIOServer(configuration);
 		ioServer.start();
