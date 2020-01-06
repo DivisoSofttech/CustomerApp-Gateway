@@ -620,7 +620,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			if (hit.getIndex().equals("store")) {
 				//Store store=objectMapper.convertValue(hit.getSourceAsMap(),new Store());
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+sourceAsMap.get("id"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("name"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("imageLink"));
 				Long id=(Long)sourceAsMap.get("id");
@@ -631,7 +631,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 			} else if (hit.getIndex().equals("product")) {
 				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+ sourceAsMap.get("id"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+(String) sourceAsMap.get("name"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZv"+(String) sourceAsMap.get("imageLink"));
 				Long id=(Long)sourceAsMap.get("id");
@@ -642,7 +642,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 			} else if (hit.getIndex().equals("category")) {
 				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(Long) sourceAsMap.get("id"));
+				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+ sourceAsMap.get("id"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("name"));
 				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("imageLink"));
 				result.setResultType(hit.getIndex());
@@ -659,7 +659,19 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return new PageImpl(headerResultList, pageable, searchResponse.getHits().getTotalHits());
 
 	}
+	public  <T> Page getPageResult(SearchResponse response, Pageable page, T t) {
 
+		SearchHit[] searchHit = response.getHits().getHits();
+
+		List<T> list = new ArrayList<>();
+
+		for (SearchHit hit : searchHit) {
+			//System.out.println("............T............"+t);
+			list.add((T)objectMapper.convertValue(hit.getSourceAsMap(), t.getClass()));
+		}
+
+		return new PageImpl(list, page, response.getHits().getTotalHits());
+	}
 	public <T> T search(String indexName, Long id) {
 
 		if (indexName.equals("store")) {
