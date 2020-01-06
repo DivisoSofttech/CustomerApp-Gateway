@@ -618,41 +618,25 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	
 
 			if (hit.getIndex().equals("store")) {
-				//Store store=objectMapper.convertValue(hit.getSourceAsMap(),new Store());
-				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(long)sourceAsMap.get("id"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("name"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZstore"+(String) sourceAsMap.get("imageLink"));
-				Store store=objectMapper.convertValue(hit.getSourceAsMap(),Store.class);
 				
-				long id=(long)sourceAsMap.get("id");
-				Long d= id;
-				result.setResultType(hit.getIndex());
+				Store store=objectMapper.convertValue(hit.getSourceAsMap(),Store.class);
+		        result.setResultType(hit.getIndex());
 				result.setId(store.getId());
 				result.setName(store.getName());
 				result.setImageLink(store.getImageLink());
 
 			} else if (hit.getIndex().equals("product")) {
-				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+ sourceAsMap.get("id"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZproduct"+(String) sourceAsMap.get("name"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZv"+(String) sourceAsMap.get("imageLink"));
+				
 				com.diviso.graeshoppe.customerappgateway.client.product.model.Product product=objectMapper.convertValue(hit.getSourceAsMap(),com.diviso.graeshoppe.customerappgateway.client.product.model.Product.class);
-				
-				
 				result.setResultType(hit.getIndex());
 				result.setId(product.getId());
 				result.setName(product.getName());
 				result.setImageLink(product.getImageLink());
 
 			} else if (hit.getIndex().equals("category")) {
-				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+hit.getIndex());
-				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+ sourceAsMap.get("id"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("name"));
-				System.out.println("zZZZZZZZZZZZZZZZZZZcategory"+(String) sourceAsMap.get("imageLink"));
+				
 				com.diviso.graeshoppe.customerappgateway.client.product.model.Category category =objectMapper.convertValue(hit.getSourceAsMap(),com.diviso.graeshoppe.customerappgateway.client.product.model.Category.class);
 				result.setResultType(hit.getIndex());
-				
 				result.setId(category.getId());
 				result.setName(category.getName());
 				result.setImageLink(category.getImageLink());
