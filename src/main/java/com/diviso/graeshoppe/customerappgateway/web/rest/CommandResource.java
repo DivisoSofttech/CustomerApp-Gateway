@@ -211,9 +211,19 @@ public class CommandResource {
 
 	@PutMapping("/notifications")
 	public ResponseEntity<NotificationDTO> updateNotification(@RequestBody NotificationDTO notificationDTO) {
+		/*
+		 * if(notificationDTO.getType().equalsIgnoreCase("Order-Request")||
+		 * notificationDTO.getType().equalsIgnoreCase("Order-Placed")) {
+		 * paymentCommandService.updateNotification(notificationDTO); }
+		 */
+		
+		
 		return orderCommandService.updateNotification(notificationDTO);
 	}
 
+	
+	
+	
 	@PutMapping("/addresses")
 	public ResponseEntity<AddressDTO> updateAddress(@RequestBody AddressDTO addressDTO) {
 		return orderCommandService.updateAddress(addressDTO);
