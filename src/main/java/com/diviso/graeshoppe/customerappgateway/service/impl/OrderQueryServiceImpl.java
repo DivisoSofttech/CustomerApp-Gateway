@@ -91,13 +91,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable) {
 
 		log.debug("input", customerId);
-
 		QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(dslQuery);
-		searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.DESC));
+		searchSourceBuilder.query(dslQuery).sort("_id", SortOrder.DESC);
+		//searchSourceBuilder.sort);
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
 		SearchResponse searchResponse = null;
