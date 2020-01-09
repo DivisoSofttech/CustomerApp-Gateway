@@ -18,6 +18,8 @@ import javax.validation.constraints.*;
 public class CommandResource   {
   @JsonProperty("nextTaskId")
   private String nextTaskId = null;
+  @JsonProperty("processId")
+	private String processId;
 
   @JsonProperty("nextTaskName")
   private String nextTaskName = null;
@@ -129,20 +131,29 @@ public class CommandResource   {
     return Objects.hash(nextTaskId, nextTaskName, orderId, selfId);
   }
 
-  @Override
-  public String toString() {
-    StringBuilder sb = new StringBuilder();
-    sb.append("class CommandResourceTestsI {\n");
-    
-    sb.append("    nextTaskId: ").append(toIndentedString(nextTaskId)).append("\n");
-    sb.append("    nextTaskName: ").append(toIndentedString(nextTaskName)).append("\n");
-    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
-    sb.append("    selfId: ").append(toIndentedString(selfId)).append("\n");
-    sb.append("}");
-    return sb.toString();
-  }
 
   /**
+ * @return the processId
+ */
+public String getProcessId() {
+	return processId;
+}
+
+@Override
+public String toString() {
+	return String.format(
+			"CommandResource [nextTaskId=%s,\n processId=%s,\n nextTaskName=%s,\n orderId=%s,\n selfId=%s]", nextTaskId,
+			processId, nextTaskName, orderId, selfId);
+}
+
+/**
+ * @param processId the processId to set
+ */
+public void setProcessId(String processId) {
+	this.processId = processId;
+}
+
+/**
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */

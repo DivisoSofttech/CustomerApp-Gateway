@@ -79,6 +79,7 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 		Order orderResult = orderMapper.toEntity(orderDTO);
 		orderResult.setId(resource.getSelfId());
 		orderResult.setOrderId(resource.getOrderId());
+		orderResult.setProcessId(resource.getProcessId());
 		orderResponse.setCommandResource(resource);
 		orderResponse.setOrder(orderResult);
 		order.getOrderLines().forEach(orderLine -> {
