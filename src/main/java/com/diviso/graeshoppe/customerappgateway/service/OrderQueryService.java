@@ -35,7 +35,7 @@ public interface OrderQueryService {
 
 	Page<Address> findAllSavedAddresses(String customerId, Pageable pageable);
 
-	Page<Notification> findNotificationByCustomerId(String customerId, Pageable pageable);
+	//Page<Notification> findNotificationByCustomerId(String customerId, Pageable pageable);
 
 	Page<Order> findOrderByCustId(String customerId, LocalDate date, Pageable pageable);
 
