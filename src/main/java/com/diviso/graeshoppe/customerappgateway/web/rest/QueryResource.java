@@ -1,7 +1,7 @@
 package com.diviso.graeshoppe.customerappgateway.web.rest;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.time.*;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -598,10 +598,10 @@ public class QueryResource {
      * @param pageable the pageable to create
      * @return page of Order in body 
      */
-	@GetMapping("/ordersByCustomerId/{customerId}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId, Pageable pageable) {
+	@GetMapping("/ordersByCustomerId/{customerId}/{date}")
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
 
-		return orderQueryService.findOrderByCustomerId(customerId, pageable);
+		return orderQueryService.findOrderByCustomerId(customerId,date, pageable);
 
 	}
 	/**

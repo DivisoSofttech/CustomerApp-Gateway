@@ -1,6 +1,6 @@
 package com.diviso.graeshoppe.customerappgateway.service;
 
-import java.time.Instant;
+import java.time.*;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -15,7 +15,7 @@ import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Or
 public interface OrderQueryService {
 	Order findById(Long id);
 
-	Page<Order> findOrderByCustomerId(String customerId, Pageable pageable);
+	Page<Order> findOrderByCustomerId(String customerId,LocalDate date, Pageable pageable);
 
 	List<OrderLine> findOrderLinesByOrderId(Long orderId);
 

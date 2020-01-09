@@ -6,7 +6,7 @@ import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.time.*;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -88,15 +88,18 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @return the page of Order in body
 	 */
 	@Override
-	public Page<Order> findOrderByCustomerId(String customerId, Pageable pageable) {
+	public Page<Order> findOrderByCustomerId(String customerId,LocalDate date, Pageable pageable) {
 
 		log.debug("input", customerId);
-		QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
+		
+		QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("customerId.keyword", customerId)).filter(rangeQuery("date").lte(date));
+		
+		//QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(dslQuery).sort("_id", SortOrder.DESC);
-		//searchSourceBuilder.sort);
+		searchSourceBuilder.query(dslQuery).sort("id", SortOrder.DESC);
+		
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
 		SearchResponse searchResponse = null;
@@ -106,11 +109,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		}
 
 		Page<Order> orderPage = serviceUtility.getPageResult(searchResponse, pageable, new Order());
-		/*orderPage.forEach(order -> {
-
-			order.setOrderLines(new HashSet<OrderLine>(findOrderLinesByOrderId(order.getId())));
-
-		});*/
+	
 
 		log.debug("output", orderPage);
 
