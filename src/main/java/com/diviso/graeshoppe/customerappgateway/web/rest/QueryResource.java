@@ -599,11 +599,18 @@ public class QueryResource {
      * @return page of Order in body 
      */
 	@GetMapping("/ordersByCustomerId/{customerId}/{date}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
 
-		return orderQueryService.findOrderByCustomerId(customerId,date, pageable);
+		return orderQueryService.findOrderByCustomerId(customerId,pageable);
 
 	}
+	@GetMapping("/ordersByCustId/{customerId}/{date}")
+	public Page<Order> findOrdersByCustId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
+
+		return orderQueryService.findOrderByCustId(customerId,date, pageable);
+
+	}
+	
 	/**
      * GET  /findAllOrderLinesByOrderId/:orderId Get the customerId based OrderLine
      * @param orderId the id of  Order
@@ -627,6 +634,7 @@ public class QueryResource {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
 	/**
+	 *@deprecated 
      * GET  /findnotificationbyreceiverid/:receiverId Get the receiverId based Notification
      * @param receiverId the receiverId of  Notification
      * @param pageable the pageable to create
@@ -637,6 +645,13 @@ public class QueryResource {
 	public Page<Notification> findNotificationByReceiverId(@PathVariable String receiverId, Pageable pageable) {
 		return orderQueryService.findNotificationByReceiverId(receiverId, pageable);
 	}
+	
+	@GetMapping("/findnotificationbyCustomerid/{receiverId}")
+	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, LocalDate date,Pageable pageable) {
+		return orderQueryService.findNotificationByCustomerId(receiverId,date ,pageable);
+	}
+	
+	
 	/**
      * GET  /findAuxilaryOrderLineByOrderLineId/:orderLineId Get the orderLineId based AuxilaryOrderLine
      * @param orderLineId the id of  OrderLine
