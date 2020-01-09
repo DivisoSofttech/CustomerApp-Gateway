@@ -598,7 +598,7 @@ public class QueryResource {
      * @param pageable the pageable to create
      * @return page of Order in body 
      */
-	@GetMapping("/ordersByCustomerId/{customerId}/{date}")
+	@GetMapping("/ordersByCustomerId/{customerId}")
 	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
 
 		return orderQueryService.findOrderByCustomerId(customerId,pageable);
