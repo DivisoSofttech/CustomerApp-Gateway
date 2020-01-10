@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.CancelledOrderLine;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
@@ -710,17 +711,7 @@ public class QueryResource {
 		return offerQueryService.findOfferLinesByOrderId(id);
 	}
 	
-	/**
-     * GET  /stores/banners Get all premium banners
-     * @param pageable the pageable to create
-     * @return page of Banner in body 
-     */
-	@GetMapping("/administration/premiumBanners")
-	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
 
-		return administrationQueryService.findPremiumBanners(pageable);
-	}
-	
 	/**
      * GET  findLoyaltyPointByIdpCode
      * @param idpCode 
@@ -732,5 +723,25 @@ public class QueryResource {
     	return customerQueryService.findLoyaltyPointByIdpCode(idpCode);
     }
 
+	//**************** Administration service End Points*************************
+	
+	/**
+     * GET  /stores/banners Get all premium banners
+     * @param pageable the pageable to create
+     * @return page of Banner in body 
+     */
+	@GetMapping("/administration/premiumBanners")
+	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
+
+		return administrationQueryService.findPremiumBanners(pageable);
+	}
+	
+	@GetMapping("/findCancelledOrderLinesByCancellationRequestId/{id}")
+	public Page<CancelledOrderLine> findCancelledOrderLinesByCancellationRequestId(@PathVariable Long id,Pageable pageable){
+
+		return administrationQueryService.findCancelledOrderLinesByCancellationRequestId(id,pageable);
+	}
+	
+	
 	
 }
