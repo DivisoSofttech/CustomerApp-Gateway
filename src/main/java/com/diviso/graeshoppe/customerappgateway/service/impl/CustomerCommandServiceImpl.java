@@ -134,7 +134,7 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 
 	public String save(Customer customer)  {
 		 IndexRequest request = new IndexRequest("customer");
-	        
+		 request.id(""+customer.getId());
 	        try {
 				request.source(objectMapper.writeValueAsString(customer), XContentType.JSON);
 			} catch (JsonProcessingException e) {
