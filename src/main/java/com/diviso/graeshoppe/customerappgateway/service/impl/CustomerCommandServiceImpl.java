@@ -25,7 +25,17 @@ import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPChallen
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.OTPResponse;
 import com.diviso.graeshoppe.customerappgateway.client.order.api.OrderCommandResourceApi;
 import com.diviso.graeshoppe.customerappgateway.service.OfferCommandService;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
+
+import java.io.IOException;
+
+import org.elasticsearch.action.index.IndexRequest;
+import org.elasticsearch.action.index.IndexResponse;
+import org.elasticsearch.client.RequestOptions;
+import org.elasticsearch.client.RestHighLevelClient;
+import org.elasticsearch.common.xcontent.XContentType;
 @Service
 public class CustomerCommandServiceImpl implements CustomerCommandService {
 	@Autowired
@@ -43,6 +53,12 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 	@Autowired
 	FavouriteStoreResourceApi favouriteStoreResourceApi;
 	
+	
+	 @Autowired
+	    private RestHighLevelClient client;
+	
+	 @Autowired
+		private ObjectMapper objectMapper;
 	public ResponseEntity<CustomerDTO> createCustomer(CustomerAggregator customerAggregator){
 		CustomerDTO customerDTO = new CustomerDTO();
 		ContactDTO contactDTO = new ContactDTO();
@@ -116,5 +132,24 @@ public class CustomerCommandServiceImpl implements CustomerCommandService {
 	}
 
 
+	public String save(Customer customer)  {
+		 IndexRequest request = new IndexRequest("customer");
+	        
+	        try {
+				request.source(objectMapper.writeValueAsString(customer), XContentType.JSON);
+			} catch (JsonProcessingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        IndexResponse indexResponse =null;
+			try {
+				indexResponse = client.index(request, RequestOptions.DEFAULT);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	        System.out.println("response id: "+indexResponse.getId());
+	        return indexResponse.getResult().name();
+	}
 
 }
