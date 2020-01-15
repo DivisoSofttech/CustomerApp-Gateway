@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.diviso.graeshoppe.customerappgateway.client.aggregators.CustomerAggregator;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
+import com.diviso.graeshoppe.customerappgateway.client.customer.model.Customer;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProductDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteStoreDTO;
@@ -290,4 +291,11 @@ public class CommandResource {
 	System.out.println("updateLoyaltyPoint+++++++++++++++++++++"+customerDTO.getBody());
 	 return customerDTO;
 	}
+	@PostMapping("/test")
+	public String save(@RequestBody Customer customer) {
+		return customerCommandService.save(customer);
+		
+	}
+	
+	
 }

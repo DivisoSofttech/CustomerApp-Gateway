@@ -1,6 +1,6 @@
 package com.diviso.graeshoppe.customerappgateway.service;
 
-import java.time.Instant;
+import java.time.*;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -34,6 +34,12 @@ public interface OrderQueryService {
 	Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
 
 	Page<Address> findAllSavedAddresses(String customerId, Pageable pageable);
+
+	//Page<Notification> findNotificationByCustomerId(String customerId, Pageable pageable);
+
+	Page<Order> findOrderByCustId(String customerId, LocalDate date, Pageable pageable);
+
+	Page<Notification> findNotificationByCustomerId(String receiverId, LocalDate date, Pageable pageable);
 
 	
 	

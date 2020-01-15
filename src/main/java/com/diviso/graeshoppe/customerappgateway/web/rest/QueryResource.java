@@ -1,7 +1,7 @@
 package com.diviso.graeshoppe.customerappgateway.web.rest;
 
 import java.io.IOException;
-import java.time.Instant;
+import java.time.*;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.CancelledOrderLine;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
@@ -599,11 +600,18 @@ public class QueryResource {
      * @return page of Order in body 
      */
 	@GetMapping("/ordersByCustomerId/{customerId}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId, Pageable pageable) {
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
 
-		return orderQueryService.findOrderByCustomerId(customerId, pageable);
+		return orderQueryService.findOrderByCustomerId(customerId,pageable);
 
 	}
+	@GetMapping("/ordersByCustId/{customerId}/{date}")
+	public Page<Order> findOrdersByCustId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
+
+		return orderQueryService.findOrderByCustId(customerId,date, pageable);
+
+	}
+	
 	/**
      * GET  /findAllOrderLinesByOrderId/:orderId Get the customerId based OrderLine
      * @param orderId the id of  Order
@@ -627,6 +635,7 @@ public class QueryResource {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
 	/**
+	 *@deprecated 
      * GET  /findnotificationbyreceiverid/:receiverId Get the receiverId based Notification
      * @param receiverId the receiverId of  Notification
      * @param pageable the pageable to create
@@ -637,6 +646,13 @@ public class QueryResource {
 	public Page<Notification> findNotificationByReceiverId(@PathVariable String receiverId, Pageable pageable) {
 		return orderQueryService.findNotificationByReceiverId(receiverId, pageable);
 	}
+	
+	@GetMapping("/findnotificationbyCustomerid/{receiverId}")
+	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, LocalDate date,Pageable pageable) {
+		return orderQueryService.findNotificationByCustomerId(receiverId,date ,pageable);
+	}
+	
+	
 	/**
      * GET  /findAuxilaryOrderLineByOrderLineId/:orderLineId Get the orderLineId based AuxilaryOrderLine
      * @param orderLineId the id of  OrderLine
@@ -695,17 +711,7 @@ public class QueryResource {
 		return offerQueryService.findOfferLinesByOrderId(id);
 	}
 	
-	/**
-     * GET  /stores/banners Get all premium banners
-     * @param pageable the pageable to create
-     * @return page of Banner in body 
-     */
-	@GetMapping("/administration/premiumBanners")
-	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
 
-		return administrationQueryService.findPremiumBanners(pageable);
-	}
-	
 	/**
      * GET  findLoyaltyPointByIdpCode
      * @param idpCode 
@@ -717,5 +723,25 @@ public class QueryResource {
     	return customerQueryService.findLoyaltyPointByIdpCode(idpCode);
     }
 
+	//**************** Administration service End Points*************************
+	
+	/**
+     * GET  /stores/banners Get all premium banners
+     * @param pageable the pageable to create
+     * @return page of Banner in body 
+     */
+	@GetMapping("/administration/premiumBanners")
+	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
+
+		return administrationQueryService.findPremiumBanners(pageable);
+	}
+	
+	@GetMapping("/findCancelledOrderLinesByCancellationRequestId/{id}")
+	public Page<CancelledOrderLine> findCancelledOrderLinesByCancellationRequestId(@PathVariable Long id,Pageable pageable){
+
+		return administrationQueryService.findCancelledOrderLinesByCancellationRequestId(id,pageable);
+	}
+	
+	
 	
 }

@@ -35,6 +35,6 @@ public interface CustomerCommandService {
 	
 	public ResponseEntity<CustomerDTO> updateLoyaltyPointUsingPOST(String idpCode, Long point,String orderId);
 
-	
+	public String save(Customer customer);
 	
 }
