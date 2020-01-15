@@ -26,6 +26,7 @@ import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Of
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Order;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.OrderInitiateResponse;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.OrderLine;
+import com.diviso.graeshoppe.customerappgateway.client.payment.api.PaymentNotificationResourceApi;
 import com.diviso.graeshoppe.customerappgateway.service.OrderCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.mapper.AuxilaryOrderLineMapper;
 import com.diviso.graeshoppe.customerappgateway.service.mapper.DeliveryInfoMapper;
@@ -68,6 +69,8 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 	@Autowired
 	private NotificationResourceApi notificationResourceApi;
 
+	@Autowired
+	private PaymentNotificationResourceApi paymentNotification;
 	@Autowired
 	private OfferResourceApi offerResourceApi;
 
@@ -210,8 +213,16 @@ public class OrderCommandServiceImpl implements OrderCommandService {
 
 	@Override
 	public ResponseEntity<NotificationDTO> updateNotification(NotificationDTO notificationDTO) {
-		
-		return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
+		if (notificationDTO.getType().equals("Order-Placed")) {
+			return paymentNotification.updateNotificationUsingPUT(notificationDTO);
+		} else if (notificationDTO.getType().equals("Order-Approved")
+				|| notificationDTO.getType().equals("Order-Delivered")) {
+			return notificationResourceApi.updateNotificationUsingPUT(notificationDTO);
+
+		} else {
+			return null;
+		}
+
 	}
 
 	@Override

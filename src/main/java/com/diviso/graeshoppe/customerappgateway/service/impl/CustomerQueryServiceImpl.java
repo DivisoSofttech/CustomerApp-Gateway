@@ -156,8 +156,6 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("favouriteproduct", searchSourceBuilder,
 				pageable);
 
-		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new FavouriteProduct()));
-
 		return serviceUtility.getPageResult(searchResponse, pageable, new FavouriteProduct());
 
 		/*
