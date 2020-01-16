@@ -199,7 +199,7 @@
           <hashTree/>
         </hashTree>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="customer-dump" enabled="true">
-          <stringProp name="filename">/home/abilash-diviso/003-Softwares-Libraries/apache-jmeter-5.2.1/bin/register-customer.csv</stringProp>
+          <stringProp name="filename">register-customer.csv</stringProp>
           <stringProp name="fileEncoding"></stringProp>
           <stringProp name="variableNames">name,mobileNumber,idpCode,email,imageLink,phoneCode,idpSub</stringProp>
           <boolProp name="ignoreFirstLine">false</boolProp>
