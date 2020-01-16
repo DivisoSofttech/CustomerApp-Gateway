@@ -17,7 +17,7 @@ import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteP
 import com.diviso.graeshoppe.customerappgateway.config.TestSecurityConfiguration;
 
 @SpringBootTest(classes = { CustomerappgatewayApp.class, TestSecurityConfiguration.class })
-public class CustomerQueryServiceTest {
+public class CustomerQueryServiceTestW {
 
 	@Autowired
 	private CustomerQueryService customerQueryService;
