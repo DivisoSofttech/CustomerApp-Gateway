@@ -160,8 +160,24 @@ public class Order {
 	@JsonProperty("status")
 	private Status status = null;
 
+	/**
+	 * @return the cancellationRef
+	 */
+	public Long getCancellationRef() {
+		return cancellationRef;
+	}
+
+	/**
+	 * @param cancellationRef the cancellationRef to set
+	 */
+	public void setCancellationRef(Long cancellationRef) {
+		this.cancellationRef = cancellationRef;
+	}
+
 	@JsonProperty("storeId")
 	private String storeId = null;
+	@JsonProperty("cancellationRef")
+	private Long cancellationRef;
 
 	public Order appliedOffers(List<Offer> appliedOffers) {
 		this.appliedOffers = appliedOffers;
@@ -447,7 +463,6 @@ public class Order {
 		return storeId;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -606,16 +621,16 @@ public class Order {
 	}
 
 	
+
 	@Override
 	public String toString() {
 		return String.format(
-				"Order [appliedOffers=%s,\n approvalDetails=%s,\n paymentMode=%s,\n customerId=%s,\n date=%s,\n allergyNote=%s,\n preOrderDate=%s,\n acceptOrderId=%s,\n processId=%s,\n timeZone=%s,\n state=%s,\n deliveryInfo=%s,\n email=%s,\n grandTotal=%s,\n subTotal=%s,\n id=%s,\n orderId=%s,\n orderLines=%s,\n paymentRef=%s,\n status=%s,\n storeId=%s]",
+				"Order [appliedOffers=%s,\n approvalDetails=%s,\n paymentMode=%s,\n customerId=%s,\n date=%s,\n allergyNote=%s,\n preOrderDate=%s,\n acceptOrderId=%s,\n processId=%s,\n timeZone=%s,\n state=%s,\n deliveryInfo=%s,\n email=%s,\n grandTotal=%s,\n subTotal=%s,\n id=%s,\n orderId=%s,\n orderLines=%s,\n paymentRef=%s,\n status=%s,\n storeId=%s,\n cancellationRef=%s]",
 				appliedOffers, approvalDetails, paymentMode, customerId, date, allergyNote, preOrderDate, acceptOrderId,
 				processId, timeZone, state, deliveryInfo, email, grandTotal, subTotal, id, orderId, orderLines,
-				paymentRef, status, storeId);
+				paymentRef, status, storeId, cancellationRef);
 	}
 
-	
 	public void setStoreId(String storeId) {
 		this.storeId = storeId;
 	}

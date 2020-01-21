@@ -72,6 +72,24 @@ public class OrderDTO {
 	private String acceptOrderId;
 	@JsonProperty("processId")
 	private String processId;
+
+	@JsonProperty("cancellationRef")
+	private Long cancellationRef;
+
+	/**
+	 * @return the cancellationRef
+	 */
+	public Long getCancellationRef() {
+		return cancellationRef;
+	}
+
+	/**
+	 * @param cancellationRef the cancellationRef to set
+	 */
+	public void setCancellationRef(Long cancellationRef) {
+		this.cancellationRef = cancellationRef;
+	}
+
 	/**
 	 * @return the acceptOrderId
 	 */
@@ -413,8 +431,6 @@ public class OrderDTO {
 		this.subTotal = subTotal;
 	}
 
-	
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -440,12 +456,15 @@ public class OrderDTO {
 		return result;
 	}
 
+	
+
 	@Override
 	public String toString() {
 		return String.format(
-				"OrderDTO [allergyNote=%s,\n approvalDetailsId=%s,\n customerId=%s,\n date=%s,\n timeZone=%s,\n deliveryInfoId=%s,\n email=%s,\n grandTotal=%s,\n id=%s,\n orderId=%s,\n paymentMode=%s,\n paymentRef=%s,\n preOrderDate=%s,\n acceptOrderId=%s,\n processId=%s,\n statusId=%s,\n storeId=%s,\n subTotal=%s]",
+				"OrderDTO [allergyNote=%s,\n approvalDetailsId=%s,\n customerId=%s,\n date=%s,\n timeZone=%s,\n deliveryInfoId=%s,\n email=%s,\n grandTotal=%s,\n id=%s,\n orderId=%s,\n paymentMode=%s,\n paymentRef=%s,\n preOrderDate=%s,\n acceptOrderId=%s,\n processId=%s,\n cancellationRef=%s,\n statusId=%s,\n storeId=%s,\n subTotal=%s]",
 				allergyNote, approvalDetailsId, customerId, date, timeZone, deliveryInfoId, email, grandTotal, id,
-				orderId, paymentMode, paymentRef, preOrderDate, acceptOrderId, processId, statusId, storeId, subTotal);
+				orderId, paymentMode, paymentRef, preOrderDate, acceptOrderId, processId, cancellationRef, statusId,
+				storeId, subTotal);
 	}
 
 	@Override
