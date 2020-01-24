@@ -67,7 +67,7 @@ public class CustomerappgatewayApp implements InitializingBean {
         SpringApplication app = new SpringApplication(CustomerappgatewayApp.class);
         DefaultProfileUtil.addDefaultProfile(app);
         ConfigurableApplicationContext applicationContext = app.run(args);
-        applicationContext.getBean(NotificationService.class).start();
+        applicationContext.getBean(NotificationService.class).startConsumers();
         Environment env = applicationContext.getEnvironment();
         logApplicationStartup(env);
     }
