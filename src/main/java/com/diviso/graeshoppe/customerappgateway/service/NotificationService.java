@@ -54,7 +54,8 @@ public class NotificationService {
 				while (!closed.get()) {
 					ConsumerRecords<String, Notification> records = kafkaConsumer.poll(Duration.ofSeconds(3));
 					records.forEach(record -> {
-						sendNotification(record.value());
+						log.info("Notifiation consumed is #####"+record.value());
+						// sendNotification(record.value());
 					});
 				}
 				kafkaConsumer.commitSync();
