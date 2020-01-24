@@ -252,6 +252,9 @@ report:
    
 payment:
    url: dev.ci2.divisosofttech.com:9090
+   
+administration:   
+   url: dev.ci3.divisosofttech.com:8081
 socket:
    server:
       host: 0.0.0.0
