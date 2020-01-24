@@ -58,12 +58,12 @@ public class NotificationService {
 					records.forEach(record -> {
 						log.info("notificationTopic  is consuming " + record);
 						Notification notification = record.value();
-						if (notification.getType().equals("Order-Placed")
-								|| notification.getType().equals("Order-Approved")
-								|| notification.getType().equals("Order-Delivered")) {
-							log.info("In If condition &&&&&&&&&&&&7");
-							sendNotification(notification);
-						}
+						/*
+						 * if (notification.getType().equals("Order-Placed") ||
+						 * notification.getType().equals("Order-Approved") ||
+						 * notification.getType().equals("Order-Delivered")) {
+						 * log.info("In If condition &&&&&&&&&&&&7"); sendNotification(notification); }
+						 */
 					});
 
 				} catch (Exception ex) {
