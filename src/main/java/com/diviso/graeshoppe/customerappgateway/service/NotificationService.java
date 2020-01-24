@@ -61,6 +61,7 @@ public class NotificationService {
 						if (notification.getType().equals("Order-Placed")
 								|| notification.getType().equals("Order-Approved")
 								|| notification.getType().equals("Order-Delivered")) {
+							log.info("In If condition &&&&&&&&&&&&7");
 							sendNotification(notification);
 						}
 					});
