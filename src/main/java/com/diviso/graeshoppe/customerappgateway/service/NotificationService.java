@@ -57,6 +57,12 @@ public class NotificationService {
 					ConsumerRecords<String, Notification> records = consumer.poll(Duration.ofSeconds(3));
 					records.forEach(record -> {
 						log.info("notificationTopic  is consuming " + record);
+						Notification notification = record.value();
+						if (notification.getType().equals("Order-Placed")
+								|| notification.getType().equals("Order-Approved")
+								|| notification.getType().equals("Order-Delivered")) {
+							sendNotification(notification);
+						}
 					});
 
 				} catch (Exception ex) {
