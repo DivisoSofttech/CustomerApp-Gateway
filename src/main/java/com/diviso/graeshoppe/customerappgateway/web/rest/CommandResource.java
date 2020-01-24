@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.FeedbackDTO;
 import com.diviso.graeshoppe.customerappgateway.client.aggregators.CustomerAggregator;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.Customer;
@@ -37,6 +38,7 @@ import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTran
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PaymentTransactionResponse;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.ReplyDTO;
 import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReviewDTO;
+import com.diviso.graeshoppe.customerappgateway.service.AdministrationCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.CustomerCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OfferCommandService;
 import com.diviso.graeshoppe.customerappgateway.service.OrderCommandService;
@@ -60,7 +62,9 @@ public class CommandResource {
 
 	@Autowired
 	private OfferCommandService offerCommandService;
-
+	
+	@Autowired
+	private AdministrationCommandService admistrationCommandService;
 	
 	public CommandResource() {
 		
@@ -296,6 +300,12 @@ public class CommandResource {
 		return customerCommandService.save(customer);
 		
 	}
+	/*****************************************************Administration***********************************/
 	
+	@PostMapping("/feedback")
+	public ResponseEntity<FeedbackDTO> createFeedback(
+			@RequestBody FeedbackDTO feedbackDTO) {
+		return admistrationCommandService.createFeedback(feedbackDTO);
+	}
 	
 }
