@@ -7,7 +7,6 @@ import com.diviso.graeshoppe.notification.avro.Notification;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
-import org.apache.kafka.common.errors.WakeupException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,9 @@ import java.time.Instant;
 import java.time.OffsetDateTime;
 import java.time.ZoneId;
 import java.util.Collections;
+import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 @Service
@@ -32,9 +34,10 @@ public class NotificationService {
 	private final AtomicBoolean closed = new AtomicBoolean(false);
 
 	@Value("${topic.notification}")
-	public String topic;
+	public String notificationTopic;
 
 	private final KafkaProperties kafkaProperties;
+	private ExecutorService sseExecutorService = Executors.newCachedThreadPool();
 
 	private KafkaConsumer<String, Notification> kafkaConsumer;
 
@@ -42,33 +45,33 @@ public class NotificationService {
 		this.kafkaProperties = kafkaProperties;
 	}
 
-	public void start() {
-		log.info("Kafka consumer starting notification...");
-		this.kafkaConsumer = new KafkaConsumer<>(kafkaProperties.getConsumerProps());
-		Runtime.getRuntime().addShutdownHook(new Thread(this::shutdown));
-
-		Thread consumerThread = new Thread(() -> {
-			try {
-				kafkaConsumer.subscribe(Collections.singletonList(topic));
-				log.info("Kafka consumer started");
-				while (!closed.get()) {
-					ConsumerRecords<String, Notification> records = kafkaConsumer.poll(Duration.ofSeconds(3));
+	public void subscribeToNotification() {
+		log.debug("REST request to consume records from Kafka topics {}", notificationTopic);
+		Map<String, Object> consumerProps = kafkaProperties.getConsumerProps();
+		sseExecutorService.execute(() -> {
+			KafkaConsumer<String, Notification> consumer = new KafkaConsumer<>(consumerProps);
+			consumer.subscribe(Collections.singletonList(notificationTopic));
+			boolean exitLoop = false;
+			while (!exitLoop) {
+				try {
+					ConsumerRecords<String, Notification> records = consumer.poll(Duration.ofSeconds(3));
 					records.forEach(record -> {
-						log.info("Notifiation consumed is #####"+record.value());
-						// sendNotification(record.value());
+						log.info("notificationTopic  is consuming " + record);
 					});
+
+				} catch (Exception ex) {
+					ex.printStackTrace();
+					log.trace("Complete with error {}", ex.getMessage(), ex);
+					exitLoop = true;
 				}
-				kafkaConsumer.commitSync();
-			} catch (WakeupException e) {
-				if (!closed.get())
-					throw e;
-			} catch (Exception e) {
-				log.error(e.getMessage(), e);
-			} finally {
-				kafkaConsumer.close();
 			}
+			log.info("Consumer is going to close");
+			consumer.close();
 		});
-		consumerThread.start();
+	}
+
+	public void startConsumers() {
+		subscribeToNotification();
 	}
 
 	public KafkaConsumer<String, Notification> getKafkaConsumer() {
