@@ -122,11 +122,12 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		log.debug("input", customerId);
 		
-		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+		/*QueryBuilder dslQuery=QueryBuilders.boolQuery()
 				.must(termQuery("customerId.keyword", customerId))
-				.filter(rangeQuery("date").lte(date));
-		
-		//QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
+				.filter(rangeQuery("date").lte(date));*/
+		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+				.must(rangeQuery("date").lte(date))
+				.filter(termQuery("customerId.keyword", customerId));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 

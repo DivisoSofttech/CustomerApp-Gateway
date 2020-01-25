@@ -663,6 +663,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		return new PageImpl(list, page, response.getHits().getTotalHits());
 	}
+	
+	
 	public <T> T search(String indexName, Long id) {
 
 		if (indexName.equals("store")) {

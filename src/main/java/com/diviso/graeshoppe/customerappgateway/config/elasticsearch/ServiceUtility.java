@@ -84,9 +84,12 @@ public class ServiceUtility {
 		List<T> list = new ArrayList<>();
 
 		for (SearchHit hit : searchHit) {
-			//System.out.println("............T............"+t);
+			System.out.println("............T............"+(T)objectMapper.convertValue(hit.getSourceAsMap(), t.getClass()));
 			list.add((T)objectMapper.convertValue(hit.getSourceAsMap(), t.getClass()));
 		}
+		
+		
+		System.out.println("");
 
 		return new PageImpl(list, page, response.getHits().getTotalHits());
 	}
