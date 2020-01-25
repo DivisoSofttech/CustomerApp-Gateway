@@ -131,7 +131,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(dslQuery).sort("id", SortOrder.DESC);
+		searchSourceBuilder.query(dslQuery).sort("date", SortOrder.DESC);
 		
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
