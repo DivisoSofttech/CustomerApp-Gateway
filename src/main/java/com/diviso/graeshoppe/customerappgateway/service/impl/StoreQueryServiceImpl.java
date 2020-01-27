@@ -922,6 +922,12 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 			storeSet.add(storeType.getStore());
 			log.debug("storeSet.size", storeSet.size());
 		}
+		//for testing
+		for(Store store:storeSet) {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<STOREEEEEEEEEEEEEEEEEEEE>>>>>>>>>>>>>>>>>"+store);
+		}
+		
+		
 		List<Store> storeList = new ArrayList<>();
 		storeList.addAll(storeSet);
 		

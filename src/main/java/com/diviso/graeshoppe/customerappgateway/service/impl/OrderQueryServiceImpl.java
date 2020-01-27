@@ -349,14 +349,16 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @return the Page of Notification in body
 	 */
 	@Override
-	public Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable) {
+	public Page<Notification> findNotificationByReceiverId(String receiverId/*,LocalDate date*/, Pageable pageable) {
 
 		log.debug("input",receiverId);
-		
+		/*QueryBuilder dslQuery=QueryBuilders.boolQuery()
+				.must(rangeQuery("date").lte(date))
+				.filter(termQuery("receiverId.keyword", receiverId));*/
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(termQuery("receiverId.keyword", receiverId));
-		searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.DESC));
+		QueryBuilder dslQuery=	termQuery("receiverId.keyword", receiverId);
+		searchSourceBuilder.query(dslQuery);
+		searchSourceBuilder.sort(new FieldSortBuilder("date").order(SortOrder.DESC));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("notification", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
@@ -377,7 +379,7 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(dslQuery);
-		searchSourceBuilder.sort(new FieldSortBuilder("id").order(SortOrder.DESC));
+		searchSourceBuilder.sort(new FieldSortBuilder("date").order(SortOrder.DESC));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("notification", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
