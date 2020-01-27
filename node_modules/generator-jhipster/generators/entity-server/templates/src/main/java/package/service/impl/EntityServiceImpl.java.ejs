@@ -28,11 +28,13 @@ package <%= packageName %>.service<% if (service === 'serviceImpl') { %>.impl<% 
     const repository = entityInstance  + 'Repository';
     const searchRepository = entityInstance  + 'SearchRepository';
     let isUsingMapsId = false;
+    let primaryKeyType = pkType;
     let mapsIdAssoc;
     for (idx in relationships) {
         isUsingMapsId = relationships[idx].useJPADerivedIdentifier;
         if ( isUsingMapsId === true) {
             mapsIdAssoc = relationships[idx];
+            primaryKeyType = (relationships[idx].otherEntityName === 'user'  && authenticationType === 'oauth2') ? 'String' : pkType;
             break;
         }
         isUsingMapsId = false;
@@ -91,7 +93,7 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 <%_ } _%>
 
 /**
- * Service Implementation for managing <%= asEntity(entityClass) %>.
+ * Service Implementation for managing {@link <%= asEntity(entityClass) %>}.
  */
 @Service<% if (databaseType === 'sql') { %>
 @Transactional<% } %>
@@ -103,8 +105,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     /**
      * Save a <%= entityInstance %>.
      *
-     * @param <%= instanceName %> the entity to save
-     * @return the persisted entity
+     * @param <%= instanceName %> the entity to save.
+     * @return the persisted entity.
      */
     <%_ if (service === 'serviceImpl') { _%>
     @Override
@@ -117,8 +119,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     /**
      * Get all the <%= entityInstancePlural %>.
      *<% if (pagination !== 'no') { %>
-     * @param pageable the pagination information<% } %>
-     * @return the list of entities
+     * @param pageable the pagination information.<% } %>
+     * @return the list of entities.
      */
     <%_ if (service === 'serviceImpl') { _%>
     @Override
@@ -141,7 +143,7 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
 
     /**
      * Get all the <%= entityInstancePlural %>.
-     * @return the Flux of entities
+     * @return the {@link Flux} of entities.
      */
     public Flux<<%= instanceType %>> findAllAsFlux() {
         log.debug("Request to get all <%= entityClassPlural %> as a flux");
@@ -152,9 +154,9 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ if (fieldsContainOwnerManyToMany === true) { _%>
 
     /**
-     * Get all the <%= entityClass %> with eager load of many-to-many relationships.
+     * Get all the <%= entityInstancePlural %> with eager load of many-to-many relationships.
      *
-     * @return the list of entities
+     * @return the list of entities.
      */
     public Page<<%= instanceType %>> findAllWithEagerRelationships(Pageable pageable) {
         return <%= entityInstance %>Repository.findAllWithEagerRelationships(pageable)<% if (dto !== 'mapstruct') { %>;<% } else { %>.map(<%= entityToDtoReference %>);<% } %>
@@ -164,8 +166,8 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     /**
      * Get one <%= entityInstance %> by id.
      *
-     * @param id the id of the entity
-     * @return the entity
+     * @param id the id of the entity.
+     * @return the entity.
      */
     <%_ if (service === 'serviceImpl') { _%>
     @Override
@@ -173,29 +175,30 @@ public class <%= serviceClassName %><% if (service === 'serviceImpl') { %> imple
     <%_ if (databaseType === 'sql') { _%>
     @Transactional(readOnly = true)
     <%_ } _%>
-    public Optional<<%= instanceType %>> findOne(<%= pkType %> id) {
+    public Optional<<%= instanceType %>> findOne(<%= primaryKeyType %> id) {
         log.debug("Request to get <%= entityClass %> : {}", id);<%- include('../../common/get_template', {asEntity, asDto, viaService, returnDirectly:true}); -%>
     }
 
     /**
      * Delete the <%= entityInstance %> by id.
      *
-     * @param id the id of the entity
+     * @param id the id of the entity.
      */
     <%_ if (service === 'serviceImpl') { _%>
     @Override
     <%_ } _%>
-    public void delete(<%= pkType %> id) {
-        log.debug("Request to delete <%= entityClass %> : {}", id);<%- include('../../common/delete_template', {viaService: viaService}); -%>
+    public void delete(<%= primaryKeyType %> id) {
+        log.debug("Request to delete <%= entityClass %> : {}", id);
+<%- include('../../common/delete_template', {viaService: viaService}); -%>
     }
     <%_ if (searchEngine === 'elasticsearch') { _%>
 
     /**
      * Search for the <%= entityInstance %> corresponding to the query.
      *
-     * @param query the query of the search<% if (pagination !== 'no') { %>
-     * @param pageable the pagination information<% } %>
-     * @return the list of entities
+     * @param query the query of the search.<% if (pagination !== 'no') { %>
+     * @param pageable the pagination information.<% } %>
+     * @return the list of entities.
      */
     <%_ if (service === 'serviceImpl') { _%>
     @Override

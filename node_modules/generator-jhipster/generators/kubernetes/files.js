@@ -36,13 +36,10 @@ function writeFiles() {
                 if (this.app.searchEngine === 'elasticsearch') {
                     this.template('db/elasticsearch.yml.ejs', `${appName}/${appName}-elasticsearch.yml`);
                 }
-                if (
-                    (this.app.applicationType === 'gateway' || this.app.applicationType === 'monolith') &&
-                    this.kubernetesServiceType === 'Ingress'
-                ) {
-                    if (this.istio !== 'no') {
-                        this.template('gateway.yml.ejs', `${appName}/${appName}-gateway.yml`);
-                    } else {
+                if (this.app.applicationType === 'gateway' || this.app.applicationType === 'monolith') {
+                    if (this.istio) {
+                        this.template('istio/gateway.yml.ejs', `${appName}/${appName}-gateway.yml`);
+                    } else if (this.kubernetesServiceType === 'Ingress') {
                         this.template('ingress.yml.ejs', `${appName}/${appName}-ingress.yml`);
                     }
                 }
@@ -52,7 +49,7 @@ function writeFiles() {
                 if (this.monitoring === 'prometheus') {
                     this.template('monitoring/jhipster-prometheus-sm.yml.ejs', `${appName}/${appName}-prometheus-sm.yml`);
                 }
-                if (this.istioRoute === true) {
+                if (this.istio) {
                     this.template('istio/destination-rule.yml.ejs', `${appName}/${appName}-destination-rule.yml`);
                     this.template('istio/virtual-service.yml.ejs', `${appName}/${appName}-virtual-service.yml`);
                 }
@@ -83,6 +80,9 @@ function writeFiles() {
                 if (this.deploymentApplicationType === 'microservice') {
                     this.template('console/jhipster-zipkin.yml.ejs', 'console/jhipster-zipkin.yml');
                 }
+                if (this.istio) {
+                    this.template('istio/gateway/jhipster-console-gateway.yml.ejs', 'console/jhipster-console-gateway.yml');
+                }
             }
         },
 
@@ -92,6 +92,9 @@ function writeFiles() {
                 this.template('monitoring/jhipster-prometheus-cr.yml.ejs', 'monitoring/jhipster-prometheus-cr.yml');
                 this.template('monitoring/jhipster-grafana.yml.ejs', 'monitoring/jhipster-grafana.yml');
                 this.template('monitoring/jhipster-grafana-dashboard.yml.ejs', 'monitoring/jhipster-grafana-dashboard.yml');
+                if (this.istio) {
+                    this.template('istio/gateway/jhipster-grafana-gateway.yml.ejs', 'monitoring/jhipster-grafana-gateway.yml');
+                }
             }
         },
 
@@ -108,6 +111,13 @@ function writeFiles() {
 
         writeConfigRunFile() {
             this.template('kubectl-apply.sh.ejs', 'kubectl-apply.sh');
+        },
+
+        writeObservabilityGatewayFiles() {
+            if (!this.istio) return;
+            this.template('istio/gateway/grafana-gateway.yml.ejs', 'istio/grafana-gateway.yml');
+            this.template('istio/gateway/zipkin-gateway.yml.ejs', 'istio/zipkin-gateway.yml');
+            this.template('istio/gateway/kiali-gateway.yml.ejs', 'istio/kiali-gateway.yml');
         }
     };
 }

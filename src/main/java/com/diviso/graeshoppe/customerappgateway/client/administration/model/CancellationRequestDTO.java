@@ -14,7 +14,7 @@ import javax.validation.constraints.*;
  * CancellationRequestDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-01-24T15:11:21.747+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-01-27T14:13:06.209+05:30[Asia/Kolkata]")
 
 public class CancellationRequestDTO   {
   @JsonProperty("amount")
