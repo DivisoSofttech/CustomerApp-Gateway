@@ -919,8 +919,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		Set<Store> storeSet = new HashSet();
 	
 		for (StoreType storeType : storeTypeList) {
-			storeSet.add(storeType.getStore());
-			log.debug("storeSet.size", storeSet.size());
+                         Store s =storeType.getStore();
+System.out.println("<@@@@@@@@@@@@@@@@@@@@@@QQQQQQQQQQQQQQQQQQ>"+s.hashCode());
+			storeSet.add(s);
+		System.out.println("storeSet.size"+ storeSet.size());
 		}
 		//for testing
 		for(Store store:storeSet) {
