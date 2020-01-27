@@ -29,7 +29,7 @@ public interface OrderQueryService {
 
 	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 
-	Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable);
+	Page<Notification> findNotificationByReceiverId(String receiverId,/*LocalDate date,*/Pageable pageable);
 
 	Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
 
