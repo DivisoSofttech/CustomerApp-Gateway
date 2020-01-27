@@ -46,6 +46,7 @@ module.exports = class extends BaseGenerator {
         });
         this.regenerate = this.options['skip-prompts'];
         this.skipChecks = this.options['skip-checks'];
+        this.registerPrettierTransform();
     }
 
     get initializing() {
@@ -75,12 +76,13 @@ module.exports = class extends BaseGenerator {
                 this.DOCKER_COMPOSE_FORMAT_VERSION = constants.DOCKER_COMPOSE_FORMAT_VERSION;
 
                 this.DOCKER_MYSQL = constants.DOCKER_MYSQL;
+                this.DOCKER_MSSQL = constants.DOCKER_MSSQL;
                 this.DOCKER_MARIADB = constants.DOCKER_MARIADB;
                 this.DOCKER_POSTGRESQL = constants.DOCKER_POSTGRESQL;
-                this.DOCKER_ORACLE = constants.DOCKER_ORACLE;
                 this.DOCKER_MONGODB = constants.DOCKER_MONGODB;
                 this.DOCKER_COUCHBASE = constants.DOCKER_COUCHBASE;
                 this.DOCKER_MEMCACHED = constants.DOCKER_MEMCACHED;
+                this.DOCKER_REDIS = constants.DOCKER_REDIS;
                 this.DOCKER_ELASTICSEARCH = constants.DOCKER_ELASTICSEARCH;
                 this.DOCKER_PROMETHEUS_OPERATOR = constants.DOCKER_PROMETHEUS_OPERATOR;
                 this.DOCKER_GRAFANA_WATCHER = constants.DOCKER_GRAFANA_WATCHER;

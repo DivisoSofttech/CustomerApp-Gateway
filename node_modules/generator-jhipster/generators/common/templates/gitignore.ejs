@@ -1,6 +1,6 @@
 ######################
 # Project Specific
-######################<% if (!skipClient && useSass) { %>
+######################<% if (!skipClient) { %>
 /<%= CLIENT_MAIN_SRC_DIR %>content/css/main.css<% } %>
 /<%= CLIENT_DIST_DIR %>**
 /<%= TEST_DIR %>javascript/coverage/
@@ -51,6 +51,8 @@ local.properties
 # PDT-specific
 .buildpath
 
+# STS-specific
+/.sts4-cache/*
 ######################
 # Intellij
 ######################
