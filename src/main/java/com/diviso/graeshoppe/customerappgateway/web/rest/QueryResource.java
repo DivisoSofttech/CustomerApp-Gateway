@@ -650,8 +650,8 @@ public class QueryResource {
 		return orderQueryService.findNotificationByReceiverId(receiverId, pageable);
 	}
 	
-	@GetMapping("/findnotificationbyCustomerid/{receiverId}")
-	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, LocalDate date,Pageable pageable) {
+	@GetMapping("/findnotificationbyCustomerid/{receiverId}/{date}")
+	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, @PathVariable  LocalDate date,Pageable pageable) {
 		return orderQueryService.findNotificationByCustomerId(receiverId,date ,pageable);
 	}
 	
