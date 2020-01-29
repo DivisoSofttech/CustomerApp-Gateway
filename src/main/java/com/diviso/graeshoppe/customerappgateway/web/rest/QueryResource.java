@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.About;
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.CancelledOrderLine;
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.SubTerm;
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.Term;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
@@ -742,6 +745,26 @@ public class QueryResource {
 		return administrationQueryService.findCancelledOrderLinesByCancellationRequestId(id,pageable);
 	}
 	
+	@GetMapping("/about/{id}")
+	public About findAboutById(@PathVariable Long id) {
+		return administrationQueryService.findAboutById(id);
+		
+	}
+
+	@GetMapping("/term/{id}")
+	public Term findTermById(@PathVariable Long id) {
+		return administrationQueryService.findTermById(id);
+	}
+	
+	@GetMapping("/subTerm/{id}")
+	public SubTerm findSubTermById(Long id) {
+		return administrationQueryService.findSubTermById(id);
+	}
+	
+	@GetMapping("/findSubTermByTermId/{id}")
+	public List<SubTerm> getSubTermsByTermId(@PathVariable Long id) {
+		return administrationQueryService.getSubTermsByTermId(id);
+	}
 	
 	
 }
