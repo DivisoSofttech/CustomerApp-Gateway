@@ -142,6 +142,33 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 		return subTermList;
 
 	}
+	
+	@Override
+	public Page<Term> findallterms(Pageable pageable) {
+
+			log.debug("Term",pageable);
+			QueryBuilder dslbuilder = QueryBuilders.matchAllQuery();
+			SearchSourceBuilder builder = new SearchSourceBuilder();
+			builder.query(dslbuilder);
+
+			SearchResponse response = serviceUtility.searchResponseForPage("term", builder, pageable);
+			return serviceUtility.getPageResult(response, pageable, new Term());
+		
+	}
+	
+
+	@Override
+	public Page<About> findallabout(Pageable pageable) {
+
+			log.debug("about",pageable);
+			QueryBuilder dslbuilder = QueryBuilders.matchAllQuery();
+			SearchSourceBuilder builder = new SearchSourceBuilder();
+			builder.query(dslbuilder);
+
+			SearchResponse response = serviceUtility.searchResponseForPage("about", builder, pageable);
+			return serviceUtility.getPageResult(response, pageable, new About());
+		
+	}
 }
 	
 

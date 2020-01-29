@@ -766,5 +766,15 @@ public class QueryResource {
 		return administrationQueryService.getSubTermsByTermId(id);
 	}
 	
+	@GetMapping("/findallterms")
+	Page<Term> findallterms(Pageable pageable){
+		return administrationQueryService.findallterms(pageable);
+		
+	}
+
+	@GetMapping("/findallabout")
+	Page<About> findallabout(Pageable pageable){
+		return administrationQueryService.findallabout(pageable);
+	}
 	
 }
