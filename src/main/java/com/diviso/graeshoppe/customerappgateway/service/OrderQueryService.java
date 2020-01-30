@@ -15,8 +15,6 @@ import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Or
 public interface OrderQueryService {
 	Order findById(Long id);
 
-	Page<Order> findOrderByCustomerId(String customerId, Pageable pageable);
-
 	List<OrderLine> findOrderLinesByOrderId(Long orderId);
 
 	Order findOrderByOrderId(String orderId);
@@ -29,17 +27,13 @@ public interface OrderQueryService {
 
 	Long findNotificationCountByReceiverIdAndStatusName(String receiverId, String status);
 
-	Page<Notification> findNotificationByReceiverId(String receiverId,/*LocalDate date,*/Pageable pageable);
-
 	Page<AuxilaryOrderLine> findAuxilaryOrderLineByOrderLineId(Long orderLineId, Pageable pageable);
 
 	Page<Address> findAllSavedAddresses(String customerId, Pageable pageable);
 
-	//Page<Notification> findNotificationByCustomerId(String customerId, Pageable pageable);
-
-	Page<Order> findOrderByCustId(String customerId, LocalDate date, Pageable pageable);
-
 	Page<Notification> findNotificationByCustomerId(String receiverId, LocalDate date, Pageable pageable);
+
+	Page<Order> findOrdersByCustomerId(String customerId, LocalDate date, Pageable pageable);
 
 	
 	

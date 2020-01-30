@@ -597,21 +597,15 @@ public class QueryResource {
 	}
 
 	/**
-     * GET  /ordersByCustomerId/:customerId Get the customerId based Order
+     * GET  /findOrdersByCustomerId/:customerId Get the customerId based Order
      * @param customerId the customerId of  Order
      * @param pageable the pageable to create
      * @return page of Order in body 
      */
-	@GetMapping("/ordersByCustomerId/{customerId}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
+	@GetMapping("/findOrdersByCustomerId/{customerId}/{date}")
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
 
-		return orderQueryService.findOrderByCustomerId(customerId,pageable);
-
-	}
-	@GetMapping("/ordersByCustId/{customerId}/{date}")
-	public Page<Order> findOrdersByCustId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
-
-		return orderQueryService.findOrderByCustId(customerId,date, pageable);
+		return orderQueryService.findOrdersByCustomerId(customerId,date, pageable);
 
 	}
 	
@@ -637,18 +631,7 @@ public class QueryResource {
 			@PathVariable String status) {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
-	/**
-	 *@deprecated 
-     * GET  /findnotificationbyreceiverid/:receiverId Get the receiverId based Notification
-     * @param receiverId the receiverId of  Notification
-     * @param pageable the pageable to create
-     * @return page of Notification in body 
-     */
-	
-	@GetMapping("/findnotificationbyreceiverid/{receiverId}")
-	public Page<Notification> findNotificationByReceiverId(@PathVariable String receiverId, Pageable pageable) {
-		return orderQueryService.findNotificationByReceiverId(receiverId, pageable);
-	}
+
 	
 	@GetMapping("/findnotificationbyCustomerid/{receiverId}/{date}")
 	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, @PathVariable  LocalDate date,Pageable pageable) {
@@ -684,8 +667,6 @@ public class QueryResource {
 		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
 
 	}
-	
-	
 	
 	
 	// ****************Report related end points********
