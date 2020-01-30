@@ -669,18 +669,6 @@ public class QueryResource {
 	}
 	
 	
-	// ****************Report related end points********
-	
-	/**
-     * GET  /orderaggregator/:orderNumber Get the orderNumber based OrderAggregator
-     * @param orderNumber the orderNumber of OrderMaster
-     * @return the ResponseEntity with status 200 (OK) of OrderAggregator in body 
-     */
-	
-	@GetMapping("/orderaggregator/{orderNumber}")
-	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
-		return reportQueryResourceApi.getOrderAggregatorUsingGET(orderNumber);
-	}
 	// ****************offer related end points********
 	/**
 	 * GET /findOfferLinesByOrderId/:id: get all the "id" offer.
