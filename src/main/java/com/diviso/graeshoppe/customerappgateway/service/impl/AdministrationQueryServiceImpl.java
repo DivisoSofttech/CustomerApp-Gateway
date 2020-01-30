@@ -41,8 +41,10 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 	@Autowired
 	ServiceUtility serviceUtility;
 	
+	@Autowired
 	private RestHighLevelClient restHighLevelClient;
 	
+	@Autowired
 	private ObjectMapper objectMapper;
 	
 	@Override
