@@ -375,7 +375,13 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	public Page<Notification> findNotificationByCustomerId(String receiverId,LocalDate date, Pageable pageable) {
 
 		log.debug("input",receiverId);
-		QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("receiverId.keyword", receiverId)).filter(rangeQuery("date").lte(date));
+		
+		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+				.must(rangeQuery("date").lte(date))
+				.filter(termQuery("receiverId.keyword", receiverId));
+		
+		
+		//QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("receiverId.keyword", receiverId)).filter(rangeQuery("date").lte(date));
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(dslQuery);
