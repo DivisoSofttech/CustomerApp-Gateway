@@ -327,64 +327,92 @@ public class ProductQueryServiceImpl implements ProductQueryService {
 	@Override
 	public List<ResultBucket> findCategoryAndCountByStoreId(String storeId, Pageable pageable) {
 
-		log.debug("input", "storeId");
-
-		List<ResultBucket> resultBucketList = new ArrayList<>();
-
-		 SearchRequest searchRequest = new SearchRequest("product");
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		FilterAggregationBuilder filterAggregationBuilder = AggregationBuilders.filter("byStoreFilter",
-				QueryBuilders.termQuery("iDPcode.keyword", storeId));
-
-		TermsAggregationBuilder aggregation = AggregationBuilders.terms("by_categories").field("category.name.keyword").size(50);
-
-		filterAggregationBuilder.subAggregation(aggregation);
-
-		searchSourceBuilder.aggregation(filterAggregationBuilder);
-
-		searchSourceBuilder.query(QueryBuilders.matchAllQuery());
-
-		
-
-		searchRequest.source(searchSourceBuilder);
-		SearchResponse searchResponse = null;
+		/*
+		 * log.debug("input", "storeId");
+		 * 
+		 * List<ResultBucket> resultBucketList = new ArrayList<>();
+		 * 
+		 * SearchRequest searchRequest = new SearchRequest("product");
+		 * 
+		 * SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
+		 * 
+		 * FilterAggregationBuilder filterAggregationBuilder =
+		 * AggregationBuilders.filter("byStoreFilter",
+		 * QueryBuilders.termQuery("iDPcode.keyword", storeId));
+		 * 
+		 * TermsAggregationBuilder aggregation =
+		 * AggregationBuilders.terms("by_categories").field("category.name.keyword").
+		 * size(50);
+		 * 
+		 * filterAggregationBuilder.subAggregation(aggregation);
+		 * 
+		 * searchSourceBuilder.aggregation(filterAggregationBuilder);
+		 * 
+		 * searchSourceBuilder.query(QueryBuilders.matchAllQuery());
+		 * 
+		 * 
+		 * 
+		 * searchRequest.source(searchSourceBuilder); SearchResponse searchResponse =
+		 * null; try { searchResponse = restHighLevelClient.search(searchRequest,
+		 * RequestOptions.DEFAULT); } catch (IOException e) {
+		 * 
+		 * e.printStackTrace(); }
+		 * 
+		 * Aggregations aggregations = searchResponse.getAggregations();
+		 * 
+		 * Filter byStoreFilterAggregation = aggregations.get("byStoreFilter");
+		 * 
+		 * Terms byCompanyAggregation =
+		 * byStoreFilterAggregation.getAggregations().get("by_categories"); //refactor
+		 * by for each for (Terms.Bucket bucket : byCompanyAggregation.getBuckets()) {
+		 * 
+		 * ResultBucket result = new ResultBucket();
+		 * 
+		 * result.setKey(bucket.getKey().toString());
+		 * 
+		 * result.setDocCount(bucket.getDocCount());
+		 * 
+		 * result.setKeyAsString(bucket.getKeyAsString());
+		 * 
+		 * resultBucketList.add(result);
+		 * 
+		 * log.debug("KEY:" + bucket.getKey() + "!!keyAsString:" +
+		 * bucket.getKeyAsString() + "!!count:" + bucket.getDocCount());
+		 * 
+		 * }
+		 * 
+		 * return resultBucketList;
+		 */
+		log.debug("<<<<<<<< findCategoryAndCountByStoreId >>>>>>>>>{}",storeId);
+		List<ResultBucket> buckets = new ArrayList<>();
+		QueryBuilder dslBuilder = QueryBuilders.termQuery("iDPcode.keyword", storeId);
+		SearchSourceBuilder builder =new SearchSourceBuilder();
+		FilterAggregationBuilder filteraggsBuilder = new FilterAggregationBuilder("filter_storeid", dslBuilder);
+		TermsAggregationBuilder termsaggsBuilders = AggregationBuilders.terms("by_categories").field("category.name.keyword").size(50);
+		filteraggsBuilder.subAggregation(termsaggsBuilders);
+		builder.aggregation(filteraggsBuilder);
+		builder.query(QueryBuilders.matchAllQuery());
+		SearchRequest request = new SearchRequest("product");
+		request.source(builder);
+		SearchResponse response = null;
 		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) {
-
+			response = restHighLevelClient.search(request, RequestOptions.DEFAULT);
+		}catch (IOException e){
 			e.printStackTrace();
 		}
-
-		Aggregations aggregations = searchResponse.getAggregations();
-
+		Aggregations aggregations = response.getAggregations();
 		Filter byStoreFilterAggregation = aggregations.get("byStoreFilter");
-
 		Terms byCompanyAggregation = byStoreFilterAggregation.getAggregations().get("by_categories");
-//refactor by for each
 		for (Terms.Bucket bucket : byCompanyAggregation.getBuckets()) {
-
 			ResultBucket result = new ResultBucket();
-
 			result.setKey(bucket.getKey().toString());
-
 			result.setDocCount(bucket.getDocCount());
-
 			result.setKeyAsString(bucket.getKeyAsString());
-
-			resultBucketList.add(result);
-
-			log.debug("KEY:" + bucket.getKey() + "!!keyAsString:" + bucket.getKeyAsString() + "!!count:"
-					+ bucket.getDocCount());
-
+			buckets.add(result);
+			log.debug("<<<<<<<<<KEY>>>>>>:" + bucket.getKey() + "<<<<<<!!keyAsString>>>>> :" + bucket.getKeyAsString() + "<<<<<<!!count>>>>>>:" + bucket.getDocCount());
+			
 		}
-		// 
-
-		
-
-		//return new PageImpl<>(resultBucketList, pageable, resultBucketList.size());
-		return resultBucketList;
+		return buckets;
 	}
 
 	/**
