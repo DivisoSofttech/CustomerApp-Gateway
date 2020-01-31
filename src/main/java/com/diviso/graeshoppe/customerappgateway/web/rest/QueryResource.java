@@ -18,7 +18,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.About;
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.CancelledOrderLine;
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.SubTerm;
+import com.diviso.graeshoppe.customerappgateway.client.administration.model.Term;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.ContactDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.CustomerDTO;
 import com.diviso.graeshoppe.customerappgateway.client.customer.model.FavouriteProduct;
@@ -594,21 +597,15 @@ public class QueryResource {
 	}
 
 	/**
-     * GET  /ordersByCustomerId/:customerId Get the customerId based Order
+     * GET  /findOrdersByCustomerId/:customerId Get the customerId based Order
      * @param customerId the customerId of  Order
      * @param pageable the pageable to create
      * @return page of Order in body 
      */
-	@GetMapping("/ordersByCustomerId/{customerId}")
-	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,Pageable pageable) {
+	@GetMapping("/findOrdersByCustomerId/{customerId}/{date}")
+	public Page<Order> findOrdersByCustomerId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
 
-		return orderQueryService.findOrderByCustomerId(customerId,pageable);
-
-	}
-	@GetMapping("/ordersByCustId/{customerId}/{date}")
-	public Page<Order> findOrdersByCustId(@PathVariable String customerId,@PathVariable LocalDate date, Pageable pageable) {
-
-		return orderQueryService.findOrderByCustId(customerId,date, pageable);
+		return orderQueryService.findOrdersByCustomerId(customerId,date, pageable);
 
 	}
 	
@@ -634,21 +631,10 @@ public class QueryResource {
 			@PathVariable String status) {
 		return orderQueryService.findNotificationCountByReceiverIdAndStatusName(receiverId, status);
 	}
-	/**
-	 *@deprecated 
-     * GET  /findnotificationbyreceiverid/:receiverId Get the receiverId based Notification
-     * @param receiverId the receiverId of  Notification
-     * @param pageable the pageable to create
-     * @return page of Notification in body 
-     */
+
 	
-	@GetMapping("/findnotificationbyreceiverid/{receiverId}")
-	public Page<Notification> findNotificationByReceiverId(@PathVariable String receiverId, Pageable pageable) {
-		return orderQueryService.findNotificationByReceiverId(receiverId, pageable);
-	}
-	
-	@GetMapping("/findnotificationbyCustomerid/{receiverId}")
-	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, LocalDate date,Pageable pageable) {
+	@GetMapping("/findnotificationbyCustomerid/{receiverId}/{date}")
+	public Page<Notification> findNotificationByCustomerId(@PathVariable String receiverId, @PathVariable  LocalDate date,Pageable pageable) {
 		return orderQueryService.findNotificationByCustomerId(receiverId,date ,pageable);
 	}
 	
@@ -683,20 +669,6 @@ public class QueryResource {
 	}
 	
 	
-	
-	
-	// ****************Report related end points********
-	
-	/**
-     * GET  /orderaggregator/:orderNumber Get the orderNumber based OrderAggregator
-     * @param orderNumber the orderNumber of OrderMaster
-     * @return the ResponseEntity with status 200 (OK) of OrderAggregator in body 
-     */
-	
-	@GetMapping("/orderaggregator/{orderNumber}")
-	public ResponseEntity<OrderAggregator> getOrderAggregator(@PathVariable String orderNumber) {
-		return reportQueryResourceApi.getOrderAggregatorUsingGET(orderNumber);
-	}
 	// ****************offer related end points********
 	/**
 	 * GET /findOfferLinesByOrderId/:id: get all the "id" offer.
@@ -742,6 +714,36 @@ public class QueryResource {
 		return administrationQueryService.findCancelledOrderLinesByCancellationRequestId(id,pageable);
 	}
 	
+	@GetMapping("/about/{id}")
+	public About findAboutById(@PathVariable Long id) {
+		return administrationQueryService.findAboutById(id);
+		
+	}
+
+	@GetMapping("/term/{id}")
+	public Term findTermById(@PathVariable Long id) {
+		return administrationQueryService.findTermById(id);
+	}
 	
+	@GetMapping("/subTerm/{id}")
+	public SubTerm findSubTermById(Long id) {
+		return administrationQueryService.findSubTermById(id);
+	}
+	
+	@GetMapping("/findSubTermByTermId/{id}")
+	public List<SubTerm> getSubTermsByTermId(@PathVariable Long id) {
+		return administrationQueryService.getSubTermsByTermId(id);
+	}
+	
+	@GetMapping("/findallterms")
+	Page<Term> findallterms(Pageable pageable){
+		return administrationQueryService.findallterms(pageable);
+		
+	}
+
+	@GetMapping("/findallabout")
+	Page<About> findallabout(Pageable pageable){
+		return administrationQueryService.findallabout(pageable);
+	}
 	
 }

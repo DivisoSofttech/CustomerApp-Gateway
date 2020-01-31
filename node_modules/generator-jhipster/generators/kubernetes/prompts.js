@@ -16,14 +16,15 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+const execSync = require('child_process').execSync;
 const dockerPrompts = require('../docker-prompts');
 
 module.exports = {
     askForKubernetesNamespace,
     askForKubernetesServiceType,
+    askForIngressType,
     askForIngressDomain,
     askForIstioSupport,
-    askForIstioRouteFiles,
     ...dockerPrompts
 };
 
@@ -50,15 +51,18 @@ function askForKubernetesServiceType() {
     if (this.regenerate) return;
     const done = this.async();
 
+    const istio = this.istio;
+
     const prompts = [
         {
+            when: () => istio === false,
             type: 'list',
             name: 'kubernetesServiceType',
-            message: 'Choose the kubernetes service type for your edge services',
+            message: 'Choose the Kubernetes service type for your edge services',
             choices: [
                 {
                     value: 'LoadBalancer',
-                    name: 'LoadBalancer - Let a kubernetes cloud provider automatically assign an IP'
+                    name: 'LoadBalancer - Let a Kubernetes cloud provider automatically assign an IP'
                 },
                 {
                     value: 'NodePort',
@@ -79,7 +83,7 @@ function askForKubernetesServiceType() {
     });
 }
 
-function askForIngressDomain() {
+function askForIngressType() {
     if (this.regenerate) return;
     const done = this.async();
     const kubernetesServiceType = this.kubernetesServiceType;
@@ -87,15 +91,79 @@ function askForIngressDomain() {
     const prompts = [
         {
             when: () => kubernetesServiceType === 'Ingress',
+            type: 'list',
+            name: 'ingressType',
+            message: 'Choose the Kubernetes Ingress type',
+            choices: [
+                {
+                    value: 'nginx',
+                    name: 'NGINX Ingress - choose this if you are running on Minikube'
+                },
+                {
+                    value: 'gke',
+                    name: 'Google Kubernetes Engine Ingress - choose this if you are running on GKE'
+                }
+            ],
+            default: this.ingressType ? this.ingressType : 'nginx'
+        }
+    ];
+
+    this.prompt(prompts).then(props => {
+        this.ingressType = props.ingressType;
+        done();
+    });
+}
+
+function askForIngressDomain() {
+    if (this.regenerate) return;
+    const done = this.async();
+    const kubernetesServiceType = this.kubernetesServiceType;
+    const istio = this.istio;
+    this.ingressDomain = this.ingressDomain && this.ingressDomain.startsWith('.') ? this.ingressDomain.substring(1) : this.ingressDomain;
+
+    const istioIpCommand = "kubectl -n istio-system get svc istio-ingressgateway -o jsonpath='{.status.loadBalancer.ingress[0].ip}'";
+    let istioMessage = '';
+    let istioIngressIp = '';
+
+    let defaultValue = '';
+    if (this.ingressDomain) {
+        defaultValue = this.ingressDomain;
+    } else if (istio) {
+        // If it's Istio, and no previous domain is configured, try to determine the default value
+        try {
+            istioIngressIp = execSync(istioIpCommand, { encoding: 'utf8' });
+            defaultValue = `${istioIngressIp}.nip.io`;
+        } catch (ex) {
+            istioMessage = `Unable to determine Istio Ingress IP address. You can find the Istio Ingress IP address by running the command line:\n    ${istioIpCommand}`;
+        }
+    } else if (this.ingressType === 'nginx') {
+        defaultValue = '192.168.99.100.nip.io';
+    } else {
+        defaultValue = 'none';
+    }
+
+    const examples = ['example.com', '192.168.99.100.nip.io'];
+    if (this.ingressType !== 'nginx' && !istio) {
+        examples.push('none');
+    }
+
+    const prompts = [
+        {
+            when: () => kubernetesServiceType === 'Ingress' || istio === true,
             type: 'input',
             name: 'ingressDomain',
-            message:
-                'What is the root FQDN for your ingress services (e.g. example.com, sub.domain.co, www.10.10.10.10.xip.io, [namespace.ip]...)?',
-            // default to minikube ip
-            default: this.ingressDomain ? this.ingressDomain : `${this.kubernetesNamespace}.192.168.99.100.nip.io`,
+            message: `${istioMessage}${istioMessage ? '\n' : ''}What is the root FQDN for your ingress services (e.g. ${examples.join(
+                ', '
+            )})?`,
+            // if Ingress Type is nginx, then default to minikube ip
+            // else, default to empty string, because it's mostly not needed.
+            default: defaultValue,
             validate: input => {
                 if (input.length === 0) {
-                    return 'domain name cannot be empty';
+                    if (this.ingressType === 'nginx' || istio) {
+                        return 'domain name cannot be empty';
+                    }
+                    return true;
                 }
                 if (input.charAt(0) === '.') {
                     return 'domain name cannot start with a "."';
@@ -110,7 +178,11 @@ function askForIngressDomain() {
     ];
 
     this.prompt(prompts).then(props => {
-        this.ingressDomain = props.ingressDomain;
+        if (props.ingressDomain === 'none') {
+            this.ingressDomain = '';
+        } else {
+            this.ingressDomain = props.ingressDomain ? props.ingressDomain : '';
+        }
         done();
     });
 }
@@ -118,7 +190,7 @@ function askForIngressDomain() {
 function askForIstioSupport() {
     if (this.regenerate) return;
     if (this.deploymentApplicationType === 'monolith') {
-        this.istio = 'no';
+        this.istio = false;
         return;
     }
     const done = this.async();
@@ -127,44 +199,7 @@ function askForIstioSupport() {
         {
             type: 'list',
             name: 'istio',
-            message: 'Do you want to configure Istio?',
-            choices: [
-                {
-                    value: 'no',
-                    name: 'Not required'
-                },
-                {
-                    value: 'manualInjection',
-                    name: 'Manual sidecar injection (ensure istioctl in $PATH)'
-                },
-                {
-                    value: 'autoInjection',
-                    name: 'Label tag namespace as automatic injection is already configured'
-                }
-            ],
-            default: this.istio ? this.istio : 'no'
-        }
-    ];
-
-    this.prompt(prompts).then(props => {
-        this.istio = props.istio;
-        done();
-    });
-}
-
-function askForIstioRouteFiles() {
-    if (this.regenerate) return;
-    if (this.istio === 'no') {
-        this.istioRoute = false;
-        return;
-    }
-    const done = this.async();
-
-    const prompts = [
-        {
-            type: 'list',
-            name: 'istioRoute',
-            message: 'Do you want to generate Istio route files?',
+            message: 'Do you want to enable Istio?',
             choices: [
                 {
                     value: false,
@@ -175,12 +210,12 @@ function askForIstioRouteFiles() {
                     name: 'Yes'
                 }
             ],
-            default: this.istioRoute
+            default: this.istio
         }
     ];
 
     this.prompt(prompts).then(props => {
-        this.istioRoute = props.istioRoute;
+        this.istio = props.istio;
         done();
     });
 }
