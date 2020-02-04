@@ -75,7 +75,7 @@ public class NotificationService {
 				}
 			}
 			log.info("Consumer is going to close");
-			//consumer.close();
+			consumer.close();
 		});
 	}
 
