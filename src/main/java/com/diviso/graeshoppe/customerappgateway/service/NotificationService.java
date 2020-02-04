@@ -2,9 +2,8 @@ package com.diviso.graeshoppe.customerappgateway.service;
 
 import com.corundumstudio.socketio.SocketIOServer;
 import com.diviso.graeshoppe.customerappgateway.client.order.model.NotificationDTO;
-import com.diviso.graeshoppe.customerappgateway.client.order.model.aggregator.Notification;
 import com.diviso.graeshoppe.customerappgateway.config.KafkaProperties;
-//import com.diviso.graeshoppe.notification.avro.Notification;
+import com.diviso.graeshoppe.notification.avro.Notification;
 
 import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
