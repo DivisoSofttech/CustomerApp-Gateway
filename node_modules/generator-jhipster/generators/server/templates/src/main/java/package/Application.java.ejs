@@ -24,11 +24,17 @@ import <%=packageName%>.client.OAuth2InterceptedFeignConfiguration;
 import <%=packageName%>.config.ApplicationProperties;
 import <%=packageName%>.config.DefaultProfileUtil;
 
+<%_ if (messageBroker === 'kafka') { _%>
+import <%=packageName%>.service.<%= upperFirstCamelCase(baseName) %>KafkaConsumer;
+import <%=packageName%>.service.<%= upperFirstCamelCase(baseName) %>KafkaProducer;
+import org.springframework.context.ConfigurableApplicationContext;
+<%_ } _%>
 import io.github.jhipster.config.JHipsterConstants;
 
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 <%_ if (databaseType === 'sql') { _%>
@@ -47,7 +53,6 @@ import org.springframework.context.annotation.FilterType;
 <%_ } _%>
 import org.springframework.core.env.Environment;
 
-import javax.annotation.PostConstruct;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
@@ -66,7 +71,7 @@ import java.util.Collection;
 <%_ if (applicationType === 'gateway' && serviceDiscoveryType) { _%>
 @EnableZuulProxy
 <%_ } _%>
-public class <%= mainClass %> {
+public class <%= mainClass %> implements InitializingBean {
 
     private static final Logger log = LoggerFactory.getLogger(<%= mainClass %>.class);
 
@@ -83,8 +88,8 @@ public class <%= mainClass %> {
      * <p>
      * You can find more information on how profiles work with JHipster on <a href="https://www.jhipster.tech/profiles/">https://www.jhipster.tech/profiles/</a>.
      */
-    @PostConstruct
-    public void initApplication() {
+    @Override
+    public void afterPropertiesSet() throws Exception {
         Collection<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_DEVELOPMENT) && activeProfiles.contains(JHipsterConstants.SPRING_PROFILE_PRODUCTION)) {
             log.error("You have misconfigured your application! It should not run " +
@@ -99,12 +104,19 @@ public class <%= mainClass %> {
     /**
      * Main method, used to run the application.
      *
-     * @param args the command line arguments
+     * @param args the command line arguments.
      */
     public static void main(String[] args) {
         SpringApplication app = new SpringApplication(<%= mainClass %>.class);
         DefaultProfileUtil.addDefaultProfile(app);
+<%_ if (messageBroker === 'kafka') { _%>
+        ConfigurableApplicationContext applicationContext = app.run(args);
+        applicationContext.getBean(<%= upperFirstCamelCase(baseName) %>KafkaProducer.class).init();
+        applicationContext.getBean(<%= upperFirstCamelCase(baseName) %>KafkaConsumer.class).start();
+        Environment env = applicationContext.getEnvironment();
+<%_ } else {_%>
         Environment env = app.run(args).getEnvironment();
+<%_ } _%>
         logApplicationStartup(env);
     }
 

@@ -87,50 +87,22 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 	 * @param pageable   the pageable to create
 	 * @return the page of Order in body
 	 */
+	
 	@Override
-	public Page<Order> findOrderByCustomerId(String customerId,Pageable pageable) {
+	public Page<Order> findOrdersByCustomerId(String customerId,LocalDate date, Pageable pageable) {
 
 		log.debug("input", customerId);
 		
-	//	QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("customerId.keyword", customerId)).filter(rangeQuery("date").lte(date));
-		
-		QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(dslQuery).sort("id", SortOrder.DESC);
-		
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder);
-		SearchResponse searchResponse = null;
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
-		}
-
-		Page<Order> orderPage = serviceUtility.getPageResult(searchResponse, pageable, new Order());
-	
-
-		log.debug("output", orderPage);
-
-		return orderPage;
-
-	}
-	
-	@Override
-	public Page<Order> findOrderByCustId(String customerId,LocalDate date, Pageable pageable) {
-
-		log.debug("input", customerId);
-		
-		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+		/*QueryBuilder dslQuery=QueryBuilders.boolQuery()
 				.must(termQuery("customerId.keyword", customerId))
-				.filter(rangeQuery("date").lte(date));
-		
-		//QueryBuilder dslQuery = termQuery("customerId.keyword", customerId);
+				.filter(rangeQuery("date").lte(date));*/
+		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+				.must(rangeQuery("date").lte(date))
+				.filter(termQuery("customerId.keyword", customerId));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
-		searchSourceBuilder.query(dslQuery).sort("id", SortOrder.DESC);
+		searchSourceBuilder.query(dslQuery).sort("date", SortOrder.DESC);
 		
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("order", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
@@ -341,42 +313,22 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 
 	}
 	
-	/**
-	 * Return Notification in descending order
-	 * @param receiverId  the receiverId of Notification
-	 * @param pageable the Pageable to create
-	 * @return the Page of Notification in body
-	 */
-	@Override
-	public Page<Notification> findNotificationByReceiverId(String receiverId, Pageable pageable) {
-
-		log.debug("input",receiverId);
-		
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(termQuery("receiverId.keyword", receiverId));
-		searchSourceBuilder.sort(new FieldSortBuilder("_id").order(SortOrder.DESC));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("notification", pageable.getPageSize(),
-				pageable.getPageNumber(), searchSourceBuilder);
-		SearchResponse searchResponse = null;
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated e.printStackTrace(); } return
-		}
-
-		return serviceUtility.getPageResult(searchResponse, pageable, new Notification());
-	}
 
 	@Override
 	public Page<Notification> findNotificationByCustomerId(String receiverId,LocalDate date, Pageable pageable) {
 
 		log.debug("input",receiverId);
-		QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("receiverId.keyword", receiverId)).filter(rangeQuery("date").lte(date));
+		
+		QueryBuilder dslQuery=QueryBuilders.boolQuery()
+				.must(rangeQuery("date").lte(date))
+				.filter(termQuery("receiverId.keyword", receiverId));
+		
+		
+		//QueryBuilder dslQuery=QueryBuilders.boolQuery().must(termQuery("receiverId.keyword", receiverId)).filter(rangeQuery("date").lte(date));
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(dslQuery);
-		searchSourceBuilder.sort(new FieldSortBuilder("id").order(SortOrder.DESC));
+		searchSourceBuilder.sort(new FieldSortBuilder("date").order(SortOrder.DESC));
 
 		SearchRequest searchRequest = serviceUtility.generateSearchRequest("notification", pageable.getPageSize(),
 				pageable.getPageNumber(), searchSourceBuilder);
@@ -448,6 +400,6 @@ public class OrderQueryServiceImpl implements OrderQueryService {
 		return serviceUtility.getPageResult(searchResponse, pageable, new Address());
 	}
 
-	
+
 
 }

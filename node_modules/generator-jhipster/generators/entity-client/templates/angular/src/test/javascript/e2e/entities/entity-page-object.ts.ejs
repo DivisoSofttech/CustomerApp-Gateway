@@ -16,7 +16,7 @@
  See the License for the specific language governing permissions and
  limitations under the License.
 -%>
-import { element, by, ElementFinder } from 'protractor';
+import { element, by<% if (!readOnly) { %>, ElementFinder<% } %> } from 'protractor';
 
 <%_
 let elementGetter = `getText()`;
@@ -33,10 +33,13 @@ for (let relationship of relationships) {
     }
 } _%>
 export class <%= entityClass %>ComponentsPage {
+    <%_ if (!readOnly) { _%>
     createButton = element(by.id('jh-create-entity'));
     deleteButtons = element.all(by.css('<%= jhiPrefixDashed %>-<%= entityFileName %> div table .btn-danger'));
+    <%_ } _%>
     title = element.all(by.css('<%= jhiPrefixDashed %>-<%= entityFileName %> div h2#page-heading span')).first();
 
+<%_ if (!readOnly) { _%>
     async clickOnCreateButton() {
         await this.createButton.click();
     }
@@ -48,12 +51,14 @@ export class <%= entityClass %>ComponentsPage {
     async countDeleteButtons() {
         return this.deleteButtons.count();
     }
+<%_ } _%>
 
     async getTitle() {
         return this.title.<%- elementGetter %>;
     }
 }
 
+<%_ if (!readOnly) { _%>
 export class <%= entityClass %>UpdatePage {
     pageTitle = element(by.id('<%= jhiPrefixDashed %>-<%= entityFileName %>-heading'));
     saveButton = element(by.id('save-entity'));
@@ -108,7 +113,7 @@ export class <%= entityClass %>UpdatePage {
     }
 
     async get<%= fieldNameCapitalized %>Select() {
-        return this.<%= fieldName %>Select.element(by.css('option:checked')).getText();
+        return await this.<%= fieldName %>Select.element(by.css('option:checked')).getText();
     }
 
     async <%=fieldName %>SelectLastOption() {
@@ -121,7 +126,7 @@ export class <%= entityClass %>UpdatePage {
     }
 
     async get<%= fieldNameCapitalized %>Input() {
-        return this.<%= fieldName %>Input.getAttribute('value');
+        return await this.<%= fieldName %>Input.getAttribute('value');
     }
 
     <%_ } else { _%>
@@ -130,7 +135,7 @@ export class <%= entityClass %>UpdatePage {
     }
 
     async get<%= fieldNameCapitalized %>Input() {
-        return this.<%= fieldName %>Input.getAttribute('value');
+        return await this.<%= fieldName %>Input.getAttribute('value');
     }
 
     <%_ } _%>
@@ -156,7 +161,7 @@ export class <%= entityClass %>UpdatePage {
     }
 
     async get<%=relationshipNameCapitalized %>SelectedOption() {
-        return this.<%=relationshipName %>Select.element(by.css('option:checked')).getText();
+        return await this.<%=relationshipName %>Select.element(by.css('option:checked')).getText();
     }
 
     <%_ } _%>
@@ -186,3 +191,4 @@ export class <%= entityClass %>DeleteDialog {
         await this.confirmButton.click();
     }
 }
+<%_ } _%>

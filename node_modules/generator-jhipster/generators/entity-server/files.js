@@ -19,6 +19,7 @@
 const _ = require('lodash');
 const randexp = require('randexp');
 const chalk = require('chalk');
+const faker = require('faker');
 const fs = require('fs');
 const utils = require('../utils');
 const constants = require('../generator-constants');
@@ -30,14 +31,17 @@ const SERVER_MAIN_RES_DIR = constants.SERVER_MAIN_RES_DIR;
 const TEST_DIR = constants.TEST_DIR;
 const SERVER_TEST_SRC_DIR = constants.SERVER_TEST_SRC_DIR;
 
+// In order to have consistent results with Faker, the seed is fixed.
+faker.seed(42);
+
 /**
  * The default is to use a file path string. It implies use of the template method.
  * For any other config an object { file:.., method:.., template:.. } can be used
  */
 const serverFiles = {
-    db: [
+    dbChangelog: [
         {
-            condition: generator => generator.databaseType === 'sql',
+            condition: generator => generator.databaseType === 'sql' && !generator.skipDbChangelog,
             path: SERVER_MAIN_RES_DIR,
             templates: [
                 {
@@ -50,6 +54,7 @@ const serverFiles = {
         {
             condition: generator =>
                 generator.databaseType === 'sql' &&
+                !generator.skipDbChangelog &&
                 (generator.fieldsContainOwnerManyToMany || generator.fieldsContainOwnerOneToOne || generator.fieldsContainManyToOne),
             path: SERVER_MAIN_RES_DIR,
             templates: [
@@ -62,7 +67,7 @@ const serverFiles = {
             ]
         },
         {
-            condition: generator => generator.databaseType === 'cassandra',
+            condition: generator => generator.databaseType === 'cassandra' && !generator.skipDbChangelog,
             path: SERVER_MAIN_RES_DIR,
             templates: [
                 {
@@ -70,6 +75,43 @@ const serverFiles = {
                     renameTo: generator => `config/cql/changelog/${generator.changelogDate}_added_entity_${generator.entityClass}.cql`
                 }
             ]
+        }
+    ],
+    fakeData: [
+        {
+            condition: generator => generator.databaseType === 'sql' && !generator.skipFakeData && !generator.skipDbChangelog,
+            path: SERVER_MAIN_RES_DIR,
+            templates: [
+                {
+                    file: 'config/liquibase/fake-data/table.csv',
+                    options: {
+                        interpolate: INTERPOLATE_REGEX,
+                        context: {
+                            faker,
+                            randexp
+                        }
+                    },
+                    renameTo: generator => `config/liquibase/fake-data/${generator.entityTableName}.csv`
+                }
+            ]
+        },
+        {
+            condition: generator =>
+                generator.databaseType === 'sql' &&
+                !generator.skipFakeData &&
+                !generator.skipDbChangelog &&
+                (generator.fieldsContainImageBlob === true || generator.fieldsContainBlob === true),
+            path: SERVER_MAIN_RES_DIR,
+            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.png', method: 'copy', noEjs: true }]
+        },
+        {
+            condition: generator =>
+                generator.databaseType === 'sql' &&
+                !generator.skipFakeData &&
+                !generator.skipDbChangelog &&
+                generator.fieldsContainTextBlob === true,
+            path: SERVER_MAIN_RES_DIR,
+            templates: [{ file: 'config/liquibase/fake-data/blob/hipster.txt', method: 'copy' }]
         }
     ],
     server: [
@@ -174,7 +216,7 @@ const serverFiles = {
             path: SERVER_TEST_SRC_DIR,
             templates: [
                 {
-                    file: 'package/web/rest/EntityResourceIntTest.java',
+                    file: 'package/web/rest/EntityResourceIT.java',
                     options: {
                         context: {
                             randexp,
@@ -184,7 +226,7 @@ const serverFiles = {
                             SERVER_TEST_SRC_DIR
                         }
                     },
-                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}ResourceIntTest.java`
+                    renameTo: generator => `${generator.packageFolder}/web/rest/${generator.entityClass}ResourceIT.java`
                 }
             ]
         },
@@ -207,6 +249,37 @@ const serverFiles = {
                     file: 'gatling/user-files/simulations/EntityGatlingTest.scala',
                     options: { interpolate: INTERPOLATE_REGEX },
                     renameTo: generator => `gatling/user-files/simulations/${generator.entityClass}GatlingTest.scala`
+                }
+            ]
+        },
+        {
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/domain/EntityTest.java',
+                    renameTo: generator => `${generator.packageFolder}/domain/${generator.entityClass}Test.java`
+                }
+            ]
+        },
+        {
+            condition: generator => generator.dto === 'mapstruct',
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/service/dto/EntityDTOTest.java',
+                    renameTo: generator => `${generator.packageFolder}/service/dto/${generator.asDto(generator.entityClass)}Test.java`
+                }
+            ]
+        },
+        {
+            condition: generator =>
+                generator.dto === 'mapstruct' &&
+                (generator.databaseType === 'sql' || generator.databaseType === 'mongodb' || generator.databaseType === 'couchbase'),
+            path: SERVER_TEST_SRC_DIR,
+            templates: [
+                {
+                    file: 'package/service/mapper/EntityMapperTest.java',
+                    renameTo: generator => `${generator.packageFolder}/service/mapper/${generator.entityClass}MapperTest.java`
                 }
             ]
         }
@@ -237,12 +310,14 @@ function writeFiles() {
             this.writeFilesToDisk(serverFiles, this, false, this.fetchFromInstalledJHipster('entity-server/templates'));
 
             if (this.databaseType === 'sql') {
-                if (this.fieldsContainOwnerManyToMany || this.fieldsContainOwnerOneToOne || this.fieldsContainManyToOne) {
-                    this.addConstraintsChangelogToLiquibase(`${this.changelogDate}_added_entity_constraints_${this.entityClass}`);
+                if (!this.skipDbChangelog) {
+                    if (this.fieldsContainOwnerManyToMany || this.fieldsContainOwnerOneToOne || this.fieldsContainManyToOne) {
+                        this.addConstraintsChangelogToLiquibase(`${this.changelogDate}_added_entity_constraints_${this.entityClass}`);
+                    }
+                    this.addChangelogToLiquibase(`${this.changelogDate}_added_entity_${this.entityClass}`);
                 }
-                this.addChangelogToLiquibase(`${this.changelogDate}_added_entity_${this.entityClass}`);
 
-                if (['ehcache', 'infinispan'].includes(this.cacheProvider) && this.enableHibernateCache) {
+                if (['ehcache', 'caffeine', 'infinispan', 'redis'].includes(this.cacheProvider) && this.enableHibernateCache) {
                     this.addEntityToCache(
                         this.asEntity(this.entityClass),
                         this.relationships,

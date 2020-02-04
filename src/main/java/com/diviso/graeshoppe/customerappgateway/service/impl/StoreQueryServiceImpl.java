@@ -663,6 +663,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		return new PageImpl(list, page, response.getHits().getTotalHits());
 	}
+	
+	
 	public <T> T search(String indexName, Long id) {
 
 		if (indexName.equals("store")) {
@@ -917,9 +919,17 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		Set<Store> storeSet = new HashSet();
 	
 		for (StoreType storeType : storeTypeList) {
-			storeSet.add(storeType.getStore());
-			log.debug("storeSet.size", storeSet.size());
+                         Store s =storeType.getStore();
+System.out.println("<@@@@@@@@@@@@@@@@@@@@@@QQQQQQQQQQQQQQQQQQ>"+s.hashCode());
+			storeSet.add(s);
+		System.out.println("storeSet.size"+ storeSet.size());
 		}
+		//for testing
+		for(Store store:storeSet) {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<STOREEEEEEEEEEEEEEEEEEEE>>>>>>>>>>>>>>>>>"+store);
+		}
+		
+		
 		List<Store> storeList = new ArrayList<>();
 		storeList.addAll(storeSet);
 		
