@@ -75,7 +75,7 @@ public class NotificationService {
 				}
 			}
 			log.info("Consumer is going to close");
-			//consumer.close();
+			consumer.close();
 		});
 	}
 
@@ -96,9 +96,9 @@ public class NotificationService {
 	private void sendNotification(Notification message) {
 		log.info("Notification is send via socket server");
 		NotificationDTO notificationDTO = new NotificationDTO();
-		notificationDTO
-				.setDate(OffsetDateTime.ofInstant(Instant.ofEpochMilli(message.getDate()), ZoneId.systemDefault()));
-		notificationDTO.setTitle(message.getTitle());
+//		notificationDTO
+//				.setDate(OffsetDateTime.ofInstant(Instant.ofEpochMilli(message.getDate()), ZoneId.systemDefault()));
+	notificationDTO.setTitle(message.getTitle());
 		notificationDTO.setMessage(message.getMessage());
 		notificationDTO.setTargetId(message.getTargetId());
 		notificationDTO.setReceiverId(message.getReceiverId());

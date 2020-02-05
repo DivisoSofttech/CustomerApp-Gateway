@@ -225,10 +225,10 @@ kafka:
 topic:
    notification: notificationx
 elasticsearch:
-   host: 7817d4bf6d2b4100a5f86c3187b78e21.us-central1.gcp.cloud.es.io
+   host: f057137f46ef42e7a1e4a3b54e1a2549.us-central1.gcp.cloud.es.io
    port: 9243
    username: elastic
-   password: akIDuOABc0GKvHjxjRhSKEgC
+   password: fxD0M3o0VlOpcvRqcEYmPtzP
    scheme: https
    connectTimeout: 60 #in seconds
 # application:
