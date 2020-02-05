@@ -697,11 +697,7 @@ public class QueryResource {
 
 	//**************** Administration service End Points*************************
 	
-	/**
-     * GET  /stores/banners Get all premium banners
-     * @param pageable the pageable to create
-     * @return page of Banner in body 
-     */
+
 	@GetMapping("/administration/premiumBanners")
 	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
 
@@ -744,6 +740,11 @@ public class QueryResource {
 	@GetMapping("/findallabout")
 	Page<About> findallabout(Pageable pageable){
 		return administrationQueryService.findallabout(pageable);
+	}
+	
+	@GetMapping("/findStoreByDeliveryType/{deliveryType}")
+	Page<Store> findStoreByDeliveryType(@PathVariable String deliveryType, Pageable pageable) {
+		return findStoreByDeliveryType(deliveryType,pageable);
 	}
 	
 }

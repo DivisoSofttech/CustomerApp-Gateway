@@ -85,8 +85,7 @@ public class CustomerQueryServiceImpl implements CustomerQueryService {
 		 * e.printStackTrace(); }
 		 */
 
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchAllQuery())
-				.filter(QueryBuilders.termQuery("idpCode.keyword", idpCode));
+		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(QueryBuilders.termQuery("idpCode.keyword", idpCode));
 
 		// QueryBuilder dslQuery = termQuery("idpCode.keyword", reference);
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("customer", dslQuery);
