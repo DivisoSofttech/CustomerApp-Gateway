@@ -15,6 +15,7 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,14 +119,14 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 	@Override
 	public List<SubTerm> getSubTermsByTermId(Long id) {
 
-		
 		log.debug("input", id);
-
+		QueryBuilder dslQuery = QueryBuilders.termQuery("term.id", id);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-	
-		searchSourceBuilder.query(termQuery("term.id",id));
-
+		
+		searchSourceBuilder.query(dslQuery);
+		searchSourceBuilder.sort("id", SortOrder.ASC);
 		SearchRequest searchRequest = new SearchRequest("subterm");
+		searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
