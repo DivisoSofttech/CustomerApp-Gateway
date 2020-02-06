@@ -201,17 +201,28 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	public Page<Store> findStoreByDeliveryType(String deliveryType, Pageable pageable) {
 
 		log.debug("input", deliveryType);
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(termQuery("deliveryInfos.type.name.keyword", deliveryType));
+		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(termQuery("type.name.keyword", deliveryType));
+		
+
+		String[] includeFields = new String[] { "store.*" };
+		String[] excludeFields = new String[] { "id","startingTime","endTime","type.*" };
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
+		searchSourceBuilder.fetchSource(includeFields, excludeFields);
+		
 		searchSourceBuilder.query(dslQuery);
 
-		SearchResponse searchResponse = serviceUtility.searchResponseForPage("store", searchSourceBuilder, pageable);
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("deliveryinfo", searchSourceBuilder, pageable);
 
-		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new Store()));
-
-		return serviceUtility.getPageResult(searchResponse, pageable, new Store());
+	Page<DeliveryInfo> result=serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
+	result.getTotalElements();
+	List<DeliveryInfo> deliveryInfoList=result.getContent();
+	List<Store> storeList = new ArrayList();
+	for(DeliveryInfo deliveryInfo :deliveryInfoList) {
+		storeList.add(deliveryInfo.getStore());
+	}
+return	new PageImpl(storeList,pageable,result.getTotalElements());
 
 	}
 
