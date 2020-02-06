@@ -744,7 +744,7 @@ public class QueryResource {
 	
 	@GetMapping("/findStoreByDeliveryType/{deliveryType}")
 	Page<Store> findStoreByDeliveryType(@PathVariable String deliveryType, Pageable pageable) {
-		return findStoreByDeliveryType(deliveryType,pageable);
+		return storeQueryService.findStoreByDeliveryType(deliveryType,pageable);
 	}
 	
 }
