@@ -726,7 +726,7 @@ public class QueryResource {
 		return administrationQueryService.findSubTermById(id);
 	}
 	
-	@GetMapping("/findSubTermByTermId/{id}")
+	@GetMapping("/findSubTermBySubtermId/{id}")
 	public List<SubTerm> getSubTermsByTermId(@PathVariable Long id) {
 		return administrationQueryService.getSubTermsByTermId(id);
 	}
@@ -745,6 +745,11 @@ public class QueryResource {
 	@GetMapping("/findStoreByDeliveryType/{deliveryType}")
 	Page<Store> findStoreByDeliveryType(@PathVariable String deliveryType, Pageable pageable) {
 		return storeQueryService.findStoreByDeliveryType(deliveryType,pageable);
+	}
+	@GetMapping("/findTermByTermId/{id}")
+	public ResponseEntity<List<Term>> getTermByTermId(@PathVariable Long id){
+		log.debug("<<<<<<<<< getTermByTermId >>>>>>>{}",id);
+		return administrationQueryService.getTermByTermId(id);
 	}
 	
 }
