@@ -16,6 +16,7 @@ import javax.validation.constraints.*;
  * OfferModel
  */
 @Validated
+
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:57.994+05:30[Asia/Calcutta]")
 
 public class OfferModel   {
