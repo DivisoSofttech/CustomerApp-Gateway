@@ -10,39 +10,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * TargetTypeDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
-
+public class TargetTypeDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-    return this;
-  }
+  @JsonProperty("targetType")
+  private String targetType = null;
 
-  /**
-   * Get deductionValueType
-   * @return deductionValueType
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getDeductionValueType() {
-    return deductionValueType;
-  }
-
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-  }
-
-  public DeductionValueTypeDTO id(Long id) {
+  public TargetTypeDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -62,6 +42,26 @@ public class DeductionValueTypeDTO   {
     this.id = id;
   }
 
+  public TargetTypeDTO targetType(String targetType) {
+    this.targetType = targetType;
+    return this;
+  }
+
+  /**
+   * Get targetType
+   * @return targetType
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getTargetType() {
+    return targetType;
+  }
+
+  public void setTargetType(String targetType) {
+    this.targetType = targetType;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +71,23 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    TargetTypeDTO targetTypeDTO = (TargetTypeDTO) o;
+    return Objects.equals(this.id, targetTypeDTO.id) &&
+        Objects.equals(this.targetType, targetTypeDTO.targetType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(id, targetType);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class TargetTypeDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    targetType: ").append(toIndentedString(targetType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

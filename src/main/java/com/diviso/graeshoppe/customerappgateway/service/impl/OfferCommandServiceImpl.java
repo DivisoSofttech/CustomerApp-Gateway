@@ -27,7 +27,6 @@ public class OfferCommandServiceImpl implements OfferCommandService {
 		Long points = customerQueryService.findLoyaltyPointByIdpCode(customerId);
 		log.info("Customer Loyality points is " + points);
 		orderModel.setOrderNumber(points + 1);
-		orderModel.setPromoCode("SUPER10");
 		log.info("Offer claim request body "+orderModel);
 		ResponseEntity<OrderModel> result = aggregateCommandResourceApi.claimOfferUsingPOST(orderModel);
 		return result;

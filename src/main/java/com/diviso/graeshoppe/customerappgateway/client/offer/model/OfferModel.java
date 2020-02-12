@@ -2,16 +2,21 @@ package com.diviso.graeshoppe.customerappgateway.client.offer.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * OfferModel
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-08-15T16:47:08.654128+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
 public class OfferModel   {
   @JsonProperty("deductionValue")
@@ -29,6 +34,13 @@ public class OfferModel   {
   @JsonProperty("id")
   private Long id = null;
 
+  @JsonProperty("offerDays")
+  @Valid
+  private List<String> offerDays = null;
+
+  @JsonProperty("prerequisiteOrderAmount")
+  private Long prerequisiteOrderAmount = null;
+
   @JsonProperty("prerequisiteOrderNumber")
   private Long prerequisiteOrderNumber = null;
 
@@ -39,7 +51,7 @@ public class OfferModel   {
   private OffsetDateTime startDate = null;
 
   @JsonProperty("storeId")
-  private Long storeId = null;
+  private String storeId = null;
 
   public OfferModel deductionValue(Long deductionValue) {
     this.deductionValue = deductionValue;
@@ -142,6 +154,54 @@ public class OfferModel   {
     this.id = id;
   }
 
+  public OfferModel offerDays(List<String> offerDays) {
+    this.offerDays = offerDays;
+    return this;
+  }
+
+  public OfferModel addOfferDaysItem(String offerDaysItem) {
+    if (this.offerDays == null) {
+      this.offerDays = new ArrayList<String>();
+    }
+    this.offerDays.add(offerDaysItem);
+    return this;
+  }
+
+  /**
+   * Get offerDays
+   * @return offerDays
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public List<String> getOfferDays() {
+    return offerDays;
+  }
+
+  public void setOfferDays(List<String> offerDays) {
+    this.offerDays = offerDays;
+  }
+
+  public OfferModel prerequisiteOrderAmount(Long prerequisiteOrderAmount) {
+    this.prerequisiteOrderAmount = prerequisiteOrderAmount;
+    return this;
+  }
+
+  /**
+   * Get prerequisiteOrderAmount
+   * @return prerequisiteOrderAmount
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getPrerequisiteOrderAmount() {
+    return prerequisiteOrderAmount;
+  }
+
+  public void setPrerequisiteOrderAmount(Long prerequisiteOrderAmount) {
+    this.prerequisiteOrderAmount = prerequisiteOrderAmount;
+  }
+
   public OfferModel prerequisiteOrderNumber(Long prerequisiteOrderNumber) {
     this.prerequisiteOrderNumber = prerequisiteOrderNumber;
     return this;
@@ -203,7 +263,7 @@ public class OfferModel   {
     this.startDate = startDate;
   }
 
-  public OfferModel storeId(Long storeId) {
+  public OfferModel storeId(String storeId) {
     this.storeId = storeId;
     return this;
   }
@@ -215,11 +275,11 @@ public class OfferModel   {
   @ApiModelProperty(value = "")
 
 
-  public Long getStoreId() {
+  public String getStoreId() {
     return storeId;
   }
 
-  public void setStoreId(Long storeId) {
+  public void setStoreId(String storeId) {
     this.storeId = storeId;
   }
 
@@ -238,6 +298,8 @@ public class OfferModel   {
         Objects.equals(this.description, offerModel.description) &&
         Objects.equals(this.endDate, offerModel.endDate) &&
         Objects.equals(this.id, offerModel.id) &&
+        Objects.equals(this.offerDays, offerModel.offerDays) &&
+        Objects.equals(this.prerequisiteOrderAmount, offerModel.prerequisiteOrderAmount) &&
         Objects.equals(this.prerequisiteOrderNumber, offerModel.prerequisiteOrderNumber) &&
         Objects.equals(this.promoCode, offerModel.promoCode) &&
         Objects.equals(this.startDate, offerModel.startDate) &&
@@ -246,7 +308,7 @@ public class OfferModel   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValue, deductionValueTypeId, description, endDate, id, prerequisiteOrderNumber, promoCode, startDate, storeId);
+    return Objects.hash(deductionValue, deductionValueTypeId, description, endDate, id, offerDays, prerequisiteOrderAmount, prerequisiteOrderNumber, promoCode, startDate, storeId);
   }
 
   @Override
@@ -259,6 +321,8 @@ public class OfferModel   {
     sb.append("    description: ").append(toIndentedString(description)).append("\n");
     sb.append("    endDate: ").append(toIndentedString(endDate)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    offerDays: ").append(toIndentedString(offerDays)).append("\n");
+    sb.append("    prerequisiteOrderAmount: ").append(toIndentedString(prerequisiteOrderAmount)).append("\n");
     sb.append("    prerequisiteOrderNumber: ").append(toIndentedString(prerequisiteOrderNumber)).append("\n");
     sb.append("    promoCode: ").append(toIndentedString(promoCode)).append("\n");
     sb.append("    startDate: ").append(toIndentedString(startDate)).append("\n");

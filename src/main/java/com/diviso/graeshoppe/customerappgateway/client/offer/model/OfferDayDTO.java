@@ -10,39 +10,42 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * OfferDayDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
+public class OfferDayDTO   {
+  @JsonProperty("day")
+  private String day = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  @JsonProperty("offerId")
+  private Long offerId = null;
+
+  public OfferDayDTO day(String day) {
+    this.day = day;
     return this;
   }
 
   /**
-   * Get deductionValueType
-   * @return deductionValueType
+   * Get day
+   * @return day
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDeductionValueType() {
-    return deductionValueType;
+  public String getDay() {
+    return day;
   }
 
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  public void setDay(String day) {
+    this.day = day;
   }
 
-  public DeductionValueTypeDTO id(Long id) {
+  public OfferDayDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -62,6 +65,26 @@ public class DeductionValueTypeDTO   {
     this.id = id;
   }
 
+  public OfferDayDTO offerId(Long offerId) {
+    this.offerId = offerId;
+    return this;
+  }
+
+  /**
+   * Get offerId
+   * @return offerId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getOfferId() {
+    return offerId;
+  }
+
+  public void setOfferId(Long offerId) {
+    this.offerId = offerId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +94,25 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    OfferDayDTO offerDayDTO = (OfferDayDTO) o;
+    return Objects.equals(this.day, offerDayDTO.day) &&
+        Objects.equals(this.id, offerDayDTO.id) &&
+        Objects.equals(this.offerId, offerDayDTO.offerId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(day, id, offerId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class OfferDayDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
+    sb.append("    day: ").append(toIndentedString(day)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    offerId: ").append(toIndentedString(offerId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

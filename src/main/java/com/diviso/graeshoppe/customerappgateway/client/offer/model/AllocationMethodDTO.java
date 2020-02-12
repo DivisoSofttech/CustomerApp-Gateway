@@ -10,39 +10,39 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * AllocationMethodDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
+public class AllocationMethodDTO   {
+  @JsonProperty("allocationMethod")
+  private String allocationMethod = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  public AllocationMethodDTO allocationMethod(String allocationMethod) {
+    this.allocationMethod = allocationMethod;
     return this;
   }
 
   /**
-   * Get deductionValueType
-   * @return deductionValueType
+   * Get allocationMethod
+   * @return allocationMethod
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDeductionValueType() {
-    return deductionValueType;
+  public String getAllocationMethod() {
+    return allocationMethod;
   }
 
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  public void setAllocationMethod(String allocationMethod) {
+    this.allocationMethod = allocationMethod;
   }
 
-  public DeductionValueTypeDTO id(Long id) {
+  public AllocationMethodDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -71,22 +71,22 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    AllocationMethodDTO allocationMethodDTO = (AllocationMethodDTO) o;
+    return Objects.equals(this.allocationMethod, allocationMethodDTO.allocationMethod) &&
+        Objects.equals(this.id, allocationMethodDTO.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(allocationMethod, id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class AllocationMethodDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
+    sb.append("    allocationMethod: ").append(toIndentedString(allocationMethod)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();

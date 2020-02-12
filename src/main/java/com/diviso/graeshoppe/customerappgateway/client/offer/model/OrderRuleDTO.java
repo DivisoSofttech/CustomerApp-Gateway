@@ -10,39 +10,19 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * OrderRuleDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
-
+public class OrderRuleDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-    return this;
-  }
+  @JsonProperty("prerequisiteOrderNumber")
+  private Long prerequisiteOrderNumber = null;
 
-  /**
-   * Get deductionValueType
-   * @return deductionValueType
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getDeductionValueType() {
-    return deductionValueType;
-  }
-
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-  }
-
-  public DeductionValueTypeDTO id(Long id) {
+  public OrderRuleDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -62,6 +42,26 @@ public class DeductionValueTypeDTO   {
     this.id = id;
   }
 
+  public OrderRuleDTO prerequisiteOrderNumber(Long prerequisiteOrderNumber) {
+    this.prerequisiteOrderNumber = prerequisiteOrderNumber;
+    return this;
+  }
+
+  /**
+   * Get prerequisiteOrderNumber
+   * @return prerequisiteOrderNumber
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getPrerequisiteOrderNumber() {
+    return prerequisiteOrderNumber;
+  }
+
+  public void setPrerequisiteOrderNumber(Long prerequisiteOrderNumber) {
+    this.prerequisiteOrderNumber = prerequisiteOrderNumber;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +71,23 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    OrderRuleDTO orderRuleDTO = (OrderRuleDTO) o;
+    return Objects.equals(this.id, orderRuleDTO.id) &&
+        Objects.equals(this.prerequisiteOrderNumber, orderRuleDTO.prerequisiteOrderNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(id, prerequisiteOrderNumber);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class OrderRuleDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    prerequisiteOrderNumber: ").append(toIndentedString(prerequisiteOrderNumber)).append("\n");
     sb.append("}");
     return sb.toString();
   }

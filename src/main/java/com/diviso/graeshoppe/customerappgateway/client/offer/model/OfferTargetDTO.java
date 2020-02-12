@@ -10,39 +10,22 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * OfferTargetDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
-
+public class OfferTargetDTO   {
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-    return this;
-  }
+  @JsonProperty("offerId")
+  private Long offerId = null;
 
-  /**
-   * Get deductionValueType
-   * @return deductionValueType
-  **/
-  @ApiModelProperty(value = "")
+  @JsonProperty("targetId")
+  private Long targetId = null;
 
-
-  public String getDeductionValueType() {
-    return deductionValueType;
-  }
-
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
-  }
-
-  public DeductionValueTypeDTO id(Long id) {
+  public OfferTargetDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -62,6 +45,46 @@ public class DeductionValueTypeDTO   {
     this.id = id;
   }
 
+  public OfferTargetDTO offerId(Long offerId) {
+    this.offerId = offerId;
+    return this;
+  }
+
+  /**
+   * Get offerId
+   * @return offerId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getOfferId() {
+    return offerId;
+  }
+
+  public void setOfferId(Long offerId) {
+    this.offerId = offerId;
+  }
+
+  public OfferTargetDTO targetId(Long targetId) {
+    this.targetId = targetId;
+    return this;
+  }
+
+  /**
+   * Get targetId
+   * @return targetId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getTargetId() {
+    return targetId;
+  }
+
+  public void setTargetId(Long targetId) {
+    this.targetId = targetId;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -71,23 +94,25 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    OfferTargetDTO offerTargetDTO = (OfferTargetDTO) o;
+    return Objects.equals(this.id, offerTargetDTO.id) &&
+        Objects.equals(this.offerId, offerTargetDTO.offerId) &&
+        Objects.equals(this.targetId, offerTargetDTO.targetId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(id, offerId, targetId);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class OfferTargetDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    offerId: ").append(toIndentedString(offerId)).append("\n");
+    sb.append("    targetId: ").append(toIndentedString(targetId)).append("\n");
     sb.append("}");
     return sb.toString();
   }

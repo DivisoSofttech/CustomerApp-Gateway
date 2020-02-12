@@ -10,39 +10,39 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DeductionValueTypeDTO
+ * CustomerSelectionDTO
  */
 @Validated
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T11:55:04.651184+05:30[Asia/Kolkata]")
 
-public class DeductionValueTypeDTO   {
-  @JsonProperty("deductionValueType")
-  private String deductionValueType = null;
+public class CustomerSelectionDTO   {
+  @JsonProperty("customerSelectionType")
+  private String customerSelectionType = null;
 
   @JsonProperty("id")
   private Long id = null;
 
-  public DeductionValueTypeDTO deductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  public CustomerSelectionDTO customerSelectionType(String customerSelectionType) {
+    this.customerSelectionType = customerSelectionType;
     return this;
   }
 
   /**
-   * Get deductionValueType
-   * @return deductionValueType
+   * Get customerSelectionType
+   * @return customerSelectionType
   **/
   @ApiModelProperty(value = "")
 
 
-  public String getDeductionValueType() {
-    return deductionValueType;
+  public String getCustomerSelectionType() {
+    return customerSelectionType;
   }
 
-  public void setDeductionValueType(String deductionValueType) {
-    this.deductionValueType = deductionValueType;
+  public void setCustomerSelectionType(String customerSelectionType) {
+    this.customerSelectionType = customerSelectionType;
   }
 
-  public DeductionValueTypeDTO id(Long id) {
+  public CustomerSelectionDTO id(Long id) {
     this.id = id;
     return this;
   }
@@ -71,22 +71,22 @@ public class DeductionValueTypeDTO   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DeductionValueTypeDTO deductionValueTypeDTO = (DeductionValueTypeDTO) o;
-    return Objects.equals(this.deductionValueType, deductionValueTypeDTO.deductionValueType) &&
-        Objects.equals(this.id, deductionValueTypeDTO.id);
+    CustomerSelectionDTO customerSelectionDTO = (CustomerSelectionDTO) o;
+    return Objects.equals(this.customerSelectionType, customerSelectionDTO.customerSelectionType) &&
+        Objects.equals(this.id, customerSelectionDTO.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(deductionValueType, id);
+    return Objects.hash(customerSelectionType, id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DeductionValueTypeDTO {\n");
+    sb.append("class CustomerSelectionDTO {\n");
     
-    sb.append("    deductionValueType: ").append(toIndentedString(deductionValueType)).append("\n");
+    sb.append("    customerSelectionType: ").append(toIndentedString(customerSelectionType)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
