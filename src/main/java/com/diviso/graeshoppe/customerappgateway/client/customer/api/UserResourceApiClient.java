@@ -1,8 +1,8 @@
 package com.diviso.graeshoppe.customerappgateway.client.customer.api;
 
 import org.springframework.cloud.openfeign.FeignClient;
-import com.diviso.graeshoppe.customerappgateway.client.customer.CustomerClientConfiguration;
+import com.diviso.graeshoppe.customerappgateway.client.customer.ClientConfiguration;
 
-@FeignClient(name="${customer.name:customer}", url="${customer.url}", configuration = CustomerClientConfiguration.class)
+@FeignClient(name="${customer.name:customer}", url="${customer.url:dev.ci1.divisosofttech.com:8088/}", configuration = ClientConfiguration.class)
 public interface UserResourceApiClient extends UserResourceApi {
 }

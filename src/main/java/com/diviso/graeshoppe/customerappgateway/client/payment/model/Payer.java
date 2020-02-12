@@ -4,17 +4,20 @@ import java.util.Objects;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.FundingInstrument;
 import com.diviso.graeshoppe.customerappgateway.client.payment.model.PayerInfo;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
+import javax.validation.constraints.*;
 
 /**
  * Payer
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-23T12:15:47.246272+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:51.390+05:30[Asia/Calcutta]")
 
 public class Payer   {
   @JsonProperty("funding_instruments")

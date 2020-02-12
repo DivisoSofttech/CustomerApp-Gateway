@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:43.416+05:30[Asia/Calcutta]")
 
 @Api(value = "OrderCommandResource", description = "the OrderCommandResource API")
 public interface OrderCommandResourceApi {
@@ -80,6 +80,18 @@ public interface OrderCommandResourceApi {
     ResponseEntity<OrderDTO> getOrderUsingGET(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
+    @ApiOperation(value = "markOrderAsDelivered", nickname = "markOrderAsDeliveredUsingPOST", notes = "", tags={ "order-command-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK"),
+        @ApiResponse(code = 201, message = "Created"),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/markAsDelivered/{orderId}",
+        method = RequestMethod.POST)
+    ResponseEntity<Void> markOrderAsDeliveredUsingPOST(@ApiParam(value = "orderId",required=true) @PathVariable("orderId") String orderId);
+
+
     @ApiOperation(value = "publishOrderToMessagebroker", nickname = "publishOrderToMessagebrokerUsingPOST", notes = "", tags={ "order-command-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK"),
@@ -104,15 +116,15 @@ public interface OrderCommandResourceApi {
     ResponseEntity<List<OrderDTO>> searchOrdersUsingGET(@NotNull @ApiParam(value = "query", required = true) @Valid @RequestParam(value = "query", required = true) String query,@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
 
 
-    @ApiOperation(value = "send", nickname = "sendUsingGET", notes = "", tags={ "order-command-resource", })
+    @ApiOperation(value = "test", nickname = "testUsingGET", notes = "", tags={ "order-command-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK"),
         @ApiResponse(code = 401, message = "Unauthorized"),
         @ApiResponse(code = 403, message = "Forbidden"),
         @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/send",
+    @RequestMapping(value = "/api/findcustomer/{ref}",
         method = RequestMethod.GET)
-    ResponseEntity<Void> sendUsingGET(@ApiParam(value = "") @Valid @RequestParam(value = "name", required = false) String name);
+    ResponseEntity<Void> testUsingGET(@ApiParam(value = "ref",required=true) @PathVariable("ref") String ref);
 
 
     @ApiOperation(value = "updateOrder", nickname = "updateOrderUsingPUT", notes = "", response = OrderDTO.class, tags={ "order-command-resource", })

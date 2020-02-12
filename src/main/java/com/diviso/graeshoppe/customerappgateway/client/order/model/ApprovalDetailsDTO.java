@@ -14,14 +14,11 @@ import javax.validation.constraints.*;
  * ApprovalDetailsDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:43.416+05:30[Asia/Calcutta]")
 
 public class ApprovalDetailsDTO   {
   @JsonProperty("acceptedAt")
   private OffsetDateTime acceptedAt = null;
-
-  @JsonProperty("customerId")
-  private String customerId = null;
 
   @JsonProperty("decision")
   private String decision = null;
@@ -54,26 +51,6 @@ public class ApprovalDetailsDTO   {
 
   public void setAcceptedAt(OffsetDateTime acceptedAt) {
     this.acceptedAt = acceptedAt;
-  }
-
-  public ApprovalDetailsDTO customerId(String customerId) {
-    this.customerId = customerId;
-    return this;
-  }
-
-  /**
-   * Get customerId
-   * @return customerId
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public String getCustomerId() {
-    return customerId;
-  }
-
-  public void setCustomerId(String customerId) {
-    this.customerId = customerId;
   }
 
   public ApprovalDetailsDTO decision(String decision) {
@@ -168,7 +145,6 @@ public class ApprovalDetailsDTO   {
     }
     ApprovalDetailsDTO approvalDetailsDTO = (ApprovalDetailsDTO) o;
     return Objects.equals(this.acceptedAt, approvalDetailsDTO.acceptedAt) &&
-        Objects.equals(this.customerId, approvalDetailsDTO.customerId) &&
         Objects.equals(this.decision, approvalDetailsDTO.decision) &&
         Objects.equals(this.expectedDelivery, approvalDetailsDTO.expectedDelivery) &&
         Objects.equals(this.id, approvalDetailsDTO.id) &&
@@ -177,7 +153,7 @@ public class ApprovalDetailsDTO   {
 
   @Override
   public int hashCode() {
-    return Objects.hash(acceptedAt, customerId, decision, expectedDelivery, id, orderId);
+    return Objects.hash(acceptedAt, decision, expectedDelivery, id, orderId);
   }
 
   @Override
@@ -186,7 +162,6 @@ public class ApprovalDetailsDTO   {
     sb.append("class ApprovalDetailsDTO {\n");
     
     sb.append("    acceptedAt: ").append(toIndentedString(acceptedAt)).append("\n");
-    sb.append("    customerId: ").append(toIndentedString(customerId)).append("\n");
     sb.append("    decision: ").append(toIndentedString(decision)).append("\n");
     sb.append("    expectedDelivery: ").append(toIndentedString(expectedDelivery)).append("\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");

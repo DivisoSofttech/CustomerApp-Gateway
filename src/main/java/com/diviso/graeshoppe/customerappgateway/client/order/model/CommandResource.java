@@ -10,22 +10,23 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * CommandResourceTestsI
+ * CommandResource
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:43.416+05:30[Asia/Calcutta]")
 
 public class CommandResource   {
   @JsonProperty("nextTaskId")
   private String nextTaskId = null;
-  @JsonProperty("processId")
-	private String processId;
 
   @JsonProperty("nextTaskName")
   private String nextTaskName = null;
 
   @JsonProperty("orderId")
   private String orderId = null;
+
+  @JsonProperty("processId")
+  private String processId = null;
 
   @JsonProperty("selfId")
   private Long selfId = null;
@@ -90,6 +91,26 @@ public class CommandResource   {
     this.orderId = orderId;
   }
 
+  public CommandResource processId(String processId) {
+    this.processId = processId;
+    return this;
+  }
+
+  /**
+   * Get processId
+   * @return processId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public String getProcessId() {
+    return processId;
+  }
+
+  public void setProcessId(String processId) {
+    this.processId = processId;
+  }
+
   public CommandResource selfId(Long selfId) {
     this.selfId = selfId;
     return this;
@@ -123,37 +144,30 @@ public class CommandResource   {
     return Objects.equals(this.nextTaskId, commandResource.nextTaskId) &&
         Objects.equals(this.nextTaskName, commandResource.nextTaskName) &&
         Objects.equals(this.orderId, commandResource.orderId) &&
+        Objects.equals(this.processId, commandResource.processId) &&
         Objects.equals(this.selfId, commandResource.selfId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(nextTaskId, nextTaskName, orderId, selfId);
+    return Objects.hash(nextTaskId, nextTaskName, orderId, processId, selfId);
   }
 
+  @Override
+  public String toString() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("class CommandResource {\n");
+    
+    sb.append("    nextTaskId: ").append(toIndentedString(nextTaskId)).append("\n");
+    sb.append("    nextTaskName: ").append(toIndentedString(nextTaskName)).append("\n");
+    sb.append("    orderId: ").append(toIndentedString(orderId)).append("\n");
+    sb.append("    processId: ").append(toIndentedString(processId)).append("\n");
+    sb.append("    selfId: ").append(toIndentedString(selfId)).append("\n");
+    sb.append("}");
+    return sb.toString();
+  }
 
   /**
- * @return the processId
- */
-public String getProcessId() {
-	return processId;
-}
-
-@Override
-public String toString() {
-	return String.format(
-			"CommandResource [nextTaskId=%s,\n processId=%s,\n nextTaskName=%s,\n orderId=%s,\n selfId=%s]", nextTaskId,
-			processId, nextTaskName, orderId, selfId);
-}
-
-/**
- * @param processId the processId to set
- */
-public void setProcessId(String processId) {
-	this.processId = processId;
-}
-
-/**
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
