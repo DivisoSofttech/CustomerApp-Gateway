@@ -61,7 +61,8 @@ public class NotificationService {
 						Notification notification = record.value();
 						if (notification.getType().equals("Order-Placed")
 								|| notification.getType().equals("Order-Approved")
-								|| notification.getType().equals("Order-Delivered")) {
+								|| notification.getType().equals("Order-Delivered")
+								|| notification.getType().equals("Order-Out-For-Delivered")) {
 							log.info("In If condition &&&&&&&&&&&&");
 							sendNotification(notification);
 						}
