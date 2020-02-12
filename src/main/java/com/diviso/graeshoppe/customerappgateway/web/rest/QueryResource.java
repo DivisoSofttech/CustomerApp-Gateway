@@ -538,17 +538,28 @@ public class QueryResource {
 	// ****************order related end points********
 	
 
-	@GetMapping("/tasks")
-	public ResponseEntity<List<OpenTask>> getTasks(@RequestParam(required = false) String assignee,
-			@RequestParam(required = false) String assigneeLike, @RequestParam(required = false) String candidateGroup,
-			@RequestParam(required = false) String candidateGroups,
-			@RequestParam(required = false) String candidateUser, @RequestParam(required = false) String createdAfter,
-			@RequestParam(required = false) String createdBefore, @RequestParam(required = false) String createdOn,
-			@RequestParam(required = false) String name, @RequestParam(required = false) String nameLike) {
-		return orderQueryResourceApi.getTasksUsingGET(assignee, assigneeLike, candidateGroup, candidateGroups,
-				candidateUser, createdAfter, createdBefore, createdOn, name, nameLike);
-
-	}
+	/*
+	 * @GetMapping("/tasks") public ResponseEntity<List<OpenTask>>
+	 * getTasks(@RequestParam(required = false) String assignee,
+	 * 
+	 * @RequestParam(required = false) String assigneeLike, @RequestParam(required =
+	 * false) String candidateGroup,
+	 * 
+	 * @RequestParam(required = false) String candidateGroups,
+	 * 
+	 * @RequestParam(required = false) String candidateUser, @RequestParam(required
+	 * = false) String createdAfter,
+	 * 
+	 * @RequestParam(required = false) String createdBefore, @RequestParam(required
+	 * = false) String createdOn,
+	 * 
+	 * @RequestParam(required = false) String name, @RequestParam(required = false)
+	 * String nameLike) { return orderQueryResourceApi.getTasksUsingGET(assignee,
+	 * assigneeLike, candidateGroup, candidateGroups, candidateUser, createdAfter,
+	 * createdBefore, createdOn, name, nameLike);
+	 * 
+	 * }
+	 */
 
 	/**
      * GET  /orderByOrderId/:orderId Get the orderId based Order
@@ -661,12 +672,16 @@ public class QueryResource {
      * @return page of OpenTask in body 
      */
 	
-	@GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}")
-	public ResponseEntity<OpenTask> getTaskDetails(@PathVariable String taskName, @PathVariable String orderId,
-			@PathVariable String storeId) {
-		return orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
-
-	}
+	/*
+	 * @GetMapping("/taskDetails/{taskName}/{orderId}/{storeId}") public
+	 * ResponseEntity<OpenTask> getTaskDetails(@PathVariable String
+	 * taskName, @PathVariable String orderId,
+	 * 
+	 * @PathVariable String storeId) { return
+	 * orderQueryResourceApi.getTaskDetailsUsingGET(taskName, orderId, storeId);
+	 * 
+	 * }
+	 */
 	
 	
 	// ****************offer related end points********

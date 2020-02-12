@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-12-12T14:59:45.796530+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:43.416+05:30[Asia/Calcutta]")
 
 @Api(value = "AuxilaryOrderLineResource", description = "the AuxilaryOrderLineResource API")
 public interface AuxilaryOrderLineResourceApi {
@@ -65,18 +65,6 @@ public interface AuxilaryOrderLineResourceApi {
         produces = "*/*", 
         method = RequestMethod.GET)
     ResponseEntity<List<AuxilaryOrderLineDTO>> getAllAuxilaryOrderLinesUsingGET(@ApiParam(value = "Page number of the requested page") @Valid @RequestParam(value = "page", required = false) Integer page,@ApiParam(value = "Size of a page") @Valid @RequestParam(value = "size", required = false) Integer size,@ApiParam(value = "Sorting criteria in the format: property(,asc|desc). Default sort order is ascending. Multiple sort criteria are supported.") @Valid @RequestParam(value = "sort", required = false) List<String> sort);
-
-
-    @ApiOperation(value = "getAllAuxilaryOrderLines", nickname = "getAllAuxilaryOrderLinesUsingGET1", notes = "", response = AuxilaryOrderLineDTO.class, responseContainer = "List", tags={ "auxilary-order-line-resource", })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "OK", response = AuxilaryOrderLineDTO.class, responseContainer = "List"),
-        @ApiResponse(code = 401, message = "Unauthorized"),
-        @ApiResponse(code = 403, message = "Forbidden"),
-        @ApiResponse(code = 404, message = "Not Found") })
-    @RequestMapping(value = "/api/findByOrderLineId/{id}",
-        produces = "*/*", 
-        method = RequestMethod.GET)
-    ResponseEntity<List<AuxilaryOrderLineDTO>> getAllAuxilaryOrderLinesUsingGET1(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
 
 
     @ApiOperation(value = "getAuxilaryOrderLine", nickname = "getAuxilaryOrderLineUsingGET", notes = "", response = AuxilaryOrderLineDTO.class, tags={ "auxilary-order-line-resource", })

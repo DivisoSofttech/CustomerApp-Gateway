@@ -28,12 +28,12 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-11-27T10:26:27.966+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:19:05.022+05:30[Asia/Calcutta]")
 
 @Api(value = "CustomerResource", description = "the CustomerResource API")
 public interface CustomerResourceApi {
 
-	@ApiOperation(value = "checkUserExists", nickname = "checkUserExistsUsingGET", notes = "", response = Boolean.class, tags={ "customer-resource", })
+    @ApiOperation(value = "checkUserExists", nickname = "checkUserExistsUsingGET", notes = "", response = Boolean.class, tags={ "customer-resource", })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "OK", response = Boolean.class),
         @ApiResponse(code = 401, message = "Unauthorized"),
@@ -68,6 +68,18 @@ public interface CustomerResourceApi {
     @RequestMapping(value = "/api/customers/{id}",
         method = RequestMethod.DELETE)
     ResponseEntity<Void> deleteCustomerUsingDELETE(@ApiParam(value = "id",required=true) @PathVariable("id") Long id);
+
+
+    @ApiOperation(value = "findByMobileNumber", nickname = "findByMobileNumberUsingGET", notes = "", response = CustomerDTO.class, tags={ "customer-resource", })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "OK", response = CustomerDTO.class),
+        @ApiResponse(code = 401, message = "Unauthorized"),
+        @ApiResponse(code = 403, message = "Forbidden"),
+        @ApiResponse(code = 404, message = "Not Found") })
+    @RequestMapping(value = "/api/findByMobileNumber/{mobileNumber}",
+        produces = "*/*", 
+        method = RequestMethod.GET)
+    ResponseEntity<CustomerDTO> findByMobileNumberUsingGET(@ApiParam(value = "mobileNumber",required=true) @PathVariable("mobileNumber") Long mobileNumber);
 
 
     @ApiOperation(value = "findByReference", nickname = "findByReferenceUsingGET", notes = "", response = Customer.class, tags={ "customer-resource", })
@@ -209,7 +221,5 @@ public interface CustomerResourceApi {
         produces = "*/*", 
         method = RequestMethod.POST)
     ResponseEntity<OTPChallenge> verifyOTPUsingPOST(@NotNull @ApiParam(value = "code", required = true) @Valid @RequestParam(value = "code", required = true) String code,@NotNull @ApiParam(value = "numbers", required = true) @Valid @RequestParam(value = "numbers", required = true) Long numbers);
-
-
 
 }

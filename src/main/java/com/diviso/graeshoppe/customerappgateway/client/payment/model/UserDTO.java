@@ -2,6 +2,8 @@ package com.diviso.graeshoppe.customerappgateway.client.payment.model;
 
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.time.OffsetDateTime;
 import java.util.ArrayList;
@@ -14,7 +16,7 @@ import javax.validation.constraints.*;
  * UserDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-09-23T12:15:47.246272+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T12:18:51.390+05:30[Asia/Calcutta]")
 
 public class UserDTO   {
   @JsonProperty("activated")
@@ -237,7 +239,7 @@ public class UserDTO   {
   **/
   @ApiModelProperty(value = "")
 
-@Size(min=2,max=6) 
+@Size(min=2,max=10) 
   public String getLangKey() {
     return langKey;
   }
