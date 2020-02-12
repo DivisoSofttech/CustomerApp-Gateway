@@ -743,6 +743,7 @@ public class QueryResource {
 	
 	@GetMapping("/findSubTermBySubtermId/{id}")
 	public List<SubTerm> getSubTermsByTermId(@PathVariable Long id) {
+		log.debug("<<<<<<getSubTermsByTermId >>>>>>>{}", id);
 		return administrationQueryService.getSubTermsByTermId(id);
 	}
 	

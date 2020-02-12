@@ -121,7 +121,7 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 	@Override
 	public List<SubTerm> getSubTermsByTermId(Long id) {
 
-		log.debug("input", id);
+		log.debug("<<<<<<<<<getSubTermsByTermId >>>>>>>{}", id);
 		QueryBuilder dslQuery = QueryBuilders.termQuery("id", id);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 		
@@ -144,7 +144,7 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 			subTermList.add(objectMapper.convertValue(hit.getSourceAsMap(),SubTerm.class));
 		}
 
-		log.debug("output",subTermList);
+		log.debug("<<<<<<<<<<<<output{}",subTermList);
 
 		return subTermList;
 
@@ -179,6 +179,7 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 	@Override
 	public ResponseEntity<List<Term>> getTermByTermId(Long id) {
 		log.debug("<<<<<<getTermByTermId >>>>>>>{}",id);
+		System.out.println("<<<<<<sys<<<<<getTermByTermId >>>>>>>{}");
 		QueryBuilder dslQuery =QueryBuilders.termQuery("id", id);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(dslQuery);
