@@ -26,23 +26,13 @@ public interface StoreQueryService {
 
 	Store findStoreByRegNo(String regNo);
 
-	List<ResultBucket> findRatingCount(Pageable pageable);
-
 	Page<Store> findStoreByDeliveryType(String deliveryType, Pageable pageable);
 
-	Page<Store> findStoreByTypeName(String name, Pageable pageable);
-
-	Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable);
-
 	Page<Type> findAllDeliveryTypesByStoreId(Long storeId, Pageable pageable);
-
-	DeliveryInfo findDeliveryInfoById(Long id);
 
 	Page<Store> findStoreByRating(Pageable pageable);
 
 	Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId, Pageable pageable);
-
-	Page<Store> findStoreByLocationName(String locationName, Pageable pageable);
 
 	Page<Store> findAndSortStoreByMinAmount(Pageable pageable);
 
@@ -69,7 +59,10 @@ public interface StoreQueryService {
     Long findUserRatingReviewCountByRegNo(String regNo);
 
 	Page<Banner> findBannersByRegNo(Pageable pageable, String regNo);
+	
 	public List<HeaderSuggestion> searchSuggestion(String searchTerm);
+	
 	public Page<HeaderResult> getHeaderResult(String indexName,String suggestionData,Pageable pageable);
+	
 	public <T> T search(String indexName,Long id);
 }

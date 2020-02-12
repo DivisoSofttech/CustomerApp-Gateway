@@ -13,11 +13,14 @@ import javax.validation.constraints.*;
  * SubTermDTO
  */
 @Validated
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-01-27T14:13:06.209+05:30[Asia/Kolkata]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2020-02-12T10:22:12.708+05:30[Asia/Calcutta]")
 
 public class SubTermDTO   {
   @JsonProperty("id")
   private Long id = null;
+
+  @JsonProperty("subTermId")
+  private Long subTermId = null;
 
   @JsonProperty("termDescription")
   private String termDescription = null;
@@ -43,6 +46,26 @@ public class SubTermDTO   {
 
   public void setId(Long id) {
     this.id = id;
+  }
+
+  public SubTermDTO subTermId(Long subTermId) {
+    this.subTermId = subTermId;
+    return this;
+  }
+
+  /**
+   * Get subTermId
+   * @return subTermId
+  **/
+  @ApiModelProperty(value = "")
+
+
+  public Long getSubTermId() {
+    return subTermId;
+  }
+
+  public void setSubTermId(Long subTermId) {
+    this.subTermId = subTermId;
   }
 
   public SubTermDTO termDescription(String termDescription) {
@@ -96,13 +119,14 @@ public class SubTermDTO   {
     }
     SubTermDTO subTermDTO = (SubTermDTO) o;
     return Objects.equals(this.id, subTermDTO.id) &&
+        Objects.equals(this.subTermId, subTermDTO.subTermId) &&
         Objects.equals(this.termDescription, subTermDTO.termDescription) &&
         Objects.equals(this.termId, subTermDTO.termId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, termDescription, termId);
+    return Objects.hash(id, subTermId, termDescription, termId);
   }
 
   @Override
@@ -111,6 +135,7 @@ public class SubTermDTO   {
     sb.append("class SubTermDTO {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    subTermId: ").append(toIndentedString(subTermId)).append("\n");
     sb.append("    termDescription: ").append(toIndentedString(termDescription)).append("\n");
     sb.append("    termId: ").append(toIndentedString(termId)).append("\n");
     sb.append("}");

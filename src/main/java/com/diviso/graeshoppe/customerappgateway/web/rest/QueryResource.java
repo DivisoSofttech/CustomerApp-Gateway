@@ -697,11 +697,7 @@ public class QueryResource {
 
 	//**************** Administration service End Points*************************
 	
-	/**
-     * GET  /stores/banners Get all premium banners
-     * @param pageable the pageable to create
-     * @return page of Banner in body 
-     */
+
 	@GetMapping("/administration/premiumBanners")
 	public Page<com.diviso.graeshoppe.customerappgateway.client.administration.model.Banner> findPremiumBanners(Pageable pageable){
 
@@ -730,7 +726,7 @@ public class QueryResource {
 		return administrationQueryService.findSubTermById(id);
 	}
 	
-	@GetMapping("/findSubTermByTermId/{id}")
+	@GetMapping("/findSubTermBySubtermId/{id}")
 	public List<SubTerm> getSubTermsByTermId(@PathVariable Long id) {
 		return administrationQueryService.getSubTermsByTermId(id);
 	}
@@ -744,6 +740,16 @@ public class QueryResource {
 	@GetMapping("/findallabout")
 	Page<About> findallabout(Pageable pageable){
 		return administrationQueryService.findallabout(pageable);
+	}
+	
+	@GetMapping("/findStoreByDeliveryType/{deliveryType}")
+	Page<Store> findStoreByDeliveryType(@PathVariable String deliveryType, Pageable pageable) {
+		return storeQueryService.findStoreByDeliveryType(deliveryType,pageable);
+	}
+	@GetMapping("/findTermByTermId/{id}")
+	public ResponseEntity<List<Term>> getTermByTermId(@PathVariable Long id){
+		log.debug("<<<<<<<<< getTermByTermId >>>>>>>{}",id);
+		return administrationQueryService.getTermByTermId(id);
 	}
 	
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.About;
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.AboutDTO;
@@ -32,5 +33,7 @@ public interface AdministrationQueryService {
 	Page<Term> findallterms(Pageable pageable);
 
 	Page<About> findallabout(Pageable pageable);
+
+	ResponseEntity<List<Term>> getTermByTermId(Long id);
 	
 }

@@ -1,11 +1,9 @@
 package com.diviso.graeshoppe.customerappgateway.service.impl;
 
-import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
 import static org.elasticsearch.index.query.QueryBuilders.matchAllQuery;
 import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -30,6 +28,11 @@ import org.elasticsearch.search.aggregations.bucket.terms.Terms;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
 import org.elasticsearch.search.sort.FieldSortBuilder;
 import org.elasticsearch.search.sort.SortOrder;
+import org.elasticsearch.search.suggest.Suggest;
+import org.elasticsearch.search.suggest.SuggestBuilder;
+import org.elasticsearch.search.suggest.SuggestBuilders;
+import org.elasticsearch.search.suggest.SuggestionBuilder;
+import org.elasticsearch.search.suggest.completion.CompletionSuggestion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,26 +40,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderSuggestion;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Banner;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.DeliveryInfo;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.HeaderSearch;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Store;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreAddress;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreSettings;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.StoreType;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.Type;
-import com.diviso.graeshoppe.customerappgateway.client.store.model.UserRatingReview;
+
+import com.diviso.graeshoppe.customerappgateway.client.store.model.*;
 import com.diviso.graeshoppe.customerappgateway.config.elasticsearch.ServiceUtility;
-import com.diviso.graeshoppe.customerappgateway.domain.ResultBucket;
-import com.diviso.graeshoppe.customerappgateway.domain.StoreTypeWrapper;
+import com.diviso.graeshoppe.customerappgateway.domain.*;
+import com.diviso.graeshoppe.customerappgateway.domain.search.*;
+
+import com.diviso.graeshoppe.customerappgateway.service.ProductQueryService;
 import com.diviso.graeshoppe.customerappgateway.service.StoreQueryService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.elasticsearch.search.suggest.term.*;
-import org.elasticsearch.search.suggest.*;
-import org.elasticsearch.search.suggest.phrase.*;
-import org.elasticsearch.search.suggest.SuggestBuilder;
-import com.diviso.graeshoppe.customerappgateway.domain.search.HeaderResult;
 
 @Service
 public class StoreQueryServiceImpl implements StoreQueryService {
@@ -78,8 +70,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param pageable
-	 *            the pageable to create
+	 * @param pageable the pageable to create
 	 * @return the page of Store in body
 	 */
 	@Override
@@ -98,8 +89,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param regNo
-	 *            the regNo of store
+	 * @param regNo the regNo of store
 	 * @return the page of Store in body
 	 */
 	@Override
@@ -115,8 +105,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	 * This method return the number of users rated reviewed the corresponding store
 	 * by CountRequest
 	 * 
-	 * @param regNo
-	 *            the regNo of store
+	 * @param regNo the regNo of store
 	 * @return the Long
 	 */
 	@Override
@@ -135,7 +124,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		CountResponse countResponse = null;
 		try {
 			countResponse = restHighLevelClient.count(countRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 
@@ -147,8 +136,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	/**
 	 * TO_DO:@author rafeek This method returns the storeType and its count.
 	 * 
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param pageable the Pageable to create
 	 * @return the page of ResultBucket
 	 */
 	@Override
@@ -205,170 +193,45 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * TO_DO:@author rafeek This method returns the rating count of stores
-	 * 
-	 * @param pageable
-	 *            the Pageable to create
-	 * @return the list of ResultBucket
-	 */
-	@Override
-	public List<ResultBucket> findRatingCount(Pageable pageable) {
-
-		List<ResultBucket> resultBucketList = new ArrayList<>();
-
-		SearchRequest searchRequest = new SearchRequest("storetype");
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(matchAllQuery());
-
-		searchSourceBuilder.aggregation(AggregationBuilders.terms("ratings").field("rating"));
-
-		searchRequest.source(searchSourceBuilder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-		Aggregations aggregations = searchResponse.getAggregations();
-
-		Terms categoryAggregation = searchResponse.getAggregations().get("ratings");
-
-		for (Terms.Bucket bucket : categoryAggregation.getBuckets()) {
-
-			ResultBucket result = new ResultBucket();
-
-			result.setKey(bucket.getKey().toString());
-
-			result.setDocCount(bucket.getDocCount());
-
-			result.setKeyAsString(bucket.getKeyAsString());
-
-			resultBucketList.add(result);
-
-			log.debug("KEY:" + bucket.getKey() + "!!keyAsString:" + bucket.getKeyAsString() + "!!count:"
-					+ bucket.getDocCount());
-
-		}
-
-		log.debug("output", resultBucketList);
-
-		return resultBucketList;
-
-	}
-
-	/**
-	 * @param deliveryType
-	 *            the name of type
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param deliveryType the name of type
+	 * @param pageable     the Pageable to create
 	 * @return the page of Store
 	 */
 	@Override
 	public Page<Store> findStoreByDeliveryType(String deliveryType, Pageable pageable) {
 
 		log.debug("input", deliveryType);
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery())
-				.filter(termQuery("deliveryInfos.type.name.keyword", deliveryType));
+		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(termQuery("type.name.keyword", deliveryType));
+		
+
+		String[] includeFields = new String[] { "store.*" };
+		String[] excludeFields = new String[] { "id","startingTime","endTime","type.*" };
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
+		searchSourceBuilder.fetchSource(includeFields, excludeFields);
+		
 		searchSourceBuilder.query(dslQuery);
 
-		SearchResponse searchResponse = serviceUtility.searchResponseForPage("store", searchSourceBuilder, pageable);
+		SearchResponse searchResponse = serviceUtility.searchResponseForPage("deliveryinfo", searchSourceBuilder, pageable);
 
-		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new Store()));
-
-		return serviceUtility.getPageResult(searchResponse, pageable, new Store());
-
+	Page<DeliveryInfo> result=serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
+	result.getTotalElements();
+	List<DeliveryInfo> deliveryInfoList=result.getContent();
+	List<Store> storeList = new ArrayList();
+	for(DeliveryInfo deliveryInfo :deliveryInfoList) {
+		storeList.add(deliveryInfo.getStore());
 	}
+return	new PageImpl(storeList,pageable,result.getTotalElements());
 
-	/**
-	 * @param name
-	 *            the name of type
-	 * @param pageable
-	 *            the Pageable to create
-	 * @return the page of Store
-	 */
-	@Override
-	public Page<Store> findStoreByTypeName(String name, Pageable pageable) {
-
-		log.debug("input", name);
-
-		Set<Store> storeSet = new HashSet<>();
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(QueryBuilders.boolQuery().must(QueryBuilders.termQuery("type.name.keyword", name)));
-
-		SearchRequest searchRequest = serviceUtility.generateSearchRequest("deliveryinfo", pageable.getPageSize(),
-
-				pageable.getPageNumber(), searchSourceBuilder);
-
-		SearchResponse searchResponse = null;
-
-		try {
-			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
-		} catch (IOException e) { // TODO Auto-generated
-			e.printStackTrace();
-		}
-
-		SearchHit[] searchHit = searchResponse.getHits().getHits();
-
-		List<DeliveryInfo> deliveryInfoList = new ArrayList<>();
-
-		for (SearchHit hit : searchHit) {
-			deliveryInfoList.add(objectMapper.convertValue(hit.getSourceAsMap(), DeliveryInfo.class));
-		}
-		for (DeliveryInfo delivery : deliveryInfoList) {
-			storeSet.add(delivery.getStore());
-		}
-
-		log.debug("output",
-				new PageImpl(new ArrayList<Store>(storeSet), pageable, searchResponse.getHits().getTotalHits()));
-
-		return new PageImpl(new ArrayList<Store>(storeSet), pageable, searchResponse.getHits().getTotalHits());
-
-	}
-
-	/**
-	 * This method return page stores, start matching with prefix length of 3.
-	 * 
-	 * @param searchTerm
-	 *            the name of Store
-	 * @param pageable
-	 *            the Pageable to create
-	 * @return the page of Store
-	 */
-	@Override
-	public Page<Store> findStoreBySearchTerm(String searchTerm, Pageable pageable) {
-
-		log.debug("input", searchTerm);
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-
-		searchSourceBuilder.query(matchQuery("name", searchTerm).prefixLength(3));
-
-		SearchResponse searchResponse = serviceUtility.searchResponseForPage("store", searchSourceBuilder, pageable);
-
-		log.debug("output", serviceUtility.getPageResult(searchResponse, pageable, new Store()));
-
-		return serviceUtility.getPageResult(searchResponse, pageable, new Store());
 	}
 
 	/**
 	 * Return page of type firstly by getting deliveryInfo according to storeId,
 	 * then get type from deliveryInfo.
 	 * 
-	 * @param storeId
-	 *            the id of Store
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param storeId  the id of Store
+	 * @param pageable the Pageable to create
 	 * @return the page of Type in body
 	 */
 	@Override
@@ -376,7 +239,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		log.debug("input", storeId);
 
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery()).filter(termQuery("store.id", storeId));
+		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(termQuery("store.id", storeId));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
@@ -412,33 +275,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * 
-	 * @param id
-	 *            the id of DeliveryInfo
-	 * @param pageable
-	 *            the Pageable to create
-	 * @return DeliveryInfo in body
-	 */
-	@Override
-	public DeliveryInfo findDeliveryInfoById(Long id) {
-
-		log.info("input", id);
-
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery()).filter(termQuery("id", id));
-
-		SearchResponse searchResponse = serviceUtility.searchResponseForObject("deliveryinfo", dslQuery);
-
-		log.debug("output", serviceUtility.getObjectResult(searchResponse, new DeliveryInfo()));
-
-		return serviceUtility.getObjectResult(searchResponse, new DeliveryInfo());
-
-	}
-
-	/**
 	 * Return Page of stores in descending order of totalRating range from 5 to 1.
 	 * 
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param pageable the Pageable to create
 	 * @return page of Store in body
 	 */
 	@Override
@@ -458,17 +297,15 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param storeId
-	 *            the regNo of store
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param storeId  the regNo of store
+	 * @param pageable the Pageable to create
 	 * @return page of DeliveryInfo in body
 	 */
 	@Override
 	public Page<DeliveryInfo> findDeliveryInfoByStoreId(String storeId, Pageable pageable) {
 
 		log.debug("input", storeId);
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery())
+		QueryBuilder dslQuery = QueryBuilders.boolQuery()
 				.filter(termQuery("store.regNo.keyword", storeId));
 
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
@@ -478,8 +315,6 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		SearchResponse searchResponse = serviceUtility.searchResponseForPage("deliveryinfo", searchSourceBuilder,
 				pageable);
 
-		
-
 		return serviceUtility.getPageResult(searchResponse, pageable, new DeliveryInfo());
 
 	}
@@ -487,10 +322,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	/**
 	 * TO_DO:@author rafeek
 	 * 
-	 * @param searchTerm
-	 *            the name of store
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param searchTerm the name of store
+	 * @param pageable   the Pageable to create
 	 * @return page of Store in body
 	 */
 	@Override
@@ -543,10 +376,8 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param values
-	 *            the HeaderSearch to create
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param values   the HeaderSearch to create
+	 * @param pageable the Pageable to create
 	 * @return page of Store in body
 	 */
 	public Page<Store> findStoresByRegNoList(Set<HeaderSearch> values, Pageable pageable) throws IOException {
@@ -614,28 +445,31 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		for (SearchHit hit : searchHit) {
 
 			HeaderResult result = new HeaderResult();
-			Map<String,Object> sourceAsMap = hit.getSourceAsMap();
-	
+			Map<String, Object> sourceAsMap = hit.getSourceAsMap();
 
 			if (hit.getIndex().equals("store")) {
-				
-				Store store=objectMapper.convertValue(hit.getSourceAsMap(),Store.class);
-		        result.setResultType(hit.getIndex());
+
+				Store store = objectMapper.convertValue(hit.getSourceAsMap(), Store.class);
+				result.setResultType(hit.getIndex());
 				result.setId(store.getId());
 				result.setName(store.getName());
 				result.setImageLink(store.getImageLink());
 
 			} else if (hit.getIndex().equals("product")) {
-				
-				com.diviso.graeshoppe.customerappgateway.client.product.model.Product product=objectMapper.convertValue(hit.getSourceAsMap(),com.diviso.graeshoppe.customerappgateway.client.product.model.Product.class);
+
+				com.diviso.graeshoppe.customerappgateway.client.product.model.Product product = objectMapper
+						.convertValue(hit.getSourceAsMap(),
+								com.diviso.graeshoppe.customerappgateway.client.product.model.Product.class);
 				result.setResultType(hit.getIndex());
 				result.setId(product.getId());
 				result.setName(product.getName());
 				result.setImageLink(product.getImageLink());
 
 			} else if (hit.getIndex().equals("category")) {
-				
-				com.diviso.graeshoppe.customerappgateway.client.product.model.Category category =objectMapper.convertValue(hit.getSourceAsMap(),com.diviso.graeshoppe.customerappgateway.client.product.model.Category.class);
+
+				com.diviso.graeshoppe.customerappgateway.client.product.model.Category category = objectMapper
+						.convertValue(hit.getSourceAsMap(),
+								com.diviso.graeshoppe.customerappgateway.client.product.model.Category.class);
 				result.setResultType(hit.getIndex());
 				result.setId(category.getId());
 				result.setName(category.getName());
@@ -649,22 +483,22 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		return new PageImpl(headerResultList, pageable, searchResponse.getHits().getTotalHits());
 
 	}
-	public  <T> Page getPageResult(SearchResponse response, Pageable page, T t) {
+
+	public <T> Page getPageResult(SearchResponse response, Pageable page, T t) {
 
 		SearchHit[] searchHit = response.getHits().getHits();
 
 		List<T> list = new ArrayList<>();
 
 		for (SearchHit hit : searchHit) {
-			//System.out.println("............T............"+t);
-		T t1=	(T)objectMapper.convertValue(hit.getSourceAsMap(), t.getClass());
-	Store store=objectMapper.convertValue(hit.getSourceAsMap(),Store.class);
+			// System.out.println("............T............"+t);
+			T t1 = (T) objectMapper.convertValue(hit.getSourceAsMap(), t.getClass());
+			Store store = objectMapper.convertValue(hit.getSourceAsMap(), Store.class);
 		}
 
 		return new PageImpl(list, page, response.getHits().getTotalHits());
 	}
-	
-	
+
 	public <T> T search(String indexName, Long id) {
 
 		if (indexName.equals("store")) {
@@ -679,25 +513,9 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param
-	 * @param
-	 * @return
-	 */
-	@Override
-	public Page<Store> findStoreByLocationName(String locationName, Pageable pageable) {
-
-		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-		searchSourceBuilder.query(matchQuery("locationName", locationName).prefixLength(3));
-		SearchResponse searchResponse = serviceUtility.searchResponseForPage("store", searchSourceBuilder, pageable);
-
-		return serviceUtility.getPageResult(searchResponse, pageable, new Store());
-	}
-
-	/**
 	 * Return Page of stores ,sorted in ascending order of minAmount
 	 * 
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param pageable the Pageable to create
 	 * @return page of Store in body
 	 */
 	@Override
@@ -720,16 +538,14 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	/**
 	 * Return Page of storeType ,which excludes the store in it.
 	 * 
-	 * @param storeId
-	 *            the regNo of Store
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param storeId  the regNo of Store
+	 * @param pageable the Pageable to create
 	 * @return page of StoreType in body
 	 */
 	@Override
 	public Page<StoreType> findStoreTypeByStoreId(String storeId, Pageable pageable) {
 		log.debug("input", storeId);
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery())
+		QueryBuilder dslQuery = QueryBuilders.boolQuery()
 				.filter(termQuery("store.regNo.keyword", storeId));
 
 		String[] includeFields = new String[] { "id", "name" };
@@ -748,15 +564,14 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param IDPCode
-	 *            the regNo of Store
+	 * @param IDPCode the regNo of Store
 	 * @return StoreSettings in body
 	 */
 	@Override
 	public StoreSettings getStoreSettings(String IDPCode) {
 
 		log.debug("input", IDPCode);
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery())
+		QueryBuilder dslQuery = QueryBuilders.boolQuery()
 				.filter(termQuery("regNo.keyword", IDPCode));
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", dslQuery);
@@ -765,8 +580,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param iDPCode
-	 *            the regNo of Store
+	 * @param iDPCode the regNo of Store
 	 * @return StoreAddress in body
 	 */
 	@Override
@@ -783,14 +597,10 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param lat
-	 *            the location split of Store
-	 * @param lon
-	 *            the location split of store
-	 * @param distance
-	 *            the distance of Double
-	 * @param pageable
-	 *            the pageable to create
+	 * @param lat      the location split of Store
+	 * @param lon      the location split of store
+	 * @param distance the distance of Double
+	 * @param pageable the pageable to create
 	 * @return page of Store in body
 	 */
 	@Override
@@ -845,8 +655,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	}
 
 	/**
-	 * @param id
-	 *            the id of Store
+	 * @param id the id of Store
 	 * @return Store in body
 	 */
 	@Override
@@ -854,20 +663,17 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 
 		log.debug("input", id);
 
-		QueryBuilder dslQuery = QueryBuilders.boolQuery().must(matchAllQuery()).filter(termQuery("id", id));
+		QueryBuilder dslQuery = QueryBuilders.boolQuery().filter(termQuery("id", id));
 
 		SearchResponse searchResponse = serviceUtility.searchResponseForObject("store", dslQuery);
 
 		return serviceUtility.getObjectResult(searchResponse, new Store());
 	}
 
-	
-
 	/**
 	 * TO_DO DESC:rafeek
 	 * 
-	 * @param r
-	 *            the regNo of Store
+	 * @param r the regNo of Store
 	 * @return Store in body
 	 */
 	private Store createHeaderQuery(HeaderSearch r) {
@@ -886,8 +692,7 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 	/**
 	 * TO_DO DESC:rafeek
 	 * 
-	 * @param storeTypeWrapper
-	 *            the StoreTypeWrapper to create
+	 * @param storeTypeWrapper the StoreTypeWrapper to create
 	 * @return page of Store in body
 	 */
 	@Override
@@ -917,38 +722,34 @@ public class StoreQueryServiceImpl implements StoreQueryService {
 		List<StoreType> storeTypeList = serviceUtility.getPageResult(searchResponse, pageable, new StoreType())
 				.getContent();
 		Set<Store> storeSet = new HashSet();
-	
+
 		for (StoreType storeType : storeTypeList) {
-                         Store s =storeType.getStore();
-System.out.println("<@@@@@@@@@@@@@@@@@@@@@@QQQQQQQQQQQQQQQQQQ>"+s.hashCode());
+			Store s = storeType.getStore();
+			System.out.println("<@@@@@@@@@@@@@@@@@@@@@@QQQQQQQQQQQQQQQQQQ>" + s.hashCode());
 			storeSet.add(s);
-		System.out.println("storeSet.size"+ storeSet.size());
+			System.out.println("storeSet.size" + storeSet.size());
 		}
-		//for testing
-		for(Store store:storeSet) {
-			System.out.println("<<<<<<<<<<<<<<<<<<<<<STOREEEEEEEEEEEEEEEEEEEE>>>>>>>>>>>>>>>>>"+store);
+		// for testing
+		for (Store store : storeSet) {
+			System.out.println("<<<<<<<<<<<<<<<<<<<<<STOREEEEEEEEEEEEEEEEEEEE>>>>>>>>>>>>>>>>>" + store);
 		}
-		
-		
+
 		List<Store> storeList = new ArrayList<>();
 		storeList.addAll(storeSet);
-		
 
 		return new PageImpl(storeList);
 
 	}
 
 	/**
-	 * @param regNo
-	 *            the regNo of store
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param regNo    the regNo of store
+	 * @param pageable the Pageable to create
 	 * @return page of UserRatingReview in body
 	 */
 	public Page<UserRatingReview> findUserRatingReviewByRegNo(String regNo, Pageable pageable) {
 
 		log.debug("input", regNo);
-		
+
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
 
 		searchSourceBuilder.query(termQuery("store.regNo.keyword", regNo));
@@ -964,8 +765,7 @@ System.out.println("<@@@@@@@@@@@@@@@@@@@@@@QQQQQQQQQQQQQQQQQQ>"+s.hashCode());
 
 	/**
 	 *
-	 * @param pageable
-	 *            the Pageable to create
+	 * @param pageable the Pageable to create
 	 * @return page of Banner in body
 	 */
 	@Override

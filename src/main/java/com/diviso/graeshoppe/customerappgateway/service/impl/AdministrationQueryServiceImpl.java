@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.lucene.index.Terms;
 import org.elasticsearch.action.search.SearchRequest;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.RequestOptions;
@@ -15,11 +16,13 @@ import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.SearchHit;
 import org.elasticsearch.search.builder.SearchSourceBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.diviso.graeshoppe.customerappgateway.client.administration.model.About;
@@ -118,14 +121,14 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 	@Override
 	public List<SubTerm> getSubTermsByTermId(Long id) {
 
-		
 		log.debug("input", id);
-
+		QueryBuilder dslQuery = QueryBuilders.termQuery("id", id);
 		SearchSourceBuilder searchSourceBuilder = new SearchSourceBuilder();
-	
-		searchSourceBuilder.query(termQuery("term.id",id));
-
+		
+		searchSourceBuilder.query(dslQuery);
+		searchSourceBuilder.sort("subtermId", SortOrder.ASC);
 		SearchRequest searchRequest = new SearchRequest("subterm");
+		searchRequest.source(searchSourceBuilder);
 		SearchResponse searchResponse = null;
 		try {
 			searchResponse = restHighLevelClient.search(searchRequest, RequestOptions.DEFAULT);
@@ -173,11 +176,31 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 			return serviceUtility.getPageResult(response, pageable, new About());
 		
 	}
+	@Override
+	public ResponseEntity<List<Term>> getTermByTermId(Long id) {
+		log.debug("<<<<<<getTermByTermId >>>>>>>{}",id);
+		QueryBuilder dslQuery =QueryBuilders.termQuery("id", id);
+		SearchSourceBuilder builder = new SearchSourceBuilder();
+		builder.query(dslQuery);
+		builder.sort("termId", SortOrder.DESC);
+		SearchRequest request = new SearchRequest("term");
+		request.source(builder);
+		SearchResponse response = null;
+		SearchHit searchHit[]=response.getHits().getHits();
+
+		ArrayList<Term> terms = new ArrayList<>();
+		
+		try {
+			response=restHighLevelClient.search(request, RequestOptions.DEFAULT);
+		}catch (IOException e){
+			e.printStackTrace();
+		}
+		for(SearchHit hit : searchHit) {
+			terms.add(objectMapper.convertValue(hit.getSourceAsMap(), Term.class));
+		}
+		
+		return ResponseEntity.ok().body(terms);
+	}
 }
 	
-
-
-
-	
-
 

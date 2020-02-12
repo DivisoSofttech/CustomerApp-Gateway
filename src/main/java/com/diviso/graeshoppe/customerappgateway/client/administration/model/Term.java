@@ -1,10 +1,24 @@
 package com.diviso.graeshoppe.customerappgateway.client.administration.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class Term {
 
 	private Long id;
 
 	private String title;
+	
+	@JsonProperty("termId")
+	private Long termId = null;
+
+
+	public Long getTermId() {
+		return termId;
+	}
+
+	public void setTermId(Long termId) {
+		this.termId = termId;
+	}
 
 	public Long getId() {
 		return id;

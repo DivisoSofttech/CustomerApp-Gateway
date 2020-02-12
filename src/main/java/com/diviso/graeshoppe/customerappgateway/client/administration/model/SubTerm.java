@@ -22,6 +22,18 @@ public class SubTerm   {
   private String termDescription;
 
   private Long termId;
+  
+  @JsonProperty("subTermId")
+  private Long subTermId = null;
+
+
+public Long getSubTermId() {
+	return subTermId;
+}
+
+public void setSubTermId(Long subTermId) {
+	this.subTermId = subTermId;
+}
 
 public Long getId() {
 	return id;
@@ -86,7 +98,7 @@ public boolean equals(Object obj) {
 
 @Override
 public String toString() {
-	return "SubTerm [id=" + id + ", termDescription=" + termDescription + ", termId=" + termId + "]";
+	return "SubTerm [id=" + id + ", termDescription=" + termDescription + ", termId=" + termId + ", subTermId="+ subTermId +"]";
 }
 
  
