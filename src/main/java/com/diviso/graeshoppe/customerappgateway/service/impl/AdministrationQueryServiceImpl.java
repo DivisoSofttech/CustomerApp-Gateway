@@ -183,7 +183,7 @@ public class AdministrationQueryServiceImpl implements AdministrationQueryServic
 		QueryBuilder dslQuery =QueryBuilders.termQuery("id", id);
 		SearchSourceBuilder builder = new SearchSourceBuilder();
 		builder.query(dslQuery);
-		builder.sort("termId", SortOrder.DESC);
+		builder.sort("termId", SortOrder.ASC);
 		SearchRequest request = new SearchRequest("term");
 		request.source(builder);
 		SearchResponse response = null;
